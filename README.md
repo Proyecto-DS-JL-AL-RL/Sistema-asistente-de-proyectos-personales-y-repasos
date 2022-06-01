@@ -1,4 +1,4 @@
-<h1><center>Sistema-asistente-de-proyectos-personales-y-repasos</h1>
+<h1><center>Sistema asistente de proyectos personales y repasos</h1>
 
 ## 📚 Descripción
 Nosotros buscamos desarrollar una plataforma que provea un servicio para organizar proyectos personales, repasos, etc.
