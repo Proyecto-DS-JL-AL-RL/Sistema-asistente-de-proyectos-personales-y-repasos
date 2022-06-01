@@ -1,7 +1,7 @@
 <h1><center>Sistema Organizador de vidas</h1>
 
 ## 📚 Descripción
-Nosotros buscamos desarrollar una plataforma que provea un servicio para realizar organizar proyectos personales, repasos, etc.
+Nosotros buscamos desarrollar una plataforma que provea un servicio para organizar proyectos personales, repasos, etc.
 
 **📝 Entregables**
 
