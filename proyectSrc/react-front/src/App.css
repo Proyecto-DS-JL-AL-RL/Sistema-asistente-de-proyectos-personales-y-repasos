@@ -1,21 +1,75 @@
-.App {
-  text-align: center;
+:root{
+  margin: 0;
+  --width-drawer: 50px;
+  --top-space: 20px;
+  --head-space:80px;
+  --descp-drawer-item:None;
+  --avatar-drawer-display:hidden;
+  --change-width-item:0;
 }
 
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/*var(--top-space) var(--height-space) var(--width-drawer)*/
+.container-main{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+.drawer-container{
+  background-color: red;
+  width: var(--width-drawer);
+  transition: width 1s;
+}
+.drawer-container>button{
+  width: var(--width-drawer);
+  transition: width 1s;
+  display: block;
+  
+}
+.other-container{
   display: flex;
   flex-direction: column;
-  align-items: center;
+  width: 100%;
+}
+
+.content-container{
+  height: 100%;
+  
+  padding: 15px;
+}
+.head-container{
+  height: var(--head-space);
+  margin-top: var(--top-space);
+
+}
+.image-head{
+  width: var(--head-space);
+  height: var(--head-space);
+  object-fit: cover;
+  border-radius: 100%;
+}
+.head-izquierda{
+  position: relative;
+  right: 0px;
+}
+.item-drawer{
+  background-color: magenta;
+  display: flex;
+  flex-direction: row;
+}
+
+.item-drawer-description{
+  display: var(--descp-drawer-item);
+  
+}
+.ctn-avatar{
+  display: flex;
+  visibility: var(--avatar-drawer-display);
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  
 }
+.img-medalla{
+  width: 60px;
 
-.App-link {
-  color: #61dafb;
 }
-
-
