@@ -15,7 +15,6 @@
   display: flex;
 }
 .drawer-container{
-  background-color: red;
   width: var(--width-drawer);
   transition: width 1s;
 }
@@ -33,8 +32,8 @@
 
 .content-container{
   height: 100%;
-  
   padding: 15px;
+  overflow-y: auto;
 }
 .head-container{
   height: var(--head-space);
