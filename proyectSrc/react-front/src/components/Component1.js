@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography } from '@mui/material';
-import CustomizedAccordions from './componentesALL/Acordion'
-const mazos = [{
+//import CustomizedAccordions from './componentesALL/Acordion'
+/*const mazos = [{
     id: '1',
     titulo: 'Calidad de Software',
     descripcion: 'esto es un prueba porque estamos a punto de dar parcial de calidad de software pero no estudie asi que es tu turno de colaborar.'
@@ -16,7 +16,8 @@ const mazos = [{
     descripcion: 'esto es una prueba que no ira algun lado xd por ede mueres aaaa'
   }
   ]
-
+ */ 
+//<CustomizedAccordions getmazo={mazos}/>
 
 export default function Component1(){
 
@@ -31,7 +32,6 @@ export default function Component1(){
             <Typography variant = 'h4'>
                 Componente 1
             </Typography>
-            <CustomizedAccordions getmazo={mazos}/>
         </React.Fragment>
     );
 }
