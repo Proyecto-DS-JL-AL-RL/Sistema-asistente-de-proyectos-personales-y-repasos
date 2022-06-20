@@ -1,7 +1,7 @@
 import InputAdornments from '../components/componentesALL/login'
 import React from "react";
 
-export default function Component1(){
+export default function Inicio(){
 
     return (
           <InputAdornments/>  
