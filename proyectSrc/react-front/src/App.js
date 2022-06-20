@@ -3,6 +3,9 @@ import {Switch , Route} from 'react-router-dom';
 import Page1 from './pages/Page1';
 import AppBarSearch from './components/AppBarSearch';
 import DrawerComponent from './components/DrawerComponent';
+import Inicio from './pages/Inicio';
+import ProyectoView from './pages/projectDashboard';
+import AlgoQueHacer from './pages/AlgoQueHacer';
 
 function App() {
   return (
@@ -13,10 +16,18 @@ function App() {
         <AppBarSearch/>
       </div>
       <div className='content-container'>
-        contenido
         <Switch>
-          <Route path = '/'>
+          <Route exact path = '/'>
             <Page1/>
+          </Route>
+          <Route path = '/inicio'>
+            <Inicio/>
+          </Route>
+          <Route path = '/proyect'>
+            <ProyectoView/>
+          </Route>
+          <Route path = '/algoQueHacer'>
+            <AlgoQueHacer/>
           </Route>
         </Switch>
       </div>
