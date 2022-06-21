@@ -38,10 +38,10 @@ export default function Login() {
   return (
     <Box  justifyContent="center" sx={{ display: 'flex', flexWrap: 'wrap' }}>
       <div>
-      <FormControl sx={{ m: 1, width: '55ch' }} variant="outlined">
+      <FormControl sx={{ m: 2, width: '65ch' }} variant="outlined">
             <TextField id="outlined-basic" label="Correo electrónico" variant="outlined" />
       </FormControl>
-        <FormControl sx={{ m: 1, width: '55ch' }} variant="outlined">
+        <FormControl sx={{ m: 2, width: '65ch' }} variant="outlined">
           <InputLabel htmlFor="outlined-adornment-password">Contraseña</InputLabel>
           <OutlinedInput
             id="outlined-adornment-password"
@@ -64,7 +64,7 @@ export default function Login() {
           />
           </FormControl>
         </div>
-          <Button sx={{}} variant="contained" size="large">
+          <Button  variant="contained" size="large">
             Iniciar Sesión
           </Button>
     </Box>

@@ -1,6 +1,6 @@
 import React from "react";
 import Login from '../components/componentesALL/login.js'
-import { styled } from '@mui/material/styles';
+import { styled, createTheme, ThemeProvider} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
@@ -13,27 +13,30 @@ import Grid from '@mui/material/Grid';
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
-  padding: theme.spacing(1),
+  padding: theme.spacing(20),
   textAlign: 'center',
   color: theme.palette.text.secondary,
 }));
 
-
+const darkTheme = createTheme({ palette: { mode: 'dark' } });
+//sx={{ flexGrow: 1 }} mt={10}
 export default function Inicio(){
     return (
       <React.Fragment>
           <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={2} columns={16}>
-                <Grid item xs={8}>
-                <img 
-                    src={"https://drive.google.com/uc?export=view&id=1e9TrTH56TwOvOuKBPzIwfEuZwrz605sn"}
-                    width= "100%" 
-                    height="100%"
-                    /> 
+            <Grid container justifyContent="center" spacing={1} rowSpacing={1} columnSpacing={{ xs: 1, sm: 45, md: 10 }}>
+            <Grid item xs={5.5} mt={45} >
+                    <ThemeProvider theme={darkTheme}>
+                          <Item ><Login/></Item>
+                    </ThemeProvider>
                 </Grid>
-                <Grid item xs={5}>
-                    <Login/>
+              <Grid item xs={1}>
                 </Grid>
+                    <img   
+                          src={"https://drive.google.com/uc?export=view&id=1e9TrTH56TwOvOuKBPzIwfEuZwrz605sn"}
+                                            width= "45%" 
+                                            height="45%"
+                                            />
             </Grid>
         </Box>
       </React.Fragment>
