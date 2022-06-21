@@ -46,14 +46,18 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
    borderTop: '1px solid rgba(89, 196, 232, .200)',
 }));
 
-export default function CustomizedAccordions(props) {
+export default function Mazos(props) {
   const [expanded, setExpanded] = useState('panel1');
   const [mazos, setMazos] = useState(props.getmazo)
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
   
-
+/*
+  Este archivo crea los Mazos, es decir cada sección la cual contendra  las tarjetas para el repaso
+  y los proyectos.
+  
+*/
   return (
     <div>
       {
