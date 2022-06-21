@@ -11,7 +11,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
 
-export default function InputAdornments() {
+export default function Login() {
   const [values, setValues] = React.useState({
     amount: '',
     password: '',
@@ -36,13 +36,12 @@ export default function InputAdornments() {
   };
 
   return (
-    <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+    <Box  justifyContent="center" sx={{ display: 'flex', flexWrap: 'wrap' }}>
       <div>
       <FormControl sx={{ m: 1, width: '55ch' }} variant="outlined">
             <TextField id="outlined-basic" label="Correo electrónico" variant="outlined" />
       </FormControl>
         <FormControl sx={{ m: 1, width: '55ch' }} variant="outlined">
-          
           <InputLabel htmlFor="outlined-adornment-password">Contraseña</InputLabel>
           <OutlinedInput
             id="outlined-adornment-password"
@@ -65,11 +64,9 @@ export default function InputAdornments() {
           />
           </FormControl>
         </div>
-        <Tooltip arrow>
-          <Button variant="contained" size="large">
+          <Button sx={{}} variant="contained" size="large">
             Iniciar Sesión
           </Button>
-        </Tooltip>
     </Box>
   );
 }
