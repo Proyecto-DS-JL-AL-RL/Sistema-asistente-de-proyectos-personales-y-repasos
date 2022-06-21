@@ -11,11 +11,8 @@ import Grid from '@mui/material/Grid';
 //<MostrarFuncionalidades/>
 
 const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
   padding: theme.spacing(20),
   textAlign: 'center',
-  color: theme.palette.text.secondary,
 }));
 
 const darkTheme = createTheme({ palette: { mode: 'dark' } });
@@ -24,7 +21,7 @@ export default function Inicio(){
     return (
       <React.Fragment>
           <Box sx={{ flexGrow: 1 }}>
-            <Grid container justifyContent="center" spacing={1} rowSpacing={1} columnSpacing={{ xs: 1, sm: 45, md: 10 }}>
+            <Grid container justifyContent="center" rowSpacing={1} columnSpacing={{ xs: 1, sm: 45, md: 10 }}>
             <Grid item xs={5.5} mt={45} >
                     <ThemeProvider theme={darkTheme}>
                           <Item ><Login/></Item>
