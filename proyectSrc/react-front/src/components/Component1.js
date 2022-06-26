@@ -1,6 +1,8 @@
 import React from "react";
 import { Typography } from '@mui/material';
+import Box from '@mui/material/Box';
 import Mazos from './componentesALL/Mazos'
+
 const mazos = [{
     id: '1',
     titulo: 'Calidad de Software',
@@ -20,9 +22,8 @@ const mazos = [{
 //<Mazos getmazo={mazos}/>
 
 export default function Component1(){
-
     return (
-        <React.Fragment>
+        <React.Fragment sx={{background:'#9b9b9b'}}>
             <Typography variant = 'h1'>
                 Componente 1
             </Typography>
@@ -32,7 +33,13 @@ export default function Component1(){
             <Typography variant = 'h4'>
                 Componente 1
             </Typography>
-            <Mazos getmazo={mazos}/>
+            <Box sx={{
+                        mx: 60,
+                        width: 900,
+                        height: 900,
+                        }}>
+                    <Mazos getmazo={mazos}/>
+            </Box>
         </React.Fragment>
     );
 }

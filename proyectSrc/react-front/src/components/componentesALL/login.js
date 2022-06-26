@@ -73,11 +73,11 @@ export default function Login() {
               />
               </FormControl>
               <FormControl sx={{m: 2}} variant="outlined">
-                    <Button sx={{color: 'white' ,background:'#0000cc'}} variant="contained" size="large">
+                    <Button sx={{p:2, borderRadius: 5, py: 2, color: 'white' ,background:'#0000cc'}} variant="contained" size="large">
                     <Typography variant = 'h5'>Iniciar Sesión</Typography>
                     </Button>                            
-                            <Typography variant = 'h8'>¿Olvidaste tu contraseña?</Typography>
-                    <Button  sx={{color: 'white', background:'#00b347'}} variant="contained" size="large">
+                            <Typography sx={{py:2}} variant = 'h8'>¿Olvidaste tu contraseña?</Typography>
+                    <Button  sx={{py:2, borderRadius: 5, color: 'white', background:'#00b347'}} variant="contained" size="large">
                         <Typography variant = 'h5'>Registrate</Typography>
                     </Button>
               </FormControl>
