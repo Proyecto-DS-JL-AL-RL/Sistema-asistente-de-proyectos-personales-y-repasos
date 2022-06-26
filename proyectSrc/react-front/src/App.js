@@ -6,6 +6,7 @@ import DrawerComponent from './components/DrawerComponent';
 import Inicio from './pages/Inicio';
 import ProyectoView from './pages/projectDashboard';
 import AlgoQueHacer from './pages/AlgoQueHacer';
+import MostrarFuncionalidades from './components/componentesALL/MostrarFuncionalidades'
 
 function App() {
   return (
@@ -28,6 +29,9 @@ function App() {
           </Route>
           <Route path = '/algoQueHacer'>
             <AlgoQueHacer/>
+          </Route>
+          <Route path = '/Funcionalidades'>
+            <MostrarFuncionalidades/>
           </Route>
         </Switch>
       </div>
