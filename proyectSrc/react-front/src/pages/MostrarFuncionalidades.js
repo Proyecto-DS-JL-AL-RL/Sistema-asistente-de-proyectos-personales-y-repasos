@@ -6,7 +6,6 @@ import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
-import Button from '@mui/material/Button';
 import { orange, red, blue, green } from '@mui/material/colors';
 
 /*
@@ -32,7 +31,7 @@ export default function MostrarFuncionalidades() {
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container justifyContent="center" spacing={1}  columns={16}>
                         <Grid item xs={11}>
-                            <Typography variant = 'h3'>
+                            <Typography sx={{fontWeight: 'bold'}} variant = 'h3'>
                                     Explore Nuestras Funcionalidades
                             </Typography>
                             </Grid>
@@ -52,22 +51,22 @@ export default function MostrarFuncionalidades() {
                     <Grid container justifyContent="center"  rowSpacing={2} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
                         <Grid item xs={6}>
                             <Item>
-                            <Paper sx={{borderRadius:'5%', backgroundColor:green[700], '&:hover': {backgroundColor: green[500]}, padding: 29}}><Typography sx={{color:'black'}}>Gestione sus Proyectos</Typography></Paper>
+                            <Paper sx={{borderRadius:'5%', backgroundColor:green[700], '&:hover': {backgroundColor: green[500]}, padding: 25}}><Typography sx={{ fontSize:40, color:'white'}}>Gestione sus Proyectos</Typography></Paper>
                             </Item>
                         </Grid>
                         <Grid item xs={6}>
                             <Item>
-                            <Paper sx={{borderRadius:'5%', backgroundColor:blue[700], '&:hover': {backgroundColor: blue[500]}, padding: 29}}><Typography sx={{color:'black'}}>Tarjetas de Repaso</Typography></Paper>
+                            <Paper sx={{borderRadius:'5%', backgroundColor:blue[700], '&:hover': {backgroundColor: blue[500]}, padding: 25}}><Typography sx={{fontSize:40, color:'white'}}>Tarjetas de Repaso</Typography></Paper>
                             </Item>
                         </Grid>
                         <Grid item xs={6}>
                             <Item>
-                            <Paper sx={{borderRadius:'5%', backgroundColor:red[700], '&:hover': {backgroundColor: red[500]}, padding: 29}}><Typography sx={{color:'black'}}>Dame Algo que hacer</Typography></Paper>
+                            <Paper sx={{borderRadius:'5%', backgroundColor:red[700], '&:hover': {backgroundColor: red[500]}, padding: 25}}><Typography sx={{fontSize:40, color:'white'}}>Dame Algo que hacer</Typography></Paper>
                             </Item>
                         </Grid>
                         <Grid item xs={6}>
                             <Item>
-                                <Paper sx={{borderRadius:'5%', backgroundColor:orange[700], '&:hover': {backgroundColor: orange[600]},padding: 29}}><Typography sx={{color:'black'}}>Organizador de Actividades</Typography></Paper>
+                                <Paper sx={{borderRadius:'5%', backgroundColor:orange[700], '&:hover': {backgroundColor: orange[600]},padding: 25}}><Typography sx={{fontSize:40,color:'white'}}>Organizador de Actividades</Typography></Paper>
                             </Item>
                         </Grid>
                     </Grid>
