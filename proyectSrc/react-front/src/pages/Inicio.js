@@ -1,5 +1,5 @@
 import React from "react";
-import Login from '../components/componentesALL/login.js'
+import Login from '../components/componentsLiq/Login.js'
 import { styled, createTheme, ThemeProvider} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
