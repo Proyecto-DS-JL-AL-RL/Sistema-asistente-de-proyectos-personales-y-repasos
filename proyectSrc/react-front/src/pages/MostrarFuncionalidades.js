@@ -7,6 +7,7 @@ import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import { orange, red, blue, green } from '@mui/material/colors';
+import { useHistory } from "react-router-dom";
 
 /*
     en este archivo se mostraran las funcionalidades del software 
@@ -26,6 +27,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 export default function MostrarFuncionalidades() {
+    let history = useHistory()
     return (
         <React.Fragment>
             <Box sx={{ flexGrow: 1 }}>
@@ -56,7 +58,7 @@ export default function MostrarFuncionalidades() {
                         </Grid>
                         <Grid item xs={6}>
                             <Item>
-                            <Paper sx={{borderRadius:'5%', backgroundColor:blue[700], '&:hover': {backgroundColor: blue[500]}, padding: 25}}><Typography sx={{fontSize:40, color:'white'}}>Tarjetas de Repaso</Typography></Paper>
+                            <Paper onClick={()=>{history.push('/Mazos')}} sx={{borderRadius:'5%', backgroundColor:blue[700], '&:hover': {backgroundColor: blue[500]}, padding: 25}}><Typography sx={{fontSize:40, color:'white'}}>Tarjetas de Repaso</Typography></Paper>
                             </Item>
                         </Grid>
                         <Grid item xs={6}>

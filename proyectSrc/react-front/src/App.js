@@ -22,7 +22,7 @@ function App() {
           <div className='content-container'>
             <Switch>
               <Route exact path = '/'>
-                <Page1/>
+                <MostrarFuncionalidades/>
               </Route>
               <Route path = '/inicio'>
                 <Inicio/>
@@ -32,9 +32,6 @@ function App() {
               </Route>
               <Route path = '/algoQueHacer'>
                 <AlgoQueHacer/>
-              </Route>
-              <Route path = '/Funcionalidades'>
-                <MostrarFuncionalidades/>
               </Route>
               <Route path = '/Mazos'>
                     <VerMazos/>

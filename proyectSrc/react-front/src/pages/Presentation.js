@@ -8,9 +8,16 @@ import Slide from '@mui/material/Slide';
 import Grid from '@mui/material/Grid';
 import MicIcon from '@mui/icons-material/Mic';
 import QuestionMarkRoundedIcon from '@mui/icons-material/QuestionMarkRounded';
+import CardContent from '@mui/material/CardContent';
+import Card from '@mui/material/Card';
+import Grow from '@mui/material/Grow';
+import { useHistory } from "react-router-dom";
+
 
 export default function Presentacion(){
+    let history = useHistory()
     const [showPresentacion, setShowPresentacion] = useState(true)
+    const [showRecomendacion, setShowRecomendacion] = useState(false)
     return (
         <React.Fragment>     
                 {showPresentacion?
@@ -49,7 +56,7 @@ export default function Presentacion(){
                                 <Box mt={40} position={'absolute'} display="flex" justifyContent="center">
                                     <Stack spacing={3}>
                                             <Slide direction="up"   timeout={1000} in={true}  mountOnEnter unmountOnExit>
-                                                    <Typography sx={{fontWeight: 'bold'}}  variant = 'h3'>
+                                                    <Typography sx={{fontWeight: 'bold', textAlign: 'center'}}  variant = 'h3'>
                                                         Recuerde  que puede usar la interfaz de Voz y asistente de ayuda con los iconos
                                                     </Typography>
                                             </Slide>
@@ -73,7 +80,10 @@ export default function Presentacion(){
                                 <Box mt={90} mx={130} sx={{
                                             position: 'absolute'}} display="flex" justifyContent="center">
                                         <Slide direction="up" timeout={1000} in={true}  mountOnEnter unmountOnExit>
-                                                <Button sx={{borderRadius:50, p:4,                            
+                                                <Button onClick= {()=>{
+                                                                setShowPresentacion(false)
+                                                                setShowRecomendacion(true)
+                                                            }} sx={{borderRadius:50, p:4,                            
                                                             width: 200, height: 85,
                                                             color:'white', background:'#00b347',
                                                             fontSize:30, 
@@ -84,6 +94,28 @@ export default function Presentacion(){
                                 </Box>
                         </React.Fragment>
             }
+            {showRecomendacion?
+                <Grow  timeout={1000}  in={showRecomendacion}>
+                    <Box mt={40}  position={'absolute'} justifyContent="center" sx={{ display: 'flex', flexWrap: 'wrap' }}> 
+                        <Card  sx={{mx:100, minWidth: 600, border: '0.5px solid purple'  }}>
+                                <CardContent>
+                                    
+                                    <Typography mt={10} sx={{fontWeight: 'bold', textAlign: 'center'}} variant="h4" component="div">
+                                                    Este es un mensaje de ayuda, recomendación, motivación
+                                    </Typography>
+                                    <Box  justifyContent="center" sx={{p:12, display: 'flex', flexWrap: 'wrap' }}> 
+                                                <Button onClick={()=>{history.push('/')}} sx={{borderRadius:50, p:4,                            
+                                                                    width: 200, height: 85,
+                                                                    color:'white', background:'#00b347',
+                                                                    fontSize:30, 
+                                                                    '&:hover': {backgroundColor: '#cfe619'}
+                                                                    }}>Aceptar</Button>
+                                    </Box>        
+                                </CardContent>
+                            </Card>
+                    </Box>
+                </Grow>
+                :null}
         </React.Fragment>
     );
 }

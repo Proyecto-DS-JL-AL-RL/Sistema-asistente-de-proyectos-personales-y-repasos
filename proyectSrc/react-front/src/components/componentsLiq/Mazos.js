@@ -19,6 +19,7 @@ import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SaveIcon from '@mui/icons-material/Save';
+import Grow from '@mui/material/Grow';
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -80,7 +81,9 @@ export default function Mazos(props) {
                   position: 'absolute',
                 }}
                 >
-                  {showEdit?<Card  sx={{mx:50, minWidth: 600, border: '0.5px solid purple'}}>
+                  {showEdit?
+                      <Grow  timeout={1000}  in={showEdit}>  
+                        <Card  sx={{mx:50, minWidth: 600, border: '0.5px solid purple'}}>
                             <CardContent>
                                 <Tooltip title="Cancelar" placement="right">
                                         <CloseIcon onClick={(e)=>{setShowEdit(false)}} sx={{p:1,mx:65, backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
@@ -106,7 +109,8 @@ export default function Mazos(props) {
                                     </Tooltip>
                                     </Box>
                               </CardContent>
-                        </Card>:null}
+                        </Card>
+                      </Grow>:null}
         </Box> 
       <Box mt={20} sx={{position: 'absolute'}}>
         {

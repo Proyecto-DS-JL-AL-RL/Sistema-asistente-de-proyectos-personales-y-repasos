@@ -10,6 +10,7 @@ import TextField from '@mui/material/TextField';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
+import { useHistory } from "react-router-dom";
 
 /*
     login simple:
@@ -21,6 +22,7 @@ import Button from '@mui/material/Button';
 
 
 export default function Login() {
+  let history = useHistory()
   const [values, setValues] = React.useState({
     amount: '',
     password: '',
@@ -73,11 +75,11 @@ export default function Login() {
               />
               </FormControl>
               <FormControl sx={{m: 2}} variant="outlined">
-                    <Button sx={{p:2, borderRadius: 5, py: 2, color: 'white' ,background:'#0000cc'}} variant="contained" size="large">
+                    <Button onClick={()=>{history.push('/')}} sx={{p:2, borderRadius: 5, py: 2, color: 'white' ,background:'#0000cc'}} variant="contained" size="large">
                     <Typography variant = 'h5'>Iniciar Sesión</Typography>
                     </Button>                            
                             <Typography sx={{py:2}} variant = 'h8'>¿Olvidaste tu contraseña?</Typography>
-                    <Button  sx={{py:2, borderRadius: 5, color: 'white', background:'#00b347'}} variant="contained" size="large">
+                    <Button onClick={()=>{history.push('/Presentacion')}} sx={{py:2, borderRadius: 5, color: 'white', background:'#00b347'}} variant="contained" size="large">
                         <Typography variant = 'h5'>Registrate</Typography>
                     </Button>
               </FormControl>
