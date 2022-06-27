@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Mazos from '../components/componentsLiq/Mazos'
 import Grid from '@mui/material/Grid';
 import MicIcon from '@mui/icons-material/Mic';
-import HelpIcon from '@mui/icons-material/Help';
+import QuestionMarkRoundedIcon from '@mui/icons-material/QuestionMarkRounded';
 import AddIcon from '@mui/icons-material/Add';
 import Tooltip from '@mui/material/Tooltip';
 import Card from '@mui/material/Card';
@@ -50,7 +50,7 @@ const mazos = [{
                                             color:'white', width: 56, height: 56 }}/>
                           </Grid>
                           <Grid item xs={2} ml={230} mt={-13.4}>
-                                    <HelpIcon sx={{width: 85, height: 85, color:'green', p:2, borderRadius:50}}/>
+                                    <QuestionMarkRoundedIcon sx={{width: 56, height: 56, color:'white', background:'green', p:1, borderRadius:50}}/>
                           </Grid>
                           <Grid item ml={245} mt={-13}>
                           <Tooltip title="añadir" placement="right">

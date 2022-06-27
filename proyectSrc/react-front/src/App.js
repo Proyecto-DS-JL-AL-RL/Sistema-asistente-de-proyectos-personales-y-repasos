@@ -1,6 +1,6 @@
 import './App.css';
 import {Switch , Route} from 'react-router-dom';
-import Page1 from './pages/Page1';
+import Presentacion from './pages/Presentation';
 import AppBarSearch from './components/AppBarSearch';
 import DrawerComponent from './components/DrawerComponent';
 import Inicio from './pages/Inicio';
@@ -21,7 +21,7 @@ function App() {
           <div className='content-container'>
             <Switch>
               <Route exact path = '/'>
-                <Page1/>
+                <Presentacion/>
               </Route>
               <Route path = '/inicio'>
                 <Inicio/>
