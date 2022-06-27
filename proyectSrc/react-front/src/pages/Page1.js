@@ -5,7 +5,7 @@ export default function  Page1(){
 
     return(
         <React.Fragment>
-            <Presentacion/>
+            
         </React.Fragment>
     );
 }

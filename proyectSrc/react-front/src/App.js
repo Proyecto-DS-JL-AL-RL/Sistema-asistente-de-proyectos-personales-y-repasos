@@ -1,5 +1,6 @@
 import './App.css';
 import {Switch , Route} from 'react-router-dom';
+import Page1 from './pages/Page1';
 import Presentacion from './pages/Presentation';
 import AppBarSearch from './components/AppBarSearch';
 import DrawerComponent from './components/DrawerComponent';
@@ -21,7 +22,7 @@ function App() {
           <div className='content-container'>
             <Switch>
               <Route exact path = '/'>
-                <Presentacion/>
+                <Page1/>
               </Route>
               <Route path = '/inicio'>
                 <Inicio/>
@@ -37,6 +38,9 @@ function App() {
               </Route>
               <Route path = '/Mazos'>
                     <VerMazos/>
+              </Route>
+              <Route path = '/Presentacion'>
+                    <Presentacion/>
               </Route>
         </Switch>
       </div>
