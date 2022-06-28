@@ -15,6 +15,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SaveIcon from '@mui/icons-material/Save';
 import Grow from '@mui/material/Grow';
+import Divider from '@mui/material/Divider';
 
 const mazos = [{
     id: '1',
@@ -39,6 +40,7 @@ const mazos = [{
 
   export default function VerMazos(){
     const [showAnadir, setShowAnadir] = useState(false)
+    const [showFeedBack, setShowFeedBack] = useState(false)
     return (
         <React.Fragment>
                 <Box sx={{ flexGrow: 1}}>
@@ -51,7 +53,7 @@ const mazos = [{
                                             color:'white', width: 56, height: 56 }}/>
                           </Grid>
                           <Grid item xs={2} ml={230} mt={-13.4}>
-                                    <QuestionMarkRoundedIcon sx={{width: 56, height: 56, color:'white', background:'green', p:1, borderRadius:50}}/>
+                                    <QuestionMarkRoundedIcon onClick={()=>{setShowFeedBack(true)}} sx={{width: 56, height: 56, color:'white', background:'green', p:1, borderRadius:50}}/>
                           </Grid>
                           <Grid item ml={245} mt={-13}>
                           <Tooltip title="añadir" placement="right">
@@ -69,7 +71,7 @@ const mazos = [{
                 >
                   {showAnadir?
                         <Grow  timeout={1000}  in={showAnadir}>
-                          <Card  sx={{mx:100, minWidth: 600, border: '0.5px solid purple'  }}>
+                          <Card  sx={{borderRadius: '5%', mx:100, minWidth: 600, border: '0.5px solid purple'  }}>
                                 <CardContent>
                                     <Tooltip title="Cancelar" placement="right">
                                             <CloseIcon onClick={(e)=>{setShowAnadir(false)}} sx={{p:1,mx:65, backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
@@ -94,6 +96,26 @@ const mazos = [{
                                             </Button>
                                         </Tooltip>
                                         </Box>
+                                  </CardContent>
+                            </Card>
+                          </Grow>:null}
+
+                          {showFeedBack?
+                        <Grow  timeout={1000}  in={showFeedBack}>
+                          <Card  sx={{borderRadius: '5%', mx:100, minWidth: 600, border: '0.5px solid black'  }}>
+                                <CardContent>
+                                    <Tooltip title="Cancelar" placement="right">
+                                            <CloseIcon onClick={(e)=>{setShowFeedBack(false)}} sx={{p:1,mx:65, backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
+                                    </Tooltip>   
+                                      <Typography sx={{fontWeight: 'bold', mx:3}} variant="h4" component="div">
+                                          Feedback
+                                      </Typography>
+                                      <Divider  variant="middle" />
+                                      <Typography sx={{textAlign: 'center'}} variant="h6">
+                                        Esta parte de la página esta enfocada en la funcionalidad de repasos. Aquí 
+                                        podra separar por temas las tarjetas que vaya creando. 
+                                        <img style={{width:'50%', height:'50%', borderRadius: '150%'}} src="https://drive.google.com/uc?id=18BAWHAawYBjUCRmxZyrf_O4_fqRJKUk6"/> 
+                                      </Typography>
                                   </CardContent>
                             </Card>
                           </Grow>:null}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import MicIcon from '@mui/icons-material/Mic';
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -8,6 +8,13 @@ import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import { orange, red, blue, green } from '@mui/material/colors';
 import { useHistory } from "react-router-dom";
+import QuestionMarkRoundedIcon from '@mui/icons-material/QuestionMarkRounded';
+import Grow from '@mui/material/Grow';
+import Divider from '@mui/material/Divider';
+import Tooltip from '@mui/material/Tooltip';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CloseIcon from '@mui/icons-material/Close';
 
 /*
     en este archivo se mostraran las funcionalidades del software 
@@ -28,9 +35,38 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function MostrarFuncionalidades() {
     let history = useHistory()
+    const [showFeedBack, setShowFeedBack] = useState(false)
     return (
         <React.Fragment>
             <Box sx={{ flexGrow: 1 }}>
+            <Box mt={30} sx={{
+                  width: 350,
+                  height: 350,
+                  zIndex:1,
+                  position: 'absolute',
+                }}
+                >
+                    {showFeedBack?
+                                <Grow  timeout={1000}  in={showFeedBack}>
+                                <Card  sx={{borderRadius: '5%', mx:100, minWidth: 600, border: '0.5px solid black'  }}>
+                                        <CardContent>
+                                            <Tooltip title="Cancelar" placement="right">
+                                                    <CloseIcon onClick={(e)=>{setShowFeedBack(false)}} sx={{p:1,mx:65, backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
+                                            </Tooltip>   
+                                            <Typography sx={{fontWeight: 'bold', mx:3}} variant="h4" component="div">
+                                                Feedback
+                                            </Typography>
+                                            <Divider  variant="middle" />
+                                            <Typography sx={{textAlign: 'center'}} variant="h6">
+                                                Aquí podras encontrar las diversas funcionalidades de nuestro software.
+                                                Como la sección de repasos, la de organizar tu activades, dame algo que hacer.
+                                                y gestion de proyectos.
+                                                <img style={{width:'45%', height:'45%', borderRadius: '150%'}} src="https://drive.google.com/uc?id=1KAJbi3XnjoQQnJCzd0ofRt1ODaVaXZTy"/>
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Grow>:null}
+                    </Box>    
                 <Grid container justifyContent="center" spacing={1}  columns={16}>
                         <Grid item xs={11}>
                             <Typography sx={{fontWeight: 'bold'}} variant = 'h3'>
@@ -39,12 +75,9 @@ export default function MostrarFuncionalidades() {
                             </Grid>
                             <Grid item xs={2}>
                                 <Stack direction="row" spacing={3}>
-                                    <img    style={{borderRadius: '50%'}}
-                                            src={"https://drive.google.com/uc?export=view&id=1e9TrTH56TwOvOuKBPzIwfEuZwrz605sn"}
-                                            width= "100" 
-                                            height="100"
-                                            /> 
-                                    <MicIcon sx={{ width: 90, height: 90 }}/>                     
+                                    <QuestionMarkRoundedIcon onClick={()=>{setShowFeedBack(true)}} sx={{width: 56, height: 56, color:'white', background:'green', p:1, borderRadius:50}}/> 
+                                    <MicIcon sx={{p:1, borderRadius:50, background:'red',
+                                            color:'white', width: 56, height: 56 }}/>                     
                                 </Stack>      
                             </Grid>
                     </Grid>
