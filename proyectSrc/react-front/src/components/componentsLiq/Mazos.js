@@ -83,7 +83,7 @@ export default function Mazos(props) {
                 >
                   {showEdit?
                       <Grow  timeout={1000}  in={showEdit}>  
-                        <Card  sx={{mx:50, minWidth: 600, border: '0.5px solid purple'}}>
+                        <Card  sx={{borderRadius: '5%', mx:50, minWidth: 600, border: '0.5px solid purple'}}>
                             <CardContent>
                                 <Tooltip title="Cancelar" placement="right">
                                         <CloseIcon onClick={(e)=>{setShowEdit(false)}} sx={{p:1,mx:65, backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
