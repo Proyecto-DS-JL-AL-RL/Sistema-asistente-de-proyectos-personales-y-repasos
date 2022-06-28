@@ -11,7 +11,6 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
 import { useHistory } from "react-router-dom";
-
 /*
     login simple:
         - correo 
@@ -21,7 +20,7 @@ import { useHistory } from "react-router-dom";
 */
 
 
-export default function Login() {
+export default function Login(props) {
   let history = useHistory()
   const [values, setValues] = React.useState({
     amount: '',
@@ -48,7 +47,7 @@ export default function Login() {
 
   return (
     <React.Fragment>
-      <Box  justifyContent="center" sx={{ display: 'flex', flexWrap: 'wrap' }}>
+      <Box  justifyContent="center" sx={{fontWeight: 'bold', display: 'flex', flexWrap: 'wrap' }}>
           <FormControl sx={{ m: 2, width: '45ch' }} variant="outlined">
                 <TextField id="outlined-basic" label="Correo electrónico" variant="outlined" />
           </FormControl>
@@ -76,11 +75,13 @@ export default function Login() {
               </FormControl>
               <FormControl sx={{m: 2}} variant="outlined">
                     <Button onClick={()=>{history.push('/')}} sx={{p:2, borderRadius: 5, py: 2, color: 'white' ,background:'#0000cc'}} variant="contained" size="large">
-                    <Typography variant = 'h5'>Iniciar Sesión</Typography>
+                    <Typography sx= {{fontWeight: 'bold'}} variant = 'h5'>Iniciar Sesión</Typography>
                     </Button>                            
                             <Typography sx={{py:2}} variant = 'h8'>¿Olvidaste tu contraseña?</Typography>
-                    <Button onClick={()=>{history.push('/Presentacion')}} sx={{py:2, borderRadius: 5, color: 'white', background:'#00b347'}} variant="contained" size="large">
-                        <Typography variant = 'h5'>Registrate</Typography>
+                    <Button onClick={()=>{
+                          props.show.setShowRegister(true)
+                        }} sx={{py:2, borderRadius: 5, color: 'white', background:'#00b347'}} variant="contained" size="large">
+                        <Typography sx= {{fontWeight: 'bold'}} variant = 'h5'>Registrate</Typography>
                     </Button>
               </FormControl>
       </Box>
