@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
-import Mazos from '../components/Mazos'
 import Grid from '@mui/material/Grid';
+import Mazos from '../components/Mazos'
 import MicIcon from '@mui/icons-material/Mic';
 import QuestionMarkRoundedIcon from '@mui/icons-material/QuestionMarkRounded';
 import AddIcon from '@mui/icons-material/Add';
@@ -17,6 +17,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import Grow from '@mui/material/Grow';
 import Divider from '@mui/material/Divider';
 import Fade from '@mui/material/Fade';
+import Paper from '@mui/material/Paper';
 
 
 const mazos = [{
@@ -43,6 +44,7 @@ const mazos = [{
   export default function VerMazos(){
     const [showAnadir, setShowAnadir] = useState(false)
     const [showFeedBack, setShowFeedBack] = useState(false)
+    const [showTarjetas, setShowTarjetas] = useState(false)
     return (
         <React.Fragment>
                 <Box sx={{ flexGrow: 1}}>
@@ -68,13 +70,34 @@ const mazos = [{
                             </Grid>
                       </Fade>
                     </Box>
-                    <Box sx={{
-                  width: 350,
-                  height: 350,
-                  zIndex:1,
-                  position: 'absolute',
-                }}
-                >
+                          <Box sx={{
+                              zIndex:1,
+                              position: 'absolute',
+                            }}
+                            >
+                                {showTarjetas?
+                                    <Box
+                                        sx={{
+                                          display: 'flex',
+                                          '& > :not(style)': {
+                                            m: 1,
+                                            width: 1000,
+                                            height: 1000,
+                                            textAlign: 'center'
+                                          },
+                                        }}
+                                      >
+                              
+                                    <Paper variant="outlined" square >tarjetas</Paper>
+                                    </Box>:null}
+                          </Box>
+                    <Box  sx={{
+                        width: 350,
+                        height: 350,
+                        zIndex:1,
+                        position: 'absolute',
+                      }}
+                      >
                   {showAnadir?
                         <Grow  timeout={1000}  in={showAnadir}>
                           <Card  sx={{borderRadius: '5%', mx:100, minWidth: 600, border: '0.5px solid purple'  }}>
@@ -129,7 +152,7 @@ const mazos = [{
                   <Box sx={{
                               mx: 50,
                               width: 500}}>
-                          <Mazos getmazo={mazos}/>
+                          <Mazos getmazo={mazos} showT={setShowTarjetas} />
                   </Box>
         </React.Fragment>
     );
