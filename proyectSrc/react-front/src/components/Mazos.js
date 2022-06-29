@@ -20,6 +20,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SaveIcon from '@mui/icons-material/Save';
 import Grow from '@mui/material/Grow';
+import Slide from '@mui/material/Slide';
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -73,7 +74,6 @@ export default function Mazos(props) {
   return (
 
     <React.Fragment>
-         
        <Box sx={{
                   width: 350,
                   height: 350,
@@ -112,7 +112,8 @@ export default function Mazos(props) {
                         </Card>
                       </Grow>:null}
         </Box> 
-      <Box mt={20} sx={{position: 'absolute'}}>
+    <Slide direction="up" timeout={1000} in={true} mountOnEnter unmountOnExit>
+      <Box mt={20} sx={{position: 'absolute', pr:1.5, background:'#20B2AA'}}>
         {
         mazos.map((mazo, idx)=>{
           return  (
@@ -153,6 +154,7 @@ export default function Mazos(props) {
             })
           }
           </Box>
-          </React.Fragment>
+      </Slide>    
+      </React.Fragment>
   );
 }

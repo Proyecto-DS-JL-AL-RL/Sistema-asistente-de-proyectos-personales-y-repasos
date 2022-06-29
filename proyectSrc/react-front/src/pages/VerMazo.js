@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
-import Mazos from '../components/componentsLiq/Mazos'
+import Mazos from '../components/Mazos'
 import Grid from '@mui/material/Grid';
 import MicIcon from '@mui/icons-material/Mic';
 import QuestionMarkRoundedIcon from '@mui/icons-material/QuestionMarkRounded';
@@ -16,6 +16,8 @@ import Button from '@mui/material/Button';
 import SaveIcon from '@mui/icons-material/Save';
 import Grow from '@mui/material/Grow';
 import Divider from '@mui/material/Divider';
+import Fade from '@mui/material/Fade';
+
 
 const mazos = [{
     id: '1',
@@ -44,23 +46,27 @@ const mazos = [{
     return (
         <React.Fragment>
                 <Box sx={{ flexGrow: 1}}>
-                            <Typography mx={10} mt={6} sx={{fontWeight: 'bold'}} variant = 'h3'>
+                <Fade timeout={2000} in={true}>
+                          <Typography mx={10} mt={6} sx={{fontWeight: 'bold'}} variant = 'h3'>
                                         Tarjetas de Repaso
                             </Typography>
-                  <Grid container spacing={1}  columns={6}>
-                          <Grid item xs={2} ml={220} mt={-5}>
-                              <MicIcon sx={{p:1, borderRadius:50, background:'red',
-                                            color:'white', width: 56, height: 56 }}/>
-                          </Grid>
-                          <Grid item xs={2} ml={230} mt={-13.4}>
-                                    <QuestionMarkRoundedIcon onClick={()=>{setShowFeedBack(true)}} sx={{width: 56, height: 56, color:'white', background:'green', p:1, borderRadius:50}}/>
-                          </Grid>
-                          <Grid item ml={245} mt={-13}>
-                          <Tooltip title="añadir" placement="right">
-                              <AddIcon onClick={()=>{setShowAnadir(true)}} mx={2} sx={{width: 56, height: 56, background:'purple', color:'white', p:1, borderRadius:50, '&:hover': {backgroundColor: '#6f2da8'}}}/>                            
-                              </Tooltip>
+                </Fade>
+                <Fade timeout={2000} in={true}>
+                            <Grid container spacing={1}  columns={6}>
+                              <Grid item xs={2} ml={220} mt={-5}>
+                                  <MicIcon sx={{p:1, borderRadius:50, background:'red',
+                                                color:'white', width: 56, height: 56 }}/>
+                              </Grid>
+                              <Grid item xs={2} ml={230} mt={-13.4}>
+                                        <QuestionMarkRoundedIcon onClick={()=>{setShowFeedBack(true)}} sx={{width: 56, height: 56, color:'white', background:'green', p:1, borderRadius:50}}/>
+                              </Grid>
+                              <Grid item ml={245} mt={-13}>
+                              <Tooltip title="añadir" placement="right">
+                                  <AddIcon onClick={()=>{setShowAnadir(true)}} mx={2} sx={{width: 56, height: 56, background:'purple', color:'white', p:1, borderRadius:50, '&:hover': {backgroundColor: '#6f2da8'}}}/>                            
+                                  </Tooltip>
+                                </Grid>
                             </Grid>
-                        </Grid>
+                      </Fade>
                     </Box>
                     <Box sx={{
                   width: 350,

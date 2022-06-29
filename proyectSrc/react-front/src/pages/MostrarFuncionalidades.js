@@ -15,6 +15,8 @@ import Tooltip from '@mui/material/Tooltip';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CloseIcon from '@mui/icons-material/Close';
+import Slide from '@mui/material/Slide';
+import Fade from '@mui/material/Fade';
 
 /*
     en este archivo se mostraran las funcionalidades del software 
@@ -67,44 +69,48 @@ export default function MostrarFuncionalidades() {
                                     </Card>
                                 </Grow>:null}
                     </Box>    
-                <Grid container justifyContent="center" spacing={1}  columns={16}>
-                        <Grid item xs={11}>
-                            <Typography sx={{fontWeight: 'bold'}} variant = 'h3'>
-                                    Explore Nuestras Funcionalidades
-                            </Typography>
+                    <Fade timeout={2000} in={true}>
+                        <Grid container justifyContent="center" spacing={1}  columns={16}>
+                                <Grid item xs={11}>
+                                    <Typography sx={{fontWeight: 'bold'}} variant = 'h3'>
+                                            Explore Nuestras Funcionalidades
+                                    </Typography>
+                                    </Grid>
+                                    <Grid item xs={2}>
+                                        <Stack direction="row" spacing={3}>
+                                            <QuestionMarkRoundedIcon onClick={()=>{setShowFeedBack(true)}} sx={{width: 56, height: 56, color:'white', background:'green', p:1, borderRadius:50}}/> 
+                                            <MicIcon sx={{p:1, borderRadius:50, background:'red',
+                                                    color:'white', width: 56, height: 56 }}/>                     
+                                        </Stack>      
+                                    </Grid>
                             </Grid>
-                            <Grid item xs={2}>
-                                <Stack direction="row" spacing={3}>
-                                    <QuestionMarkRoundedIcon onClick={()=>{setShowFeedBack(true)}} sx={{width: 56, height: 56, color:'white', background:'green', p:1, borderRadius:50}}/> 
-                                    <MicIcon sx={{p:1, borderRadius:50, background:'red',
-                                            color:'white', width: 56, height: 56 }}/>                     
-                                </Stack>      
-                            </Grid>
-                    </Grid>
+                    </Fade>
                 </Box>   
-                <Box sx={{flexGrow: 1  }}>
-                    <Grid container justifyContent="center"  rowSpacing={2} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
-                        <Grid item xs={6}>
-                            <Item>
-                            <Paper sx={{borderRadius:'5%', backgroundColor:green[700], '&:hover': {backgroundColor: green[500]}, padding: 25}}><Typography sx={{ fontSize:40, color:'white'}}>Gestione sus Proyectos</Typography></Paper>
-                            </Item>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Item>
-                            <Paper onClick={()=>{history.push('/Mazos')}} sx={{borderRadius:'5%', backgroundColor:blue[700], '&:hover': {backgroundColor: blue[500]}, padding: 25}}><Typography sx={{fontSize:40, color:'white'}}>Tarjetas de Repaso</Typography></Paper>
-                            </Item>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Item>
-                            <Paper sx={{borderRadius:'5%', backgroundColor:red[700], '&:hover': {backgroundColor: red[500]}, padding: 25}}><Typography sx={{fontSize:40, color:'white'}}>Dame Algo que hacer</Typography></Paper>
-                            </Item>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Item>
-                                <Paper sx={{borderRadius:'5%', backgroundColor:orange[700], '&:hover': {backgroundColor: orange[600]},padding: 25}}><Typography sx={{fontSize:40,color:'white'}}>Organizador de Actividades</Typography></Paper>
-                            </Item>
-                        </Grid>
-                    </Grid>
+                <Box mt={3} sx={{flexGrow: 1  }}>
+                    <Slide direction="up" timeout={1000} in={true} mountOnEnter unmountOnExit>
+                            <Grid container justifyContent="center"  rowSpacing={2} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
+                                <Grid item xs={6}>
+                                    <Item>
+                                    <Paper sx={{borderRadius:'5%', backgroundColor:green[700], '&:hover': {backgroundColor: green[500]}, padding: 25}}><Typography sx={{ fontSize:40, color:'white'}}>Gestione sus Proyectos</Typography></Paper>
+                                    </Item>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <Item>
+                                    <Paper onClick={()=>{history.push('/Mazos')}} sx={{borderRadius:'5%', backgroundColor:blue[700], '&:hover': {backgroundColor: blue[500]}, padding: 25}}><Typography sx={{fontSize:40, color:'white'}}>Tarjetas de Repaso</Typography></Paper>
+                                    </Item>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <Item>
+                                    <Paper sx={{borderRadius:'5%', backgroundColor:red[700], '&:hover': {backgroundColor: red[500]}, padding: 25}}><Typography sx={{fontSize:40, color:'white'}}>Dame Algo que hacer</Typography></Paper>
+                                    </Item>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <Item>
+                                        <Paper sx={{borderRadius:'5%', backgroundColor:orange[700], '&:hover': {backgroundColor: orange[600]},padding: 25}}><Typography sx={{fontSize:40,color:'white'}}>Organizador de Actividades</Typography></Paper>
+                                    </Item>
+                                </Grid>
+                            </Grid>
+                    </Slide>
                 </Box>
         </React.Fragment>
     )
