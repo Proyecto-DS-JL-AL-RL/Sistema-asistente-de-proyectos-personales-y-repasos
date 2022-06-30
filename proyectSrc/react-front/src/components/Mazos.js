@@ -86,7 +86,9 @@ export default function Mazos(props) {
                         <Card  sx={{borderRadius: '5%', mx:50, minWidth: 600, border: '0.5px solid purple'}}>
                             <CardContent>
                                 <Tooltip title="Cancelar" placement="right">
-                                        <CloseIcon onClick={(e)=>{setShowEdit(false)}} sx={{p:1,mx:65, backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
+                                      <Button onClick={(e)=>{setShowEdit(false)}}>
+                                        <CloseIcon sx={{p:1,mx:65, backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
+                                      </Button>
                                  </Tooltip>   
                                   <Typography sx={{fontWeight: 'bold', mx:3}} variant="h4" component="div">
                                       Editar Sección
@@ -104,7 +106,7 @@ export default function Mazos(props) {
                                       </FormControl>
                                       <Tooltip title="Guardar" placement="left">
                                         <Button onClick={()=>{setShowEdit(false)}} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
-                                          <SaveIcon sx={{p:1}}/>
+                                             <SaveIcon sx={{p:1}}/>
                                         </Button>
                                     </Tooltip>
                                     </Box>
@@ -123,18 +125,24 @@ export default function Mazos(props) {
                       <Typography  variant="h5" sx={{ flexGrow: 1, color: 'white' }}>{mazo.titulo}</Typography>
                       <Grid item>
                         <Tooltip title="abrir" placement="right">
-                            <IconButton sx={{color: "white"}}>                             
-                                <LaunchOutlinedIcon />
+                              <IconButton onClick={()=>{
+                                    props.showT(true)
+                                    }}
+                                    sx={{color: "white"}}>   
+                                                  
+                                         <LaunchOutlinedIcon/>
                               </IconButton>
                         </Tooltip>
                         <Tooltip title="editar" placement="right">
-                            <IconButton sx={{color: "white"}}>                             
-                                <EditIcon onClick={()=>{
-                                  setShowEdit(true)
-                                  setSection(mazo.titulo)
-                                  setDescription(mazo.descripcion)
-                                  }}/>
-                              </IconButton>
+                              
+                                  <IconButton onClick={()=>{
+                                    setShowEdit(true)
+                                    setSection(mazo.titulo)
+                                    setDescription(mazo.descripcion)
+                                    }} sx={{color: "white"}}>                             
+                                        <EditIcon/>
+                                      </IconButton>
+                              
                         </Tooltip>
                         <Tooltip title="borrar" placement="right">
                             <IconButton sx={{color: "white"}}>                             
