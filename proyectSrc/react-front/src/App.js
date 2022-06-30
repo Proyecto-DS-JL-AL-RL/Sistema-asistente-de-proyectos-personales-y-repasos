@@ -4,6 +4,7 @@ import Page1 from './pages/Page1';
 import AppBarSearch from './components/AppBarSearch';
 import DrawerComponent from './components/DrawerComponent';
 import Horario from './pages/Horario';
+import Proyectos from './pages/Proyectos';
 
 function App() {
   return (
@@ -20,6 +21,9 @@ function App() {
             </Route>
             <Route path = '/horario'>
               <Horario/>
+            </Route>
+            <Route path='/proyecto'>
+              <Proyectos/>
             </Route>
           </Switch>
         </div>
