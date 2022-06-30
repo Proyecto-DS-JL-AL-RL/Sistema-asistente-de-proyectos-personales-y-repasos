@@ -127,7 +127,7 @@ export default function Inicio(){
                               <Item ><Login show={{showRegister, setShowRegister}}/></Item>
                     </Grid>
                   <Grid item xs={6.5}  mt={20}>
-                          ok
+                          esto es una prueba
                     </Grid>
                 </Grid>
         </Box>
