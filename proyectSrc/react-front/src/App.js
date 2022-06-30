@@ -4,11 +4,16 @@ import {Switch , Route} from 'react-router-dom';
 import Presentacion from './pages/Presentation';
 import AppBarSearch from './components/AppBarSearch';
 import DrawerComponent from './components/DrawerComponent';
+
+import Horario from './pages/Horario';
+import Proyectos from './pages/Proyectos';
+
 import Inicio from './pages/Inicio';
 import ProyectoView from './pages/projectDashboard';
 import AlgoQueHacer from './pages/AlgoQueHacer';
 import MostrarFuncionalidades from './pages/MostrarFuncionalidades'
 import VerMazos from './pages/VerMazo'
+
 
 
 function App() {
@@ -35,6 +40,9 @@ function App() {
               </Route>
               <Route path = '/Mazos'>
                     <VerMazos/>
+              </Route>
+              <Route path = '/horario'>
+                <Horario/>
               </Route>
               <Route path = '/Presentacion'>
                     <Presentacion/>
