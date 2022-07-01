@@ -31,7 +31,7 @@ function App() {
   const history = useHistory();
   const [listeningState,setListeningState] = useState(false);
   const commands = getCommands(location,history);
-  const {listening} = useSpeechRecognition({commands:commands});
+  const {listening,transcript} = useSpeechRecognition({commands:commands});
   const beforeUnload = ()=>{
     if (listening)
       SR.stopListening();
@@ -61,6 +61,7 @@ function App() {
         <AppBarSearch/>
       </div>
       <div className='content-container'>
+        {transcript}
         <Switch>
           <Route exact path = '/'>
             <MostrarFuncionalidades/>

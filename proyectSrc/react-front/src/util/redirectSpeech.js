@@ -14,6 +14,20 @@ const paths = {
 
 const getCommands = (location,history) =>{
     const comando = [{
+        command: ["Llévame a *"],
+        callback: (frase) =>{
+            alert(frase);
+            const path = paths[frase]
+            if (path != null && path != undefined){
+                if (path != location.pathname){
+                    history.push(path);
+                }                   
+                else    
+                    alert("Ya se encuentra en esa pagina");                
+            }            
+        }
+    },
+    {
         command: ["Llévame a *."],
         callback: (frase) =>{
             alert(frase);
