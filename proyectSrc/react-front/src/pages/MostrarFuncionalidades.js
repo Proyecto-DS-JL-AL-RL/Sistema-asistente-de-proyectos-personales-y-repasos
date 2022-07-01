@@ -18,6 +18,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
+import Badge from '@mui/material/Badge';
 
     /*
     en este archivo se mostraran las funcionalidades del software 
@@ -27,6 +28,7 @@ import Button from '@mui/material/Button';
     - Organizador de Actividades.
 */
 const Item = styled(Paper)(({ theme }) => ({
+    borderRadius:'2.5%',
     textAlign: 'center',
    }));
 
@@ -71,28 +73,30 @@ export default function MostrarFuncionalidades() {
         <React.Fragment>
             <Box sx={{ display:"flex"}}>
             <Box sx={{
-                  zIndex:1, positon:'absolute',
+                  zIndex:1,
                   width: '10ch',
                   height: '10ch',
                 }}
                 >
                     {showFeedBack?
                                 <Grow  timeout={1000}  in={showFeedBack}>
-                                <Card  sx={{borderRadius: '5%', mx:100, minWidth: 600, border: '0.5px solid black'  }}>
+                                <Card  sx={{borderRadius: '5%', mx:'70ch', minWidth: '23vw', border: '0.5px solid black'  }}>
                                         <CardContent>
                                             <Tooltip title="Cancelar" placement="right">
-                                                    <CloseIcon onClick={(e)=>{setShowFeedBack(false)}} sx={{p:1,mx:65, backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
+                                                    <CloseIcon onClick={(e)=>{setShowFeedBack(false)}} sx={{p:1, mx:'93%', backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
                                             </Tooltip>   
-                                            <Typography sx={{fontWeight: 'bold', mx:3}} variant="h4" component="div">
+                                            <Typography sx={{fontWeight: 'bold', fontsize:'1vw'}} variant="h4" component="div">
                                                 Feedback
                                             </Typography>
                                             <Divider  variant="middle" />
-                                            <Typography sx={{textAlign: 'center'}} variant="h6">
+                                            <Typography sx={{textAlign: 'left'}} variant="h6">
                                                 Aquí podras encontrar las diversas funcionalidades de nuestro software.
                                                 Como la sección de repasos, la de organizar tu activades, dame algo que hacer.
                                                 y gestion de proyectos.
-                                                <img style={{width:'45%', height:'45%', borderRadius: '150%'}} src="https://drive.google.com/uc?id=1KAJbi3XnjoQQnJCzd0ofRt1ODaVaXZTy"/>
                                             </Typography>
+                                            <Box sx={{position:'relative', mx:'30%'}}>
+                                                <img style={{width:'20ch', height:'20ch', borderRadius: '150%'}} src="https://drive.google.com/uc?id=1KAJbi3XnjoQQnJCzd0ofRt1ODaVaXZTy"/>
+                                            </Box>
                                         </CardContent>
                                     </Card>
                                 </Grow>:null}
