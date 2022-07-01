@@ -12,7 +12,7 @@ import Proyectos from './pages/Proyectos';
 
 import Inicio from './pages/Inicio';
 import ProyectoView from './pages/projectDashboard';
-import AlgoQueHacer from './pages/AlgoQueHacer';
+import AlgoQueHacerPage from './pages/AlgoQueHacerPage';
 
 import SR,{useSpeechRecognition} from 'react-speech-recognition';
 import { Beforeunload } from 'react-beforeunload';
@@ -73,7 +73,7 @@ function App() {
             <ProyectoView/>
           </Route>
           <Route path = '/algoQueHacer'>
-            <AlgoQueHacer/>
+            <AlgoQueHacerPage/>
           </Route>
           <Route path = '/activityQueue'>
             <ActivityQueue/>
