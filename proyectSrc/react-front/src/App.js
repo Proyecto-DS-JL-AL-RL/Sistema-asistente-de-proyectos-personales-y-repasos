@@ -10,6 +10,7 @@ import SR,{useSpeechRecognition} from 'react-speech-recognition';
 import { Beforeunload } from 'react-beforeunload';
 import {getCommands} from './util/redirectSpeech';
 import { useState } from 'react';
+import ActivityQueue from './pages/ActivityQueue';
 
 function App() {
   const CONTINOUS_ = false;
@@ -60,6 +61,9 @@ function App() {
           </Route>
           <Route path = '/algoQueHacer'>
             <AlgoQueHacer/>
+          </Route>
+          <Route path = '/activityQueue'>
+            <ActivityQueue/>
           </Route>
         </Switch>
       </div>
