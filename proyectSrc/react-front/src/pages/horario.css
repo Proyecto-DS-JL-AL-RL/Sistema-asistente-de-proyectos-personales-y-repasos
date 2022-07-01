@@ -1,0 +1,55 @@
+.horario-container{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#root-horario{
+    
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+   
+}
+.item-horario{
+    width: calc(12.5% - 2px);
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.unlock-item:hover{
+    background-color: yellow;
+}
+.descp-item-horario{
+    position: absolute;
+    
+    width: 100px;
+}
+.horas-item{
+    width: 10%;
+}
+.actividad-description{
+    max-width: 800px;
+    
+    display: flex;
+}
+@media (max-width:1000px){
+    
+    .horario-container{
+        flex-direction: column;
+    }
+    .actividad-description{
+        position: absolute;
+        bottom: 30px;
+    }
+}
+@media (min-width:1500px){
+    #root-horario{
+        max-width: 800px;
+    }
+}

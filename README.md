@@ -18,7 +18,7 @@ Nosotros buscamos desarrollar una plataforma que provea un servicio para organiz
 <br/>
 <p align="center">
   <code><img width="90" height="100" src="src/alex.jpg" alt="alex"></code>
-  <code><img width="90" height="100"  src="src/royer.jpg" alt="royer"></code>
+  <code><img width="90" height="100"  src="src/royer.jpeg" alt="royer"></code>
   <code><img width="90" height="100" src="src/jorge.jpg" alt="jorge"></code>
 </p>
 <br/>
