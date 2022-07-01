@@ -38,24 +38,24 @@ function FormRow(props) {
       <React.Fragment>
         <Grid item xs={'5ch'}>
             <Item>
-                <Button sx={{width:'90ch', borderRadius:'5%', backgroundColor:green[700], '&:hover': {backgroundColor: green[500]}, padding: '25ch'}}>
+                <Button sx={{width:'90ch', borderRadius:'5%', backgroundColor:green[700], '&:hover': {backgroundColor: green[500]}, padding: '23ch'}}>
                     <Typography sx={{fontSize:'3ch', color:'white'}}>Gestionar Proyectos</Typography>
                 </Button>
             </Item>
           <Item>
-            <Button  sx={{borderRadius:'5%', backgroundColor:orange[700], '&:hover': {backgroundColor: orange[600]}, padding: '25ch'}}>
+            <Button  sx={{width:'90ch', borderRadius:'5%', backgroundColor:orange[700], '&:hover': {backgroundColor: orange[600]}, padding: '23ch'}}>
                 <Typography sx={{fontWeight: 'bold', fontSize:'3ch', color:'white'}}>Organizar Actividades</Typography>
             </Button>
           </Item>
         </Grid>
         <Grid item xs={'0.5vw'}>
             <Item>
-                <Button onClick={()=>{props.history.push('/Mazos')}} sx={{width:'90ch', borderRadius:'5%', backgroundColor:blue[700], '&:hover': {backgroundColor: blue[500]}, padding: '25ch'}}>
+                <Button onClick={()=>{props.history.push('/Mazos')}} sx={{width:'90ch', borderRadius:'5%', backgroundColor:blue[700], '&:hover': {backgroundColor: blue[500]}, padding: '23ch'}}>
                     <Typography  sx={{fontSize:'3ch', color:'white'}}>Tarjetas de Repaso</Typography>
                 </Button>
             </Item>
             <Item>
-                    <Button sx={{width:'90ch', borderRadius:'5%', backgroundColor:red[700], '&:hover': {backgroundColor: red[500]}, padding: '25ch'}}>
+                    <Button sx={{width:'90ch', borderRadius:'5%', backgroundColor:red[700], '&:hover': {backgroundColor: red[500]}, padding: '23ch'}}>
                         <Typography  sx={{fontSize:'3ch', color:'white'}}>Dame algo que hacer</Typography>
                     </Button>
             </Item>
