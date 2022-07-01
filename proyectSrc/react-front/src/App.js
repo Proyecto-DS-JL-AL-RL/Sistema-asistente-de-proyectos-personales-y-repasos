@@ -63,7 +63,7 @@ function App() {
       <div className='content-container'>
         <Switch>
           <Route exact path = '/'>
-            <Page1/>
+            <MostrarFuncionalidades/>
           </Route>
           <Route path = '/inicio'>
             <Inicio/>
