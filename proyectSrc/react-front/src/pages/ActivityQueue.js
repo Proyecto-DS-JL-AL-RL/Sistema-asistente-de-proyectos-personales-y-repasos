@@ -26,8 +26,8 @@ export default function ActivityQueue(params) {
 
 
 
-        <Grid container direction='row' sx={{width:'70vw',marginLeft:'200px',bgcolor:'cyan',padding:'20px',borderRadius : '30px',
-                                            marginTop:'20px',maxHeight:'80vh',overflowY:'auto'}} rowGap = {2}>
+        <Grid container direction='row' sx={{width:'70%',marginLeft:'15%',bgcolor:'cyan',padding:'20px',borderRadius : '30px',
+                                            marginTop:'20px',maxHeight:'80%',overflowY:'auto'}} rowGap = {2}>
         {activities.map((act,idx)=>(
             <Grid key = {idx} item xs = {12} >
                 <Card sx = {{height:'100px'}}>
