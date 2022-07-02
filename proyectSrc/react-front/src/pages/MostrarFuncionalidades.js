@@ -18,6 +18,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
+import Badge from '@mui/material/Badge';
 
     /*
     en este archivo se mostraran las funcionalidades del software 
@@ -27,6 +28,7 @@ import Button from '@mui/material/Button';
     - Organizador de Actividades.
 */
 const Item = styled(Paper)(({ theme }) => ({
+    borderRadius:'2.5%',
     textAlign: 'center',
    }));
 
@@ -38,24 +40,24 @@ function FormRow(props) {
       <React.Fragment>
         <Grid item xs={'5ch'}>
             <Item>
-                <Button sx={{width:'90ch', borderRadius:'5%', backgroundColor:green[700], '&:hover': {backgroundColor: green[500]}, padding: '23ch'}}>
+                <Button sx={{width:'90ch', borderRadius:'5%', backgroundColor:green[700], '&:hover': {backgroundColor: green[500]}, padding: '26%'}}>
                     <Typography sx={{fontSize:'3ch', color:'white'}}>Gestionar Proyectos</Typography>
                 </Button>
             </Item>
           <Item>
-            <Button  sx={{width:'90ch', borderRadius:'5%', backgroundColor:orange[700], '&:hover': {backgroundColor: orange[600]}, padding: '23ch'}}>
+            <Button  sx={{width:'90ch', borderRadius:'5%', backgroundColor:orange[700], '&:hover': {backgroundColor: orange[600]}, padding: '26%'}}>
                 <Typography sx={{fontWeight: 'bold', fontSize:'3ch', color:'white'}}>Organizar Actividades</Typography>
             </Button>
           </Item>
         </Grid>
         <Grid item xs={'0.5vw'}>
             <Item>
-                <Button onClick={()=>{props.history.push('/Mazos')}} sx={{width:'90ch', borderRadius:'5%', backgroundColor:blue[700], '&:hover': {backgroundColor: blue[500]}, padding: '23ch'}}>
+                <Button onClick={()=>{props.history.push('/Mazos')}} sx={{width:'90ch', borderRadius:'5%', backgroundColor:blue[700], '&:hover': {backgroundColor: blue[500]}, padding: '26%'}}>
                     <Typography  sx={{fontSize:'3ch', color:'white'}}>Tarjetas de Repaso</Typography>
                 </Button>
             </Item>
             <Item>
-                    <Button sx={{width:'90ch', borderRadius:'5%', backgroundColor:red[700], '&:hover': {backgroundColor: red[500]}, padding: '23ch'}}>
+                    <Button sx={{width:'90ch', borderRadius:'5%', backgroundColor:red[700], '&:hover': {backgroundColor: red[500]}, padding: '26%'}}>
                         <Typography  sx={{fontSize:'3ch', color:'white'}}>Dame algo que hacer</Typography>
                     </Button>
             </Item>
@@ -71,28 +73,30 @@ export default function MostrarFuncionalidades() {
         <React.Fragment>
             <Box sx={{ display:"flex"}}>
             <Box sx={{
-                  zIndex:1, positon:'absolute',
+                  zIndex:1,
                   width: '10ch',
                   height: '10ch',
                 }}
                 >
                     {showFeedBack?
                                 <Grow  timeout={1000}  in={showFeedBack}>
-                                <Card  sx={{borderRadius: '5%', mx:100, minWidth: 600, border: '0.5px solid black'  }}>
+                                <Card  sx={{justifyContent:"center", borderRadius: '5%', mx:'670%', minWidth: '500%', border: '0.5px solid black'  }}>
                                         <CardContent>
                                             <Tooltip title="Cancelar" placement="right">
-                                                    <CloseIcon onClick={(e)=>{setShowFeedBack(false)}} sx={{p:1,mx:65, backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
+                                                    <CloseIcon onClick={(e)=>{setShowFeedBack(false)}} sx={{p:1, mx:'93%', backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
                                             </Tooltip>   
-                                            <Typography sx={{fontWeight: 'bold', mx:3}} variant="h4" component="div">
+                                            <Typography sx={{fontWeight: 'bold', fontsize:'1vw'}} variant="h4" component="div">
                                                 Feedback
                                             </Typography>
                                             <Divider  variant="middle" />
-                                            <Typography sx={{textAlign: 'center'}} variant="h6">
+                                            <Typography sx={{textAlign: 'left'}} variant="h6">
                                                 Aquí podras encontrar las diversas funcionalidades de nuestro software.
                                                 Como la sección de repasos, la de organizar tu activades, dame algo que hacer.
                                                 y gestion de proyectos.
-                                                <img style={{width:'45%', height:'45%', borderRadius: '150%'}} src="https://drive.google.com/uc?id=1KAJbi3XnjoQQnJCzd0ofRt1ODaVaXZTy"/>
                                             </Typography>
+                                            <Box sx={{position:'relative', mx:'30%'}}>
+                                                <img style={{width:'20ch', height:'20ch', borderRadius: '150%'}} src="https://drive.google.com/uc?id=1KAJbi3XnjoQQnJCzd0ofRt1ODaVaXZTy"/>
+                                            </Box>
                                         </CardContent>
                                     </Card>
                                 </Grow>:null}
@@ -116,13 +120,11 @@ export default function MostrarFuncionalidades() {
                 </Box>   
                 <Box mx={'15ch'} sx={{ display:'flex'  }}>
                     <Slide direction="up" timeout={1000} in={true} mountOnEnter unmountOnExit>
-
-                            <Grid  spacing={'1ch'}>
-                                <Grid sx={{background:'gold',p:2, border:'5px solid black', borderRadius:'2.5%'}}>
-                                    <Grid container item sx={{p:0.5, border:'5px solid black', borderRadius:'2.5%'}} >
+                            <Grid  spacing={'2%'}>
+                                <Grid sx={{background:'gold',p:'0.5ch', border:'5px solid black', borderRadius:'2.5%'}}>
+                                    <Grid container item sx={{p:'0.5ch', border:'5px solid black', borderRadius:'2.5%'}} >
                                         <FormRow history={history}/>
                                     </Grid>
-
                                 </Grid>
                         </Grid>
                     </Slide>
