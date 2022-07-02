@@ -35,7 +35,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 //const darkTheme = createTheme({ palette: { mode: 'dark' } });
 //sx={{ flexGrow: 1 }} mt={10}
-export default function Inicio(){
+export default function Inicio(props){
   let history = useHistory()
   const [showRegister, setShowRegister] = useState(false)
   const [values, setValues] = React.useState({
