@@ -74,7 +74,9 @@ export default function Login(props) {
               />
               </FormControl>
               <FormControl sx={{m: 2}} variant="outlined">
-                    <Button onClick={()=>{history.push('/')}} sx={{p:2, borderRadius: 5, py: 2, color: 'white' ,background:'#0000cc'}} variant="contained" size="large">
+                    <Button onClick={()=>{
+                                history.push('/')}
+                                } sx={{p:2, borderRadius: 5, py: 2, color: 'white' ,background:'#0000cc'}} variant="contained" size="large">
                     <Typography sx= {{fontWeight: 'bold'}} variant = 'h5'>Iniciar Sesión</Typography>
                     </Button>                            
                             <Typography sx={{py:2}} variant = 'h8'>¿Olvidaste tu contraseña?</Typography>
