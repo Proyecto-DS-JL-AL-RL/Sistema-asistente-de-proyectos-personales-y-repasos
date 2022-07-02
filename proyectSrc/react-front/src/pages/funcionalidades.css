@@ -1,0 +1,15 @@
+.button-main:hover{
+    animation: scalado 2s linear infinite;
+}
+
+@keyframes scalado {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
