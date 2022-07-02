@@ -19,7 +19,7 @@ import { Beforeunload } from 'react-beforeunload';
 import {getCommands} from './util/redirectSpeech';
 import React, { useState, useContext} from 'react';
 import ActivityQueue from './pages/ActivityQueue';
-
+import Register from './pages/Register';
 import MostrarFuncionalidades from './pages/MostrarFuncionalidades'
 import VerMazos from './pages/VerMazo'
 
@@ -65,6 +65,9 @@ function App() {
                       <Switch>
                         <Route exact path = '/'>
                           <MostrarFuncionalidades/>
+                        </Route>
+                        <Route exact path = '/registro'>
+                          <Register/>
                         </Route>
                         <Route path = '/proyect'>
                           <ProyectoView/>
