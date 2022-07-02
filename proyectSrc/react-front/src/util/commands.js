@@ -30,6 +30,6 @@ const getCommands = (location,history) =>{
 
     return comando;
 }
-
+//Secuencial Pasos
 
 export {getCommands}

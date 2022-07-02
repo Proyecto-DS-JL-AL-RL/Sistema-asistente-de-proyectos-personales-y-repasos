@@ -116,11 +116,13 @@ export default function MostrarFuncionalidades() {
                 </Box>   
                 <Box mx={'15ch'} sx={{ display:'flex'  }}>
                     <Slide direction="up" timeout={1000} in={true} mountOnEnter unmountOnExit>
+
                             <Grid  spacing={'1ch'}>
                                 <Grid sx={{background:'gold',p:2, border:'5px solid black', borderRadius:'2.5%'}}>
                                     <Grid container item sx={{p:0.5, border:'5px solid black', borderRadius:'2.5%'}} >
                                         <FormRow history={history}/>
                                     </Grid>
+
                                 </Grid>
                         </Grid>
                     </Slide>
