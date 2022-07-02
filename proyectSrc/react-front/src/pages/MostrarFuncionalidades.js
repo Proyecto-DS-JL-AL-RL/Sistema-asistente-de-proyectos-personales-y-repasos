@@ -40,24 +40,24 @@ function FormRow(props) {
       <React.Fragment>
         <Grid item xs={'5ch'}>
             <Item>
-                <Button sx={{width:'90ch', borderRadius:'5%', backgroundColor:green[700], '&:hover': {backgroundColor: green[500]}, padding: '23ch'}}>
+                <Button sx={{width:'90ch', borderRadius:'5%', backgroundColor:green[700], '&:hover': {backgroundColor: green[500]}, padding: '26%'}}>
                     <Typography sx={{fontSize:'3ch', color:'white'}}>Gestionar Proyectos</Typography>
                 </Button>
             </Item>
           <Item>
-            <Button  sx={{width:'90ch', borderRadius:'5%', backgroundColor:orange[700], '&:hover': {backgroundColor: orange[600]}, padding: '23ch'}}>
+            <Button  sx={{width:'90ch', borderRadius:'5%', backgroundColor:orange[700], '&:hover': {backgroundColor: orange[600]}, padding: '26%'}}>
                 <Typography sx={{fontWeight: 'bold', fontSize:'3ch', color:'white'}}>Organizar Actividades</Typography>
             </Button>
           </Item>
         </Grid>
         <Grid item xs={'0.5vw'}>
             <Item>
-                <Button onClick={()=>{props.history.push('/Mazos')}} sx={{width:'90ch', borderRadius:'5%', backgroundColor:blue[700], '&:hover': {backgroundColor: blue[500]}, padding: '23ch'}}>
+                <Button onClick={()=>{props.history.push('/Mazos')}} sx={{width:'90ch', borderRadius:'5%', backgroundColor:blue[700], '&:hover': {backgroundColor: blue[500]}, padding: '26%'}}>
                     <Typography  sx={{fontSize:'3ch', color:'white'}}>Tarjetas de Repaso</Typography>
                 </Button>
             </Item>
             <Item>
-                    <Button sx={{width:'90ch', borderRadius:'5%', backgroundColor:red[700], '&:hover': {backgroundColor: red[500]}, padding: '23ch'}}>
+                    <Button sx={{width:'90ch', borderRadius:'5%', backgroundColor:red[700], '&:hover': {backgroundColor: red[500]}, padding: '26%'}}>
                         <Typography  sx={{fontSize:'3ch', color:'white'}}>Dame algo que hacer</Typography>
                     </Button>
             </Item>
@@ -80,7 +80,7 @@ export default function MostrarFuncionalidades() {
                 >
                     {showFeedBack?
                                 <Grow  timeout={1000}  in={showFeedBack}>
-                                <Card  sx={{borderRadius: '5%', mx:'70ch', minWidth: '23vw', border: '0.5px solid black'  }}>
+                                <Card  sx={{justifyContent:"center", borderRadius: '5%', mx:'670%', minWidth: '500%', border: '0.5px solid black'  }}>
                                         <CardContent>
                                             <Tooltip title="Cancelar" placement="right">
                                                     <CloseIcon onClick={(e)=>{setShowFeedBack(false)}} sx={{p:1, mx:'93%', backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
@@ -120,9 +120,9 @@ export default function MostrarFuncionalidades() {
                 </Box>   
                 <Box mx={'15ch'} sx={{ display:'flex'  }}>
                     <Slide direction="up" timeout={1000} in={true} mountOnEnter unmountOnExit>
-                            <Grid  spacing={'1ch'}>
-                                <Grid sx={{background:'gold',p:2, border:'5px solid black', borderRadius:'2.5%'}}>
-                                    <Grid container item sx={{p:0.5, border:'5px solid black', borderRadius:'2.5%'}} >
+                            <Grid  spacing={'2%'}>
+                                <Grid sx={{background:'gold',p:'0.5ch', border:'5px solid black', borderRadius:'2.5%'}}>
+                                    <Grid container item sx={{p:'0.5ch', border:'5px solid black', borderRadius:'2.5%'}} >
                                         <FormRow history={history}/>
                                     </Grid>
                                 </Grid>
