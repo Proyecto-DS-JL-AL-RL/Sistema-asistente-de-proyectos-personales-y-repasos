@@ -17,8 +17,9 @@ import CardContent from '@mui/material/CardContent';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import Fade from '@mui/material/Fade';
+import Button from '@mui/material/Button';
 
-/*
+    /*
     en este archivo se mostraran las funcionalidades del software 
     - Gestion de Proyectos y objetivos.
     - Tarjetas de Repaso.
@@ -26,26 +27,53 @@ import Fade from '@mui/material/Fade';
     - Organizador de Actividades.
 */
 const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
     textAlign: 'center',
-    borderRadius:'5%',
-    color: theme.palette.text.secondary,
-  }));
+   }));
 
+
+
+function FormRow(props) {
+    
+    return (
+      <React.Fragment>
+        <Grid item xs={'5ch'}>
+            <Item>
+                <Button sx={{width:'90ch', borderRadius:'5%', backgroundColor:green[700], '&:hover': {backgroundColor: green[500]}, padding: '23ch'}}>
+                    <Typography sx={{fontSize:'3ch', color:'white'}}>Gestionar Proyectos</Typography>
+                </Button>
+            </Item>
+          <Item>
+            <Button  sx={{width:'90ch', borderRadius:'5%', backgroundColor:orange[700], '&:hover': {backgroundColor: orange[600]}, padding: '23ch'}}>
+                <Typography sx={{fontWeight: 'bold', fontSize:'3ch', color:'white'}}>Organizar Actividades</Typography>
+            </Button>
+          </Item>
+        </Grid>
+        <Grid item xs={'0.5vw'}>
+            <Item>
+                <Button onClick={()=>{props.history.push('/Mazos')}} sx={{width:'90ch', borderRadius:'5%', backgroundColor:blue[700], '&:hover': {backgroundColor: blue[500]}, padding: '23ch'}}>
+                    <Typography  sx={{fontSize:'3ch', color:'white'}}>Tarjetas de Repaso</Typography>
+                </Button>
+            </Item>
+            <Item>
+                    <Button sx={{width:'90ch', borderRadius:'5%', backgroundColor:red[700], '&:hover': {backgroundColor: red[500]}, padding: '23ch'}}>
+                        <Typography  sx={{fontSize:'3ch', color:'white'}}>Dame algo que hacer</Typography>
+                    </Button>
+            </Item>
+        </Grid>
+      </React.Fragment>
+    );
+  }
 
 export default function MostrarFuncionalidades() {
     let history = useHistory()
     const [showFeedBack, setShowFeedBack] = useState(false)
     return (
         <React.Fragment>
-            <Box sx={{ flexGrow: 1 }}>
-            <Box mt={30} sx={{
-                  width: 350,
-                  height: 350,
-                  zIndex:1,
-                  position: 'absolute',
+            <Box sx={{ display:"flex"}}>
+            <Box sx={{
+                  zIndex:1, positon:'absolute',
+                  width: '10ch',
+                  height: '10ch',
                 }}
                 >
                     {showFeedBack?
@@ -86,30 +114,17 @@ export default function MostrarFuncionalidades() {
                             </Grid>
                     </Fade>
                 </Box>   
-                <Box mt={3} sx={{flexGrow: 1  }}>
+                <Box mx={'15ch'} sx={{ display:'flex'  }}>
                     <Slide direction="up" timeout={1000} in={true} mountOnEnter unmountOnExit>
-                            <Grid container justifyContent="center"  rowSpacing={2} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
-                                <Grid item xs={6}>
-                                    <Item>
-                                    <Paper sx={{borderRadius:'5%', backgroundColor:green[700], '&:hover': {backgroundColor: green[500]}, padding: 25}}><Typography sx={{ fontSize:40, color:'white'}}>Gestione sus Proyectos</Typography></Paper>
-                                    </Item>
+
+                            <Grid  spacing={'1ch'}>
+                                <Grid sx={{background:'gold',p:2, border:'5px solid black', borderRadius:'2.5%'}}>
+                                    <Grid container item sx={{p:0.5, border:'5px solid black', borderRadius:'2.5%'}} >
+                                        <FormRow history={history}/>
+                                    </Grid>
+
                                 </Grid>
-                                <Grid item xs={6}>
-                                    <Item>
-                                    <Paper onClick={()=>{history.push('/Mazos')}} sx={{borderRadius:'5%', backgroundColor:blue[700], '&:hover': {backgroundColor: blue[500]}, padding: 25}}><Typography sx={{fontSize:40, color:'white'}}>Tarjetas de Repaso</Typography></Paper>
-                                    </Item>
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <Item>
-                                    <Paper onClick = {()=>{history.push('/algoQueHacer')}} sx={{borderRadius:'5%', backgroundColor:red[700], '&:hover': {backgroundColor: red[500]}, padding: 25}}><Typography sx={{fontSize:40, color:'white'}}>Dame Algo que hacer</Typography></Paper>
-                                    </Item>
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <Item>
-                                        <Paper sx={{borderRadius:'5%', backgroundColor:orange[700], '&:hover': {backgroundColor: orange[600]},padding: 25}}><Typography sx={{fontSize:40,color:'white'}}>Organizador de Actividades</Typography></Paper>
-                                    </Item>
-                                </Grid>
-                            </Grid>
+                        </Grid>
                     </Slide>
                 </Box>
         </React.Fragment>
