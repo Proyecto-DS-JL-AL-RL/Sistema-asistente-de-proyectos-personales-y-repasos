@@ -3,14 +3,14 @@ import ActividadActual from './ActividadActual';
 import AlgoQueHacer from './AlgoQueHacer';
 
 export default function AlgoQueHacerPage(){
-    const [doingSomething,setDoingSomething] = useState(false);
+    const [doingSomething,setDoingSomething] = useState(true);
 
     return (
     <React.Fragment>
         {doingSomething?
-        <ActividadActual/>        
+        <ActividadActual setDoingSomething = {setDoingSomething}/>        
         :
-        <AlgoQueHacer/>
+        <AlgoQueHacer setDoingSomething = {setDoingSomething}/>
         }
     </React.Fragment>
 );}

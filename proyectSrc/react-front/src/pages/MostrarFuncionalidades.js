@@ -101,7 +101,7 @@ export default function MostrarFuncionalidades() {
                                 </Grid>
                                 <Grid item xs={6}>
                                     <Item>
-                                    <Paper sx={{borderRadius:'5%', backgroundColor:red[700], '&:hover': {backgroundColor: red[500]}, padding: 25}}><Typography sx={{fontSize:40, color:'white'}}>Dame Algo que hacer</Typography></Paper>
+                                    <Paper onClick = {()=>{history.push('/algoQueHacer')}} sx={{borderRadius:'5%', backgroundColor:red[700], '&:hover': {backgroundColor: red[500]}, padding: 25}}><Typography sx={{fontSize:40, color:'white'}}>Dame Algo que hacer</Typography></Paper>
                                     </Item>
                                 </Grid>
                                 <Grid item xs={6}>
