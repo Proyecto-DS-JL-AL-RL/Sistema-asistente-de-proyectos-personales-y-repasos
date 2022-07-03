@@ -32,7 +32,7 @@ const mazos = [
                  'Area de la informatica que permite a las maquinas aprender',
                   'Es una palabra en ingles',
                   'N.A.'],
-      Respuestas: 'Area de la informatica que permite a las maquinas aprender'
+      Respuestas: 2
     },
     {
       id: '2',
@@ -41,7 +41,7 @@ const mazos = [
                  'ELECTRA',
                   'T5',
                   'BERT'],
-      Respuestas: 'ELECTRA'
+      Respuestas: 2
     },
     {
       id: '3',
@@ -50,7 +50,7 @@ const mazos = [
                  'One to One',
                   'Many to Many',
                   'Many to one'],
-      Respuestas: 'Many to one'
+      Respuestas: 4
     }  
     ]
   }, {
@@ -64,7 +64,7 @@ const mazos = [
                  'Es un tipo de inteliegencia artificial para hacer caras',
                   'Es un tipo de video juego', 
                   'N.A.'],
-      Respuestas: 'Es un programa informatico que tiene como objetivo hacer dano a sistemas'
+      Respuestas: 1
     }]
   }
   ]//width: 900,    height: 900, <img    style={{borderRadius: '50%'}}
