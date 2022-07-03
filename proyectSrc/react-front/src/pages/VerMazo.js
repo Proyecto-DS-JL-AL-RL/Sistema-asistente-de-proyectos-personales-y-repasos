@@ -132,33 +132,39 @@ const mazos = [
                       >
                   {showAnadir?
                         <Grow  timeout={1000}  in={showAnadir}>
-                          <Card  sx={{borderRadius: '5%', mx:100, minWidth: 600, border: '0.5px solid purple'  }}>
-                                <CardContent>
-                                    <Tooltip title="Cancelar" placement="right">
-                                            <CloseIcon onClick={(e)=>{setShowAnadir(false)}} sx={{p:1,mx:65, backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
-                                    </Tooltip>   
-                                      <Typography sx={{fontWeight: 'bold', mx:3}} variant="h4" component="div">
-                                          Añadir Sección
-                                      </Typography>
-                                      <Box  justifyContent="center" sx={{ display: 'flex', flexWrap: 'wrap' }}>
-                                          <FormControl  sx={{m: 2, width: '45ch' }} variant="outlined">
-                                                <TextField sx={{py:2}} id="outlined-basic" label="Titulo de la Sección" defaultValue= {''} variant="outlined" />
-                                                <TextField
-                                                    id="outlined-multiline-static"
-                                                    label="Descripcion"
-                                                    multiline
-                                                    rows={4}
-                                                    defaultValue={''}
-                                                  />
-                                          </FormControl>
-                                          <Tooltip title="Guardar" placement="left">
-                                            <Button onClick={()=>{setShowAnadir(false)}} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
-                                              <SaveIcon sx={{p:1}}/>
-                                            </Button>
-                                        </Tooltip>
-                                        </Box>
-                                  </CardContent>
-                            </Card>
+                          <Box  justifyContent="center" sx={{mx:'200%', width: '200%', position:'absolute', mt:'4%', display: 'flex'}}> 
+                                  <Card  sx={{borderRadius: '3%',  width: '160%', border: '0.5px solid black'}}>
+                                      <CardContent>
+                                          <Tooltip title="Cancelar" placement="right">
+                                              <Button sx={{mx:'90%'}} onClick={(e)=>{setShowAnadir(false)}}>
+                                                      <CloseIcon  sx={{p:1, backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
+                                              </Button>
+                                          </Tooltip>   
+                                            <Typography sx={{fontWeight: 'bold', mx:3}} variant="h4" component="div">
+                                                Añadir Sección
+                                            </Typography>
+                                            <Box  justifyContent="center" sx={{ display: 'flex', flexWrap: 'wrap' }}>
+                                                <FormControl  sx={{m: 2, width: '45ch' }} variant="outlined">
+                                                      <TextField sx={{py:2}} id="outlined-basic" label="Titulo de la Sección" defaultValue= {''} variant="outlined" />
+                                                      <TextField
+                                                          id="outlined-multiline-static"
+                                                          label="Descripcion"
+                                                          multiline
+                                                          rows={4}
+                                                          defaultValue={''}
+                                                        />
+                                                </FormControl>
+                                              </Box>
+                                              <Box  justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>
+                                                    <Tooltip title="Guardar" placement="left">
+                                                      <Button onClick={()=>{setShowAnadir(false)}} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
+                                                        <SaveIcon sx={{p:1}}/>
+                                                      </Button>
+                                                    </Tooltip>
+                                              </Box>
+                                      </CardContent>
+                                </Card>
+                            </Box>
                           </Grow>:null}
 
                           {showFeedBack?
