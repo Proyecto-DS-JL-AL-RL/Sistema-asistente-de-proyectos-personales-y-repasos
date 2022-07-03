@@ -17,7 +17,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import Grow from '@mui/material/Grow';
 import Divider from '@mui/material/Divider';
 import Fade from '@mui/material/Fade';
-import Paper from '@mui/material/Paper';
+//import Paper from '@mui/material/Paper';
 
 
 const mazos = [
@@ -55,14 +55,15 @@ const mazos = [
     ]
   }, {
     id:'2',
-    titulo: 'Interaccion humano computador',
+    titulo: 'Seguridad informatico',
     descripcion: 'esto es una prueba del curso de seguridad',
     Tarjetas:[{
       id: '1',
       Pregunta: '¿Ques es un malware?',
       Opciones: ['Es un programa informatico que tiene como objetivo hacer dano a sistemas', 
                  'Es un tipo de inteliegencia artificial para hacer caras',
-                  'Es un tipo de video juego '],
+                  'Es un tipo de video juego', 
+                  'N.A.'],
       Respuestas: 'Es un programa informatico que tiene como objetivo hacer dano a sistemas'
     }]
   }
@@ -76,8 +77,7 @@ const mazos = [
   export default function VerMazos(){
     const [showAnadir, setShowAnadir] = useState(false)
     const [showFeedBack, setShowFeedBack] = useState(false)
-    const [showTarjetas, setShowTarjetas] = useState(false)
-    return (
+        return (
         <React.Fragment>
                 <Box sx={{ flexGrow: 1}}>
                 <Fade timeout={2000} in={true}>
@@ -102,27 +102,7 @@ const mazos = [
                             </Grid>
                       </Fade>
                     </Box>
-                          <Box sx={{
-                              zIndex:1,
-                              position: 'absolute',
-                            }}
-                            >
-                                {showTarjetas?
-                                    <Box
-                                        sx={{
-                                          display: 'flex',
-                                          '& > :not(style)': {
-                                            m: 1,
-                                            width: 1000,
-                                            height: 1000,
-                                            textAlign: 'center'
-                                          },
-                                        }}
-                                      >
-                              
-                                    <Paper variant="outlined" square >tarjetas</Paper>
-                                    </Box>:null}
-                          </Box>
+                          
                     <Box  sx={{
                         width: 350,
                         height: 350,
@@ -181,7 +161,7 @@ const mazos = [
                                       <Typography sx={{textAlign: 'center'}} variant="h6">
                                         Esta parte de la página esta enfocada en la funcionalidad de repasos. Aquí 
                                         podra separar por temas las tarjetas que vaya creando. 
-                                        <img style={{width:'50%', height:'50%', borderRadius: '150%'}} src="https://drive.google.com/uc?id=18BAWHAawYBjUCRmxZyrf_O4_fqRJKUk6"/> 
+                                        <img style={{width:'50%', height:'50%', borderRadius: '150%'}} alt='emoji' src="https://drive.google.com/uc?id=18BAWHAawYBjUCRmxZyrf_O4_fqRJKUk6"/> 
                                       </Typography>
                                   </CardContent>
                             </Card>
@@ -190,7 +170,7 @@ const mazos = [
                   <Box sx={{mx:'12%',
                             position:'absolute',
                               width: '65%'}}>
-                          <Mazos getmazo={mazos} showT={setShowTarjetas} />
+                          <Mazos getmazo={mazos} />
                   </Box>
         </React.Fragment>
     );

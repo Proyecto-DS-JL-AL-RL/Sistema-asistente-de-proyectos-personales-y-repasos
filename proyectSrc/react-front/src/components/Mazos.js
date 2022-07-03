@@ -65,9 +65,8 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 
 export default function Mazos(props) {
   const [expanded, setExpanded] = useState('panel1');
-  const [nameSection, setSection] = useState('')
-  const [description, setDescription] = useState('')
-  const [mazos, setMazos] = useState(props.getmazo)
+  const [mazo, setMazo] = useState({})
+  const mazos = props.getmazo
   const [showEdit, setShowEdit] = useState(false)
   const [showEditCard, setShowEditCard] = useState(false)
   const [tarjeta, setTarjeta] = useState({})
@@ -108,13 +107,13 @@ export default function Mazos(props) {
                                             <Typography sx={{fontWeight: 'bold', mx:'1vw'}} variant="h4" component="div">
                                                 Editar Sección
                                             </Typography>
-                                              <TextField sx={{py:2}} id="outlined-basic" label="Titulo de la Sección" defaultValue= {nameSection} variant="outlined" />
+                                              <TextField sx={{py:2}} id="outlined-basic" label="Titulo de la Sección" defaultValue= {mazo.titulo} variant="outlined" />
                                               <TextField
                                                   id="outlined-multiline-static"
                                                   label="Descripcion"
                                                   multiline
                                                   rows={4}
-                                                  defaultValue={description}
+                                                  defaultValue={mazo.descripcion}
                                                 />
                                       </FormControl>
                                     </Box>
@@ -176,7 +175,7 @@ export default function Mazos(props) {
                       <Grid item>
                         <Tooltip title="abrir" placement="right">
                               <IconButton onClick={()=>{
-                                    props.showT(true)
+                                    console.log('ok')
                                     }}
                                     sx={{color: "white"}}>   
                                                   
@@ -187,8 +186,8 @@ export default function Mazos(props) {
                               
                                   <IconButton onClick={()=>{
                                     setShowEdit(true)
-                                    setSection(mazo.titulo)
-                                    setDescription(mazo.descripcion)
+                                    setMazo(mazo)
+                                
                                     }} sx={{color: "white"}}>                             
                                         <EditIcon/>
                                       </IconButton>
@@ -205,8 +204,10 @@ export default function Mazos(props) {
                         <Typography variant="h6">
                               {mazo.descripcion}
                         </Typography>
+                    
                           <List sx={{fontWeight: 'bold', color: 'white',bgcolor: '#454545'}}>
-                              {mazo.Tarjetas.map((value) => (
+                              {mazo.Tarjetas.map((value, idx) => (
+                              <React.Fragment key={idx}>  
                                 <ListItem
                                   key={value}
                                   disableGutters
@@ -228,6 +229,7 @@ export default function Mazos(props) {
                                       <ListItemText primary={`${value.Pregunta}`} />
                                   </ListItemButton>
                                 </ListItem>
+                                </React.Fragment>
                               ))}
                           </List>      
                       </AccordionDetails>
