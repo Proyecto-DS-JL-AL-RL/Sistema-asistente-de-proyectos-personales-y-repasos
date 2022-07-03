@@ -25,6 +25,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText';
 import ListItemButton from '@mui/material/ListItemButton';
+import '../pages/funcionalidades.css'
 
 
 
@@ -68,6 +69,8 @@ export default function Mazos(props) {
   const [description, setDescription] = useState('')
   const [mazos, setMazos] = useState(props.getmazo)
   const [showEdit, setShowEdit] = useState(false)
+  const [showEditCard, setShowEditCard] = useState(false)
+  const [tarjeta, setTarjeta] = useState({})
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
@@ -92,18 +95,19 @@ export default function Mazos(props) {
                 >
                   {showEdit?
                       <Grow  timeout={1000}  in={showEdit}>  
-                        <Card  sx={{borderRadius: '5%', mx:50, minWidth: 600, border: '0.5px solid purple'}}>
+                      <Box  justifyContent="center" sx={{mx:'120%', width: '200%', position:'absolute', mt:'4%', display: 'flex'}}>  
+                        <Card  sx={{borderRadius: '3%',  width: '160%', border: '0.5px solid black'}}>
                             <CardContent>
                                 <Tooltip title="Cancelar" placement="right">
-                                      <Button onClick={(e)=>{setShowEdit(false)}}>
-                                        <CloseIcon sx={{p:1,mx:65, backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
+                                      <Button sx={{mx:'90%'}} onClick={(e)=>{setShowEdit(false)}}>
+                                        <CloseIcon sx={{p:1, backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
                                       </Button>
                                  </Tooltip>   
-                                  <Typography sx={{fontWeight: 'bold', mx:3}} variant="h4" component="div">
-                                      Editar Sección
-                                  </Typography>
                                     <Box  justifyContent="center" sx={{ display: 'flex', flexWrap: 'wrap' }}>
                                         <FormControl  sx={{m: 2, width: '45ch' }} variant="outlined">
+                                            <Typography sx={{fontWeight: 'bold', mx:'1vw'}} variant="h4" component="div">
+                                                Editar Sección
+                                            </Typography>
                                               <TextField sx={{py:2}} id="outlined-basic" label="Titulo de la Sección" defaultValue= {nameSection} variant="outlined" />
                                               <TextField
                                                   id="outlined-multiline-static"
@@ -113,14 +117,51 @@ export default function Mazos(props) {
                                                   defaultValue={description}
                                                 />
                                       </FormControl>
-                                      <Tooltip title="Guardar" placement="left">
-                                        <Button onClick={()=>{setShowEdit(false)}} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
-                                             <SaveIcon sx={{p:1}}/>
-                                        </Button>
-                                    </Tooltip>
                                     </Box>
+                                    <Box  justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>
+                                      <Tooltip title="Guardar" placement="left">
+                                            <Button onClick={()=>{setShowEdit(false)}} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
+                                                <SaveIcon sx={{p:1}}/>
+                                            </Button>
+                                        </Tooltip>
+                                        </Box>
                               </CardContent>
                         </Card>
+                        </Box>
+                      </Grow>:null}
+                      {showEditCard?
+                      <Grow  timeout={1000}  in={showEditCard}>  
+                        <Box  justifyContent="center" sx={{mx:'120%', width: '200%', position:'absolute', mt:'4%', display: 'flex' }}>
+                            <Card  sx={{borderRadius: '3%', width: '160%', border: '0.5px solid black'}}>
+                                <CardContent >
+                                          <Button sx={{mx:'90%'}} onClick={(e)=>{setShowEditCard(false)}}>
+                                              <Tooltip title="Guardar" placement="left">  
+                                                  <CloseIcon sx={{p:1, backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
+                                              </Tooltip>
+                                          </Button>   
+                                        <Box  justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>
+                                            <FormControl  sx={{width: '45ch' }} variant="outlined">
+                                            <Typography sx={{fontWeight: 'bold', mx:'1vw'}} variant="h4" component="div">
+                                                    Editar Tarjeta
+                                                </Typography>
+                                                  <TextField sx={{py:'2%'}} id="outlined-basic" label="Pregunta" defaultValue= {tarjeta.Pregunta} variant="outlined" />
+                                                  <TextField sx={{py:'2%'}} id="outlined-basic" label="Opción 1" defaultValue= {tarjeta.Opciones[0]} variant="outlined" />
+                                                  <TextField sx={{py:'2%'}} id="outlined-basic" label="Opción 2" defaultValue= {tarjeta.Opciones[1]} variant="outlined" />
+                                                  <TextField sx={{py:'2%'}} id="outlined-basic" label="Opción 3" defaultValue= {tarjeta.Opciones[2]} variant="outlined" />
+                                                  <TextField sx={{py:'2%'}} id="outlined-basic" label="Opción 4" defaultValue= {tarjeta.Opciones[3]} variant="outlined" />
+                                                  <TextField sx={{py:'2%'}} id="outlined-basic" label="Respuesta" defaultValue= {2} variant="outlined" />
+                                          </FormControl>
+                                        </Box>
+                                        <Box  justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>
+                                                      <Tooltip title="Guardar" placement="left">
+                                                          <Button onClick={()=>{setShowEditCard(false)}} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
+                                                              <SaveIcon sx={{p:1}}/>
+                                                          </Button>
+                                                      </Tooltip>
+                                        </Box>
+                                  </CardContent>
+                            </Card>
+                        </Box>
                       </Grow>:null}
         </Box> 
     <Slide direction="up" timeout={1000} in={true} mountOnEnter unmountOnExit>
@@ -169,8 +210,21 @@ export default function Mazos(props) {
                                 <ListItem
                                   key={value}
                                   disableGutters
+                                  secondaryAction={
+                                    <React.Fragment>
+                                          <IconButton onClick={()=>{
+                                            setShowEditCard(true);
+                                            setTarjeta(value)
+                                          }} className='button-main' sx={{color:'white',  '&:hover': {backgroundColor: '#00b347', color:'black'}}} aria-label="comment">
+                                              <EditIcon/>
+                                          </IconButton>
+                                          <IconButton  className='button-main' sx={{color:'white',  '&:hover': {backgroundColor: '#00b347', color:'black'}}} aria-label="comment">
+                                              <DeleteIcon />
+                                          </IconButton>
+                                    </React.Fragment>
+                                  }
                                 >
-                                  <ListItemButton sx={{fontWeight:'bold', color:'white', '&:hover': {backgroundColor: '#00b347', color:'black'}}}>                                  
+                                  <ListItemButton className='button-main' sx={{fontWeight:'bold', color:'white', '&:hover': {backgroundColor: '#00b347', color:'black'}}}>                                  
                                       <ListItemText primary={`${value.Pregunta}`} />
                                   </ListItemButton>
                                 </ListItem>
