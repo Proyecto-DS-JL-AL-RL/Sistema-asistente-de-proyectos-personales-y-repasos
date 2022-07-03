@@ -81,7 +81,7 @@ export default function Login(props) {
                     </Button>                            
                             <Typography sx={{py:2}} variant = 'h8'>¿Olvidaste tu contraseña?</Typography>
                     <Button onClick={()=>{
-                          props.show.setShowRegister(true)
+                          history.push('/registro')
                         }} sx={{py:2, borderRadius: 5, color: 'white', background:'#00b347'}} variant="contained" size="large">
                         <Typography sx= {{fontWeight: 'bold'}} variant = 'h5'>Registrate</Typography>
                     </Button>
