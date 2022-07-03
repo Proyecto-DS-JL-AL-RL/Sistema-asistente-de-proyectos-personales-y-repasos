@@ -148,7 +148,7 @@ export default function Mazos(props) {
                                                   <TextField sx={{py:'2%'}} id="outlined-basic" label="Opción 2" defaultValue= {tarjeta.Opciones[1]} variant="outlined" />
                                                   <TextField sx={{py:'2%'}} id="outlined-basic" label="Opción 3" defaultValue= {tarjeta.Opciones[2]} variant="outlined" />
                                                   <TextField sx={{py:'2%'}} id="outlined-basic" label="Opción 4" defaultValue= {tarjeta.Opciones[3]} variant="outlined" />
-                                                  <TextField sx={{py:'2%'}} id="outlined-basic" label="Respuesta" defaultValue= {2} variant="outlined" />
+                                                  <TextField sx={{py:'2%'}} id="outlined-basic" label="Respuesta" defaultValue= {tarjeta.Respuestas} variant="outlined" />
                                           </FormControl>
                                         </Box>
                                         <Box  justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>

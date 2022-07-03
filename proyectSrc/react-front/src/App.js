@@ -1,6 +1,6 @@
 import './App.css';
 
-import {Switch , Route, useLocation, useHistory, Router} from 'react-router-dom';
+import {Switch , Route, useLocation, useHistory} from 'react-router-dom';
 //import Page1 from './pages/Page1';
 
 import Presentacion from './pages/Presentation';
@@ -8,8 +8,9 @@ import AppBarSearch from './components/AppBarSearch';
 import DrawerComponent from './components/DrawerComponent';
 
 import Horario from './pages/Horario';
-import Proyectos from './pages/Proyectos';
+//import Proyectos from './pages/Proyectos';
 
+import Tarjetas from './pages/verTarjeta';
 import Inicio from './pages/Inicio';
 import ProyectoView from './pages/projectDashboard';
 import AlgoQueHacerPage from './pages/AlgoQueHacerPage';
@@ -17,7 +18,7 @@ import AlgoQueHacerPage from './pages/AlgoQueHacerPage';
 import SR,{useSpeechRecognition} from 'react-speech-recognition';
 import { Beforeunload } from 'react-beforeunload';
 import {getCommands} from './util/redirectSpeech';
-import React, { useState, useContext} from 'react';
+import React, { useState} from 'react';
 import ActivityQueue from './pages/ActivityQueue';
 import Register from './pages/Register';
 import MostrarFuncionalidades from './pages/MostrarFuncionalidades'
@@ -80,6 +81,9 @@ function App() {
                         </Route>
                         <Route exact path = "/inicio" >
                           <Inicio logged={{logged,setLogged}}/>
+                        </Route>
+                        <Route exact path = "/Tarjetas" >
+                                <Tarjetas/>
                         </Route>
                             <Route path = '/Mazos'>
                                   <VerMazos/>
