@@ -27,7 +27,7 @@ import './funcionalidades.css'
     - Organizador de Actividades.
 */
 const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor:'gold',
+    backgroundColor:'#BDBEC3',
     borderRadius:'2.5%',
     padding: theme.spacing('1ch'),
     textAlign: 'center',
@@ -123,7 +123,7 @@ export default function MostrarFuncionalidades() {
                 <Box mt={'3ch'} mx={'15ch'} sx={{position:'absolute', display:'flex'  }}>
                     <Slide direction="up" timeout={1000} in={true} mountOnEnter unmountOnExit>
                             <Grid  spacing={'2%'}>
-                                <Grid sx={{background:'gold',p:'0.5ch', border:'5px solid black', borderRadius:'2.5%'}}>
+                                <Grid sx={{background:'#BDBEC3',p:'0.5ch', border:'5px solid black', borderRadius:'2.5%'}}>
                                     <Grid container item sx={{p:'0.5ch', border:'5px solid black', borderRadius:'2.5%'}} >
                                         <FormRow history={history}/>
                                     </Grid>

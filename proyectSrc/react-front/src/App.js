@@ -25,6 +25,7 @@ import MostrarFuncionalidades from './pages/MostrarFuncionalidades'
 import VerMazos from './pages/VerMazo'
 
 
+
 function App() {
   const CONTINOUS_ = false;
 
@@ -82,7 +83,7 @@ function App() {
                         <Route exact path = "/inicio" >
                           <Inicio logged={{logged,setLogged}}/>
                         </Route>
-                        <Route exact path = "/Tarjetas" >
+                        <Route exact path = "/Tarjetas/:idSeccion" >
                                 <Tarjetas/>
                         </Route>
                             <Route path = '/Mazos'>

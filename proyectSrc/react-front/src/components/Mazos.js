@@ -26,6 +26,7 @@ import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText';
 import ListItemButton from '@mui/material/ListItemButton';
 import '../pages/funcionalidades.css'
+import { useHistory } from "react-router-dom";
 
 
 
@@ -70,6 +71,7 @@ export default function Mazos(props) {
   const [showEdit, setShowEdit] = useState(false)
   const [showEditCard, setShowEditCard] = useState(false)
   const [tarjeta, setTarjeta] = useState({})
+  let history = useHistory()
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
@@ -175,7 +177,7 @@ export default function Mazos(props) {
                       <Grid item>
                         <Tooltip title="abrir" placement="right">
                               <IconButton onClick={()=>{
-                                    console.log('ok')
+                                    history.push('/Tarjetas/'+mazo.titulo)
                                     }}
                                     sx={{color: "white"}}>   
                                                   
