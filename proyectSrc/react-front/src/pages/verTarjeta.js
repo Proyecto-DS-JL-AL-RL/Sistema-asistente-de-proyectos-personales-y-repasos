@@ -9,6 +9,39 @@ import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import './funcionalidades.css'
 
+const mazo = {
+  id:'1',
+  titulo: 'Inteligencia Artificial',
+  descripcion: 'esto es un prueba porque estamos a punto de dar parcial de AI pero no estudie asi que es tu turno de colaborar.',
+  Tarjetas:[{
+    id: '1',
+    Pregunta: '¿Que es la IA?',
+    Opciones: ['Es un campo de la Botanica', 
+               'Area de la informatica que permite a las maquinas aprender',
+                'Es una palabra en ingles',
+                'N.A.'],
+    Respuestas: 2
+  },
+  {
+    id: '2',
+    Pregunta: '¿Que modelo "Transformer" no fue entrenado en la estrategia del MLM (Masked Language Modeling)?',
+    Opciones: ['ROBERTA', 
+               'ELECTRA',
+                'T5',
+                'BERT'],
+    Respuestas: 2
+  },
+  {
+    id: '3',
+    Pregunta: 'El profesor del curso de Inteligencia Artificial te deja de trabajo final  realizar un clasificador de reviews. Para ello te provee de la data Amazon, la cual contiene tanto las reviews (Texto) como su calificación de estrellas (1 al 5), poniendote manos a la obra comienzas probando con una RNN (Recurrent Neural Networks). ¿Que tipo de Arquitectura RNN usarias?',
+    Opciones: ['One to Many', 
+               'One to One',
+                'Many to Many',
+                'Many to one'],
+    Respuestas: 4
+  }  
+  ]
+}
 
 const Opt = styled(Paper)(({ theme }) => ({
   background:'#c8a2b5',
@@ -81,15 +114,15 @@ export default function VerTarjeta() {
                                                                 '&:hover': {backgroundColor: '#FF6347'}
                                                             }}
                                                                 variant="outlined" > 
-                                                                      <Typography mt={'6%'} sx={{fontWeight: 'bold'}} variant="h6" component="div">¿esto es una pregunta?</Typography>
+                                                                      <Typography mt={'8%'} sx={{fontWeight: 'bold'}} variant="h6" component="div">{mazo.Tarjetas[page-1].Pregunta}</Typography>
                                                       </Paper>
                                                       <Opt>
                                                           <Grid  container spacing={'1%'}>
                                                                   <Grid item xs>
                                                                           <Box sx={{ width: '100%' }}>
                                                                               <Stack spacing={'4%'}>
-                                                                                  <Button className='button-main'  sx={{ border: '5px solid black', borderRadius:'6%',p:9,color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}>Item 1</Button>
-                                                                                  <Button className='button-main'  sx={{ border: '5px solid black', borderRadius:'6%',p:9, color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}>Item 2</Button>
+                                                                                  <Button className='button-main'  sx={{ border: '5px solid black', borderRadius:'6%',p:9,color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}><Typography variant="body2" component="div">{mazo.Tarjetas[page-1].Opciones[0]}</Typography></Button>
+                                                                                  <Button className='button-main'  sx={{ border: '5px solid black', borderRadius:'6%',p:9, color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}><Typography variant="body2" component="div">{mazo.Tarjetas[page-1].Opciones[2]}</Typography></Button>
                                                                               </Stack>
                                                                           </Box>
                                                                   </Grid>
@@ -100,8 +133,8 @@ export default function VerTarjeta() {
                                                                   <Grid item xs>
                                                                           <Box sx={{ width: '100%' }}>
                                                                               <Stack spacing={'4%'}>
-                                                                                  <Button className='button-main'  sx={{border: '5px solid black', borderRadius:'6%',p:9,color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}>Item 1</Button>
-                                                                                  <Button className='button-main'  sx={{border: '5px solid black', borderRadius:'6%',p:9, color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}>Item 2</Button>
+                                                                                  <Button className='button-main'  sx={{border: '5px solid black', borderRadius:'6%',p:9,color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}> <Typography variant="body2" component="div">{mazo.Tarjetas[page-1].Opciones[1]}</Typography></Button>
+                                                                                  <Button className='button-main'  sx={{border: '5px solid black', borderRadius:'6%',p:9, color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}><Typography variant="body2" component="div">{mazo.Tarjetas[page-1].Opciones[3]}</Typography></Button>
                                                                               </Stack>
                                                                           </Box>
                                                                   </Grid>
@@ -121,7 +154,7 @@ export default function VerTarjeta() {
         display: 'flex',
       }}
     >
-        <Pagination sx={{textAlign: 'center'}} count={5} page={page} onChange={handleChange}  color="secondary" />
+        <Pagination sx={{textAlign: 'center'}} count={mazo.Tarjetas.length} page={page} onChange={handleChange}  color="secondary" />
     </Box>
     </React.Fragment>
   );

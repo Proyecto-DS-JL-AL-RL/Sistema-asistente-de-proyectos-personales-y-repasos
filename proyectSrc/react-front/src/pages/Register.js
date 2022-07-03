@@ -1,9 +1,9 @@
-import React, {useState} from "react";
+import React from "react";
 import Box from '@mui/material/Box';
-import Tooltip from '@mui/material/Tooltip';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CloseIcon from '@mui/icons-material/Close';
+//import Tooltip from '@mui/material/Tooltip';
+//import Card from '@mui/material/Card';
+//import CardContent from '@mui/material/CardContent';
+//import CloseIcon from '@mui/icons-material/Close';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -20,7 +20,7 @@ import Stack from '@mui/material/Stack';
 
 export default function Register(props){
     let history = useHistory()
-    const [showRegister, setShowRegister] = useState(false)
+    //const [showRegister, setShowRegister] = useState(false)
     const [values, setValues] = React.useState({
       amount: '',
       password: '',
