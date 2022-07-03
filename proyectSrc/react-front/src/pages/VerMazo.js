@@ -20,19 +20,51 @@ import Fade from '@mui/material/Fade';
 import Paper from '@mui/material/Paper';
 
 
-const mazos = [{
-    id: '1',
-    titulo: 'Calidad de Software',
-    descripcion: 'esto es un prueba porque estamos a punto de dar parcial de calidad de software pero no estudie asi que es tu turno de colaborar.'
-  },
+const mazos = [
   {
-    id:'2',
+    id:'1',
     titulo: 'Inteligencia Artificial',
-    descripcion: 'esto es un prueba porque estamos a punto de dar parcial de AI pero no estudie asi que es tu turno de colaborar.'
+    descripcion: 'esto es un prueba porque estamos a punto de dar parcial de AI pero no estudie asi que es tu turno de colaborar.',
+    Tarjetas:[{
+      id: '1',
+      Pregunta: '¿Que es la IA?',
+      Opciones: ['Es un campo de la Botanica', 
+                 'Area de la informatica que permite a las maquinas aprender',
+                  'Es una palabra en ingles',
+                  'N.A.'],
+      Respuestas: 'Area de la informatica que permite a las maquinas aprender'
+    },
+    {
+      id: '2',
+      Pregunta: '¿Que modelo "Transformer" no fue entrenado en la estrategia del MLM (Masked Language Modeling)?',
+      Opciones: ['ROBERTA', 
+                 'ELECTRA',
+                  'T5',
+                  'BERT'],
+      Respuestas: 'ELECTRA'
+    },
+    {
+      id: '3',
+      Pregunta: 'El profesor del curso de Inteligencia Artificial te deja de trabajo final  realizar un clasificador de reviews. Para ello te provee de la data Amazon, la cual contiene tanto las reviews (Texto) como su calificación de estrellas (1 al 5), poniendote manos a la obra comienzas probando con una RNN (Recurrent Neural Networks). ¿Que tipo de Arquitectura RNN usarias?',
+      Opciones: ['One to Many', 
+                 'One to One',
+                  'Many to Many',
+                  'Many to one'],
+      Respuestas: 'Many to one'
+    }  
+    ]
   }, {
-    id:'3',
+    id:'2',
     titulo: 'Interaccion humano computador',
-    descripcion: 'esto es una prueba que no ira algun lado xd por ede mueres aaaa'
+    descripcion: 'esto es una prueba del curso de seguridad',
+    Tarjetas:[{
+      id: '1',
+      Pregunta: '¿Ques es un malware?',
+      Opciones: ['Es un programa informatico que tiene como objetivo hacer dano a sistemas', 
+                 'Es un tipo de inteliegencia artificial para hacer caras',
+                  'Es un tipo de video juego '],
+      Respuestas: 'Es un programa informatico que tiene como objetivo hacer dano a sistemas'
+    }]
   }
   ]//width: 900,    height: 900, <img    style={{borderRadius: '50%'}}
  // src={"https://drive.google.com/uc?export=view&id=1e9TrTH56TwOvOuKBPzIwfEuZwrz605sn"}
@@ -149,9 +181,9 @@ const mazos = [{
                             </Card>
                           </Grow>:null}
                   </Box> 
-                  <Box sx={{
-                              mx: 50,
-                              width: 500}}>
+                  <Box sx={{mx:'12%',
+                            position:'absolute',
+                              width: '65%'}}>
                           <Mazos getmazo={mazos} showT={setShowTarjetas} />
                   </Box>
         </React.Fragment>

@@ -21,6 +21,12 @@ import Button from '@mui/material/Button';
 import SaveIcon from '@mui/icons-material/Save';
 import Grow from '@mui/material/Grow';
 import Slide from '@mui/material/Slide';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText';
+import ListItemButton from '@mui/material/ListItemButton';
+
+
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -70,6 +76,9 @@ export default function Mazos(props) {
   Este archivo crea los Mazos, es decir cada sección la cual contendra  las tarjetas para el repaso
   y los proyectos.
   {show?<BasicCard/>:null}
+  sx={{fontWeight:'bold', color:'white', '&:hover': {backgroundColor: '#00b347'}}}
+  mazo.Tarjetas.length
+    
 */
   return (
 
@@ -115,7 +124,7 @@ export default function Mazos(props) {
                       </Grow>:null}
         </Box> 
     <Slide direction="up" timeout={1000} in={true} mountOnEnter unmountOnExit>
-      <Box mt={20} sx={{position: 'absolute', pr:1.5, background:'#20B2AA'}}>
+      <Box mt={'10%'} sx={{position: 'absolute',  background:'#20B2AA'}}>
         {
         mazos.map((mazo, idx)=>{
           return  (
@@ -155,6 +164,18 @@ export default function Mazos(props) {
                         <Typography variant="h6">
                               {mazo.descripcion}
                         </Typography>
+                          <List sx={{fontWeight: 'bold', color: 'white',bgcolor: '#454545'}}>
+                              {mazo.Tarjetas.map((value) => (
+                                <ListItem
+                                  key={value}
+                                  disableGutters
+                                >
+                                  <ListItemButton sx={{fontWeight:'bold', color:'white', '&:hover': {backgroundColor: '#00b347', color:'black'}}}>                                  
+                                      <ListItemText primary={`${value.Pregunta}`} />
+                                  </ListItemButton>
+                                </ListItem>
+                              ))}
+                          </List>      
                       </AccordionDetails>
                   </Accordion>
               </React.Fragment>

@@ -45,25 +45,28 @@ export default function Register(props){
     };
         return (
     <Box sx={{
-            mx: '30%',
+            mx: '34%',
             mt:'10%',
             position: 'absolute',
             }}>  
-                 <Box sx={{justifyContent:"center" , display: 'flex' }}>
+                 <Grow  timeout={1000} in={true}>
+                 <Box sx={{justifyContent:"center"}}>
                         <Stack spacing={4}>
-                                <Typography sx={{textAlign:'center',fontWeight: 'bold'}} variant="h3" component="div">
-                                    Registro de usuario
-                                </Typography>
-                                <FormControl  sx={{m: 2, width: '45ch' }} variant="outlined">
-                                    <TextField id="outlined-basic" label="Nombre" defaultValue= {''} variant="outlined" />
+                                <FormControl  sx={{width: '45ch' }} variant="outlined">
+                                        <Typography sx={{textAlign:'center',fontWeight: 'bold'}} variant="h3" component="div">
+                                            Registro de usuario
+                                        </Typography>
                                 </FormControl>
-                                <FormControl  sx={{m: 2, width: '45ch' }} variant="outlined">
-                                    <TextField id="outlined-basic" label="Apellido" defaultValue= {''} variant="outlined" />
+                                <FormControl  sx={{ width: '45ch' }} variant="outlined">
+                                        <TextField id="outlined-basic" label="Nombre" defaultValue= {''} variant="outlined" />
                                 </FormControl>
-                                <FormControl sx={{m: 2, width: '45ch' }} variant="outlined">
-                                    <TextField  id="outlined-basic" label="Correo" defaultValue= {''} variant="outlined" />
+                                <FormControl  sx={{ width: '45ch' }} variant="outlined">
+                                        <TextField id="outlined-basic" label="Apellido" defaultValue= {''} variant="outlined" />
                                 </FormControl>
-                                <FormControl  sx={{ m: 2, width: '45ch' }} variant="outlined">
+                                <FormControl sx={{ width: '45ch' }} variant="outlined">
+                                        <TextField  id="outlined-basic" label="Correo" defaultValue= {''} variant="outlined" />
+                                </FormControl>
+                                <FormControl  sx={{  width: '45ch' }} variant="outlined">
                                     <InputLabel htmlFor="outlined-adornment-password">Contraseña</InputLabel>
                                     <OutlinedInput
                                             id="outlined-adornment-password"
@@ -84,12 +87,17 @@ export default function Register(props){
                                             }
                                             label="Password"
                                         />
-                                    <Button  sx={{m:4,  width: '45ch', p:2, borderRadius: '3%', color: 'white', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
-                                        <Typography sx= {{fontWeight: 'bold'}} variant = 'h5'>Comenzemos 😁</Typography>
-                                    </Button>
                                 </FormControl>
+                                        <FormControl sx={{m: 2, width: '45ch' }} variant="outlined">
+                                                    <Button  onClick={()=>{
+                                                                        history.push('/Presentacion')
+                                                                    }}  sx={{ p:2, borderRadius: '3%', color: 'white', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
+                                                        <Typography sx= {{fontWeight: 'bold'}} variant = 'h5'>Comenzemos 😁</Typography>
+                                                    </Button>
+                                        </FormControl>
                                 </Stack>                
                             </Box>
+                        </Grow>
                     </Box>
     )
 }
