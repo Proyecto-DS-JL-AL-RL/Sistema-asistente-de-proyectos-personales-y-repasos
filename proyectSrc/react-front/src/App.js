@@ -85,7 +85,7 @@ function App() {
                           <Inicio logged={{logged,setLogged}}/>
                         </Route>
                         <Route exact path = "/Tarjetas/:idSeccion" >
-                                <Tarjetas/>
+                                <Tarjetas  showAdd={{showAnadir, setShowAnadir}} />
                         </Route>
                             <Route path = '/Mazos'>
                                   <VerMazos showAdd={{showAnadir, setShowAnadir}} showFeed={{showFeedBack, setShowFeedBack}}/>

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Pagination from '@mui/material/Pagination';
@@ -51,12 +51,15 @@ const Opt = styled(Paper)(({ theme }) => ({
   border: '6px solid black',
 }));
 
-export default function VerTarjeta() {
+export default function VerTarjeta(props) {
   const [page, setPage] = React.useState(1);
   const handleChange = (event, value) => {
     setPage(value);
   };
-
+  /* eslint-disable */
+  useEffect(() => {
+    props.showAdd.setShowAnadir({card:false, icon:false});
+  },[]);
   return (
     <React.Fragment>
     <Box
@@ -121,8 +124,8 @@ export default function VerTarjeta() {
                                                                   <Grid item xs>
                                                                           <Box sx={{ width: '100%' }}>
                                                                               <Stack spacing={'4%'}>
-                                                                                  <Button className='button-main'  sx={{ border: '5px solid black', borderRadius:'6%',p:9,color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}><Typography variant="body2" component="div">{mazo.Tarjetas[page-1].Opciones[0]}</Typography></Button>
-                                                                                  <Button className='button-main'  sx={{ border: '5px solid black', borderRadius:'6%',p:9, color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}><Typography variant="body2" component="div">{mazo.Tarjetas[page-1].Opciones[2]}</Typography></Button>
+                                                                                  <Button className='button-main'  sx={{height:'20ch', width: '80ch', border: '5px solid black',color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}><Typography variant="body2" component="div">{mazo.Tarjetas[page-1].Opciones[0]}</Typography></Button>
+                                                                                  <Button className='button-main'  sx={{height:'20ch', width: '80ch', border: '5px solid black', color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}><Typography variant="body2" component="div">{mazo.Tarjetas[page-1].Opciones[2]}</Typography></Button>
                                                                               </Stack>
                                                                           </Box>
                                                                   </Grid>
@@ -133,8 +136,8 @@ export default function VerTarjeta() {
                                                                   <Grid item xs>
                                                                           <Box sx={{ width: '100%' }}>
                                                                               <Stack spacing={'4%'}>
-                                                                                  <Button className='button-main'  sx={{border: '5px solid black', borderRadius:'6%',p:9,color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}> <Typography variant="body2" component="div">{mazo.Tarjetas[page-1].Opciones[1]}</Typography></Button>
-                                                                                  <Button className='button-main'  sx={{border: '5px solid black', borderRadius:'6%',p:9, color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}><Typography variant="body2" component="div">{mazo.Tarjetas[page-1].Opciones[3]}</Typography></Button>
+                                                                                  <Button className='button-main'  sx={{height:'20ch', width: '80ch',border: '5px solid black', color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}> <Typography variant="body2" component="div">{mazo.Tarjetas[page-1].Opciones[1]}</Typography></Button>
+                                                                                  <Button className='button-main'  sx={{height:'20ch', width: '80ch', border: '5px solid black',  color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}><Typography variant="body2" component="div">{mazo.Tarjetas[page-1].Opciones[3]}</Typography></Button>
                                                                               </Stack>
                                                                           </Box>
                                                                   </Grid>
