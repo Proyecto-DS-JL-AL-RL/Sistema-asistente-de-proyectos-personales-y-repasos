@@ -218,16 +218,16 @@ export default function Mazos(props) {
                                           <IconButton onClick={()=>{
                                             setShowEditCard(true);
                                             setTarjeta(value)
-                                          }} className='button-main' sx={{color:'white',  '&:hover': {backgroundColor: '#00b347', color:'black'}}} aria-label="comment">
+                                          }}  sx={{color:'white',  '&:hover': {backgroundColor: '#00b347', color:'black'}}} aria-label="comment">
                                               <EditIcon/>
                                           </IconButton>
-                                          <IconButton  className='button-main' sx={{color:'white',  '&:hover': {backgroundColor: '#00b347', color:'black'}}} aria-label="comment">
+                                          <IconButton   sx={{color:'white',  '&:hover': {backgroundColor: '#00b347', color:'black'}}} aria-label="comment">
                                               <DeleteIcon />
                                           </IconButton>
                                     </React.Fragment>
                                   }
                                 >
-                                  <ListItemButton className='button-main' sx={{fontWeight:'bold', color:'white', '&:hover': {backgroundColor: '#00b347', color:'black'}}}>                                  
+                                  <ListItemButton sx={{fontWeight:'bold', color:'white', '&:hover': {backgroundColor: '#00b347', color:'black'}}}>                                  
                                       <ListItemText primary={`${value.Pregunta}`} />
                                   </ListItemButton>
                                 </ListItem>

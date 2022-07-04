@@ -5,8 +5,10 @@ import Box from '@mui/material/Box';
 import Toolbar from   '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import InputBase from  '@mui/material/InputBase';
-import MenuIcon from   '@mui/icons-material/Menu';
+//import InputBase from  '@mui/material/InputBase';
+import QuestionMarkRoundedIcon from '@mui/icons-material/QuestionMarkRounded';
+import MicIcon from '@mui/icons-material/Mic';
+import AddIcon from '@mui/icons-material/Add';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -24,7 +26,7 @@ const Search = styled('div')(({ theme }) => ({
   },
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
+/*const SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: '100%',
   position: 'absolute',
@@ -50,8 +52,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-
-export default function AppBarSearch() {
+*/
+export default function AppBarSearch(props) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="relative" color='transparent'>
@@ -63,7 +65,7 @@ export default function AppBarSearch() {
             aria-label="open drawer"
             sx={{ mr: 2 }}
           >
-            <img src="https://i.pinimg.com/originals/d5/16/80/d5168001add6c3c50a1ea9328b466013.png" className='img-medalla'></img>
+            <img src="https://i.pinimg.com/originals/d5/16/80/d5168001add6c3c50a1ea9328b466013.png" alt="logro" className='img-medalla'></img>
           </IconButton>
           <Typography
             variant="h6"
@@ -78,15 +80,23 @@ export default function AppBarSearch() {
               color="inherit"
               
             >
-              <MenuIcon />
+              <QuestionMarkRoundedIcon onClick={()=>{props.ClickButton.setShowFeedBack({card:true, icon:true})}} sx={{width: 56, height: 56, color:'white', background:'green', p:1, borderRadius:50}}/> 
+  
             </IconButton>
 
             <IconButton
               color="inherit"
               
-            >
-              <MenuIcon />
+            >        
+                <MicIcon sx={{p:1, borderRadius:50, background:'red',
+                color:'white', width: 56, height: 56 }}/>
             </IconButton>
+            {props.stateButton.showAnadir.icon?<IconButton
+              color="inherit"
+              
+            >        
+              <AddIcon mx={2} onClick={()=>{props.ClickButton.setShowAnadir({card:true, icon:true})}} sx={{width: 56, height: 56, background:'purple', color:'white', p:1, borderRadius:50, '&:hover': {backgroundColor: '#6f2da8'}}}/>
+            </IconButton>:null}
           </Search>
         </Toolbar>
       </AppBar>

@@ -52,21 +52,22 @@ function App() {
     }
   })
   const [logged,setLogged] = useState(true);
-  
+  const [showFeedBack, setShowFeedBack] = useState({card:false, icon:false})
 
+  const [showAnadir, setShowAnadir] = useState({card:false, icon:false})
   return (
           <div className='container-main'>
               <button onClick = {()=>{listening?SR.stopListening():SR.startListening({language: 'es', continuous: CONTINOUS_});setListeningState(!listeningState)}}>xd</button>
                   <DrawerComponent/>
                   <div className='other-container'>
                     <div className='head-container'>
-                      <AppBarSearch/>
+                      <AppBarSearch stateButton={{showFeedBack, showAnadir}} ClickButton={{setShowFeedBack, setShowAnadir}}/>
                     </div>
                     <div className='content-container'>
                       {transcript}
                       <Switch>
                         <Route exact path = '/'>
-                          <MostrarFuncionalidades/>
+                          <MostrarFuncionalidades showAdd={{showAnadir, setShowAnadir}} showFuncionalidades={{showFeedBack, setShowFeedBack}}/>
                         </Route>
                         <Route exact path = '/registro'>
                           <Register/>
@@ -87,7 +88,7 @@ function App() {
                                 <Tarjetas/>
                         </Route>
                             <Route path = '/Mazos'>
-                                  <VerMazos/>
+                                  <VerMazos showAdd={{showAnadir, setShowAnadir}} showFeed={{showFeedBack, setShowFeedBack}}/>
                             </Route>
                             <Route path = '/horario'>
                               <Horario/>
