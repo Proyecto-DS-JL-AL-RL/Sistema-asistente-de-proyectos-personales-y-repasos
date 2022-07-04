@@ -1,11 +1,11 @@
-import React, {useState} from "react";
+import React, {useEffect} from "react";
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
+//import Grid from '@mui/material/Grid';
 import Mazos from '../components/Mazos'
-import MicIcon from '@mui/icons-material/Mic';
-import QuestionMarkRoundedIcon from '@mui/icons-material/QuestionMarkRounded';
-import AddIcon from '@mui/icons-material/Add';
+//import MicIcon from '@mui/icons-material/Mic';
+//import QuestionMarkRoundedIcon from '@mui/icons-material/QuestionMarkRounded';
+//import AddIcon from '@mui/icons-material/Add';
 import Tooltip from '@mui/material/Tooltip';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -18,6 +18,7 @@ import Grow from '@mui/material/Grow';
 import Divider from '@mui/material/Divider';
 import Fade from '@mui/material/Fade';
 //import Paper from '@mui/material/Paper';
+import happy from './img/happy.png'
 
 
 const mazos = [
@@ -74,34 +75,20 @@ const mazos = [
  // /> 
 
 
-  export default function VerMazos(){
-    const [showAnadir, setShowAnadir] = useState(false)
-    const [showFeedBack, setShowFeedBack] = useState(false)
+  export default function VerMazos(props){
+        /* eslint-disable */
+        useEffect(() => {
+          props.showAdd.setShowAnadir({card:false, icon:true});
+        },[]);
         return (
         <React.Fragment>
                 <Box sx={{ flexGrow: 1}}>
-                <Fade timeout={2000} in={true}>
-                          <Typography mx={10} mt={6} sx={{fontWeight: 'bold'}} variant = 'h3'>
-                                        Tarjetas de Repaso
-                            </Typography>
-                </Fade>
-                <Fade timeout={2000} in={true}>
-                            <Grid container spacing={1}  columns={6}>
-                              <Grid item xs={2} ml={220} mt={-5}>
-                                  <MicIcon sx={{p:1, borderRadius:50, background:'red',
-                                                color:'white', width: 56, height: 56 }}/>
-                              </Grid>
-                              <Grid item xs={2} ml={230} mt={-13.4}>
-                                        <QuestionMarkRoundedIcon onClick={()=>{setShowFeedBack(true)}} sx={{width: 56, height: 56, color:'white', background:'green', p:1, borderRadius:50}}/>
-                              </Grid>
-                              <Grid item ml={245} mt={-13}>
-                              <Tooltip title="añadir" placement="right">
-                                  <AddIcon onClick={()=>{setShowAnadir(true)}} mx={2} sx={{width: 56, height: 56, background:'purple', color:'white', p:1, borderRadius:50, '&:hover': {backgroundColor: '#6f2da8'}}}/>                            
-                                  </Tooltip>
-                                </Grid>
-                            </Grid>
-                      </Fade>
-                    </Box>
+                    <Fade timeout={2000} in={true}>
+                              <Typography mx={10} mt={6} sx={{fontWeight: 'bold'}} variant = 'h3'>
+                                            Tarjetas de Repaso
+                                </Typography>
+                    </Fade>
+                </Box>
                           
                     <Box  sx={{
                         width: 350,
@@ -110,13 +97,13 @@ const mazos = [
                         position: 'absolute',
                       }}
                       >
-                  {showAnadir?
-                        <Grow  timeout={1000}  in={showAnadir}>
+                  {props.showAdd.showAnadir.card?
+                        <Grow  timeout={1000}  in={props.showAdd.showAnadir.card}>
                           <Box  justifyContent="center" sx={{mx:'200%', width: '200%', position:'absolute', mt:'4%', display: 'flex'}}> 
                                   <Card  sx={{borderRadius: '3%',  width: '160%', border: '0.5px solid black'}}>
                                       <CardContent>
                                           <Tooltip title="Cancelar" placement="right">
-                                              <Button sx={{mx:'90%'}} onClick={(e)=>{setShowAnadir(false)}}>
+                                              <Button sx={{mx:'90%'}} onClick={(e)=>{props.showAdd.setShowAnadir({card:false, icon:true})}}>
                                                       <CloseIcon  sx={{p:1, backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
                                               </Button>
                                           </Tooltip>   
@@ -137,7 +124,7 @@ const mazos = [
                                               </Box>
                                               <Box  justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>
                                                     <Tooltip title="Guardar" placement="left">
-                                                      <Button onClick={()=>{setShowAnadir(false)}} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
+                                                      <Button onClick={()=>{props.showAdd.setShowAnadir({card:false, icon:true})}} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
                                                         <SaveIcon sx={{p:1}}/>
                                                       </Button>
                                                     </Tooltip>
@@ -147,12 +134,12 @@ const mazos = [
                             </Box>
                           </Grow>:null}
 
-                          {showFeedBack?
-                        <Grow  timeout={1000}  in={showFeedBack}>
-                          <Card  sx={{borderRadius: '5%', mx:100, minWidth: 600, border: '0.5px solid black'  }}>
+                          {props.showFeed.showFeedBack.card?
+                        <Grow  timeout={1000}  in={props.showFeed.showFeedBack.card}>
+                          <Card  sx={{ mx:100, minWidth: 600, border: '0.5px solid black'  }}>
                                 <CardContent>
                                     <Tooltip title="Cancelar" placement="right">
-                                            <CloseIcon onClick={(e)=>{setShowFeedBack(false)}} sx={{p:1,mx:65, backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
+                                            <CloseIcon onClick={(e)=>{props.showFeed.setShowFeedBack({card:false, icon:true})}} sx={{p:1,mx:65, backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
                                     </Tooltip>   
                                       <Typography sx={{fontWeight: 'bold', mx:3}} variant="h4" component="div">
                                           Feedback
@@ -161,7 +148,7 @@ const mazos = [
                                       <Typography sx={{textAlign: 'center'}} variant="h6">
                                         Esta parte de la página esta enfocada en la funcionalidad de repasos. Aquí 
                                         podra separar por temas las tarjetas que vaya creando. 
-                                        <img style={{width:'50%', height:'50%', borderRadius: '150%'}} alt='emoji' src="https://drive.google.com/uc?id=18BAWHAawYBjUCRmxZyrf_O4_fqRJKUk6"/> 
+                                        <img style={{width:'50%', height:'50%', borderRadius: '150%'}} alt='emoji' src={happy}/> 
                                       </Typography>
                                   </CardContent>
                             </Card>
@@ -174,4 +161,4 @@ const mazos = [
                   </Box>
         </React.Fragment>
     );
-}
+}//aca
