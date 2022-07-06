@@ -16,6 +16,9 @@ import Tooltip from '@mui/material/Tooltip';
 import CloseIcon from '@mui/icons-material/Close';
 import gambare from './img/gambare.webp'
 
+//<MicIcon className='button-main' sx={{p:2, borderRadius:'50%', background:'red',
+//color:'white', width: '30%', height: '30%', '&:hover': {backgroundColor: '#FF6347'} }}/>
+
 const mazo = {
   id:'1',
   titulo: 'Inteligencia Artificial',
@@ -156,20 +159,19 @@ export default function VerTarjeta(props) {
                                                                   <Grid item xs>
                                                                           <Box sx={{ width: '100%' }}>
                                                                               <Stack spacing={'2%'}>
-                                                                                  <Button className='button-main'  sx={{height:'18ch', width: '70ch', border: '5px solid black',color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}><Typography sx={{fontWeight: 'bold'}} variant="h6" component="div">{mazo.Tarjetas[page-1].Opciones[0]}</Typography></Button>
-                                                                                  <Button className='button-main'  sx={{height:'18ch', width: '70ch', border: '5px solid black', color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}><Typography sx={{fontWeight: 'bold'}}  variant="h6" component="div">{mazo.Tarjetas[page-1].Opciones[2]}</Typography></Button>
+                                                                                  <Button className='button-main'  sx={{height:'18ch', width: '70ch', border: '5px solid black',color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}><Typography sx={{fontWeight: 'bold'}} variant="h6" component="div"> a. {mazo.Tarjetas[page-1].Opciones[0]}</Typography></Button>
+                                                                                  <Button className='button-main'  sx={{height:'18ch', width: '70ch', border: '5px solid black', color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}><Typography sx={{fontWeight: 'bold'}}  variant="h6" component="div">b. {mazo.Tarjetas[page-1].Opciones[2]}</Typography></Button>
                                                                               </Stack>
                                                                           </Box>
                                                                   </Grid>
                                                                   <Grid mt={'10%'} item xs={'10%'}>
-                                                                              <MicIcon className='button-main' sx={{p:2, borderRadius:'50%', background:'red',
-                                                                              color:'white', width: '30%', height: '30%', '&:hover': {backgroundColor: '#FF6347'} }}/>
+                                                                              
                                                                   </Grid>
                                                                   <Grid item xs>
                                                                           <Box sx={{ width: '100%' }}>
                                                                               <Stack spacing={'2%'}>
-                                                                                  <Button className='button-main'  sx={{height:'18ch', width: '70ch',border: '5px solid black', color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}> <Typography sx={{fontWeight: 'bold'}} variant="h6" component="div">{mazo.Tarjetas[page-1].Opciones[1]}</Typography></Button>
-                                                                                  <Button className='button-main'  sx={{height:'18ch', width: '70ch', border: '5px solid black',  color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}><Typography sx={{fontWeight: 'bold'}} variant="h6" component="div">{mazo.Tarjetas[page-1].Opciones[3]}</Typography></Button>
+                                                                                  <Button className='button-main'  sx={{height:'18ch', width: '70ch',border: '5px solid black', color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}> <Typography sx={{fontWeight: 'bold'}} variant="h6" component="div">c. {mazo.Tarjetas[page-1].Opciones[1]}</Typography></Button>
+                                                                                  <Button className='button-main'  sx={{height:'18ch', width: '70ch', border: '5px solid black',  color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}><Typography sx={{fontWeight: 'bold'}} variant="h6" component="div">d. {mazo.Tarjetas[page-1].Opciones[3]}</Typography></Button>
                                                                               </Stack>
                                                                           </Box>
                                                                   </Grid>

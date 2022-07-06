@@ -55,9 +55,9 @@ function App() {
   const [showFeedBack, setShowFeedBack] = useState({card:false, icon:false})
 
   const [showAnadir, setShowAnadir] = useState({card:false, icon:false})
+  //<button onClick = {()=>{listening?SR.stopListening():SR.startListening({language: 'es', continuous: CONTINOUS_});setListeningState(!listeningState)}}>xd</button>
   return (
           <div className='container-main'>
-              <button onClick = {()=>{listening?SR.stopListening():SR.startListening({language: 'es', continuous: CONTINOUS_});setListeningState(!listeningState)}}>xd</button>
                   <DrawerComponent/>
                   <div className='other-container'>
                     <div className='head-container'>

@@ -4,6 +4,9 @@ import { styled} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+import img from './img/aver.jpg'
+import { Typography } from '@mui/material';
+
 //import { useHistory } from "react-router-dom";
 //import Tooltip from '@mui/material/Tooltip';
 //import Card from '@mui/material/Card';
@@ -43,8 +46,10 @@ export default function Inicio(props){
                 <Grid item xs={3} mt={35}  md = {10} sm={10} lg ={4} xl = {4.5}>
                               <Item ><Login/></Item>
                     </Grid>
-                  <Grid item xs={6.5}  mt={20}>
-                          esto es una prueba
+                  <Grid item xs={6.5}  mt={24}>
+                          <Item >
+                            <img src={img} alt="algo"/>
+                          </Item>
                     </Grid>
                 </Grid>
         </Box>
