@@ -284,7 +284,7 @@ export default function Horario() {
                 })
 
             }
-            <div className='descp-item-horario' id='description-horario'>
+            <div  className='descp-item-horario' id='description-horario'>
                 <div id="description-content-horario">
                     {contentDescription}
                 </div>
