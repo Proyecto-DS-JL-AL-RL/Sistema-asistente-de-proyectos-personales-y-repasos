@@ -48,7 +48,7 @@ const Opt = styled(Paper)(({ theme }) => ({
   width: '90%',
   textAlign: 'center',
   color: theme.palette.text.secondary,
-  border: '6px solid black',
+  
 }));
 
 export default function VerTarjeta(props) {
@@ -112,7 +112,7 @@ export default function VerTarjeta(props) {
                                                                 width: '90%',
                                                                 height: '15vw',
                                                                 textAlign: 'center',
-                                                                background:'#c8a2c8',
+                                                                background:'#c2c2c2',
                                                                 border: '3px solid black',
                                                                 '&:hover': {backgroundColor: '#FF6347'}
                                                             }}

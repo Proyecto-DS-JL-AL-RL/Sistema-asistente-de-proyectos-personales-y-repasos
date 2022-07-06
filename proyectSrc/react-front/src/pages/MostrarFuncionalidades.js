@@ -20,7 +20,6 @@ import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import './funcionalidades.css'
 import mehera from './img/mehera.webp'
-
     /*
     en este archivo se mostraran las funcionalidades del software 
     - Gestion de Proyectos y objetivos.
@@ -31,7 +30,7 @@ import mehera from './img/mehera.webp'
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor:'#BDBEC3',
     borderRadius:'2.5%',
-    padding: theme.spacing('3ch'),
+    padding: theme.spacing('2ch'),
     textAlign: 'center',
    }));
 
@@ -41,27 +40,27 @@ function FormRow(props) {
     
     return (
       <React.Fragment>
-            <Grid item xs={'5ch'}>
+            <Grid item xs={6}>
                 <Item>
-                    <Button className='button-main' sx={{width:'70ch', borderRadius:'5%', backgroundColor:green[700], '&:hover': {backgroundColor: green[500]}, padding: '30%'}}>
-                        <Typography sx={{fontSize:'3ch', color:'white'}}>Gestionar Proyectos</Typography>
+                    <Button className='button-main' sx={{width:'90%', height:'40ch', borderRadius:'5%', backgroundColor:green[700], '&:hover': {backgroundColor: green[500]}, pl:'20%', pr: '20%'}}>
+                        <Typography sx={{textAlign:'center',fontSize:'3ch', color:'white'}}>Gestionar Proyectos</Typography>
                     </Button>
                 </Item>
             <Item>
-                <Button className='button-main' sx={{width:'70ch', borderRadius:'5%', backgroundColor:orange[700], '&:hover': {backgroundColor: orange[600]}, padding: '30%'}}>
-                    <Typography sx={{fontWeight: 'bold', fontSize:'3ch', color:'white'}}>Organizar Actividades</Typography>
+                <Button className='button-main' sx={{width:'90%', height:'40ch', borderRadius:'5%', backgroundColor:orange[700], '&:hover': {backgroundColor: orange[600]}, pl:'20%', pr: '20%'}}>
+                    <Typography sx={{textAlign:'center',fontWeight: 'bold', fontSize:'3ch', color:'white'}}>Organizar Actividades</Typography>
                 </Button>
             </Item>
             </Grid>
-            <Grid item xs={'5ch'}>
+            <Grid item xs={6}>
                 <Item>
-                    <Button className='button-main' sx={{width:'70ch', borderRadius:'5%', backgroundColor:blue[700], '&:hover': {backgroundColor: blue[500]}, padding: '30%'}} onClick={()=>{props.history.push('/Mazos')}} >
-                        <Typography  sx={{fontSize:'3ch', color:'white'}}>Tarjetas de Repaso</Typography>
+                    <Button className='button-main' sx={{width:'90%', height:'40ch', borderRadius:'5%',backgroundColor:blue[700], '&:hover': {backgroundColor: blue[500]},pl:'20%', pr: '20%'}} onClick={()=>{props.history.push('/Mazos')}} >
+                        <Typography  sx={{textAlign:'center', fontSize:'3ch', color:'white'}}>Tarjetas de Repaso</Typography>
                     </Button>
                 </Item>
                 <Item>
-                        <Button className='button-main' sx={{width:'70ch', borderRadius:'5%', backgroundColor:red[700], '&:hover': {backgroundColor: red[500]}, padding: '30%'}}>
-                            <Typography  sx={{fontSize:'3ch', color:'white'}}>Dame algo que hacer</Typography>
+                        <Button className='button-main' sx={{width:'90%', height:'40ch', borderRadius:'5%',backgroundColor:red[700], '&:hover': {backgroundColor: red[500]}, pl:'20%', pr: '20%'}}>
+                            <Typography  sx={{textAlign:'center', fontSize:'3ch', color:'white'}}>Dame algo que hacer</Typography>
                         </Button>
                 </Item>
             </Grid>
@@ -87,20 +86,20 @@ export default function MostrarFuncionalidades(props) {
                   position:'absolute',
                   justifyContent:"center",
                   zIndex:1,
-                  mt:'30ch',
+                  mt:'15ch',
                   width: '10ch', 
                   height: '10ch',
                 }}
                 >
                     {props.showFuncionalidades.showFeedBack.card?
                                 <Grow  timeout={1000}  in={props.showFuncionalidades.showFeedBack.card}>
-                                    <Card  sx={{position:'absolute',minWidth: '600%', mx:'850%', border: '0.5px solid black'  }}>
+                                    <Card  sx={{position:'absolute',minWidth: '600%', mx:'825%', border: '0.5px solid black'  }}>
                                             <CardContent>
                                                 <Tooltip title="Cancelar" placement="right">
                                                         <CloseIcon onClick={(e)=>{props.showFuncionalidades.setShowFeedBack({card:false, icon:false})}} sx={{p:1, mx:'93%', backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
                                                 </Tooltip>   
                                                 <Typography sx={{fontWeight: 'bold', fontsize:'1vw'}} variant="h4" component="div">
-                                                    Feedback
+                                                    Sugerencia
                                                 </Typography>
                                                 <Divider  variant="middle" />
                                                 <Typography sx={{textAlign: 'center'}}  variant="h6" color="text.primary">
@@ -120,19 +119,18 @@ export default function MostrarFuncionalidades(props) {
                             
                     </Fade>
                 </Box>   
-                    <Box mt={'3%'} mx={'19%'}>
-                        <Slide direction="up" timeout={1000} in={true} mountOnEnter unmountOnExit>
-                                <Grid container spacing={'2ch'}>
-                                    <Grid sx={{background:'#BDBEC3', border:'5px solid black', borderRadius:'2.5ch'}}>
-                                        <Grid container item sx={{flexWrap:'wrap',border:'5px solid black', borderRadius:'2.5ch'}} >
-                                                <Box sx={{ positon:'absolute', display: 'flex'}}> 
-                                                    <FormRow history={history}/>
-                                                </Box>
-                                        </Grid>
+                <Box mt={'3%'} ml={'17%'}>
+                    <Slide direction="up" timeout={1000} in={true} mountOnEnter unmountOnExit>
+                            <Grid   container spacing={'2%'}>
+                                    <Grid  item >
+                                            <Box flexWrap={'wrap'} sx={{height:'100%', width:'190%',background:'#BDBEC3',border:'5px solid black', borderRadius:'2.5ch', display: 'flex'}}> 
+                                                <FormRow history={history}/>
+                                            </Box>
                                     </Grid>
-                            </Grid>
-                        </Slide>
-                    </Box>
+                                
+                        </Grid>
+                    </Slide>
+                </Box>
         </React.Fragment>
     )
 }   
