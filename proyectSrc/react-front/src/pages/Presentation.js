@@ -87,7 +87,7 @@ export default function Presentacion(){
                                     <Stack spacing={'2%'}>
                                                 <Slide direction="up" mx={'2%'}  timeout={1000} in={true}  mountOnEnter unmountOnExit>
                                                         <Typography sx={{fontWeight: 'bold', textAlign: 'center'}}  variant = 'h3'>
-                                                            Recuerde  que puede usar la interfaz de Voz y asistente de ayuda con los siguientes iconos
+                                                            Recuerde  que puede usar la interfaz de Voz y el asistente de ayuda con los siguientes iconos
                                                         </Typography>
                                                 </Slide>
                                             <Box display="flex">

@@ -108,7 +108,7 @@ const mazos = [
                                               </Button>
                                           </Tooltip>   
                                             <Typography sx={{fontWeight: 'bold', mx:3}} variant="h4" component="div">
-                                                Añadir Sección
+                                                Añadir Mazo
                                             </Typography>
                                             <Box  justifyContent="center" sx={{ display: 'flex', flexWrap: 'wrap' }}>
                                                 <FormControl  sx={{m: 2, width: '45ch' }} variant="outlined">
@@ -142,7 +142,7 @@ const mazos = [
                                             <CloseIcon onClick={(e)=>{props.showFeed.setShowFeedBack({card:false, icon:true})}} sx={{p:1,mx:65, backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
                                     </Tooltip>   
                                       <Typography sx={{fontWeight: 'bold', mx:3}} variant="h4" component="div">
-                                          Feedback
+                                          Sugerencia
                                       </Typography>
                                       <Divider  variant="middle" />
                                       <Typography sx={{textAlign: 'center'}} variant="h6">

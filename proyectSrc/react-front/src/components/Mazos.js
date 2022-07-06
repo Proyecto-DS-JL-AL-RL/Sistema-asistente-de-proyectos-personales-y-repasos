@@ -107,7 +107,7 @@ export default function Mazos(props) {
                                     <Box  justifyContent="center" sx={{ display: 'flex', flexWrap: 'wrap' }}>
                                         <FormControl  sx={{m: 2, width: '45ch' }} variant="outlined">
                                             <Typography sx={{fontWeight: 'bold', mx:'1vw'}} variant="h4" component="div">
-                                                Editar Sección
+                                                Editar Mazo
                                             </Typography>
                                               <TextField sx={{py:2}} id="outlined-basic" label="Titulo de la Sección" defaultValue= {mazo.titulo} variant="outlined" />
                                               <TextField
@@ -150,7 +150,7 @@ export default function Mazos(props) {
                                                   <TextField sx={{py:'2%'}} id="outlined-basic" label="Opción 2" defaultValue= {tarjeta.Opciones[1]} variant="outlined" />
                                                   <TextField sx={{py:'2%'}} id="outlined-basic" label="Opción 3" defaultValue= {tarjeta.Opciones[2]} variant="outlined" />
                                                   <TextField sx={{py:'2%'}} id="outlined-basic" label="Opción 4" defaultValue= {tarjeta.Opciones[3]} variant="outlined" />
-                                                  <TextField sx={{py:'2%'}} id="outlined-basic" label="Respuesta" defaultValue= {tarjeta.Respuestas} variant="outlined" />
+                                                  <TextField sx={{py:'2%'}} id="outlined-basic" label="Respuesta (poner el número de la  rpta e.g : 1 o 2 o ..)" defaultValue= {tarjeta.Respuestas} variant="outlined" />
                                           </FormControl>
                                         </Box>
                                         <Box  justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>
