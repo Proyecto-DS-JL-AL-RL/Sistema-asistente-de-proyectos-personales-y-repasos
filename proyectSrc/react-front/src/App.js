@@ -23,6 +23,7 @@ import ActivityQueue from './pages/ActivityQueue';
 import Register from './pages/Register';
 import MostrarFuncionalidades from './pages/MostrarFuncionalidades'
 import VerMazos from './pages/VerMazo'
+import Proyectos from './pages/Proyectos';
 
 
 
@@ -51,17 +52,20 @@ function App() {
       SR.stopListening(); 
     }
   })
+
+  const listen = ()=> { SR.startListening({language:'es',continuous:false})}
+
   const [logged,setLogged] = useState(true);
   const [showFeedBack, setShowFeedBack] = useState({card:false, icon:false})
 
   const [showAnadir, setShowAnadir] = useState({card:false, icon:false})
   return (
           <div className='container-main'>
-              <button onClick = {()=>{listening?SR.stopListening():SR.startListening({language: 'es', continuous: CONTINOUS_});setListeningState(!listeningState)}}>xd</button>
+              
                   <DrawerComponent/>
                   <div className='other-container'>
                     <div className='head-container'>
-                      <AppBarSearch stateButton={{showFeedBack, showAnadir}} ClickButton={{setShowFeedBack, setShowAnadir}}/>
+                      <AppBarSearch stateButton={{showFeedBack, showAnadir}} ClickButton={{setShowFeedBack, setShowAnadir, listen}}/>
                     </div>
                     <div className='content-container'>
                       {transcript}
@@ -71,6 +75,9 @@ function App() {
                         </Route>
                         <Route exact path = '/registro'>
                           <Register/>
+                        </Route>
+                        <Route path = '/proyectos'>
+                          <Proyectos/>
                         </Route>
                         <Route path = '/proyect'>
                           <ProyectoView/>

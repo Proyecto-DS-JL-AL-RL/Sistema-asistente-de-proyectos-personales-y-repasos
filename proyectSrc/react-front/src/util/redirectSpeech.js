@@ -1,10 +1,10 @@
 
 const paths = {
-    "inicio": "/inicio",
+    "inicio": "/",
     "dame algo que hacer":"/algoQueHacer",
     "darme algo que hacer":"/algoQueHacer",
-    "tarjetas":"/",
-    "mazos":"/",
+    "Repasos":"/Mazos",
+    "mazos":"/Mazos",
     "cartas":"/",
     "proyecto":"/proyect",
     "Dashboard":"/proyect"
@@ -16,7 +16,7 @@ const getCommands = (location,history) =>{
     const comando = [{
         command: ["Llévame a *"],
         callback: (frase) =>{
-            alert(frase);
+            //alert(frase);
             const path = paths[frase]
             if (path != null && path != undefined){
                 if (path != location.pathname){
@@ -30,7 +30,7 @@ const getCommands = (location,history) =>{
     {
         command: ["Llévame a *."],
         callback: (frase) =>{
-            alert(frase);
+            //alert(frase);
             const path = paths[frase]
             if (path != null && path != undefined){
                 if (path != location.pathname){
