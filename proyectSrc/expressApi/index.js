@@ -14,7 +14,7 @@ const corsOptions = {
 
       callback(new Error('Not allowed by CORS'));
   }
-}
+}//Por usar, por probar
 
 app.use(cors(
     //corsOptions    
@@ -29,7 +29,7 @@ app.use(session({
     cookie:{
         expires: 3*60*60*10000
     }
-}));
+}));//Por usar (Yo me encargo :v :v :V )
 
 app.get('/asd',async (req,res)=>{
     res.json({prueba:'La real Prueba'});

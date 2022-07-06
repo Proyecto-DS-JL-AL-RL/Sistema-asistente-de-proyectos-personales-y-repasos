@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import QuestionMarkRoundedIcon from '@mui/icons-material/QuestionMarkRounded';
 import MicIcon from '@mui/icons-material/Mic';
 import AddIcon from '@mui/icons-material/Add';
-
+import SR,{useSpeechRecognition} from 'react-speech-recognition';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -53,7 +53,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 */
+
 export default function AppBarSearch(props) {
+  const {listening,transcript} = useSpeechRecognition();
+
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="relative" color='transparent'>
@@ -88,8 +92,17 @@ export default function AppBarSearch(props) {
               color="inherit"
               
             >        
+              {listening?
+                <MicIcon sx={{p:1, borderRadius:50, background:'blue',
+                color:'white', width: 56, height: 56 }}
+                onClick={()=>{props.ClickButton.listen()}} 
+                />
+                :
                 <MicIcon sx={{p:1, borderRadius:50, background:'red',
-                color:'white', width: 56, height: 56 }}/>
+                color:'white', width: 56, height: 56 }}
+                onClick={()=>{props.ClickButton.listen()}} 
+                />
+              }
             </IconButton>
             {props.stateButton.showAnadir.icon?<IconButton
               color="inherit"
