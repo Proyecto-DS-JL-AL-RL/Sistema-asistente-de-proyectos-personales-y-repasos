@@ -1,0 +1,75 @@
+.micro-form{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-bottom: 15px;
+    margin-right: 20px;
+    border-radius: 50%;
+    background-color: red;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 0 3px 3px rgba(0, 0,0 , 0.7);
+    cursor: pointer;
+    
+}
+.micro-form:hover{
+    box-shadow: 0 0 8px 8px rgba(0, 0,0 , 0.6);
+    background-color: rgb(237, 106, 106);
+    transition: box-shadow 0.8s,background-color 0.4s;
+}
+.actividad-description{
+    border-radius:10px;
+}
+.button-close{
+    background-color: red;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    font-size: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 1px 1px rgba(0, 0,0 , 0.7);
+    cursor: pointer;
+}
+.button-close:hover{
+    box-shadow: 0 0 4px 4px rgba(0, 0,0 , 0.6);
+    
+    transition: box-shadow 0.5s;
+}
+.ctn-bld{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 2px;
+    border-bottom: solid 2px black;
+    margin-bottom: 10px;
+   
+    align-items: center;
+    
+}
+.button-link-descripcion{
+    display: flex;;
+    font-size: 1.2em;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    flex-direction: row;
+    align-items: center;
+    color: white;
+    background-color: rgb(56, 137, 48);
+
+    border-radius: 5px;
+    border: solid 2 'aqua';
+    box-shadow: 0 0 1px 1px rgba(0, 0,0 , 0.7);
+    transition: box-shadow 0.2s;
+}
+.description-button-link{
+    font-size: 1.4em;
+    
+}
+.button-link-descripcion:hover{
+    color:rgb(255, 255, 0);
+    box-shadow: 0 0 3px 3px rgba(0, 0,0 , 0.6);
+}

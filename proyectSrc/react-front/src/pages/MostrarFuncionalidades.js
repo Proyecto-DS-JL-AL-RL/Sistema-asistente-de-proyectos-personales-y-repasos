@@ -42,7 +42,7 @@ function FormRow(props) {
       <React.Fragment>
             <Grid item xs={6}>
                 <Item>
-                    <Button className='button-main' sx={{width:'90%', height:'40ch', borderRadius:'5%', backgroundColor:green[700], '&:hover': {backgroundColor: green[500]}, pl:'20%', pr: '20%'}}>
+                    <Button className='button-main' sx={{width:'90%', height:'40ch', borderRadius:'5%', backgroundColor:green[700], '&:hover': {backgroundColor: green[500]}, pl:'20%', pr: '20%'}} onClick={()=>{props.history.push('/proyect')}}>
                         <Typography sx={{textAlign:'center',fontSize:'3ch', color:'white'}}>Gestionar Proyectos</Typography>
                     </Button>
                 </Item>
@@ -59,7 +59,7 @@ function FormRow(props) {
                     </Button>
                 </Item>
                 <Item>
-                        <Button className='button-main' sx={{width:'90%', height:'40ch', borderRadius:'5%',backgroundColor:red[700], '&:hover': {backgroundColor: red[500]}, pl:'20%', pr: '20%'}}>
+                        <Button className='button-main' sx={{width:'90%', height:'40ch', borderRadius:'5%',backgroundColor:red[700], '&:hover': {backgroundColor: red[500]}, pl:'20%', pr: '20%'}} onClick={()=>{props.history.push('/algoQueHacer')}}>
                             <Typography  sx={{textAlign:'center', fontSize:'3ch', color:'white'}}>Dame algo que hacer</Typography>
                         </Button>
                 </Item>

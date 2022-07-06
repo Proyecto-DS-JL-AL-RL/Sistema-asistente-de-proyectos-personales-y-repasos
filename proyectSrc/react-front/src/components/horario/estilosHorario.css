@@ -1,0 +1,25 @@
+.config-horario{
+    position: absolute;
+    margin-left: 10%;
+    max-width: 800px;
+    min-width: 500px;
+    z-index: 100;
+}
+@media (max-width:600px) {
+    .config-horario{
+        min-width: 100%;
+    }
+}
+.mostrar-tema{
+    width: 100%;
+    display: grid;
+    
+    grid-template-columns: repeat(4,1fr);
+}
+.item-tema{
+    background-color: red;
+    margin: 5px;
+}
+.item-temp{
+    background-color: aqua;
+}
