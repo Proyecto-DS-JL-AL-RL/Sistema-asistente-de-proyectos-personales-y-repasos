@@ -1,8 +1,13 @@
 .horario-container{
+
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+   
+}
+.descp-item-horario{
+    display: none;
 }
 #root-horario{
     
@@ -27,7 +32,7 @@
 }
 .descp-item-horario{
     position: absolute;
-    
+   
     width: 100px;
 }
 .horas-item{
@@ -35,11 +40,22 @@
 }
 .actividad-description{
     max-width: 800px;
-    
+  
     display: flex;
 }
-@media (max-width:1000px){
+#description-content-horario{
+    background-color: orange;
+    text-align: center;
+    min-width: 150px;
+    height: 100%;
+    overflow: none;
+    padding: 4px;
     
+}
+@media (max-width:1100px){
+    .actividad-description{
+        min-width: 400px;
+    }
     .horario-container{
         flex-direction: column;
     }
@@ -52,4 +68,7 @@
     #root-horario{
         max-width: 800px;
     }
+}
+.item-horario-ocupado{
+    background-color: rgb(214, 190, 144);
 }
