@@ -9,6 +9,12 @@ import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import './funcionalidades.css'
 import Grow from '@mui/material/Grow';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Divider from '@mui/material/Divider';
+import Tooltip from '@mui/material/Tooltip';
+import CloseIcon from '@mui/icons-material/Close';
+import gambare from './img/gambare.webp'
 
 const mazo = {
   id:'1',
@@ -64,14 +70,38 @@ export default function VerTarjeta(props) {
   return (
     <React.Fragment>
       <Typography sx={{fontWeight: 'bold'}} variant = 'h3'>
-                                            Explore Nuestras Funcionalidades
+                  {mazo.titulo}
       </Typography>
+      
     <Box
       sx={{
         justifyContent: 'center',
         display: 'flex',
       }}
-    > <Grow in={true}>
+    > 
+    {props.showFuncionalidades.showFeedBack.card?
+                               
+                               <Card  sx={{zIndex:1, position:'absolute', minWidth: '25%', mx:'825%', border: '0.5px solid black'  }}>
+                                       <CardContent>
+                                           <Tooltip title="Cancelar" placement="right">
+                                                   <CloseIcon onClick={(e)=>{props.showFuncionalidades.setShowFeedBack({card:false, icon:false})}} sx={{p:1, mx:'93%', backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
+                                           </Tooltip>   
+                                           <Typography sx={{fontWeight: 'bold', fontsize:'1vw'}} variant="h4" component="div">
+                                               Sugerencia
+                                           </Typography>
+                                           <Divider  variant="middle" />
+                                           <Typography sx={{textAlign: 'center'}}  variant="h6" color="text.primary">
+                                               En esta sección podras realizar tus repasos  de los temas que desees aprender 🤓.
+                                               Escoge alguna de las opciones o  usa Nuestra interfaz de voz 🎙 para seleccionar la respuesta.
+                                           </Typography>
+                                          
+                                       </CardContent>
+                                       <Box  sx={{mt: '2%', mx:'23%', display:'flex'}}>
+                                               <img style={{width:'30ch', height:'30ch'}} src={gambare} alt="mehera"/>
+                                          </Box>
+                                   </Card>
+                           :null}
+    <Grow in={true}>
                 <Paper sx={{
                     mx:'4%',  
                     position: 'absolute',        
@@ -85,7 +115,6 @@ export default function VerTarjeta(props) {
                         <Paper sx={{
                             mt:'1%',
                             mx: '-1%',
-                            zIndex:1,  
                             position: 'absolute',        
                             width: '99.9%',
                             height: '99%',
@@ -97,7 +126,7 @@ export default function VerTarjeta(props) {
                                 <Paper sx={{
                                     mt:'1%',
                                     mx: '-1%',
-                                    zIndex:1,  
+                                  
                                     position: 'absolute',        
                                     width: '99.9%',
                                     height: '99%',
