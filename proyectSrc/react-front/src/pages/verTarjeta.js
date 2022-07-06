@@ -8,6 +8,7 @@ import MicIcon from '@mui/icons-material/Mic';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import './funcionalidades.css'
+import Grow from '@mui/material/Grow';
 
 const mazo = {
   id:'1',
@@ -15,9 +16,9 @@ const mazo = {
   descripcion: 'esto es un prueba porque estamos a punto de dar parcial de AI pero no estudie asi que es tu turno de colaborar.',
   Tarjetas:[{
     id: '1',
-    Pregunta: '¿Que es la IA?',
+    Pregunta: '¿Que es la Inteligencia Artificial?',
     Opciones: ['Es un campo de la Botanica', 
-               'Area de la informatica que permite a las maquinas aprender',
+               'Área de la informática que permite a las máquinas aprender',
                 'Es una palabra en ingles',
                 'N.A.'],
     Respuestas: 2
@@ -62,17 +63,20 @@ export default function VerTarjeta(props) {
   },[]);
   return (
     <React.Fragment>
+      <Typography sx={{fontWeight: 'bold'}} variant = 'h3'>
+                                            Explore Nuestras Funcionalidades
+      </Typography>
     <Box
       sx={{
         justifyContent: 'center',
         display: 'flex',
       }}
-    >
+    > <Grow in={true}>
                 <Paper sx={{
                     mx:'4%',  
                     position: 'absolute',        
-                    width: '88%',
-                    height: '80%',
+                    width: '86%',
+                    height: '70%',
                     color:'yellow',
                     background:'#c8a2c8',
                     border: '3px solid black'
@@ -108,36 +112,35 @@ export default function VerTarjeta(props) {
                                                         direction="column" 
                                                         justifyContent="center">      
                                                       
-                                                      <Paper sx={{mt:'3%',    
+                                                      <Paper sx={{mt:'2%',    
                                                                 width: '90%',
                                                                 height: '15vw',
-                                                                textAlign: 'center',
                                                                 background:'#c2c2c2',
                                                                 border: '3px solid black',
-                                                                '&:hover': {backgroundColor: '#FF6347'}
+                                                                '&:hover': {backgroundColor: '#9b9b9b'}
                                                             }}
                                                                 variant="outlined" > 
-                                                                      <Typography mt={'8%'} sx={{fontWeight: 'bold'}} variant="h6" component="div">{mazo.Tarjetas[page-1].Pregunta}</Typography>
+                                                                      <Typography mt={'6.5%'} sx={{textAlign: 'center',fontWeight: 'bold'}} variant="h5" component="div">{mazo.Tarjetas[page-1].Pregunta}</Typography>
                                                       </Paper>
                                                       <Opt>
-                                                          <Grid  container spacing={'1%'}>
+                                                          <Grid  container mx={'2%'} spacing={'1%'}>
                                                                   <Grid item xs>
                                                                           <Box sx={{ width: '100%' }}>
-                                                                              <Stack spacing={'4%'}>
-                                                                                  <Button className='button-main'  sx={{height:'20ch', width: '80ch', border: '5px solid black',color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}><Typography variant="body2" component="div">{mazo.Tarjetas[page-1].Opciones[0]}</Typography></Button>
-                                                                                  <Button className='button-main'  sx={{height:'20ch', width: '80ch', border: '5px solid black', color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}><Typography variant="body2" component="div">{mazo.Tarjetas[page-1].Opciones[2]}</Typography></Button>
+                                                                              <Stack spacing={'2%'}>
+                                                                                  <Button className='button-main'  sx={{height:'18ch', width: '70ch', border: '5px solid black',color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}><Typography sx={{fontWeight: 'bold'}} variant="h6" component="div">{mazo.Tarjetas[page-1].Opciones[0]}</Typography></Button>
+                                                                                  <Button className='button-main'  sx={{height:'18ch', width: '70ch', border: '5px solid black', color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}><Typography sx={{fontWeight: 'bold'}}  variant="h6" component="div">{mazo.Tarjetas[page-1].Opciones[2]}</Typography></Button>
                                                                               </Stack>
                                                                           </Box>
                                                                   </Grid>
-                                                                  <Grid mt={'10%'} item xs={'20%'}>
+                                                                  <Grid mt={'10%'} item xs={'10%'}>
                                                                               <MicIcon className='button-main' sx={{p:2, borderRadius:'50%', background:'red',
                                                                               color:'white', width: '30%', height: '30%', '&:hover': {backgroundColor: '#FF6347'} }}/>
                                                                   </Grid>
                                                                   <Grid item xs>
                                                                           <Box sx={{ width: '100%' }}>
-                                                                              <Stack spacing={'4%'}>
-                                                                                  <Button className='button-main'  sx={{height:'20ch', width: '80ch',border: '5px solid black', color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}> <Typography variant="body2" component="div">{mazo.Tarjetas[page-1].Opciones[1]}</Typography></Button>
-                                                                                  <Button className='button-main'  sx={{height:'20ch', width: '80ch', border: '5px solid black',  color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}><Typography variant="body2" component="div">{mazo.Tarjetas[page-1].Opciones[3]}</Typography></Button>
+                                                                              <Stack spacing={'2%'}>
+                                                                                  <Button className='button-main'  sx={{height:'18ch', width: '70ch',border: '5px solid black', color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}> <Typography sx={{fontWeight: 'bold'}} variant="h6" component="div">{mazo.Tarjetas[page-1].Opciones[1]}</Typography></Button>
+                                                                                  <Button className='button-main'  sx={{height:'18ch', width: '70ch', border: '5px solid black',  color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}><Typography sx={{fontWeight: 'bold'}} variant="h6" component="div">{mazo.Tarjetas[page-1].Opciones[3]}</Typography></Button>
                                                                               </Stack>
                                                                           </Box>
                                                                   </Grid>
@@ -148,11 +151,11 @@ export default function VerTarjeta(props) {
                                 </Paper>
                         </Paper>
                 </Paper>
-                
+                </Grow>
     </Box>
     <Box
       sx={{
-        mt:'47%',
+        mt:'43%',
         justifyContent: 'center',
         display: 'flex',
       }}
