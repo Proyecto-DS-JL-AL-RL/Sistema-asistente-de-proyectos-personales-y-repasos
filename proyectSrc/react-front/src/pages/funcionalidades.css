@@ -14,10 +14,10 @@
     }
 }
 
-.container-funcionalidades{
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
+.container-mehera{ 
+    Display: flex;
+    Height: 100vh;
+    Width: 100vw; 
+    Align-Items: center;
+    Justify-Content: centre;
 }
