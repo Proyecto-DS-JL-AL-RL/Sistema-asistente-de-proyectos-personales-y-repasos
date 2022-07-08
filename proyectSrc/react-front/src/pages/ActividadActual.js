@@ -1,13 +1,15 @@
 import React,{useState,useEffect} from 'react';
 import {Box, Grid, Typography,Card, Button} from '@mui/material';
 import { useHistory } from 'react-router-dom';
-
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import TokenIcon from '@mui/icons-material/Token';
 export default function ActividadActual(props){
-    const [actividad,SetActividad] = useState('pruebas');
-    const [descripcion,setDescripcion] = useState('asdddddasdddddasdddd dasdddddasdd dddasdddddasddd ddasddddda sdddddasdddddasddd ddasdd dasdddddas dddddasddddd');
-    const [pointsAdded,setPointsAdded] = useState('200');
-    const [constan,setConstan] = useState('10%');
-    const [proyectBind,setProyectBind] = useState('Proyecto XDs');
+    const [actividad,SetActividad] = useState('Actividad de Prueba');
+    const [descripcion,setDescripcion] = useState('Esta es una actividad de prueba, Podra obtener avances en el PROYECTO ASOCIADO. Y puntos a su perfil Las recompensas se muestran abajo');
+    const [pointsAdded,setPointsAdded] = useState(200);
+    const [constan,setConstan] = useState(10);
+    const [proyectBind,setProyectBind] = useState('Proyecto Asociado');
     const [started,setStarted] = useState (false);
     const history = useHistory();
 
@@ -23,21 +25,31 @@ export default function ActividadActual(props){
     return(
         <React.Fragment>            
             <Box sx = {{minWidth:'200px',width:'50%',borderRadius:'30px',bgcolor:'pink',marginLeft:'25%',marginTop:'5%',paddingTop:'20px',paddingBottom:'20px'}}>
-                <Typography sx ={{textAlign:'center',width:'100%',marginTop:'5%',marginBottom:'5%'}} variant = 'h4'>
+                <Typography sx ={{textAlign:'center',width:'100%',marginTop:'5%',marginBottom:'5%'}} variant = 'h3'>
                     {actividad}
                 </Typography>
-                <Typography  variant="body1" sx ={{textAlign:'center',width:'80%',marginTop:'20px',marginLeft:'10%'}} >
+                <Typography  variant="body1" sx ={{fontSize:'large', textAlign:'center',width:'80%',marginTop:'20px',marginLeft:'10%'}} >
                     {descripcion}
                 </Typography>
                 <Grid container direction = 'row' sx = {{width :'80%',marginLeft:'10%',marginTop:'20px'}} justifyContent = 'center' alignItems='center'>
                     <Grid item xs = {6}>
-                        <Typography sx ={{textAlign:'center'}} variant = 'h6'>
-                            {pointsAdded}
+                        <Typography sx ={{textAlign:'center'}} variant = 'h5'>
+                            {pointsAdded} <TokenIcon/>
+                            {pointsAdded>0?
+                                    <ArrowUpwardIcon/>
+                                    :
+                                    <ArrowDownwardIcon/>
+                                }
                         </Typography>
                     </Grid>
                     <Grid item xs = {6} >
-                        <Typography sx ={{textAlign:'center'}} variant = 'h6'>
-                            {constan}
+                        <Typography sx ={{textAlign:'center'}} variant = 'h5'>
+                            {constan} %
+                            {constan>0?
+                                    <ArrowUpwardIcon/>
+                                    :
+                                    <ArrowDownwardIcon/>
+                                }
                         </Typography>
                     </Grid>
                 </Grid>
@@ -58,24 +70,26 @@ export default function ActividadActual(props){
             {started?
                 <React.Fragment>
                     <Grid item container xs = {4}  justifyContent='center' >
-                        <Button variant = 'contained' color = 'success' sx = {{width:'250px'}}>
-                            <Typography variant = 'h6'>Agregar Avances</Typography>
+                    <Button variant = 'contained'  sx = {{width:'250px',minHeight:'70px', bgcolor: '#16C0A3',borderRadius:'20px'}} >
+                        <Typography variant = 'h6' color = 'black' fontWeight = 'bold'>Agregar Avances</Typography>
                         </Button>
                     </Grid>
                     <Grid item container xs = {4}  justifyContent='center' >
-                        <Button variant = 'contained' color = 'success' sx = {{width:'250px',minHeight:'70px'}} onClick ={handleEnd}>
-                        <Typography variant = 'h6'>Terminar</Typography>
+                        <Button variant = 'contained'  sx = {{width:'250px',minHeight:'70px', bgcolor: '#F3443C',borderRadius:'20px'}}  onClick ={handleEnd}>
+                        <Typography variant = 'h6' color = 'black' fontWeight = 'bold'>Terminar</Typography>
                         </Button>
                     </Grid>
                 </React.Fragment>
             :
                     <Grid item container xs = {4}  justifyContent='center' >
-                        <Button variant = 'contained' color = 'success' sx = {{width:'250px',minHeight:'70px'}} onClick={handleStart}>
-                        <Typography variant = 'h6'>Empezar</Typography>
+                        <Button variant = 'contained'  sx = {{width:'250px',minHeight:'70px', bgcolor: '#17DF42',borderRadius:'20px'}} onClick={handleStart}>
+                        <Typography variant = 'h6' color = 'black' fontWeight = 'bold'>Empezar</Typography>
                         </Button>
                     </Grid>
             }
             </Grid>
+
+            
 
         </React.Fragment>
 );}

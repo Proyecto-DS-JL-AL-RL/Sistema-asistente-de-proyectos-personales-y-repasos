@@ -1,5 +1,5 @@
 import './App.css';
-
+import React,{useContext,useEffect,useState} from 'react';
 import {Switch , Route, useLocation, useHistory} from 'react-router-dom';
 //import Page1 from './pages/Page1';
 
@@ -19,12 +19,13 @@ import AlgoQueHacerPage from './pages/AlgoQueHacerPage';
 import SR,{useSpeechRecognition} from 'react-speech-recognition';
 import { Beforeunload } from 'react-beforeunload';
 import {getCommands} from './util/redirectSpeech';
-import React, { useState} from 'react';
 import ActivityQueue from './pages/ActivityQueue';
 import Register from './pages/Register';
 import MostrarFuncionalidades from './pages/MostrarFuncionalidades'
 import VerMazos from './pages/VerMazo'
 import {useSelector} from 'react-redux';
+import Proyectos from './pages/Proyectos';
+import {  AccountContext } from './AccountContext';
 
 
 function App() {
@@ -32,6 +33,8 @@ function App() {
   const CONTINOUS_ = false;
   const ayuda = useSelector((state)=>state.ayuda.value);
 
+
+  const { getSession, logout , sessionState }= useContext(AccountContext);
   const location = useLocation();
   const history = useHistory();
   const [listeningState,setListeningState] = useState(false);
@@ -55,10 +58,24 @@ function App() {
       SR.stopListening(); 
     }
   })
+
+  const listen = ()=> { SR.startListening({language:'es',continuous:false})}
+
   const [logged,setLogged] = useState(true);
   const [showFeedBack, setShowFeedBack] = useState({card:false, icon:false})
 
   const [showAnadir, setShowAnadir] = useState({card:false, icon:false})
+
+  useEffect(()=>{
+    getSession().then((session)=>{
+        console.log('State:',session);
+    }).catch((err)=>{
+        console.log(err);
+    });
+  },[]);
+
+
+  //<button onClick = {()=>{listening?SR.stopListening():SR.startListening({language: 'es', continuous: CONTINOUS_});setListeningState(!listeningState)}}>xd</button>
   return (
           <div className='container-main'>
               
@@ -77,6 +94,9 @@ function App() {
                         </Route>
                         <Route exact path = '/registro'>
                           <Register/>
+                        </Route>
+                        <Route path = '/proyectos'>
+                          <Proyectos/>
                         </Route>
                         <Route path = '/proyect'>
                           <ProyectoView/>

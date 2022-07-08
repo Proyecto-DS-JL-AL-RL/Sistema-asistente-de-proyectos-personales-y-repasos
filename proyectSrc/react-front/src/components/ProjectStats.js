@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from "react";
 import {Grid, Typography} from '@mui/material'
-
-
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 export default function ProjectStats(){
     const [stats,setStats] = useState([
         {label:'Constancia',value:5},
@@ -26,7 +26,13 @@ export default function ProjectStats(){
                         <Grid item>
                             <Typography sx = {{}} textAlign = 'right' ml={3} mr = {3} variant = 'h5'>
                                 {stat.value}
+                                {stat.value>0?
+                                    <ArrowUpwardIcon/>
+                                    :
+                                    <ArrowDownwardIcon/>
+                                }
                             </Typography>
+                            
                         </Grid>
                     </Grid>
                 </Grid>

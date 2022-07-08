@@ -11,6 +11,9 @@ import MicIcon from '@mui/icons-material/Mic';
 import AddIcon from '@mui/icons-material/Add';
 import { useDispatch } from 'react-redux';
 import { mostrarAyuda } from '../stores/sliceAyuda';
+import SR,{useSpeechRecognition} from 'react-speech-recognition';
+import { AccountContext } from '../AccountContext';
+import { Button } from '@mui/material';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -54,11 +57,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 */
+
 export default function AppBarSearch(props) {
   const dispatch = useDispatch();
   const handleAyuda = () =>{
     dispatch(mostrarAyuda());
   }
+  const {listening,transcript} = useSpeechRecognition();
+  const {sessionState,logout} = React.useContext(AccountContext);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="relative" color='transparent'>
@@ -79,8 +86,14 @@ export default function AppBarSearch(props) {
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
             Inicio
+            {sessionState.nickname}
           </Typography>
           <Search>
+            <Button onClick = {()=>{logout()}}>
+              logout
+            </Button>
+
+
             <IconButton
               color="inherit"
               
@@ -95,8 +108,17 @@ export default function AppBarSearch(props) {
               color="inherit"
               
             >        
+              {listening?
+                <MicIcon sx={{p:1, borderRadius:50, background:'blue',
+                color:'white', width: 56, height: 56 }}
+                onClick={()=>{props.ClickButton.listen()}} 
+                />
+                :
                 <MicIcon sx={{p:1, borderRadius:50, background:'red',
-                color:'white', width: 56, height: 56 }}/>
+                color:'white', width: 56, height: 56 }}
+                onClick={()=>{props.ClickButton.listen()}} 
+                />
+              }
             </IconButton>
             {props.stateButton.showAnadir.icon?<IconButton
               color="inherit"
