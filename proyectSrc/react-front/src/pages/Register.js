@@ -17,16 +17,18 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useHistory } from "react-router-dom";
 import Stack from '@mui/material/Stack';
+import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
+import UserPool from '../userPool';
 
 export default function Register(props){
     let history = useHistory()
     //const [showRegister, setShowRegister] = useState(false)
     const [values, setValues] = React.useState({
-      amount: '',
+      usuario: '',
       password: '',
-      weight: '',
-      weightRange: '',
-      showPassword: false,
+      nombre: '',
+      apellido: '',
+      correo: '',
     });
   
     const handleChange = (prop) => (event) => {
@@ -42,7 +44,40 @@ export default function Register(props){
   
     const handleMouseDownPassword = (event) => {
       event.preventDefault();
+      console.log(values);
     };
+
+    const handleRegister = ()=>{
+      console.log(values);
+      const password = values.password;
+      const username = values.usuario;
+      UserPool.signUp(username,password,[
+        new CognitoUserAttribute({Name:'given_name',Value: values.nombre}),
+        new CognitoUserAttribute({Name:'family_name',Value: values.apellido}),
+        new CognitoUserAttribute({Name:'email',Value: values.correo}),
+        new CognitoUserAttribute({Name:'nickname',Value: values.usuario}),
+      ],null,(err,data) =>{
+        if(err){
+        alert(err.message);
+        //console.log(err);
+        }else{
+        //console.log('Result:',data);
+        const sub = data.userSub;
+        const userData = {
+            "sub" : sub,
+            "email": values.correo,
+            "family_name": values.apellido,
+            "given_name": values.nombre,
+            "nickname": username,
+        }
+        //initUser(userData);
+        history.push('/');
+        alert('Usuario creado con exito');
+        }
+
+      });
+      
+    }
         return (
     <Box sx={{
             mx: '34%',
@@ -58,13 +93,20 @@ export default function Register(props){
                                         </Typography>
                                 </FormControl>
                                 <FormControl  sx={{ width: '45ch' }} variant="outlined">
-                                        <TextField id="outlined-basic" label="Nombre" defaultValue= {''} variant="outlined" />
+                                        <TextField id="outlined-basic" label="Nombre de Usuario" 
+                                         onChange={handleChange('usuario')} value = {values.usuario}  variant="outlined" />
                                 </FormControl>
                                 <FormControl  sx={{ width: '45ch' }} variant="outlined">
-                                        <TextField id="outlined-basic" label="Apellido" defaultValue= {''} variant="outlined" />
+                                        <TextField id="outlined-basic" label="Nombre" 
+                                         onChange={handleChange('nombre')} value = {values.nombre}  variant="outlined" />
+                                </FormControl>
+                                <FormControl  sx={{ width: '45ch' }} variant="outlined">
+                                        <TextField id="outlined-basic" label="Apellido" 
+                                        onChange={handleChange('apellido')} value = {values.apellido}  variant="outlined" />
                                 </FormControl>
                                 <FormControl sx={{ width: '45ch' }} variant="outlined">
-                                        <TextField  id="outlined-basic" label="Correo" defaultValue= {''} variant="outlined" />
+                                        <TextField  id="outlined-basic" label="Correo" 
+                                        onChange={handleChange('correo')} value = {values.correo}  variant="outlined" />
                                 </FormControl>
                                 <FormControl  sx={{  width: '45ch' }} variant="outlined">
                                     <InputLabel htmlFor="outlined-adornment-password">Contraseña</InputLabel>
@@ -89,9 +131,7 @@ export default function Register(props){
                                         />
                                 </FormControl>
                                         <FormControl sx={{m: 2, width: '45ch' }} variant="outlined">
-                                                    <Button  onClick={()=>{
-                                                                        history.push('/Presentacion')
-                                                                    }}  sx={{ p:2, borderRadius: '3%', color: 'white', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
+                                                    <Button  onClick={handleRegister}  sx={{ p:2, borderRadius: '3%', color: 'white', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
                                                         <Typography sx= {{fontWeight: 'bold'}} variant = 'h5'>Comenzemos 😁</Typography>
                                                     </Button>
                                         </FormControl>
