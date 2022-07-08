@@ -1,4 +1,4 @@
-import  React from 'react';
+import  React,{useContext,useEffect} from 'react';
 import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
@@ -11,6 +11,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
 import { useHistory } from "react-router-dom";
+import {  AccountContext } from '../AccountContext';
 /*
     login simple:
         - correo 
@@ -21,12 +22,11 @@ import { useHistory } from "react-router-dom";
 
 
 export default function Login(props) {
+  const { authenticate } = useContext(AccountContext);
   let history = useHistory()
   const [values, setValues] = React.useState({
-    amount: '',
+    usuario: '',
     password: '',
-    weight: '',
-    weightRange: '',
     showPassword: false,
   });
 
@@ -45,11 +45,21 @@ export default function Login(props) {
     event.preventDefault();
   };
 
+  const handleLogin = ()=>{
+    authenticate(values.usuario,values.password).then(data=>{
+      //console.log("app:",data);
+      history.push('/');
+  }).catch((err)=>{
+      alert(err.message);
+      //console.error("app",err);
+  });
+  };
+
   return (
     <React.Fragment>
       <Box  justifyContent="center" sx={{fontWeight: 'bold', display: 'flex', flexWrap: 'wrap' }}>
           <FormControl sx={{ m: 2, width: '45ch' }} variant="outlined">
-                <TextField id="outlined-basic" label="Correo electrónico" variant="outlined" />
+                <TextField id="outlined-basic" label="Correo electrónico" variant="outlined" value = {values.usuario} onChange = {handleChange('usuario')}/>
           </FormControl>
             <FormControl sx={{ m: 2, width: '45ch' }} variant="outlined">
               <InputLabel htmlFor="outlined-adornment-password">Contraseña</InputLabel>
@@ -74,15 +84,11 @@ export default function Login(props) {
               />
               </FormControl>
               <FormControl sx={{m: 2}} variant="outlined">
-                    <Button onClick={()=>{
-                                history.push('/')}
-                                } sx={{p:2, borderRadius: 5, py: 2, color: 'white' ,background:'#0000cc'}} variant="contained" size="large">
+                    <Button onClick={handleLogin} sx={{p:2, borderRadius: 5, py: 2, color: 'white' ,background:'#0000cc'}} variant="contained" size="large">
                     <Typography sx= {{fontWeight: 'bold'}} variant = 'h5'>Iniciar Sesión</Typography>
                     </Button>                            
                             <Typography sx={{py:2}} variant = 'h8'>¿Olvidaste tu contraseña?</Typography>
-                    <Button onClick={()=>{
-                          history.push('/registro')
-                        }} sx={{py:2, borderRadius: 5, color: 'white', background:'#00b347'}} variant="contained" size="large">
+                    <Button onClick={()=>{history.push('./Registro')}} sx={{py:2, borderRadius: 5, color: 'white', background:'#00b347'}} variant="contained" size="large">
                         <Typography sx= {{fontWeight: 'bold'}} variant = 'h5'>Registrate</Typography>
                     </Button>
               </FormControl>

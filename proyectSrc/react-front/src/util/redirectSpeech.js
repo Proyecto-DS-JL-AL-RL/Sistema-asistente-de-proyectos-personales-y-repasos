@@ -40,6 +40,13 @@ const getCommands = (location,history) =>{
                     alert("Ya se encuentra en esa pagina");                
             }            
         }
+    },
+    {
+        command: ["Dame algo que hacer."],
+        callback: (frase) =>{
+            //alert(frase);
+            history.push('/algoQueHacer')            
+        }
     }]
 
     return comando;

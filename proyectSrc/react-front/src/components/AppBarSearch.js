@@ -10,6 +10,8 @@ import QuestionMarkRoundedIcon from '@mui/icons-material/QuestionMarkRounded';
 import MicIcon from '@mui/icons-material/Mic';
 import AddIcon from '@mui/icons-material/Add';
 import SR,{useSpeechRecognition} from 'react-speech-recognition';
+import { AccountContext } from '../AccountContext';
+import { Button } from '@mui/material';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -56,7 +58,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function AppBarSearch(props) {
   const {listening,transcript} = useSpeechRecognition();
-
+  const {sessionState,logout} = React.useContext(AccountContext);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -77,9 +79,14 @@ export default function AppBarSearch(props) {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            Algo
+            {sessionState.nickname}
           </Typography>
           <Search>
+            <Button onClick = {()=>{logout()}}>
+              logout
+            </Button>
+
+
             <IconButton
               color="inherit"
               
