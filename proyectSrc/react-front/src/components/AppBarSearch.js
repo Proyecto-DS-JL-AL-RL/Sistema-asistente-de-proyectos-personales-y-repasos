@@ -9,6 +9,8 @@ import Typography from '@mui/material/Typography';
 import QuestionMarkRoundedIcon from '@mui/icons-material/QuestionMarkRounded';
 import MicIcon from '@mui/icons-material/Mic';
 import AddIcon from '@mui/icons-material/Add';
+import { useDispatch } from 'react-redux';
+import { mostrarAyuda } from '../stores/sliceAyuda';
 import SR,{useSpeechRecognition} from 'react-speech-recognition';
 import { AccountContext } from '../AccountContext';
 import { Button } from '@mui/material';
@@ -57,6 +59,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 */
 
 export default function AppBarSearch(props) {
+  const dispatch = useDispatch();
+  const handleAyuda = () =>{
+    dispatch(mostrarAyuda());
+  }
   const {listening,transcript} = useSpeechRecognition();
   const {sessionState,logout} = React.useContext(AccountContext);
 
@@ -79,6 +85,7 @@ export default function AppBarSearch(props) {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
+            Inicio
             {sessionState.nickname}
           </Typography>
           <Search>
@@ -91,7 +98,9 @@ export default function AppBarSearch(props) {
               color="inherit"
               
             >
-              <QuestionMarkRoundedIcon onClick={()=>{props.ClickButton.setShowFeedBack({card:true, icon:true})}} sx={{width: 56, height: 56, color:'white', background:'green', p:1, borderRadius:50}}/> 
+              <QuestionMarkRoundedIcon onClick={handleAyuda}
+                 sx={{width: 56, height: 56, color:'white', background:'green',
+                  p:1, borderRadius:50}}/> 
   
             </IconButton>
 

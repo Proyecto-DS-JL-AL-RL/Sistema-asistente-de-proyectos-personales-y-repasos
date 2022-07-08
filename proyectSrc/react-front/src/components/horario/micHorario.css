@@ -1,0 +1,45 @@
+.ctn-mic-horario{
+    background-color: rgba(0,0,0,0.8);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.all-mic-horario{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+}
+.all-mic-horario>.palabras-mic{
+    color: white;
+    font-size: 3em;
+    text-align: center;
+
+}
+.micro-llenar{
+    width: 100px;
+    height: 100px;
+    margin-bottom: 15px;
+    margin-right: 20px;
+    border-radius: 50%;
+    background-color: red;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 0 3px 3px rgba(0, 0,0 , 0.7);
+    cursor: pointer;
+    justify-content: center;
+    text-align: center;
+}
+.micro-llenar:hover{
+    box-shadow: 0 0 8px 8px rgba(0, 0,0 , 0.6);
+    background-color: rgb(237, 106, 106);
+    transition: box-shadow 0.8s,background-color 0.4s;
+}

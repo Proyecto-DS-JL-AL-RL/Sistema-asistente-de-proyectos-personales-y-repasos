@@ -72,3 +72,6 @@
 .item-horario-ocupado{
     background-color: rgb(214, 190, 144);
 }
+.itemp-editando{
+    background-color: blueviolet;
+}
