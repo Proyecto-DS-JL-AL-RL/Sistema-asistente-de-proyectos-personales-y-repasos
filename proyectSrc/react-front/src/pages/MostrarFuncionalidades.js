@@ -47,7 +47,10 @@ function FormRow(props) {
                     </Button>
                 </Item>
             <Item>
-                <Button className='button-main' sx={{width:'90%', height:'40ch', borderRadius:'5%', backgroundColor:orange[700], '&:hover': {backgroundColor: orange[600]}, pl:'20%', pr: '20%'}}>
+                <Button className='button-main' sx={{width:'90%', height:'40ch', borderRadius:'5%', 
+                backgroundColor:orange[700], '&:hover': {backgroundColor: orange[600]}, 
+                pl:'20%', pr: '20%'}}
+                onClick={()=>{props.history.push('/horario')}}>
                     <Typography sx={{textAlign:'center',fontWeight: 'bold', fontSize:'3ch', color:'white'}}>Organizar Actividades</Typography>
                 </Button>
             </Item>

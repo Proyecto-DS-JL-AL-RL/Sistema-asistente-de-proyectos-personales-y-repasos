@@ -6,11 +6,15 @@ import Badge  from '@mui/material/Badge';
 import MicIcon from '@mui/icons-material/Mic';
 import { FormControl,Slider,Typography } from '@mui/material';
 import { width } from '@mui/system';
-
+import MicroFormHorario from './MicroFormHorario';
 import {actividad2intervalo} from './utilsHorario';
 import ClearIcon from '@mui/icons-material/Clear';
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import './descripcionHorario.css';
+import { deleteActivity,addTempActivity, addActivity,
+    saveActivity,handleTempActivity,restoreActivity, changeEditableActivity } from '../../stores/sliceHorario';
+import { useDispatch} from 'react-redux';
+import { act } from 'react-dom/test-utils';
 const stateButton2String =  (state) =>{
     const stringState = ['Editar','Crear','Guardar'];
     return stringState[state];
@@ -28,33 +32,48 @@ const validarActividad = (actividades,newActividad) =>{
     });
     return flag;
 }
+
 const diasSemana = 'L,M,M,J,V,S,D'.split(",");
 export default function DescripcionActividad(props) {
+    const dispatch = useDispatch();
     const [stateButton,setStateButton] = useState(0);
     const [actividad,setActividad] = useState(actividadDefault);
     const [editable,setEditable] = useState(false);
     const [duracion,setDuracion] = useState([0,1]);
     const [duracionFin,setDuracionFin] = useState(24);
+    const[llenarMic,setLlenarMic] = useState(null);
     const handleVisible = () =>{
-        props.handleVisible(!props.visible);
+        props.handleVisible(true);
+        dispatch(restoreActivity());
     }
-    useEffect(()=>{
-        
+    /**
+     *console.log(props.actividad,"Desp");
+        if(!props.actividad) return;
         setEditable(props.default);
+        const newAct = {...props.actividad,intervalo:actividad2intervalo(props.actividad),estado:1}; 
+        dispatch(addActivity(newAct));
+        setActividad(newAct);
+        setDuracion([props.actividad.inicio,props.actividad.fin]);
+        setDuracionFin(props.actividad.fin);
         if(props.default==true) {
             setStateButton(1);
-            setActividad(props.actividad);
-            setDuracion([props.actividad.inicio,props.actividad.fin]);
-            setDuracionFin(props.actividad.fin);
         }
         else {
             setStateButton(0);
-            setDuracion([props.actividad.inicio,props.actividad.fin]);
-            setActividad(props.actividad);
-            
-            setDuracionFin(props.actividad.fin);
         }
+     */
+    useEffect(()=>{
+        //if(props.actividad.dia == -1) return;
+        if(!props.actividad)return;
+
+        setActividad(props.actividad);
+        setDuracion([props.actividad.inicio,props.actividad.fin]);
+        setEditable(props.actividad.estado==1?true:false);
+        setStateButton(props.actividad.estado==1?1:0)
+        setDuracionFin(props.actividad.fin);
+        
     },[props])
+    
     const handleNombre = (e) =>{
         if(!editable)return;
         setActividad({...actividad,nombre:e.target.value})
@@ -89,18 +108,20 @@ export default function DescripcionActividad(props) {
         if(stateButton==0){
             setEditable(true);
             setStateButton(2);
+            console.log("Hola donde estoy",props.idAct);
+            dispatch(changeEditableActivity(props.idAct));
             return;
         }
         if(stateButton==1){
-            const newSave = {...actividad,
-                inicio:duracion[0],fin:duracion[1],estado:0}
-                props.saveActividades(newSave);
+            dispatch(saveActivity());
+            /* Falta validar cuando esta vacio */
+            
+            setStateButton(0);
+            handleVisible();
             return;
         }
         if(stateButton==2){
-            const newSave = {...actividad,
-                inicio:duracion[0],fin:duracion[1],estado:0}
-                props.saveActividades(newSave);
+            dispatch(saveActivity());
             setStateButton(0);
             return;
         } 
@@ -108,7 +129,8 @@ export default function DescripcionActividad(props) {
     }
     const handleEliminarActividad = () =>{
         if(props.idAct==-1) return;
-        props.deleteActividad(props.idAct);
+        dispatch(deleteActivity(props.idAct));
+        props.handleVisible(true);
     }
     const handleDuracionInicio = (e) =>{
         if(!editable) return;
@@ -156,10 +178,18 @@ export default function DescripcionActividad(props) {
             
         }
     }
+    const handleMic=()=>{
+        setLlenarMic(<MicroFormHorario setVisible={setLlenarMic}/>)
+    }
     useEffect(()=>{
-        props.tempActividad({...actividad,inicio:duracion[0],fin:duracion[1]})
-    },[actividad,duracion,duracionFin,])
+        const actTemp = {...actividad,
+            inicio:duracion[0],fin:duracion[1],estado:1}
+        const intervaloAct = actividad2intervalo(actTemp);
+        dispatch(addActivity({...actTemp,intervalo:intervaloAct}))
+        
+    },[actividad,duracion,duracionFin])
   return (
+    <>
     <div className='actividad-description'>  
         <Badge 
         badgeContent={
@@ -312,11 +342,14 @@ export default function DescripcionActividad(props) {
             {stateButton==0?<Button variant="contained" onClick={handleEliminarActividad}>Eliminar</Button>:null}
         </Box>
         </Box>
-        <div className='micro-form'>
+        <div className='micro-form' 
+            onClick={handleMic}>
             <MicIcon  sx={{ fontSize: 40,color:'white','&:hover':{color:'green'} }} />
         </div>
         </Badge>
         
     </div>
+    {llenarMic}
+    </>
   )
 }

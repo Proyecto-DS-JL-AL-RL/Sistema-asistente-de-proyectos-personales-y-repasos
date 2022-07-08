@@ -9,7 +9,8 @@ import Typography from '@mui/material/Typography';
 import QuestionMarkRoundedIcon from '@mui/icons-material/QuestionMarkRounded';
 import MicIcon from '@mui/icons-material/Mic';
 import AddIcon from '@mui/icons-material/Add';
-
+import { useDispatch } from 'react-redux';
+import { mostrarAyuda } from '../stores/sliceAyuda';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -54,6 +55,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 */
 export default function AppBarSearch(props) {
+  const dispatch = useDispatch();
+  const handleAyuda = () =>{
+    dispatch(mostrarAyuda());
+  }
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="relative" color='transparent'>
@@ -73,14 +78,16 @@ export default function AppBarSearch(props) {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            Algo
+            Inicio
           </Typography>
           <Search>
             <IconButton
               color="inherit"
               
             >
-              <QuestionMarkRoundedIcon onClick={()=>{props.ClickButton.setShowFeedBack({card:true, icon:true})}} sx={{width: 56, height: 56, color:'white', background:'green', p:1, borderRadius:50}}/> 
+              <QuestionMarkRoundedIcon onClick={handleAyuda}
+                 sx={{width: 56, height: 56, color:'white', background:'green',
+                  p:1, borderRadius:50}}/> 
   
             </IconButton>
 

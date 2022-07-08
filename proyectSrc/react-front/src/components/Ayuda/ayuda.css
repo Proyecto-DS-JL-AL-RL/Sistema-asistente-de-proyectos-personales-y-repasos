@@ -1,0 +1,27 @@
+.ayuda-contenedor-top{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+  }
+  .contendor-info-ayuda{
+    background-color: white;
+    position: relative;
+    padding: 10px;
+  }
+  .cerrar-ayuda{
+    background-color: red;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    right: -20px;
+    top: -20px;
+  }

@@ -7,6 +7,7 @@ import Presentacion from './pages/Presentation';
 import AppBarSearch from './components/AppBarSearch';
 import DrawerComponent from './components/DrawerComponent';
 
+import Horario1 from './pages/Horario1';
 import Horario from './pages/Horario';
 //import Proyectos from './pages/Proyectos';
 
@@ -23,12 +24,13 @@ import ActivityQueue from './pages/ActivityQueue';
 import Register from './pages/Register';
 import MostrarFuncionalidades from './pages/MostrarFuncionalidades'
 import VerMazos from './pages/VerMazo'
-
+import {useSelector} from 'react-redux';
 
 
 function App() {
+  const [nameBar,setNameBar] = useState("Inicio")
   const CONTINOUS_ = false;
-
+  const ayuda = useSelector((state)=>state.ayuda.value);
 
   const location = useLocation();
   const history = useHistory();
@@ -41,6 +43,8 @@ function App() {
   }
 
   document.addEventListener("visibilitychange", event => {
+    
+
     if (listeningState){
     if (document.visibilityState === "visible") {
       SR.startListening({language: 'es', continuous: CONTINOUS_});
@@ -57,11 +61,13 @@ function App() {
   const [showAnadir, setShowAnadir] = useState({card:false, icon:false})
   return (
           <div className='container-main'>
-              <button onClick = {()=>{listening?SR.stopListening():SR.startListening({language: 'es', continuous: CONTINOUS_});setListeningState(!listeningState)}}>xd</button>
+              
                   <DrawerComponent/>
                   <div className='other-container'>
                     <div className='head-container'>
-                      <AppBarSearch stateButton={{showFeedBack, showAnadir}} ClickButton={{setShowFeedBack, setShowAnadir}}/>
+                      <AppBarSearch stateButton={{showFeedBack, showAnadir}} 
+                      ClickButton={{setShowFeedBack, setShowAnadir}}
+                      name={nameBar} setName={setNameBar}/>
                     </div>
                     <div className='content-container'>
                       {transcript}
@@ -91,7 +97,7 @@ function App() {
                                   <VerMazos showAdd={{showAnadir, setShowAnadir}} showFeed={{showFeedBack, setShowFeedBack}}/>
                             </Route>
                             <Route path = '/horario'>
-                              <Horario/>
+                              <Horario1 setName={setNameBar}/>
                             </Route>
                             <Route path = '/Presentacion'>
                                   <Presentacion/>
@@ -100,6 +106,9 @@ function App() {
                     </div>
                   </div>
                   <Beforeunload onBeforeunload= {beforeUnload} />
+                  
+                  {ayuda.display?ayuda.content:null}
+                    
             </div>
   );
 }

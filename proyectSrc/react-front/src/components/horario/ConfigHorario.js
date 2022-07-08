@@ -106,7 +106,7 @@ export default function ConfigHorario(props) {
                     <Sw checked={onlyMinMax}
                      onChange={handleOnlyMinMax}/>
 
-                } label="no se "/>
+                } label="Intervalo por default "/>
             </FormGroup>
             <Typography>
                 Tema
@@ -143,7 +143,13 @@ export default function ConfigHorario(props) {
                     d
                 </div>
             </div>
+            <FormGroup>
+                <FormControlLabel control={
+                    <Sw checked={true}
+                     />
 
+                } label="sobreEscribir "/>
+            </FormGroup>
            
             
         
