@@ -5,16 +5,20 @@ import { useEffect,useState } from 'react';
 import HandymanIcon from '@mui/icons-material/Handyman';
 
 import './horario.css';
-import { display, width } from '@mui/system';
 import { IconButton } from '@mui/material';
 import DescripcionActividad from '../components/horario/DescripcionActividad';
 import ConfigHorario from '../components/horario/ConfigHorario';
-import { actividadesInfo,Actividad } from '../components/horario/HorarioInfo';
+
 import MensajeAlert from '../components/horario/MensajeAlert';
 import { useSelector,useDispatch} from 'react-redux';
-import { changeEditableActivity, restoreActivity } from '../stores/sliceHorario';
+import {restoreActivity } from '../stores/sliceHorario';
 import { actividad2intervalo } from '../components/horario/utilsHorario';
-import { changeContent } from '../stores/sliceAyuda';
+import { changeContent,restoreContent } from '../stores/sliceAyuda';
+
+
+import * as ReactDOMServer from 'react-dom/server';
+
+
 const itemHorario = Array.from({length:200},(v,i)=>i);
 const dias = 'L,M,M,J,V,S,D'.split(",");
 
@@ -70,6 +74,9 @@ const maxHoraIntervalo = (actividades) =>{
     })
     return max;
 }
+const actividades2Intervalo = (actividades) =>{
+    return [minHoraIntervalo(actividades),maxHoraIntervalo(actividades)]
+}
 
 const actividadDefault = {
     nombre:'',acr:'',descrip:'',dia:-1,inicio:-1,fin:-1,link:''
@@ -101,44 +108,15 @@ export default function Horario(props) {
     const [horasOcupadas,setHorasOcupadas] = useState([]);
     const [contentDescription,setContentDescription] = useState("");
     const [idSelect,setIdSelect] = useState(-1);
-    const [actividadSelect,setActividadSelect] = useState('None');
     const [descripcionRender,setDescripcionRender] = useState(null);
-    const [newActividad,setNewActividad] = useState(null);
     const [visibleAlert,setVisibleAlert] = useState(null);
-    const [formMicHorario,setFormMicHorario] = useState(null);
-    /*
-    let act = id2actividad(horario,idSelect);
-        const acts = id2ObtainAllActivities(horario,idSelect);
-        console.log("acts:",acts.length);
-        const dia = idSelect%8-1;
-        const inicio = Math.floor(idSelect/8);
-        const space = getFinWithDefault(dia,inicio,act2horario(horario,[0]));
-        if(acts.length==0){
-            
-            let a =  {...actividadDefault,dia,inicio,
-                fin:inicio+space,estado:1} 
-            
-            return {...a, intervalo:actividad2intervalo(a)}
-        }
-        if(acts.length==1){
-            const newChangeHorario = horario.map((e)=>{
-                if(e.intervalo.indexOf(idSelect)!=-1) return {...e,estado:2}
-            })
-            console.log("Change",newChangeHorario);
-        }
-        if(act.estado==1){
-            console.log(inicio)
-            let a =  {...actividadDefault,dia,inicio,fin:inicio+space,estado:1}  
-            return {...a, intervalo:actividad2intervalo(a)}
-        }
-        if(act.estado==0){
-            console.log("Editar");
-        }
-        return act;
-    */
     useEffect(()=>{
         const aa = <div>hola</div>
-        dispatch(changeContent(aa));
+        const component=ReactDOMServer.renderToString(aa);
+        dispatch(changeContent(component));
+        return ()=>{
+            dispatch(restoreContent());
+        }
     },[])
     const id2actividadClick = (idSelect) =>{
         let act = id2actividad(horario,idSelect);
@@ -148,31 +126,20 @@ export default function Horario(props) {
         const inicio = Math.floor(idSelect/8)-1;
         const space = getFinWithDefault(dia,inicio,act2horario(horario,[0]));
         if(acts.length==0){
-            
             let a =  {...actividadDefault,dia,inicio,
                 fin:inicio+space,estado:1} 
-            
             return {...a, intervalo:actividad2intervalo(a)}
         }
         if(acts.length==2){
-            const newChangeHorario = horario.map((e)=>{
-                if(e.intervalo.indexOf(idSelect)!=-1) return {...e,estado:2}
-            })
             const actEditar = horario.filter((e)=>{
                 return (e.estado!=1 && e.intervalo.indexOf(idSelect)!=-1)
             })
-            console.log(actEditar);
             return actEditar[0];
             //console.log("Change",newChangeHorario);
-            
         }
         if(act.estado==1){
-            console.log(inicio)
             let a =  {...actividadDefault,dia,inicio,fin:inicio+space,estado:1}  
             return {...a, intervalo:actividad2intervalo(a)}
-        }
-        if(act.estado==0){
-            console.log("Editar");
         }
         return act;
     }
@@ -245,7 +212,7 @@ export default function Horario(props) {
     }
    
     useEffect(()=>{
-        console.log(horario);
+        
         if(!horario) return;
         let flag_horario = true;
         horario.forEach((e)=>{
@@ -257,7 +224,6 @@ export default function Horario(props) {
             setMinmaxIntervalo([minHoraIntervalo(horario),
                 maxHoraIntervalo(horario)]);
         }
-        console.log("Tamano hor:",horario.map((e)=>e.estado));
     },[horario])
   return (
     

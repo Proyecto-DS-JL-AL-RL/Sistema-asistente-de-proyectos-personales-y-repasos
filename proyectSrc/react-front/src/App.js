@@ -8,7 +8,6 @@ import AppBarSearch from './components/AppBarSearch';
 import DrawerComponent from './components/DrawerComponent';
 
 import Horario1 from './pages/Horario1';
-import Horario from './pages/Horario';
 //import Proyectos from './pages/Proyectos';
 
 import Tarjetas from './pages/verTarjeta';
@@ -26,6 +25,9 @@ import VerMazos from './pages/VerMazo'
 import {useSelector} from 'react-redux';
 import Proyectos from './pages/Proyectos';
 import {  AccountContext } from './AccountContext';
+import DisplayAyuda from './components/Ayuda/DisplayAyuda';
+
+
 
 
 function App() {
@@ -127,7 +129,7 @@ function App() {
                   </div>
                   <Beforeunload onBeforeunload= {beforeUnload} />
                   
-                  {ayuda.display?ayuda.content:null}
+                  {ayuda.display?<DisplayAyuda/>:null}
                     
             </div>
   );
