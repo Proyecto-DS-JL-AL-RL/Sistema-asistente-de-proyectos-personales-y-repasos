@@ -6,23 +6,30 @@ export const ayudaSlice = createSlice({
     initialState:{
         value:{
             display:false,
-            content: <DisplayAyuda content={"Adfasdfasdfasdfsadf"}/>
+            content: "Adfasdfasdfasdfsadf"
         }
         
     },
     reducers:{
         changeContent: (state,action)=>{
-            state.value.content = <DisplayAyuda content={action.payload}/>;
+            console.log()
+            state.value.content = action.payload;
         },
         mostrarAyuda: (state)=>{
             state.value.display=true
         },
         ocultarAyuda: (state) =>{
             state.value.display = false
+        },
+        restoreContent: (state) =>{
+            state.value = {
+                display:false,
+                content: "No hay ayuda disponible"
+            }
         }
     }
 
 
 })
-export const {mostrarAyuda,ocultarAyuda,changeContent} = ayudaSlice.actions
+export const {mostrarAyuda,ocultarAyuda,changeContent,restoreContent} = ayudaSlice.actions
 export default ayudaSlice.reducer

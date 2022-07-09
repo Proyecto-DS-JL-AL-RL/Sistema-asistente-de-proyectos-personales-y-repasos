@@ -40,6 +40,7 @@ export default function ConfigHorario(props) {
             const newMin = Math.min(newValue[0], intervaloMinMax[1] - minDistance,minmax[0]);
             setIntervaloMinMax([newMin, intervaloMinMax[1]]);  
             props.handleMinMax(newMin,intervaloMinMax[1]); 
+        
         } else {
             const newMax = Math.max(newValue[1], intervaloMinMax[0] + minDistance,minmax[1]);
             setIntervaloMinMax([intervaloMinMax[0],newMax ]); 

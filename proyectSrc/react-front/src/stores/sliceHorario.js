@@ -18,7 +18,6 @@ export const horarioSlice = createSlice({
     },
     reducers:{
         addActivity: (state,action) =>{
-            console.log("Add una actividad")
             const activities = state.value.filter((e)=>{
                 return (e.estado!=1)
             })
