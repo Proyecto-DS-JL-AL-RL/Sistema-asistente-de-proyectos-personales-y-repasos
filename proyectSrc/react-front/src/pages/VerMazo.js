@@ -19,6 +19,9 @@ import Divider from '@mui/material/Divider';
 import Fade from '@mui/material/Fade';
 //import Paper from '@mui/material/Paper';
 import happy from './img/happy.png'
+import * as ReactDOMServer from 'react-dom/server'
+import { useDispatch} from 'react-redux';
+import { changeContent,restoreContent } from '../stores/sliceAyuda';
 
 
 const mazos = [
@@ -76,9 +79,28 @@ const mazos = [
 
 
   export default function VerMazos(props){
+        const dispatch = useDispatch();
         /* eslint-disable */
         useEffect(() => {
           props.showAdd.setShowAnadir({card:false, icon:true});
+          const suggest = <Card  sx={{ mx:100, minWidth: 600, border: '0.5px solid black'  }}>
+                              <CardContent>
+                                    <Typography  sx={{fontWeight: 'bold'}} variant="h1">
+                                        Sugerencia
+                                    </Typography>
+                                    <Divider  variant="middle" />
+                                    <Typography variant="subtitle1" color="text.secondary" component="div">
+                                      Esta parte de la página esta enfocada en la funcionalidad de repasos. 🤓<br /> Aquí 
+                                      podra separar por temas las tarjetas 🎴 que vaya creando. 
+                                    </Typography>
+                                    <img style={{width:'40%', height:'40%'}} alt='emoji' src={happy}/>
+                                </CardContent>
+                          </Card>
+          const component = ReactDOMServer.renderToString(suggest);
+          dispatch(changeContent(component));
+              return ()=>{
+                  dispatch(restoreContent());
+              }                          
         },[]);
         return (
         <React.Fragment>
@@ -133,27 +155,7 @@ const mazos = [
                                 </Card>
                             </Box>
                           </Grow>:null}
-
-                          {props.showFeed.showFeedBack.card?
-                        <Grow  timeout={1000}  in={props.showFeed.showFeedBack.card}>
-                          <Card  sx={{ mx:100, minWidth: 600, border: '0.5px solid black'  }}>
-                                <CardContent>
-                                    <Tooltip title="Cancelar" placement="right">
-                                            <CloseIcon onClick={(e)=>{props.showFeed.setShowFeedBack({card:false, icon:true})}} sx={{p:1,mx:65, backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
-                                    </Tooltip>   
-                                      <Typography sx={{fontWeight: 'bold', mx:3}} variant="h4" component="div">
-                                          Sugerencia
-                                      </Typography>
-                                      <Divider  variant="middle" />
-                                      <Typography sx={{textAlign: 'center'}} variant="h6">
-                                        Esta parte de la página esta enfocada en la funcionalidad de repasos. Aquí 
-                                        podra separar por temas las tarjetas que vaya creando. 
-                                        <img style={{width:'50%', height:'50%', borderRadius: '150%'}} alt='emoji' src={happy}/> 
-                                      </Typography>
-                                  </CardContent>
-                            </Card>
-                          </Grow>:null}
-                  </Box> 
+                      </Box> 
                   <Box sx={{mx:'12%',
                             position:'absolute',
                               width: '65%'}}>
