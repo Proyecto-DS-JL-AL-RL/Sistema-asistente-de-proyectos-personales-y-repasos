@@ -3,7 +3,11 @@ var User = require('../Esquemas/scUser');
 
 var getUsers = async function (){
     var response = await User.find().catch(err=> console.log(err));
-    console.log(response)
+    return response;
+}
+
+var getUsersID = async function (id){
+    var response = await User.findById(id).catch(err=> console.log(err));
     return response;
 }
 
@@ -12,11 +16,9 @@ var createUser = async function(user){
         await newusr.save().catch(err=> console.log(err))
 }
 
-var updateUser = async function(user, update){
-    const updateUser = await User.findOneAndUpdate(user, update, {
-        new: true
-      }).catch(err=> console.log(err))
-    updateUser.save()
+var updateUser = async function(id, update){
+    const updateUser = await User.updateOne({_id:id}, update).catch(
+        err=> console.log(err))
     return updateUser
 }
 
@@ -25,6 +27,7 @@ var deleteUser = async function(id){
  }
 
 module.exports.getUsers = getUsers;
+module.exports.getUsersID = getUsersID;
 module.exports.createUser = createUser;
 module.exports.updateUser = updateUser;
 module.exports.deleteUser = deleteUser;

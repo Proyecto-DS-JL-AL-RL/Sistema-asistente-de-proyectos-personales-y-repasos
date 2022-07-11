@@ -8,9 +8,25 @@ router.get('/users', async function(req,res){
     res.json(resp);
 });
 
-router.post('/user', async function (req, res){
+router.get('/users/:id', async function(req,res){
+    let resp = await datUser.getUsersID(req.params.id);
+    res.json(resp);
+});
+
+router.put('/users/:id', async function(req,res){
+    let resp = await datUser.updateUser(req.params.id, req.body);
+    res.json(resp);
+});
+
+router.post('/users', async function (req, res){
     await datUser.createUser(req.body)
-    res.send('user creado')
+    res.send('usuario creado')
 })
+
+router.delete('/users/:id', async function(req,res){
+    await datUser.deleteUser(req.params.id);
+    res.send('usuario eliminado')
+});
+
 
 module.exports = router;
