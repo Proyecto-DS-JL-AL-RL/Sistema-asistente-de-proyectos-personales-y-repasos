@@ -51,48 +51,52 @@ export default function Login(props) {
       history.push('/');
   }).catch((err)=>{
       alert(err.message);
-      //console.error("app",err);
+      //console.error("app",err);sx={{width:'5vw', height:'5vw'}}
   });
   };
 
   return (
     <React.Fragment>
-      <Box  justifyContent="center" sx={{fontWeight: 'bold', display: 'flex', flexWrap: 'wrap' }}>
-          <FormControl sx={{ m: 2, width: '45ch' }} variant="outlined">
-                <TextField id="outlined-basic" label="Correo electrónico" variant="outlined" value = {values.usuario} onChange = {handleChange('usuario')}/>
+      <Box sx={{width:'80%', height:'20vw', position: 'relative', mt:'50%',boxShadow: 16, display: 'flex'}}>
+      <FormControl  sx={{ mx:'6%', mt: 1, alignItems:'center', textAlign:'center', width:'45ch'}} variant="outlined">
+              <FormControl sx={{mt: 3, width: '100%' }} variant="outlined">
+                    <TextField id="outlined-basic" label="Correo electrónico" variant="outlined" value = {values.usuario} onChange = {handleChange('usuario')}/>
+              </FormControl>
+              <FormControl sx={{mt: 3, width: '100%'}} variant="outlined">
+                    
+                        <InputLabel htmlFor="outlined-adornment-password">Contraseña</InputLabel>
+                        <OutlinedInput
+                          id="outlined-adornment-password"
+                          type={values.showPassword ? 'text' : 'password'}
+                          value={values.password}
+                          onChange={handleChange('password')}
+                          endAdornment={
+                            <InputAdornment position="end">
+                              <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowPassword}
+                                onMouseDown={handleMouseDownPassword}
+                                edge="end"
+                              >
+                                {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                              </IconButton>
+                            </InputAdornment>
+                          }
+                          label="Password"
+                        />
+              </FormControl>
+              <FormControl sx={{textAlign: 'center', mt: 3, width:'100%'}} variant="outlined">
+                    
+                                <Button onClick={handleLogin} sx={{p:2,  borderRadius: 5, py: 2, color: 'white' ,background:'#0000cc'}} variant="contained" size="large">
+                                      <Typography sx= {{fontWeight: 'bold'}} variant = 'h5'>Iniciar Sesión</Typography>
+                                        </Button>                            
+                                                <Typography sx={{py:2}} variant = 'h8'>¿Olvidaste tu contraseña?</Typography>
+                                        <Button onClick={()=>{history.push('./Registro')}} sx={{py:2, borderRadius: 5, color: 'white', background:'#00b347'}} variant="contained" size="large">
+                                      <Typography sx= {{fontWeight: 'bold'}} variant = 'h5'>Registrate</Typography>
+                                  </Button>
+              </FormControl>
           </FormControl>
-            <FormControl sx={{ m: 2, width: '45ch' }} variant="outlined">
-              <InputLabel htmlFor="outlined-adornment-password">Contraseña</InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-password"
-                type={values.showPassword ? 'text' : 'password'}
-                value={values.password}
-                onChange={handleChange('password')}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                label="Password"
-              />
-              </FormControl>
-              <FormControl sx={{m: 2}} variant="outlined">
-                    <Button onClick={handleLogin} sx={{p:2, borderRadius: 5, py: 2, color: 'white' ,background:'#0000cc'}} variant="contained" size="large">
-                    <Typography sx= {{fontWeight: 'bold'}} variant = 'h5'>Iniciar Sesión</Typography>
-                    </Button>                            
-                            <Typography sx={{py:2}} variant = 'h8'>¿Olvidaste tu contraseña?</Typography>
-                    <Button onClick={()=>{history.push('./Registro')}} sx={{py:2, borderRadius: 5, color: 'white', background:'#00b347'}} variant="contained" size="large">
-                        <Typography sx= {{fontWeight: 'bold'}} variant = 'h5'>Registrate</Typography>
-                    </Button>
-              </FormControl>
-      </Box>
+          </Box>
     </React.Fragment>
   );
 }
