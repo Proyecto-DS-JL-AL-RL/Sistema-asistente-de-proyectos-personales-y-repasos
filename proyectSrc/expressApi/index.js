@@ -1,4 +1,5 @@
 const express = require('express');
+const {mongoose} = require('./database');
 
 const app = express();
 const cors = require('cors');
@@ -30,6 +31,9 @@ app.use(session({
         expires: 3*60*60*10000
     }
 }));//Por usar (Yo me encargo :v :v :V )
+
+app.use('/',require('./Router/userRouter'));
+
 
 app.get('/asd',async (req,res)=>{
     res.json({prueba:'La real Prueba'});

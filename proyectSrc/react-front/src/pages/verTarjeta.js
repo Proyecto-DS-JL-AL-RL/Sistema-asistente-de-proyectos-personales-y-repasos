@@ -4,7 +4,7 @@ import Paper from '@mui/material/Paper';
 import Pagination from '@mui/material/Pagination';
 import { Button, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import MicIcon from '@mui/icons-material/Mic';
+//import MicIcon from '@mui/icons-material/Mic';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import './funcionalidades.css'
@@ -12,9 +12,12 @@ import Grow from '@mui/material/Grow';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Divider from '@mui/material/Divider';
-import Tooltip from '@mui/material/Tooltip';
-import CloseIcon from '@mui/icons-material/Close';
+//import Tooltip from '@mui/material/Tooltip';
+//import CloseIcon from '@mui/icons-material/Close';
 import gambare from './img/gambare.webp'
+import * as ReactDOMServer from 'react-dom/server'
+import { useDispatch} from 'react-redux';
+import { changeContent,restoreContent } from '../stores/sliceAyuda';
 
 //<MicIcon className='button-main' sx={{p:2, borderRadius:'50%', background:'red',
 //color:'white', width: '30%', height: '30%', '&:hover': {backgroundColor: '#FF6347'} }}/>
@@ -66,10 +69,34 @@ export default function VerTarjeta(props) {
   const handleChange = (event, value) => {
     setPage(value);
   };
+  const dispatch = useDispatch();
   /* eslint-disable */
   useEffect(() => {
     props.showAdd.setShowAnadir({card:false, icon:false});
+    const suggest = <Card>
+                        <CardContent>   
+                            <Typography  sx={{fontWeight: 'bold'}} variant="h1">
+                                Sugerencia
+                            </Typography>
+                            <Divider  variant="middle" />
+                            <Typography variant="subtitle1" color="text.secondary" component="div">
+                                En esta sección podras realizar tus repasos  de los temas que desees aprender 🤓.<br/>
+                                Escoge alguna de las opciones o  usa Nuestra interfaz de voz 🎙 para seleccionar <br/>
+                                la respuesta (Solo debe decir la letra del botón para escoger dicha opción).
+                            </Typography>
+                          
+                        </CardContent>
+                        <Box  sx={{mt: '2%', mx:'23%', display:'flex'}}>
+                                <img style={{width:'30ch', height:'30ch'}} src={gambare} alt="mehera"/>
+                        </Box>
+                  </Card>
+    const component = ReactDOMServer.renderToString(suggest);
+    dispatch(changeContent(component));
+    return ()=>{
+        dispatch(restoreContent());
+    }                
   },[]);
+
   return (
     <React.Fragment>
       <Typography sx={{fontWeight: 'bold'}} variant = 'h3'>
@@ -82,28 +109,6 @@ export default function VerTarjeta(props) {
         display: 'flex',
       }}
     > 
-    {props.showFuncionalidades.showFeedBack.card?
-                               
-                               <Card  sx={{zIndex:1, position:'absolute', minWidth: '25%', mx:'825%', border: '0.5px solid black'  }}>
-                                       <CardContent>
-                                           <Tooltip title="Cancelar" placement="right">
-                                                   <CloseIcon onClick={(e)=>{props.showFuncionalidades.setShowFeedBack({card:false, icon:false})}} sx={{p:1, mx:'93%', backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
-                                           </Tooltip>   
-                                           <Typography sx={{fontWeight: 'bold', fontsize:'1vw'}} variant="h4" component="div">
-                                               Sugerencia
-                                           </Typography>
-                                           <Divider  variant="middle" />
-                                           <Typography sx={{textAlign: 'center'}}  variant="h6" color="text.primary">
-                                               En esta sección podras realizar tus repasos  de los temas que desees aprender 🤓.
-                                               Escoge alguna de las opciones o  usa Nuestra interfaz de voz 🎙 para seleccionar la respuesta.
-                                           </Typography>
-                                          
-                                       </CardContent>
-                                       <Box  sx={{mt: '2%', mx:'23%', display:'flex'}}>
-                                               <img style={{width:'30ch', height:'30ch'}} src={gambare} alt="mehera"/>
-                                          </Box>
-                                   </Card>
-                           :null}
     <Grow in={true}>
                 <Paper sx={{
                     mx:'4%',  

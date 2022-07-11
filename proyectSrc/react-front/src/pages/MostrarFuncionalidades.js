@@ -9,17 +9,22 @@ import { styled } from '@mui/material/styles';
 import { orange, red, blue, green } from '@mui/material/colors';
 import { useHistory } from "react-router-dom";
 //import QuestionMarkRoundedIcon from '@mui/icons-material/QuestionMarkRounded';
-import Grow from '@mui/material/Grow';
+//import Grow from '@mui/material/Grow';
 import Divider from '@mui/material/Divider';
-import Tooltip from '@mui/material/Tooltip';
+//import Tooltip from '@mui/material/Tooltip';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CloseIcon from '@mui/icons-material/Close';
+//import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import './funcionalidades.css'
+//import CardMedia from '@mui/material/CardMedia';
+import * as ReactDOMServer from 'react-dom/server'
 import mehera from './img/mehera.webp'
+import { useDispatch} from 'react-redux';
+import { changeContent,restoreContent } from '../stores/sliceAyuda';
+
     /*
     en este archivo se mostraran las funcionalidades del software 
     - Gestion de Proyectos y objetivos.
@@ -75,11 +80,32 @@ function FormRow(props) {
 //</Box>
 export default function MostrarFuncionalidades(props) {
     let history = useHistory()
-    
+    const dispatch = useDispatch();
     //props.showAdd.setShowAnadir({card:false, icon:false});
     /* eslint-disable */
     useEffect(() => {
         props.showAdd.setShowAnadir({card:false, icon:false});
+        const suggest = <Card sx={{ display: 'flex' }}>
+                            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                                <CardContent  sx={{ flex: '1 0 auto' }}>  
+                                    <Typography  sx={{fontWeight: 'bold'}} variant="h1">
+                                        Sugerencia
+                                    </Typography>
+                                    <Divider  variant="middle" />
+                                    <Typography variant="subtitle1" color="text.secondary" component="div">
+                                        Bienvenido 🤗. Aquí podras ver las funcionalidades del software.<br /> 👀 Recuerde que tiene la opción
+                                        de navegar a travez de los botones<br/> de abajo o también por nuestra interfaz de voz 🎙. 
+                                    </Typography>
+                                </CardContent>
+                            </Box>     
+                            <img style={{width:'50%', height:'50%'}} src={mehera} alt="mehera"/>
+                        </Card>
+                        
+        const component = ReactDOMServer.renderToString(suggest);
+        dispatch(changeContent(component));
+        return ()=>{
+            dispatch(restoreContent());
+        }
       },[]);
 
     return (
@@ -94,27 +120,7 @@ export default function MostrarFuncionalidades(props) {
                   height: '10ch',
                 }}
                 >
-                    {props.showFuncionalidades.showFeedBack.card?
-                                <Grow  timeout={1000}  in={props.showFuncionalidades.showFeedBack.card}>
-                                    <Card  sx={{position:'absolute',minWidth: '600%', mx:'825%', border: '0.5px solid black'  }}>
-                                            <CardContent>
-                                                <Tooltip title="Cancelar" placement="right">
-                                                        <CloseIcon onClick={(e)=>{props.showFuncionalidades.setShowFeedBack({card:false, icon:false})}} sx={{p:1, mx:'93%', backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
-                                                </Tooltip>   
-                                                <Typography sx={{fontWeight: 'bold', fontsize:'1vw'}} variant="h4" component="div">
-                                                    Sugerencia
-                                                </Typography>
-                                                <Divider  variant="middle" />
-                                                <Typography sx={{textAlign: 'center'}}  variant="h6" color="text.primary">
-                                                    Bienvenido 🤗. Aquí podras ver las funcionalidades del software.<b/> 👀 Recuerde que tiene la opción
-                                                    de navegar a travez de los botones de abajo o también por nuestra interfaz de voz 🎙. 
-                                                </Typography>
-                                                <img style={{width:'50%', height:'50%'}} src={mehera} alt="mehera"/>
-                                            </CardContent>
-                                            
-                                        </Card>
-                                </Grow>:null}
-                    </Box>    
+                </Box>    
                     <Fade timeout={2000} in={true}>
                                     <Typography sx={{fontWeight: 'bold'}} variant = 'h3'>
                                             Explore Nuestras Funcionalidades
