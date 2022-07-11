@@ -3,10 +3,14 @@ const express = require("express")
 const router = express.Router();
 
 
-router.get('/user/:idUser', async function(req,res){
-    let resp = await datUser.getUser(req.params.idUser);
-    res.send(resp);
+router.get('/users', async function(req,res){
+    let resp = await datUser.getUsers();
+    res.json(resp);
 });
 
+router.post('/user', async function (req, res){
+    await datUser.createUser(req.body)
+    res.send('user creado')
+})
 
 module.exports = router;
