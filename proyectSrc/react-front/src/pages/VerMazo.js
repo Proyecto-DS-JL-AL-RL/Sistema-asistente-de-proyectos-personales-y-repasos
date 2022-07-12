@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 //import Grid from '@mui/material/Grid';
@@ -22,6 +22,7 @@ import happy from './img/happy.png'
 import * as ReactDOMServer from 'react-dom/server'
 import { useDispatch} from 'react-redux';
 import { changeContent,restoreContent } from '../stores/sliceAyuda';
+//import axios from 'axios';
 
 
 const mazos = [
@@ -75,7 +76,8 @@ const mazos = [
  // src={"https://drive.google.com/uc?export=view&id=1e9TrTH56TwOvOuKBPzIwfEuZwrz605sn"}
  // width= "100" 
  // height="100"
- // /> 
+ // />       const [mazos, setMazos] = useState([])
+  
 
 
   export default function VerMazos(props){
@@ -100,7 +102,7 @@ const mazos = [
           dispatch(changeContent(component));
               return ()=>{
                   dispatch(restoreContent());
-              }                          
+              }                           
         },[]);
         return (
         <React.Fragment>
