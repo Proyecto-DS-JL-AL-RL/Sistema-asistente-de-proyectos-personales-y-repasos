@@ -109,13 +109,13 @@ export default function Mazos(props) {
                                             <Typography sx={{fontWeight: 'bold', mx:'1vw'}} variant="h4" component="div">
                                                 Editar Mazo
                                             </Typography>
-                                              <TextField sx={{py:2}} id="outlined-basic" label="Titulo de la Sección" defaultValue= {mazo.titulo} variant="outlined" />
+                                              <TextField sx={{py:2}} id="outlined-basic" label="Titulo de la Sección" defaultValue= {mazo.Titulo} variant="outlined" />
                                               <TextField
                                                   id="outlined-multiline-static"
                                                   label="Descripcion"
                                                   multiline
                                                   rows={4}
-                                                  defaultValue={mazo.descripcion}
+                                                  defaultValue={mazo.Descripcion}
                                                 />
                                       </FormControl>
                                     </Box>
@@ -150,7 +150,7 @@ export default function Mazos(props) {
                                                   <TextField sx={{py:'2%'}} id="outlined-basic" label="Opción 2" defaultValue= {tarjeta.Opciones[1]} variant="outlined" />
                                                   <TextField sx={{py:'2%'}} id="outlined-basic" label="Opción 3" defaultValue= {tarjeta.Opciones[2]} variant="outlined" />
                                                   <TextField sx={{py:'2%'}} id="outlined-basic" label="Opción 4" defaultValue= {tarjeta.Opciones[3]} variant="outlined" />
-                                                  <TextField sx={{py:'2%'}} id="outlined-basic" label="Respuesta (poner el número de la  rpta e.g : 1 o 2 o ..)" defaultValue= {tarjeta.Respuestas} variant="outlined" />
+                                                  <TextField sx={{py:'2%'}} id="outlined-basic" label="Respuesta (poner el número de la  rpta e.g : 1 o 2 o ..)" defaultValue= {tarjeta.Respuesta} variant="outlined" />
                                           </FormControl>
                                         </Box>
                                         <Box  justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>
@@ -173,11 +173,11 @@ export default function Mazos(props) {
               <React.Fragment  key={idx}>
                 <Accordion expanded={expanded === `panel${idx}$`} onChange={handleChange(`panel${idx}$`)}>
                   <AccordionSummary aria-controls={`panel${idx}$d-content`} id={`panel${idx}$d-header`}>
-                      <Typography  variant="h5" sx={{ flexGrow: 1, color: 'white' }}>{mazo.titulo}</Typography>
+                      <Typography  variant="h5" sx={{ flexGrow: 1, color: 'white' }}>{mazo.Titulo}</Typography>
                       <Grid item>
                         <Tooltip title="abrir" placement="right">
                               <IconButton onClick={()=>{
-                                    history.push('/Tarjetas/'+mazo.titulo)
+                                    history.push('/Tarjetas/'+mazo.Titulo)
                                     }}
                                     sx={{color: "white"}}>   
                                                   
@@ -204,7 +204,7 @@ export default function Mazos(props) {
                   </AccordionSummary>
                       <AccordionDetails>
                         <Typography variant="h6">
-                              {mazo.descripcion}
+                              {mazo.Descripcion}
                         </Typography>
                     
                           <List sx={{fontWeight: 'bold', color: 'white',bgcolor: '#454545'}}>

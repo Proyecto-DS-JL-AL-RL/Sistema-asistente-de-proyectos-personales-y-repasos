@@ -22,7 +22,7 @@ import happy from './img/happy.png'
 import * as ReactDOMServer from 'react-dom/server'
 import { useDispatch} from 'react-redux';
 import { changeContent,restoreContent } from '../stores/sliceAyuda';
-//import axios from 'axios';
+import axios from 'axios';
 
 
 const mazos = [
@@ -81,10 +81,14 @@ const mazos = [
 
 
   export default function VerMazos(props){
+        const [mazos, setMazos] = useState([])
         const dispatch = useDispatch();
         /* eslint-disable */
         useEffect(() => {
           props.showAdd.setShowAnadir({card:false, icon:true});
+          axios.get('/api/mazos/').then(function(response){
+            setMazos(response.data)
+        });
           const suggest = <Card  sx={{ mx:100, minWidth: 600, border: '0.5px solid black'  }}>
                               <CardContent>
                                     <Typography  sx={{fontWeight: 'bold'}} variant="h1">

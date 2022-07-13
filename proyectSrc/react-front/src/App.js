@@ -67,7 +67,7 @@ function App() {
   const [showFeedBack, setShowFeedBack] = useState({card:false, icon:false})
 
   const [showAnadir, setShowAnadir] = useState({card:false, icon:false})
-
+  const [showBars, setShowBars] = useState(true)
   useEffect(()=>{
     getSession().then((session)=>{
         console.log('State:',session);
@@ -80,13 +80,13 @@ function App() {
   //<button onClick = {()=>{listening?SR.stopListening():SR.startListening({language: 'es', continuous: CONTINOUS_});setListeningState(!listeningState)}}>xd</button>
   return (
           <div className='container-main'>
-              
-                  <DrawerComponent/>
+                  
+                  {showBars?<DrawerComponent/>:null}
                   <div className='other-container'>
                     <div className='head-container'>
-                      <AppBarSearch stateButton={{showFeedBack, showAnadir}} 
+                  {showBars?<AppBarSearch stateButton={{showFeedBack, showAnadir}} 
                       ClickButton={{setShowFeedBack, setShowAnadir}}
-                      name={nameBar} setName={setNameBar}/>
+                      name={nameBar} setName={setNameBar}/>:null}
                     </div>
                     <div className='content-container'>
                       {transcript}
@@ -110,7 +110,7 @@ function App() {
                           <ActivityQueue/>
                         </Route>
                         <Route exact path = "/inicio" >
-                          <Inicio logged={{logged,setLogged}}/>
+                          <Inicio  logged={{logged,setLogged}}/>
                         </Route>
                         <Route exact path = "/Tarjetas/:idSeccion" >
                                 <Tarjetas showFuncionalidades={{showFeedBack, setShowFeedBack}} showAdd={{showAnadir, setShowAnadir}} />

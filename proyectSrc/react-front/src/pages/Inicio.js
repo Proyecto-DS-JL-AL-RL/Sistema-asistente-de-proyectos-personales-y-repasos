@@ -2,11 +2,10 @@ import React from "react";
 import Login from '../components/Login.js'
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
+//import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import img from './img/aver.jpg'
 import { Container, Typography, Link } from '@mui/material';
-
 const useStyles = styled({
   bg: {
     backgroundColor: "grey"
