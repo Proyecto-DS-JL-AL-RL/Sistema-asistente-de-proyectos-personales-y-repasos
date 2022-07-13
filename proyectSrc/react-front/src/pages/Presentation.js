@@ -74,8 +74,8 @@ export default function Presentacion(){
                                 <div>
                                     <div className="container">
                                         <div className="row">
-                                        <div class="wrapper">
-                                            <ul class="dynamic-txts">
+                                        <div className="wrapper">
+                                            <ul className="dynamic-txts">
                                             <li><span>Bienvenido Usuario</span></li>
                                             <li><span>Recuerda que puedes usar nuestra</span></li>
                                             <li><span>Interfaz de voz  {<MicIcon sx={{p:1, borderRadius:50, background:'red',
