@@ -1,13 +1,21 @@
 import { Card, Grid, Button, Typography } from '@mui/material';
-import React from 'react';
+import React,{useContext} from 'react';
 import { useHistory } from 'react-router-dom';
-
+import { AccountContext } from '../AccountContext';
 
 export default function AlgoQueHacer(props){
     const history = useHistory();
 
+
+    const { sessionState } = useContext( AccountContext );   
+
     const giveAnActivity =()=>{
-        props.setDoingSomething(true);
+        const {sub} = sessionState;
+        console.log(sub);
+
+        
+        //props.setDoingSomething(true);
+    
     }
 
     return(
