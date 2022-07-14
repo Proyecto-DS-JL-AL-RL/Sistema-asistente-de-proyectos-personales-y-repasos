@@ -65,9 +65,9 @@ function App() {
 
   const [logged,setLogged] = useState(true);
   const [showFeedBack, setShowFeedBack] = useState({card:false, icon:false})
-
   const [showAnadir, setShowAnadir] = useState({card:false, icon:false})
   const [showBars, setShowBars] = useState(true)
+  
   useEffect(()=>{
     getSession().then((session)=>{
         console.log('State:',session);
@@ -75,7 +75,6 @@ function App() {
         console.log(err);
     });
   },[]);
-
 
   //<button onClick = {()=>{listening?SR.stopListening():SR.startListening({language: 'es', continuous: CONTINOUS_});setListeningState(!listeningState)}}>xd</button>
   return (

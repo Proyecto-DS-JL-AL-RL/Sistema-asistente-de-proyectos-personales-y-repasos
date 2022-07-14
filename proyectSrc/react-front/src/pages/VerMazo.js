@@ -24,7 +24,7 @@ import { useDispatch} from 'react-redux';
 import { changeContent,restoreContent } from '../stores/sliceAyuda';
 import axios from 'axios';
 
-
+/*
 const mazos = [
   {
     id:'1',
@@ -72,7 +72,7 @@ const mazos = [
       Respuestas: 1
     }]
   }
-  ]//width: 900,    height: 900, <img    style={{borderRadius: '50%'}}
+  ]*///width: 900,    height: 900, <img    style={{borderRadius: '50%'}}
  // src={"https://drive.google.com/uc?export=view&id=1e9TrTH56TwOvOuKBPzIwfEuZwrz605sn"}
  // width= "100" 
  // height="100"
@@ -83,12 +83,12 @@ const mazos = [
   export default function VerMazos(props){
         const [mazos, setMazos] = useState([])
         const dispatch = useDispatch();
+        const [titulo, setTitulo] = useState('')
+        const [descripcion, setDescripcion] = useState('')
         /* eslint-disable */
         useEffect(() => {
           props.showAdd.setShowAnadir({card:false, icon:true});
-          axios.get('/api/mazos/').then(function(response){
-            setMazos(response.data)
-        });
+          
           const suggest = <Card  sx={{ mx:100, minWidth: 600, border: '0.5px solid black'  }}>
                               <CardContent>
                                     <Typography  sx={{fontWeight: 'bold'}} variant="h1">
@@ -108,6 +108,13 @@ const mazos = [
                   dispatch(restoreContent());
               }                           
         },[]);
+
+        useEffect(()=>{
+          axios.get('/api/mazos/1').then(function(response){
+            setMazos(response.data)
+        });
+        }, [])
+
         return (
         <React.Fragment>
                 <Box sx={{ flexGrow: 1}}>
@@ -140,19 +147,32 @@ const mazos = [
                                             </Typography>
                                             <Box  justifyContent="center" sx={{ display: 'flex', flexWrap: 'wrap' }}>
                                                 <FormControl  sx={{m: 2, width: '45ch' }} variant="outlined">
-                                                      <TextField sx={{py:2}} id="outlined-basic" label="Titulo de la Sección" defaultValue= {''} variant="outlined" />
+                                                      <TextField sx={{py:2}} id="outlined-basic" label="Titulo de la Sección" defaultValue = {titulo} onChange={(e=>{setTitulo(e.target.value)})} variant="outlined" />
                                                       <TextField
                                                           id="outlined-multiline-static"
                                                           label="Descripcion"
                                                           multiline
                                                           rows={4}
-                                                          defaultValue={''}
+                                                          onChange={(e=>{setDescripcion(e.target.value)})}
+                                                          defaultValue={descripcion}
                                                         />
                                                 </FormControl>
                                               </Box>
                                               <Box  justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>
                                                     <Tooltip title="Guardar" placement="left">
-                                                      <Button onClick={()=>{props.showAdd.setShowAnadir({card:false, icon:true})}} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
+                                                      <Button onClick={()=>{
+                                                              props.showAdd.setShowAnadir({card:false, icon:true})
+                                                                axios.post('/api/mazos/', 
+                                                                {
+                                                                    "UserID":"1",
+                                                                    "Titulo": titulo,
+                                                                    "Descripcion":descripcion,
+                                                                    "Tarjetas": [{"Pregunta":"",
+                                                                                  "Opciones":[],
+                                                                                  "Respuesta": 0}]
+                                                                })
+                                                                window.location.reload(false);
+                                                              }} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
                                                         <SaveIcon sx={{p:1}}/>
                                                       </Button>
                                                     </Tooltip>
@@ -165,7 +185,7 @@ const mazos = [
                   <Box sx={{mx:'12%',
                             position:'absolute',
                               width: '65%'}}>
-                          <Mazos getmazo={mazos} />
+                          <Mazos getmazo={mazos} setMazo={setMazos} />
                   </Box>
         </React.Fragment>
     );

@@ -18,42 +18,22 @@ import gambare from './img/gambare.webp'
 import * as ReactDOMServer from 'react-dom/server'
 import { useDispatch} from 'react-redux';
 import { changeContent,restoreContent } from '../stores/sliceAyuda';
+import { useParams } from "react-router-dom";
+import axios from 'axios';
 
 //<MicIcon className='button-main' sx={{p:2, borderRadius:'50%', background:'red',
 //color:'white', width: '30%', height: '30%', '&:hover': {backgroundColor: '#FF6347'} }}/>
 
-const mazo = {
-  id:'1',
-  titulo: 'Inteligencia Artificial',
-  descripcion: 'esto es un prueba porque estamos a punto de dar parcial de AI pero no estudie asi que es tu turno de colaborar.',
+const mazos = {
+  id:'',
+  Titulo: '',
+  descripcion: '',
   Tarjetas:[{
-    id: '1',
-    Pregunta: '¿Que es la Inteligencia Artificial?',
-    Opciones: ['Es un campo de la Botanica', 
-               'Área de la informática que permite a las máquinas aprender',
-                'Es una palabra en ingles',
-                'N.A.'],
-    Respuestas: 2
-  },
-  {
-    id: '2',
-    Pregunta: '¿Que modelo "Transformer" no fue entrenado en la estrategia del MLM (Masked Language Modeling)?',
-    Opciones: ['ROBERTA', 
-               'ELECTRA',
-                'T5',
-                'BERT'],
-    Respuestas: 2
-  },
-  {
-    id: '3',
-    Pregunta: 'El profesor del curso de Inteligencia Artificial te deja de trabajo final  realizar un clasificador de reviews. Para ello te provee de la data Amazon, la cual contiene tanto las reviews (Texto) como su calificación de estrellas (1 al 5), poniendote manos a la obra comienzas probando con una RNN (Recurrent Neural Networks). ¿Que tipo de Arquitectura RNN usarias?',
-    Opciones: ['One to Many', 
-               'One to One',
-                'Many to Many',
-                'Many to one'],
-    Respuestas: 4
-  }  
-  ]
+    id: '',
+    Pregunta: '',
+    Opciones: [],
+    Respuestas: ''
+  }]
 }
 
 const Opt = styled(Paper)(({ theme }) => ({
@@ -66,6 +46,8 @@ const Opt = styled(Paper)(({ theme }) => ({
 
 export default function VerTarjeta(props) {
   const [page, setPage] = React.useState(1);
+  const [mazo, setMazo] = React.useState(mazos);
+  const {idSeccion} = useParams();
   const handleChange = (event, value) => {
     setPage(value);
   };
@@ -97,10 +79,15 @@ export default function VerTarjeta(props) {
     }                
   },[]);
 
+  useEffect(() => {
+    axios.get('/api/mazosID/'+idSeccion).then(function(response){
+      setMazo(response.data)
+    })}, [mazos])
+
   return (
     <React.Fragment>
       <Typography sx={{fontWeight: 'bold'}} variant = 'h3'>
-                  {mazo.titulo}
+                  {mazo.Titulo}
       </Typography>
       
     <Box
@@ -161,7 +148,7 @@ export default function VerTarjeta(props) {
                                                       </Paper>
                                                       <Opt>
                                                           <Grid  container mx={'2%'} spacing={'1%'}>
-                                                                  <Grid item xs>
+                                                                  <Grid item >
                                                                           <Box sx={{ width: '100%' }}>
                                                                               <Stack spacing={'2%'}>
                                                                                   <Button className='button-main'  sx={{height:'18ch', width: '70ch', border: '5px solid black',color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}><Typography sx={{fontWeight: 'bold'}} variant="h6" component="div"> a. {mazo.Tarjetas[page-1].Opciones[0]}</Typography></Button>
@@ -172,7 +159,7 @@ export default function VerTarjeta(props) {
                                                                   <Grid mt={'10%'} item xs={'10%'}>
                                                                               
                                                                   </Grid>
-                                                                  <Grid item xs>
+                                                                  <Grid item >
                                                                           <Box sx={{ width: '100%' }}>
                                                                               <Stack spacing={'2%'}>
                                                                                   <Button className='button-main'  sx={{height:'18ch', width: '70ch',border: '5px solid black', color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}> <Typography sx={{fontWeight: 'bold'}} variant="h6" component="div">c. {mazo.Tarjetas[page-1].Opciones[1]}</Typography></Button>

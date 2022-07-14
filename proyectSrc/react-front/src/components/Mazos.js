@@ -27,6 +27,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemButton from '@mui/material/ListItemButton';
 import '../pages/funcionalidades.css'
 import { useHistory } from "react-router-dom";
+import axios from 'axios';
 
 
 
@@ -71,6 +72,16 @@ export default function Mazos(props) {
   const [showEdit, setShowEdit] = useState(false)
   const [showEditCard, setShowEditCard] = useState(false)
   const [tarjeta, setTarjeta] = useState({})
+  const [titulo, setTitulo] = useState('')
+  const [descripcion, setDescripcion] = useState('')
+
+  const [tarjetaIndex, setTarjetaIndex] = useState(0)
+  const [pregunta, setPregunta] = useState('')
+  const [opcion1, setOpcion1] = useState('')
+  const [opcion2, setOpcion2] = useState('')
+  const [opcion3, setOpcion3] = useState('')
+  const [opcion4, setOpcion4] = useState('')
+  const [respuesta, setRespuesta] = useState('') 
   let history = useHistory()
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
@@ -109,19 +120,28 @@ export default function Mazos(props) {
                                             <Typography sx={{fontWeight: 'bold', mx:'1vw'}} variant="h4" component="div">
                                                 Editar Mazo
                                             </Typography>
-                                              <TextField sx={{py:2}} id="outlined-basic" label="Titulo de la Sección" defaultValue= {mazo.Titulo} variant="outlined" />
+                                              <TextField  onChange={(e=>{setTitulo(e.target.value)})} sx={{py:2}} id="outlined-basic" label="Titulo de la Sección" value= {titulo} variant="outlined" />
                                               <TextField
+                                                  
                                                   id="outlined-multiline-static"
                                                   label="Descripcion"
                                                   multiline
                                                   rows={4}
-                                                  defaultValue={mazo.Descripcion}
+                                                  onChange={(e=>{
+                                                    setDescripcion(e.target.value)
+                                                    
+                                                  })}
+                                                  value={descripcion}
                                                 />
                                       </FormControl>
                                     </Box>
                                     <Box  justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>
                                       <Tooltip title="Guardar" placement="left">
-                                            <Button onClick={()=>{setShowEdit(false)}} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
+                                            <Button onClick={()=>{setShowEdit(false)
+                                                                  axios.put('/api/mazos/'+mazo._id, { "Titulo":titulo,
+                                                                  "Descripcion":descripcion})
+                                                                  window.location.reload(false);
+                                            }} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
                                                 <SaveIcon sx={{p:1}}/>
                                             </Button>
                                         </Tooltip>
@@ -145,17 +165,38 @@ export default function Mazos(props) {
                                             <Typography sx={{fontWeight: 'bold', mx:'1vw'}} variant="h4" component="div">
                                                     Editar Tarjeta
                                                 </Typography>
-                                                  <TextField sx={{py:'2%'}} id="outlined-basic" label="Pregunta" defaultValue= {tarjeta.Pregunta} variant="outlined" />
-                                                  <TextField sx={{py:'2%'}} id="outlined-basic" label="Opción 1" defaultValue= {tarjeta.Opciones[0]} variant="outlined" />
-                                                  <TextField sx={{py:'2%'}} id="outlined-basic" label="Opción 2" defaultValue= {tarjeta.Opciones[1]} variant="outlined" />
-                                                  <TextField sx={{py:'2%'}} id="outlined-basic" label="Opción 3" defaultValue= {tarjeta.Opciones[2]} variant="outlined" />
-                                                  <TextField sx={{py:'2%'}} id="outlined-basic" label="Opción 4" defaultValue= {tarjeta.Opciones[3]} variant="outlined" />
-                                                  <TextField sx={{py:'2%'}} id="outlined-basic" label="Respuesta (poner el número de la  rpta e.g : 1 o 2 o ..)" defaultValue= {tarjeta.Respuesta} variant="outlined" />
+                                                  <TextField onChange={(e=>{
+                                                    setPregunta(e.target.value)
+                                                    
+                                                  })} sx={{py:'2%'}} id="outlined-basic" label="Pregunta" defaultValue= {pregunta} variant="outlined" />
+                                                  <TextField onChange={(e=>{
+                                                    setOpcion1(e.target.value)
+                                                    
+                                                  })} sx={{py:'2%'}} id="outlined-basic" label="Opción 1" defaultValue= {opcion1} variant="outlined" />
+                                                  <TextField  onChange={(e=>{
+                                                    setOpcion2(e.target.value)
+                                                    
+                                                  })}sx={{py:'2%'}} id="outlined-basic" label="Opción 2" defaultValue= {opcion2} variant="outlined" />
+                                                  <TextField  onChange={(e=>{
+                                                    setOpcion3(e.target.value)
+                                                    
+                                                  })} sx={{py:'2%'}} id="outlined-basic" label="Opción 3" defaultValue= {opcion3} variant="outlined" />
+                                                  <TextField onChange={(e=>{
+                                                    setOpcion4(e.target.value)
+                                                    
+                                                  })} sx={{py:'2%'}} id="outlined-basic" label="Opción 4" defaultValue= {opcion4} variant="outlined" />
+                                                  <TextField onChange={(e=>{
+                                                    setRespuesta(e.target.value)
+                                                    
+                                                  })} sx={{py:'2%'}} id="outlined-basic" label="Respuesta (poner el número de la  rpta e.g : 1 o 2 o ..)" defaultValue= {respuesta} variant="outlined" />
                                           </FormControl>
                                         </Box>
                                         <Box  justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>
                                                       <Tooltip title="Guardar" placement="left">
-                                                          <Button onClick={()=>{setShowEditCard(false)}} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
+                                                          <Button onClick={()=>{
+                                                            setShowEditCard(false)
+                                                            
+                                                          }} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
                                                               <SaveIcon sx={{p:1}}/>
                                                           </Button>
                                                       </Tooltip>
@@ -171,13 +212,13 @@ export default function Mazos(props) {
         mazos.map((mazo, idx)=>{
           return  (
               <React.Fragment  key={idx}>
-                <Accordion expanded={expanded === `panel${idx}$`} onChange={handleChange(`panel${idx}$`)}>
+                <Accordion sx={{width:'130vh'}} expanded={expanded === `panel${idx}$`} onChange={handleChange(`panel${idx}$`)}>
                   <AccordionSummary aria-controls={`panel${idx}$d-content`} id={`panel${idx}$d-header`}>
                       <Typography  variant="h5" sx={{ flexGrow: 1, color: 'white' }}>{mazo.Titulo}</Typography>
                       <Grid item>
                         <Tooltip title="abrir" placement="right">
                               <IconButton onClick={()=>{
-                                    history.push('/Tarjetas/'+mazo.Titulo)
+                                    history.push('/Tarjetas/'+mazo._id)
                                     }}
                                     sx={{color: "white"}}>   
                                                   
@@ -189,14 +230,20 @@ export default function Mazos(props) {
                                   <IconButton onClick={()=>{
                                     setShowEdit(true)
                                     setMazo(mazo)
-                                
+                                    setTitulo(mazo.Titulo)
+                                    setDescripcion(mazo.Descripcion)    
                                     }} sx={{color: "white"}}>                             
                                         <EditIcon/>
                                       </IconButton>
                               
                         </Tooltip>
                         <Tooltip title="borrar" placement="right">
-                            <IconButton sx={{color: "white"}}>                             
+                            <IconButton onClick={()=>{
+                                mazos.splice(idx, 1);
+                                //setMazos(mazos)
+                                axios.delete('/api/mazos/'+mazo._id)
+                                //window.location.reload(false);
+                            }} sx={{color: "white"}}>                             
                                 <DeleteIcon />
                               </IconButton>
                         </Tooltip>
@@ -215,13 +262,24 @@ export default function Mazos(props) {
                                   disableGutters
                                   secondaryAction={
                                     <React.Fragment>
-                                          <IconButton onClick={()=>{
+                                          <IconButton onClick={()=>{  
+                                            setTarjetaIndex(idx)
+                                            setPregunta(mazo.Tarjetas[idx].Pregunta)
+                                            setOpcion1(mazo.Tarjetas[idx].Opciones[0])
+                                            setOpcion2(mazo.Tarjetas[idx].Opciones[1])
+                                            setOpcion3(mazo.Tarjetas[idx].Opciones[2])
+                                            setOpcion4(mazo.Tarjetas[idx].Opciones[3])
+                                            setRespuesta(mazo.Tarjetas[idx].Respuesta)
                                             setShowEditCard(true);
                                             setTarjeta(value)
                                           }}  sx={{color:'white',  '&:hover': {backgroundColor: '#00b347', color:'black'}}} aria-label="comment">
                                               <EditIcon/>
                                           </IconButton>
-                                          <IconButton   sx={{color:'white',  '&:hover': {backgroundColor: '#00b347', color:'black'}}} aria-label="comment">
+                                          <IconButton onClick={()=>{
+                                            mazo.Tarjetas.splice(idx, 1);
+                                            setMazo(mazo.Tarjetas)
+                                            axios.put('/api/mazos/'+mazo._id, {"Tarjetas":mazo.Tarjetas})
+                                          }}  sx={{color:'white',  '&:hover': {backgroundColor: '#00b347', color:'black'}}} aria-label="comment">
                                               <DeleteIcon />
                                           </IconButton>
                                     </React.Fragment>
