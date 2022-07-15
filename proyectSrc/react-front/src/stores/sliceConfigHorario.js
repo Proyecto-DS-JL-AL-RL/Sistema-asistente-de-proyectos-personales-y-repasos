@@ -6,8 +6,9 @@ export const configHorarioSlice = createSlice({
         value:{
             sobrescribir:true,
             tema:[],
-            intervaloDefault:true,
-            intervalo: [0,1]
+            intervaloDefault:false,
+            intervaloMaxMin:[6,18],
+            intervalo: [4,20]
         }
 
     },
@@ -15,14 +16,23 @@ export const configHorarioSlice = createSlice({
         changeSobreescribir: (state,action)=>{
             state.value.sobrescribir = action.payload
         },
-        changeIntervaloDefault : (state,action) =>{
+        changeIntervalo : (state,action) =>{
+            
             state.value.intervalo= action.payload
         },
+        intervaloOverFlow : (state,action) =>{
+            state.value.intervaloDefault = true;
+            state.value.intervalo= action.payload
+        },
+        changeIntervaloDefault: (state,action) =>{
+            state.value.intervaloDefault = action.payload;
+        },
+        
         changeTema :(state,action) =>{
             state.value.tema = action.payload
         }
     }
 })
-export const {changeSobreescribir,changeIntervaloDefault,
-    changeTema} = configHorarioSlice.actions;
+export const {changeSobreescribir,changeIntervalo,
+    changeTema,intervaloOverFlow,changeIntervaloDefault} = configHorarioSlice.actions;
 export default configHorarioSlice.reducer;

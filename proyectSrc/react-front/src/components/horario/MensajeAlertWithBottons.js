@@ -1,8 +1,7 @@
 import React from 'react'
 import './mensajeAlert.css'
 import ClearIcon from '@mui/icons-material/Clear';
-
-export default function MensajeAlert(props) {
+export default function MensajeAlertWithBottons(props) {
   return (
     <div className='mensaje-alert' onClick={()=>{props.visible(null)}}>
         
@@ -15,13 +14,17 @@ export default function MensajeAlert(props) {
                 <div>
                     {props.mensaje}
                 </div>
+                <div>
+                    <button onClick={()=>{props.onAccept()}}>
+                        Si
+                    </button>
+                    <button>
+                        No
+                    </button>
+                </div>
             </div>
         
             
     </div>
   )
 }
-/*
-<div className='borde-mensaje'>
-</div>
-*/

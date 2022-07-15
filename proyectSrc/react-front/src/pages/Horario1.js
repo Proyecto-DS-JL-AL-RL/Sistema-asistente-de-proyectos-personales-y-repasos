@@ -14,7 +14,7 @@ import { useSelector,useDispatch} from 'react-redux';
 import {restoreActivity } from '../stores/sliceHorario';
 import { actividad2intervalo } from '../components/horario/utilsHorario';
 import { changeContent,restoreContent } from '../stores/sliceAyuda';
-
+import {changeIntervalo, intervaloOverFlow} from '../stores/sliceConfigHorario';
 
 import * as ReactDOMServer from 'react-dom/server';
 
@@ -99,6 +99,8 @@ const minDistance = 8;
 
 export default function Horario(props) {
     const horario = useSelector((state)=>state.horario.value);
+    const configHorario = useSelector((state) => state.configHorario.value);
+    
     const dispatch = useDispatch();
 
     const [ocultarDescripcion, setOcultarDescripcion] = useState(true);
@@ -110,6 +112,7 @@ export default function Horario(props) {
     const [idSelect,setIdSelect] = useState(-1);
     const [descripcionRender,setDescripcionRender] = useState(null);
     const [visibleAlert,setVisibleAlert] = useState(null);
+    const [mensajesAlertComplete,setMensajesAlertComplete] = useState(null);
     useEffect(()=>{
         const aa = <div>hola</div>
         const component=ReactDOMServer.renderToString(aa);
@@ -127,7 +130,7 @@ export default function Horario(props) {
         const space = getFinWithDefault(dia,inicio,act2horario(horario,[0]));
         if(acts.length==0){
             let a =  {...actividadDefault,dia,inicio,
-                fin:inicio+space,estado:1} 
+                fin:Math.min(configHorario.intervalo[1],inicio+space),estado:1} 
             return {...a, intervalo:actividad2intervalo(a)}
         }
         if(acts.length==2){
@@ -138,7 +141,7 @@ export default function Horario(props) {
             //console.log("Change",newChangeHorario);
         }
         if(act.estado==1){
-            let a =  {...actividadDefault,dia,inicio,fin:inicio+space,estado:1}  
+            let a =  {...actividadDefault,dia,inicio,fin:Math.min(configHorario.intervalo[1],inicio+space),estado:1}  
             return {...a, intervalo:actividad2intervalo(a)}
         }
         return act;
@@ -161,6 +164,7 @@ export default function Horario(props) {
                 console.log("Estados",acts.map((e)=>e.estado));
 
                 setDescripcionRender(<DescripcionActividad
+                    mensajeDisplay={setMensajesAlertComplete}
                     actividad = {id2actividadClick(numEle)}
                     idAct = {numEle}
                     handleVisible={setOcultarDescripcion} 
@@ -185,8 +189,11 @@ export default function Horario(props) {
                 
                 const numEle = parseInt(elementos[i].id.match(/(\d+)/)[0]);
                 if(horasOcupadas.indexOf(numEle)!=-1){
-                    const act = id2actividad(horario,numEle);
-                    setContentDescription(act.nombre);
+                    if(horario.length>0){
+                        const act = id2actividad(horario,numEle);
+                        setContentDescription(act.nombre);
+                    }
+                    
                 }else{
                     setContentDescription("Click para crear ana actividad");
                 }
@@ -196,7 +203,8 @@ export default function Horario(props) {
                 descpHorario.style.display='None';
             }
         }
-    },[minmaxIntervalo,horasOcupadas]);
+        console.log("XDD",configHorario.intervalo);
+    },[horasOcupadas,configHorario]);
     
     
 
@@ -211,6 +219,51 @@ export default function Horario(props) {
         
     }
    
+    /**
+     console.log("Default:",horario.intervaloDefault);
+        if(horario.length==1){
+            
+            if(horario[0].estado==1) return;
+        }
+        if(horario.length<1 && configHorario.intervaloDefault) {
+            dispatch(changeIntervalo([8,18]));
+
+            return;
+        } 
+        console.log(minHora,maxHora, "---", configHorario.intervalo);
+        if(configHorario.intervalo[0]==-1 && configHorario.intervalo[1]==-1){
+            dispatch(changeIntervalo([minHora,maxHora]));
+            return;
+        }
+        if((minHora>=configHorario.intervalo[0] && maxHora<=configHorario.intervalo[1]) && !configHorario.intervaloDefault){
+            return;
+        } 
+        if(minHora<configHorario.intervalo[0] || maxHora>configHorario.intervalo[1]){
+            
+            dispatch(intervaloOverFlow([Math.min(minHora,configHorario.intervalo[0])
+            ,Math.max(maxHora,configHorario.intervalo[1])]));
+            return;
+        }
+        //if((minHora<configHorario.intervalo[0] || maxHora>configHorario.intervalo[1]) && !configHorario.intervaloDefault){
+        //    dispatch(changeIntervaloDefault([minHora,maxHora]));
+        //    return;
+        //}
+
+        if(maxHora-minHora>minDistance && configHorario.intervaloDefault){
+            console.log("Entro:", minHora,maxHora);
+            dispatch(changeIntervalo([minHora,maxHora]));
+            return;
+        }
+        if(maxHora-minHora<=minDistance ){
+            const middle = Math.floor((maxHora+minHora)/2);
+            
+            dispatch(changeIntervalo([Math.min(16,middle-4),middle+4]))
+            return;
+            
+        }
+        console.log(minHora,maxHora,configHorario.intervaloDefault);
+     
+     */
     useEffect(()=>{
         
         if(!horario) return;
@@ -220,10 +273,31 @@ export default function Horario(props) {
         })
         if (!flag_horario) return;
         setHorasOcupadas(act2horario(horario));
-        if(maxHoraIntervalo(horario)-minHoraIntervalo(horario)>minDistance){
-            setMinmaxIntervalo([minHoraIntervalo(horario),
-                maxHoraIntervalo(horario)]);
+        
+        if((act2horario(horario,[0])).length==0){
+            dispatch(changeIntervalo([Math.min(6,configHorario.intervalo[0]),Math.max(18,configHorario.intervalo[1])]));
+            return;
         }
+
+        
+        const minHora = minHoraIntervalo(horario);
+        const maxHora = maxHoraIntervalo(horario);
+        if(!configHorario.intervaloDefault){
+            if(minHora<configHorario.intervalo[0] || maxHora>configHorario.intervalo[1]){
+                dispatch(intervaloOverFlow([minHora,maxHora]));
+            }
+            return;
+        }
+        console.log(minHora,maxHora);
+        if(maxHora-minHora<minDistance){
+            console.log("Hola Min");
+            const val = Math.floor((minDistance- (maxHora-minHora))/2)+1;
+            dispatch(changeIntervalo([minHora-val,maxHora+val]))
+            return;
+        }
+        dispatch(changeIntervalo([minHora,maxHora]));
+        
+        
     },[horario])
   return (
     
@@ -257,7 +331,7 @@ export default function Horario(props) {
                         ocupado="item-horario-ocupado";
                     }
                     if(e>7){
-                        if(e<minmaxIntervalo[0]*8 || e>=(minmaxIntervalo[1]+1)*8) return;
+                        if(e<configHorario.intervalo[0]*8 || e>=(configHorario.intervalo[1]+1)*8) return;
                     }
                     if( horasOcupadas.indexOf(e)!=-1){
                         const act = id2actividad(horario,e);
@@ -294,7 +368,7 @@ export default function Horario(props) {
         intervalo={minmaxIntervalo}
         handleIntervalo={handleIntervaloHoras}/>}
         {visibleAlert}
-        
+        {mensajesAlertComplete}
     </div>
     
   )

@@ -6,6 +6,10 @@ import Button from '@mui/material/Button';
 import Badge  from '@mui/material/Badge';
 import { FormControl, FormControlLabel, FormGroup, FormHelperText, InputLabel, MenuItem, Select, Slider, Switch as Sw, Typography} from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
+import {useSelector,useDispatch} from 'react-redux';
+import { changeIntervalo,changeIntervaloDefault, changeSobreescribir } from '../../stores/sliceConfigHorario';
+import {actividades2Intervalo,act2horario}from './utilsHorario';
+
 const stateButton2String =  (state) =>{
     const stringState = ['Editar','Crear','Guardar'];
     return stringState[state];
@@ -19,32 +23,45 @@ function valuetext(value) {
 const minDistance = 8;
 const temasDisponibles = Array.from({length:4},(_,e)=>{return "tema"+e})
 export default function ConfigHorario(props) {
+    const configHorario = useSelector((state)=>state.configHorario.value);
+    const horario = useSelector((state)=>state.horario.value);
+    const dispatch = useDispatch();
+
     const [stateButton,setStateButton] = useState(0);
     const [intervaloHoras,setIntervaloHoras]=useState(false);
     const [value, setValue] = useState([2, 15]);
     const [temaValue,setTemaValue] = useState(0);
     const [onlyMinMax,setOnlyMinMax] = useState(true);
-    const [intervaloMinMax,setIntervaloMinMax ] = useState([2,15]);
-    useState(()=>{
+    const [intervaloMinMax,setIntervaloMinMax ] = useState(actividades2Intervalo(horario));
+    const [minmax,setMinMax] = useState(actividades2Intervalo(horario));
+
+    /*useState(()=>{
         if(!Array.isArray(props.intervalo)) return;
         setIntervaloMinMax(props.intervalo);
-    },[props])
+    },[props])*/
+    useState(()=>{
+        //if(!horario) return;
+        setMinMax(actividades2Intervalo(horario));
+    },[horario])
     const handleChange = (event, newValue,activeThumb) => {
         
         if (!Array.isArray(newValue)) {
             return;
         }
-        const minmax = props.minmaxIntervalo;
-        if(onlyMinMax) setOnlyMinMax(false);
-        if (activeThumb === 0) {
-            const newMin = Math.min(newValue[0], intervaloMinMax[1] - minDistance,minmax[0]);
-            setIntervaloMinMax([newMin, intervaloMinMax[1]]);  
-            props.handleMinMax(newMin,intervaloMinMax[1]); 
         
+        if(!configHorario.defaultIntervalo) dispatch(changeIntervaloDefault(false));
+        const minmax1 = (act2horario(horario,[0])).length==0?[25,-1]:minmax;
+        
+        if (activeThumb === 0) {
+            const newMin = Math.min(newValue[0], configHorario.intervalo[1] - minDistance,minmax1[0]);
+            if(configHorario.intervalo[0]!=newMin){
+                dispatch(changeIntervalo([newMin,configHorario.intervalo[1]]));
+            }
         } else {
-            const newMax = Math.max(newValue[1], intervaloMinMax[0] + minDistance,minmax[1]);
-            setIntervaloMinMax([intervaloMinMax[0],newMax ]); 
-            props.handleMinMax(intervaloMinMax[0],newMax);
+            const newMax = Math.max(newValue[1], configHorario.intervalo[0] + minDistance,minmax1[1]);
+            if(configHorario.intervalo[1] !=newMax){
+                dispatch(changeIntervalo([configHorario.intervalo[0],newMax]));
+            }
         }
     };
     const handleTemaValue = (e) =>{
@@ -59,11 +76,20 @@ export default function ConfigHorario(props) {
     };
     const handleOnlyMinMax = (e) =>{
         console.log(e.target.checked);
+        if(e.target.checked){
+            dispatch(changeIntervaloDefault(e.target.checked));
+            
+            if((act2horario(horario,[0])).length!=0){
+                dispatch(changeIntervalo(minmax));
+            }
+            
+        }else{
+            dispatch(changeIntervaloDefault(e.target.checked));
+        }
         
-        setIntervaloMinMax(props.minmaxIntervalo);
-        props.handleMinMax(props.minmaxIntervalo[0],props.minmaxIntervalo[1]);
-        
-        setOnlyMinMax(e.target.checked);
+    }
+    const handleSobrescribir = (e) =>{
+        dispatch(changeSobreescribir(e.target.checked));
     }
   return (
     <div className='config-horario'>
@@ -94,7 +120,7 @@ export default function ConfigHorario(props) {
                 </Typography>
                 <Slider
                 getAriaLabel={() => 'Temperature range'}
-                value={intervaloMinMax}
+                value={configHorario.intervalo}
                 onChange={handleChange}
                 valueLabelDisplay="auto"
                 getAriaValueText={valuetext}
@@ -104,7 +130,7 @@ export default function ConfigHorario(props) {
             </Box>
             <FormGroup>
                 <FormControlLabel control={
-                    <Sw checked={onlyMinMax}
+                    <Sw checked={configHorario.intervaloDefault}
                      onChange={handleOnlyMinMax}/>
 
                 } label="Intervalo por default "/>
@@ -146,7 +172,8 @@ export default function ConfigHorario(props) {
             </div>
             <FormGroup>
                 <FormControlLabel control={
-                    <Sw checked={true}
+                    <Sw checked={configHorario.sobrescribir}
+                    onChange={handleSobrescribir}
                      />
 
                 } label="sobreEscribir "/>
