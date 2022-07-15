@@ -14,7 +14,7 @@ export default function AlgoQueHacer(props){
         console.log(sub);
 
         
-        //props.setDoingSomething(true);
+        props.setDoingSomething(true);
     
     }
 

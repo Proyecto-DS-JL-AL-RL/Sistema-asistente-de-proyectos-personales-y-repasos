@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import TokenIcon from '@mui/icons-material/Token';
+import FileForm from '../components/fileForm';
+
 export default function ActividadActual(props){
     const [actividad,SetActividad] = useState('Actividad de Prueba');
     const [descripcion,setDescripcion] = useState('Esta es una actividad de prueba, Podra obtener avances en el PROYECTO ASOCIADO. Y puntos a su perfil Las recompensas se muestran abajo');
@@ -11,6 +13,9 @@ export default function ActividadActual(props){
     const [constan,setConstan] = useState(10);
     const [proyectBind,setProyectBind] = useState('Proyecto Asociado');
     const [started,setStarted] = useState (false);
+    const [blocked,setBlocked] = useState(true);
+    const [evidencia,setEvidencia] = useState(null);
+    const [showForm,setShowForm] = useState(false);
     const history = useHistory();
 
 
@@ -19,6 +24,11 @@ export default function ActividadActual(props){
     };
 
     const handleEnd = ()=>{
+        if (blocked && !evidencia)
+            {
+                alert('Suba evidencias');
+                return;
+            }
         props.setDoingSomething(false);
     };
 
@@ -55,8 +65,15 @@ export default function ActividadActual(props){
                 </Grid>
 
                 {proyectBind?
-                <Grid container justifyContent = 'right' alignItems = 'right' alignContent = 'flex-end' 
+                <Grid container justifyContent = 'space-between' alignItems = 'right' alignContent = 'flex-end' 
                         sx = {{width:'100%',marginTop:'20px',paddingRight:'20px'}} direction='row'  >
+
+                    {blocked?
+                    <Typography sx = {{paddingLeft:'40px'}} variant = 'h6'>
+                        Requiere subir evidencias
+                    </Typography>
+                    :null}
+                    
                     <Typography sx ={{bgcolor:'orange',width:'300px',borderRadius:'30px',textAlign :'center',fontWeight:'bold',display:'inline'}} variant = 'h6'>
                         {proyectBind}
                     </Typography>
@@ -65,14 +82,27 @@ export default function ActividadActual(props){
                 null
                 }
             </Box>
+            
+
+            {evidencia?
+            <Typography sx = {{marginLeft:'30%',marginTop:'30px',width:'40%',bgcolor:'#C4B5FD',textAlign:'center',borderRadius:'20px'}} variant = 'h6'>
+                {evidencia.tipo} : {evidencia.url} {evidencia.content?.name}
+            </Typography>            
+            :null}
 
             <Grid container justifyContent = 'space-evenly' sx = {{width:'60%',marginLeft:'20%',marginTop:'50px'}}>
             {started?
                 <React.Fragment>
                     <Grid item container xs = {4}  justifyContent='center' >
-                    <Button variant = 'contained'  sx = {{width:'250px',minHeight:'70px', bgcolor: '#16C0A3',borderRadius:'20px'}} >
-                        <Typography variant = 'h6' color = 'black' fontWeight = 'bold'>Agregar Avances</Typography>
-                        </Button>
+                    {evidencia?
+                    <Button variant = 'contained'  sx = {{width:'250px',minHeight:'70px', bgcolor: '#16C0A3',borderRadius:'20px'}} onClick =  {()=>{setShowForm(true)}} >
+                        <Typography variant = 'h6' color = 'black' fontWeight = 'bold'>Cambiar Evidencia</Typography>
+                    </Button>  
+                    :                    
+                    <Button variant = 'contained'  sx = {{width:'250px',minHeight:'70px', bgcolor: '#16C0A3',borderRadius:'20px'}} onClick =  {()=>{setShowForm(true)}} >
+                        <Typography variant = 'h6' color = 'black' fontWeight = 'bold'>Agregar Evidencia</Typography>
+                    </Button>
+                    }
                     </Grid>
                     <Grid item container xs = {4}  justifyContent='center' >
                         <Button variant = 'contained'  sx = {{width:'250px',minHeight:'70px', bgcolor: '#F3443C',borderRadius:'20px'}}  onClick ={handleEnd}>
@@ -89,7 +119,11 @@ export default function ActividadActual(props){
             }
             </Grid>
 
-            
+            {showForm?
+                <FileForm close = {()=>{setShowForm(false)}} setEvidencia = {setEvidencia}/>
+            :
+            null
+            }
 
         </React.Fragment>
 );}
