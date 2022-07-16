@@ -1,17 +1,21 @@
-import React, {useState} from "react";
+import React  from "react";
 import { Typography } from '@mui/material';
-import Box from '@mui/material/Box';
+//import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import Zoom from '@mui/material/Zoom';
-import Slide from '@mui/material/Slide';
-import Grid from '@mui/material/Grid';
+//import Zoom from '@mui/material/Zoom';
+//import Slide from '@mui/material/Slide';
+//import Grid from '@mui/material/Grid';
 import MicIcon from '@mui/icons-material/Mic';
 import QuestionMarkRoundedIcon from '@mui/icons-material/QuestionMarkRounded';
 //import CardContent from '@mui/material/CardContent';
 //import Card from '@mui/material/Card';
 //import Grow from '@mui/material/Grow';
 import { useHistory } from "react-router-dom";
+import './presentacionPage1.css'
+import Fade from '@mui/material/Fade';
+
+
 
 //vw ch %
 /*
@@ -39,53 +43,8 @@ const [showRecomendacion, setShowRecomendacion] = useState(false)
                     </Box>
                 </Grow>
                 :null}
-*/
-export default function Presentacion(){
-    let history = useHistory()
-    const [showPresentacion, setShowPresentacion] = useState(true)
-    return (
-        <React.Fragment>     
-                {showPresentacion?
-                    <React.Fragment> 
-                            <Box mt={'15%'} mx={'25%'} textAlign={"center"} position={'absolute'} display="flex" flexWrap={'wrap'} justifyContent="center">
-                                <Stack spacing={3}>
-                                        <Zoom  timeout={1000} in={true}>
-                                                <Typography sx={{fontWeight: 'bold'}}  variant = 'h3'>
-                                                    Bienvenido a nuestra Aplicación
-                                                </Typography>
-                                        </Zoom>
-                                        <Zoom  timeout={1000} in={true}>
-                                                <Typography textAlign={"center"} justifyContent="center" sx={{fontWeight: 'bold', textAlign: 'center'}}  variant = 'h3'>
-                                                    Usuario 1
-                                                </Typography>
-                                        </Zoom>
-                                            <Box  sx={{
-                                            mt:'45%', 
-                                            textAlign:"center",
-                                            flexWrap:'wrap',
-                                            position: 'static'}} display="flex" justifyContent="center">
-                                                <Zoom  timeout={1000} in={true}>
-                                                    <Button onClick={()=>{
-                                                        setShowPresentacion(false)
-                                                    }}  sx={{borderRadius:'10%', p:'2%',                            
-                                                                width: '15ch', height: '5ch',
-                                                                fontWeight: 'bold',
-                                                                color:'white', background:'#00b347',
-                                                                fontSize:30, 
-                                                                '&:hover': {backgroundColor: '#cfe619', color:'#808080'}
-                                                                }} variant="contained" size="large">
-                                                        <Typography sx={{fontWeight: 'bold'}} variant = 'h5'>Continuar</Typography></Button>
-                                                </Zoom>
-                                            </Box>
-                                    </Stack>
-                            </Box>
-                            
-                    </React.Fragment>
-                    :
-                        <React.Fragment> 
-                                <Box mt={'12%'} textAlign={"center"} alignItems={"center"} position={'absolute'} display="flex" justifyContent="center">
-                                    <Stack spacing={'2%'}>
-                                                <Slide direction="up" mx={'2%'}  timeout={1000} in={true}  mountOnEnter unmountOnExit>
+
+                 <Slide direction="up" mx={'2%'}  timeout={1000} in={true}  mountOnEnter unmountOnExit>
                                                         <Typography sx={{fontWeight: 'bold', textAlign: 'center'}}  variant = 'h3'>
                                                             Recuerde  que puede usar la interfaz de Voz y el asistente de ayuda con los siguientes iconos
                                                         </Typography>
@@ -105,26 +64,45 @@ export default function Presentacion(){
                                                     </Grid>
                                                 </Grid>
                                             </Box>
-                                            <Box sx={{position: 'static'}} display="flex" justifyContent="center">
-                                                <Slide direction="up" timeout={1000} in={true}  mountOnEnter unmountOnExit>
-                                                        <Button onClick= {()=>{
-                                                                        setShowPresentacion(false)
+227, 227, 227*/
+export default function Presentacion(){
+    let history = useHistory()
+    return (
+        
+            <React.Fragment> 
+                    <Stack spacing={3}>                                                      
+                                <div>
+                                    <div className="container">
+                                        <div className="row">
+                                        <div className="wrapper">
+                                            <ul className="dynamic-txts">
+                                            <li><span>Bienvenido Usuario</span></li>
+                                            <li><span>Recuerda que puedes usar nuestra</span></li>
+                                            <li><span>Interfaz de voz  {<MicIcon sx={{p:1, borderRadius:50, background:'red',
+                                                                            color:'white', width: '3ch', height: '3ch' }}/>}</span></li>
+                                            <li><span>Asistente de ayuda {<QuestionMarkRoundedIcon  sx={{width: '3ch', height: '3ch', color:'white', background:'green', p:1, borderRadius:50}}/>}</span></li>
+                                            </ul>
+                                        </div>
+                                        <Fade direction="up" timeout={2000} in={true}>
+                                                <Button onClick= {()=>{
                                                                         history.push('/')
-                                                                    }} sx={{borderRadius:'10%', p:'2%',                            
-                                                                    width: '20ch', height: '5ch',
-                                                                    fontWeight: 'bold',
-                                                                    color:'white', background:'#00b347',
-                                                                    fontSize:30, 
-                                                                    '&:hover': {backgroundColor: '#cfe619', color:'#808080'}
-                                                                    }} variant="contained" size="large">
-                                                            <Typography sx={{fontWeight: 'bold'}} variant = 'h5'>Empezemos ✌ </Typography></Button>
-                                                </Slide>
-                                        </Box>
-                                    </Stack>
-                                </Box>
+                                                                    }}  sx={{mt:'10%' , borderRadius:'5%',                           
+                                                            width: '20ch', height: '5ch',
+                                                            fontWeight: 'bold',
+                                                            color:'white', background:'#00b347',
+                                                            fontSize:30, 
+                                                            '&:hover': {backgroundColor: '#cfe619', color:'#808080'}
+                                                            }} variant="contained" size="large">
+                                                    <Typography  sx={{fontWeight: 'bold'}} variant = 'h5'>Continuar</Typography>
+                                                </Button>
+                                            </Fade>
+                                        </div>
+                                    </div>
+                                </div>
+                        </Stack>
+                            
                     </React.Fragment>
-            }
-            
-        </React.Fragment>
+                    
+        
     );
 }

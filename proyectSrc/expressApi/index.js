@@ -36,6 +36,8 @@ app.use('/api',require('./Router/userRouter'));
 app.use('/api',require('./Router/cardRouter'));
 app.use('/api',require('./Router/ActividadesDAQH'));
 app.use('/api',require('./Router/stateRouter'));
+app.use('/api',require('./Router/MazosRouter'));
+
 
 
 app.get('/health',async (req,res)=>{
