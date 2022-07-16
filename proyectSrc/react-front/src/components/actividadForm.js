@@ -1,5 +1,7 @@
-import React,{useEffect, useState} from 'react';
+import React,{useContext, useEffect, useState} from 'react';
 import {Button, Card, Checkbox, Grid, TextField, Typography,Box,Slider} from '@mui/material';
+import { AccountContext } from '../AccountContext';
+import axios from 'axios';
 
 
 export default function ActividadForm(props){
@@ -11,21 +13,39 @@ export default function ActividadForm(props){
     const [proyectos,setProyectos] = useState([{id:'1',titulo:'xd'},{id:'1',titulo:'xd'},{id:'1',titulo:'xd'},{id:'1',titulo:'xd'},{id:'1',titulo:'xd'},{id:'1',titulo:'xd'}]);
     const [selectingProyect, setSelectingProyect] = useState(false);
     const [currProyect,setCurrProyect] = useState(null);
+    const { sessionState } = useContext(AccountContext);
 
-    const agregarActividad = ()=>{
+
+    const agregarActividad = async ()=>{
         if (titulo == ''){
             alert('Ponga un titulo');
             return;
         }
         
+        const {sub} = sessionState;
         const p = currProyect||{titulo:null,id:null};
         const tituloProyect = p.titulo;
         const proyectId = p.id;
 
-        const Item = { titulo,descripcion,blocked ,peso , proyectId, tituloProyect}
+        const Item = {
+            "UserSub": sub,
+            "Titulo": titulo,
+            "Descripcion": descripcion,
+            "Blocked": blocked,
+            "Peso": peso,
+            "ProyectoAsociado": proyectId,
+            "ProyectoTitulo":tituloProyect
+          };
+
+        axios.post('http://localhost:4000/api/colaActividades/addActividad',Item)
+        .then(data=>{
+            console.log(data);
+        })
+        .catch(err=>console.log(err));  
+
         console.log(Item);
-        //props.setActivities([...props.activities,Item])
-        //props.close();
+        props.setActivities([...props.activities,Item])
+        props.close();
     }
     const establecerProyecto = (proyecto)=>{
         console.log(proyecto);

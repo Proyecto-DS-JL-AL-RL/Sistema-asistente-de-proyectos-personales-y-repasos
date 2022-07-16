@@ -7,7 +7,8 @@ var Actividad = new Schema({
     Descripcion : String,
     Blocked : Boolean,
     Peso : Number,
-    ProyectoAsociado : { type : Schema.Types.ObjectId ,ref : 'Proyecto'}
+    ProyectoAsociado : { type : Schema.Types.ObjectId ,ref : 'Proyecto'},
+    ProyectoTitulo : String,
 })
 
 module.exports = mongoose.model('Actividad', Actividad);

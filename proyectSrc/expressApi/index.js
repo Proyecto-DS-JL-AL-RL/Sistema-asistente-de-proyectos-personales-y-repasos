@@ -33,11 +33,15 @@ app.use(session({
 }));//Por usar (Yo me encargo :v :v :V )
 
 app.use('/api',require('./Router/userRouter'));
+app.use('/api',require('./Router/cardRouter'));
+app.use('/api',require('./Router/ActividadesDAQH'));
+app.use('/api',require('./Router/stateRouter'));
 app.use('/api',require('./Router/MazosRouter'));
 
 
-app.get('/asd',async (req,res)=>{
-    res.json({prueba:'La real Prueba'});
+
+app.get('/health',async (req,res)=>{
+    res.json({prueba:'Api Health :)'});
 });
 
 const server = app.listen(app.get('port'),()=>{

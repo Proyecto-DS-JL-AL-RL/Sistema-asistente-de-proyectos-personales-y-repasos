@@ -1,27 +1,27 @@
-//var datActividadesD = require('../Datos/datUser');
+var datActividades = require('../Datos/datActividades');
 const express = require("express")
 const router = express.Router();
 
 
 router.get('/colaActividades/:userSub', async function(req,res){
-    //let resp = await datUser.getUsers();
-    //res.json(resp);
+    let resp = await datActividades.getActivitiesFromUser(req.params.userSub);
+    res.json(resp);
 });
 
-router.put('/colaActividades/addActividad/:userSub', async function(req,res){
-    //let resp = await datUser.updateUser(req.params.id, req.body);
-    //res.json(resp);
+router.post('/colaActividades/addActividad', async function(req,res){
+    let resp = await datActividades.createActivity(req.body);
+    res.json(resp);
 });
 
-router.put('/actividadParcial/:idActividad', async function(req,res){
-    //let resp = await datUser.updateUser(req.params.id, req.body);
+router.get('/colaActividades/getActividad/:userSub', async function(req,res){
+    const resp = await datActividades.getActivityFromQueue(req.params.userSub);
     //res.json(resp);
 });
 
 //Init
-router.post('/colaActividades', async function (req, res){
-    //await datUser.createUser(req.body)
-    //res.send('usuario creado')
+router.get('/colaActividades/actividad/:id', async function (req, res){
+    const resp = await datActividades.getActivityID(req.params.id)
+    res.send(resp)
 })
 
 router.delete('/colaActividades/deleteActividad/:userSub', async function(req,res){

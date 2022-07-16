@@ -33,7 +33,14 @@ export default function ActividadActual(props){
     };
 
     return(
-        <React.Fragment>            
+        <React.Fragment>    
+            <Box sx = {{width:'100%'}}>
+                <Button sx = {{width:'50px',bgcolor: '#C0DAE5', borderRadius:'20px'}} variant = 'contained' mb = {1} ml = {10} onClick = {()=>{history.push('/')}}>
+                        <Typography color = 'black' sx = {{fontWeight : 'bold'}} >
+                            Back
+                        </Typography>
+                </Button>
+            </Box>        
             <Box sx = {{minWidth:'200px',width:'50%',borderRadius:'30px',bgcolor:'pink',marginLeft:'25%',marginTop:'5%',paddingTop:'20px',paddingBottom:'20px'}}>
                 <Typography sx ={{textAlign:'center',width:'100%',marginTop:'5%',marginBottom:'5%'}} variant = 'h3'>
                     {actividad}

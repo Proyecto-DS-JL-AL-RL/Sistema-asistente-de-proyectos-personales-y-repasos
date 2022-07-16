@@ -26,7 +26,7 @@ import {useSelector} from 'react-redux';
 import Proyectos from './pages/Proyectos';
 import {  AccountContext } from './AccountContext';
 import DisplayAyuda from './components/Ayuda/DisplayAyuda';
-
+import axios from 'axios';
 
 
 
@@ -36,7 +36,7 @@ function App() {
   const ayuda = useSelector((state)=>state.ayuda.value);
 
 
-  const { getSession, logout , sessionState }= useContext(AccountContext);
+  const { getSession, logout , sessionState , setSessionState,setCurrentState,currentState }= useContext(AccountContext);
   const location = useLocation();
   const history = useHistory();
   const [listeningState,setListeningState] = useState(false);
@@ -69,12 +69,26 @@ function App() {
   const [showBars, setShowBars] = useState(true)
   
   useEffect(()=>{
-    getSession().then((session)=>{
+    getSession()
+    .then((session)=>{
         console.log('State:',session);
-    }).catch((err)=>{
+    })
+    .catch((err)=>{
         console.log(err);
     });
   },[]);
+
+  useEffect(()=>{
+    if (sessionState.nickname){
+        axios.get('http://localhost:4000/api/state/'+sessionState.sub)
+        .then(data=>{
+          setCurrentState(data.data);
+        })
+        .catch(err=>console.log(err));
+    }else{
+      setCurrentState({});
+    }
+  },[sessionState]);
 
   //<button onClick = {()=>{listening?SR.stopListening():SR.startListening({language: 'es', continuous: CONTINOUS_});setListeningState(!listeningState)}}>xd</button>
   return (
