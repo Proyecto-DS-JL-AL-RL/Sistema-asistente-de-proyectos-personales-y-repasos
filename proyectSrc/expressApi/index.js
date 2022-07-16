@@ -33,7 +33,7 @@ app.use(session({
 }));//Por usar (Yo me encargo :v :v :V )
 
 app.use('/api',require('./Router/userRouter'));
-app.use('/api',require('./Router/cardRouter'));
+app.use('/api',require('./Router/MazosRouter'));
 
 
 app.get('/asd',async (req,res)=>{
