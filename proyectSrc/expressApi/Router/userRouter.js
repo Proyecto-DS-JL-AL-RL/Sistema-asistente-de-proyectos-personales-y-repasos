@@ -9,9 +9,11 @@ router.get('/users', async function(req,res){
 });
 
 router.get('/users/:id', async function(req,res){
+    console.log(req.params.id)
     let resp = await datUser.getUsersID(req.params.id);
     res.json(resp);
 });
+
 
 router.put('/users/:id', async function(req,res){
     let resp = await datUser.updateUser(req.params.id, req.body);

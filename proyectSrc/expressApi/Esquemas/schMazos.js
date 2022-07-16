@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var Mazos = new Schema({
+    UserID:String,
     Titulo: String,
     Descripcion: String,
     Tarjetas:[{

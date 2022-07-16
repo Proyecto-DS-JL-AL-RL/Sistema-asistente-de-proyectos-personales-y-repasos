@@ -12,7 +12,13 @@ var getMazos = async function (){
     return response;
 }
 
-var getMazosID = async function (id){
+var getMazosByUserID = async function (id){
+    var response = await Mazos.find({"UserID":id}).catch(err=> console.log(err));
+    return response;
+}
+
+
+var getMazosByID = async function (id){
     var response = await Mazos.findById(id).catch(err=> console.log(err));
     return response;
 }
@@ -30,8 +36,7 @@ var deleteMazos = async function(id){
 
 module.exports.createMazos = createMazos;
 module.exports.getMazos = getMazos;
-module.exports.getMazosID = getMazosID;
+module.exports.getMazosByUserID = getMazosByUserID;
+module.exports.getMazosByID = getMazosByID;
 module.exports.deleteMazos = deleteMazos;
 module.exports.updateMazos = updateMazos;
-
-

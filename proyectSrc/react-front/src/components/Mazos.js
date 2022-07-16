@@ -93,7 +93,7 @@ export default function Mazos(props) {
   {show?<BasicCard/>:null}
   sx={{fontWeight:'bold', color:'white', '&:hover': {backgroundColor: '#00b347'}}}
   mazo.Tarjetas.length
-    
+  ``  
 */
   return (
 
@@ -194,8 +194,17 @@ export default function Mazos(props) {
                                         <Box  justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>
                                                       <Tooltip title="Guardar" placement="left">
                                                           <Button onClick={()=>{
-                                                            setShowEditCard(false)
-                                                            
+                                                            let key_pregunta = "Tarjetas."+tarjetaIndex+".Pregunta"
+                                                            let key_respuesta = "Tarjetas."+tarjetaIndex+".Respuesta"
+                                                            let key_opciones = "Tarjetas."+tarjetaIndex+".Opciones"
+                                                            setShowEditCard(false)//`
+                                                            let update = {"$set":{key_pregunta:pregunta,
+                                                                              key_respuesta:respuesta,
+                                                                              key_opciones:[opcion1, 
+                                                                                          opcion2, 
+                                                                                          opcion3, 
+                                                                                          opcion4]}}
+                                                            axios.put('/api/mazos/'+mazo._id, update)
                                                           }} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
                                                               <SaveIcon sx={{p:1}}/>
                                                           </Button>

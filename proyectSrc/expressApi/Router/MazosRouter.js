@@ -13,7 +13,12 @@ router.get('/mazos', async function (req, res){
 })
 
 router.get('/mazos/:id', async function(req,res){
-    let resp = await datMazos.getMazosID(req.params.id);
+    let resp = await datMazos.getMazosByUserID(req.params.id);
+    res.json(resp);
+});
+
+router.get('/mazosID/:id', async function(req,res){
+    let resp = await datMazos.getMazosByID(req.params.id);
     res.json(resp);
 });
 
