@@ -30,7 +30,6 @@ import { useHistory } from "react-router-dom";
 import axios from 'axios';
 
 
-
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
@@ -221,88 +220,89 @@ export default function Mazos(props) {
         mazos.map((mazo, idx)=>{
           return  (
               <React.Fragment  key={idx}>
-                <Accordion sx={{width:'130vh'}} expanded={expanded === `panel${idx}$`} onChange={handleChange(`panel${idx}$`)}>
-                  <AccordionSummary aria-controls={`panel${idx}$d-content`} id={`panel${idx}$d-header`}>
-                      <Typography  variant="h5" sx={{ flexGrow: 1, color: 'white' }}>{mazo.Titulo}</Typography>
-                      <Grid item>
-                        <Tooltip title="abrir" placement="right">
+                
+                  <Accordion sx={{width:'130vh'}} expanded={expanded === `panel${idx}$`} onChange={handleChange(`panel${idx}$`)}>
+                    <AccordionSummary aria-controls={`panel${idx}$d-content`} id={`panel${idx}$d-header`}>
+                        <Typography  variant="h5" sx={{ flexGrow: 1, color: 'white' }}>{mazo.Titulo}</Typography>
+                        <Grid item>
+                          <Tooltip title="abrir" placement="right">
+                                <IconButton onClick={()=>{
+                                      history.push('/Tarjetas/'+mazo._id)
+                                      }}
+                                      sx={{color: "white"}}>   
+                                                    
+                                          <LaunchOutlinedIcon/>
+                                </IconButton>
+                          </Tooltip>
+                          <Tooltip title="editar" placement="right">
+                                
+                                    <IconButton onClick={()=>{
+                                      setShowEdit(true)
+                                      setMazo(mazo)
+                                      setTitulo(mazo.Titulo)
+                                      setDescripcion(mazo.Descripcion)    
+                                      }} sx={{color: "white"}}>                             
+                                          <EditIcon/>
+                                        </IconButton>
+                                
+                          </Tooltip>
+                          <Tooltip title="borrar" placement="right">
                               <IconButton onClick={()=>{
-                                    history.push('/Tarjetas/'+mazo._id)
-                                    }}
-                                    sx={{color: "white"}}>   
-                                                  
-                                         <LaunchOutlinedIcon/>
-                              </IconButton>
-                        </Tooltip>
-                        <Tooltip title="editar" placement="right">
-                              
-                                  <IconButton onClick={()=>{
-                                    setShowEdit(true)
-                                    setMazo(mazo)
-                                    setTitulo(mazo.Titulo)
-                                    setDescripcion(mazo.Descripcion)    
-                                    }} sx={{color: "white"}}>                             
-                                        <EditIcon/>
-                                      </IconButton>
-                              
-                        </Tooltip>
-                        <Tooltip title="borrar" placement="right">
-                            <IconButton onClick={()=>{
-                                mazos.splice(idx, 1);
-                                //setMazos(mazos)
-                                axios.delete('/api/mazos/'+mazo._id)
-                                //window.location.reload(false);
-                            }} sx={{color: "white"}}>                             
-                                <DeleteIcon />
-                              </IconButton>
-                        </Tooltip>
-                      </Grid>
-                  </AccordionSummary>
-                      <AccordionDetails>
-                        <Typography variant="h6">
-                              {mazo.Descripcion}
-                        </Typography>
-                    
-                          <List sx={{fontWeight: 'bold', color: 'white',bgcolor: '#454545'}}>
-                              {mazo.Tarjetas.map((value, idx) => (
-                              <React.Fragment key={idx}>  
-                                <ListItem
-                                  key={value}
-                                  disableGutters
-                                  secondaryAction={
-                                    <React.Fragment>
-                                          <IconButton onClick={()=>{  
-                                            setTarjetaIndex(idx)
-                                            setPregunta(mazo.Tarjetas[idx].Pregunta)
-                                            setOpcion1(mazo.Tarjetas[idx].Opciones[0])
-                                            setOpcion2(mazo.Tarjetas[idx].Opciones[1])
-                                            setOpcion3(mazo.Tarjetas[idx].Opciones[2])
-                                            setOpcion4(mazo.Tarjetas[idx].Opciones[3])
-                                            setRespuesta(mazo.Tarjetas[idx].Respuesta)
-                                            setShowEditCard(true);
-                                            setTarjeta(value)
-                                          }}  sx={{color:'white',  '&:hover': {backgroundColor: '#00b347', color:'black'}}} aria-label="comment">
-                                              <EditIcon/>
-                                          </IconButton>
-                                          <IconButton onClick={()=>{
-                                            mazo.Tarjetas.splice(idx, 1);
-                                            setMazo(mazo.Tarjetas)
-                                            axios.put('/api/mazos/'+mazo._id, {"Tarjetas":mazo.Tarjetas})
-                                          }}  sx={{color:'white',  '&:hover': {backgroundColor: '#00b347', color:'black'}}} aria-label="comment">
-                                              <DeleteIcon />
-                                          </IconButton>
-                                    </React.Fragment>
-                                  }
-                                >
-                                  <ListItemButton sx={{fontWeight:'bold', color:'white', '&:hover': {backgroundColor: '#00b347', color:'black'}}}>                                  
-                                      <ListItemText primary={`${value.Pregunta}`} />
-                                  </ListItemButton>
-                                </ListItem>
-                                </React.Fragment>
-                              ))}
-                          </List>      
-                      </AccordionDetails>
-                  </Accordion>
+                                  mazos.splice(idx, 1);
+                                  //setMazos(mazos)
+                                  axios.delete('/api/mazos/'+mazo._id)
+                                  //window.location.reload(false);
+                              }} sx={{color: "white"}}>                             
+                                  <DeleteIcon />
+                                </IconButton>
+                          </Tooltip>
+                        </Grid>
+                    </AccordionSummary>
+                        <AccordionDetails>
+                          <Typography variant="h6">
+                                {mazo.Descripcion}
+                          </Typography>
+                      
+                            <List sx={{fontWeight: 'bold', color: 'white',bgcolor: '#454545'}}>
+                                {mazo.Tarjetas.map((value, idx) => (
+                                <React.Fragment key={idx}>  
+                                  <ListItem
+                                    key={value}
+                                    disableGutters
+                                    secondaryAction={
+                                      <React.Fragment>
+                                            <IconButton onClick={()=>{  
+                                              setTarjetaIndex(idx)
+                                              setPregunta(mazo.Tarjetas[idx].Pregunta)
+                                              setOpcion1(mazo.Tarjetas[idx].Opciones[0])
+                                              setOpcion2(mazo.Tarjetas[idx].Opciones[1])
+                                              setOpcion3(mazo.Tarjetas[idx].Opciones[2])
+                                              setOpcion4(mazo.Tarjetas[idx].Opciones[3])
+                                              setRespuesta(mazo.Tarjetas[idx].Respuesta)
+                                              setShowEditCard(true);
+                                              setTarjeta(value)
+                                            }}  sx={{color:'white',  '&:hover': {backgroundColor: '#00b347', color:'black'}}} aria-label="comment">
+                                                <EditIcon/>
+                                            </IconButton>
+                                            <IconButton onClick={()=>{
+                                              mazo.Tarjetas.splice(idx, 1);
+                                              setMazo(mazo.Tarjetas)
+                                              axios.put('/api/mazos/'+mazo._id, {"Tarjetas":mazo.Tarjetas})
+                                            }}  sx={{color:'white',  '&:hover': {backgroundColor: '#00b347', color:'black'}}} aria-label="comment">
+                                                <DeleteIcon />
+                                            </IconButton>
+                                      </React.Fragment>
+                                    }
+                                  >
+                                    <ListItemButton sx={{fontWeight:'bold', color:'white', '&:hover': {backgroundColor: '#00b347', color:'black'}}}>                                  
+                                        <ListItemText primary={`${value.Pregunta}`} />
+                                    </ListItemButton>
+                                  </ListItem>
+                                  </React.Fragment>
+                                ))}
+                            </List>      
+                        </AccordionDetails>
+                    </Accordion>
               </React.Fragment>
               )       
             })
