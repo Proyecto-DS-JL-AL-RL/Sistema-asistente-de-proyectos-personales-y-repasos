@@ -1,15 +1,45 @@
 import { Card, Grid, Typography,Button } from '@mui/material';
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useContext} from 'react';
 import { useHistory } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import ActividadForm from '../components/actividadForm';
+import { AccountContext } from '../AccountContext';
+import axios from 'axios';
 const arrayNum = Array.from({length:3},(x,i)=>({titulo:'Actividad de Prueba',descripcion:'Descripción de la actividad'}));
+
+
+
 export default function ActivityQueue(params) {
-    const[activities,setActivities] = useState(arrayNum);
+    const { sessionState } = useContext( AccountContext );   
+    const[activities,setActivities] = useState([]);
     const history = useHistory();
     const[showForm,setShowForm] = useState(false);
     
+    const getActs = async() =>{
+        const {sub} = sessionState;
+        //console.log(sub);
+        if (sub){            
+            axios.get('http://localhost:4000/api/colaActividades/'+sub)
+            .then((data)=>{
+                console.log(data.data);
+                setActivities(data.data);
+            })
+            .catch(err=>console.log(err));
+        }else{
+            setActivities([]);
+        }
+        
+    }
 
+/*
+    useEffect(()=>{
+        getActs();        
+    },[]);
+    */
+
+    useEffect(()=>{
+        getActs();        
+    },[sessionState]);
 
     return(
     <React.Fragment>
@@ -34,9 +64,22 @@ export default function ActivityQueue(params) {
                                             marginTop:'20px',maxHeight:'80%',overflowY:'auto'}} rowGap = {2}>
         {activities.map((act,idx)=>(
             <Grid key = {idx} item xs = {12} >
-                <Card sx = {{height:'100px',padding:'10px'}}>
-                    <Typography variant = 'h5'>{act.titulo}</Typography>     
-                    <Typography variant = 'h6'>{act.descripcion}</Typography>                 
+                <Card sx = {{minHeight:'100px',padding:'10px',paddingBottom:'5px'}}>
+                    <Typography variant = 'h5'>{act.Titulo}</Typography>     
+                    <Typography variant = 'h6'>{act.Descripcion}</Typography>  
+                    <Grid container sx = {{width:'100%',marginTop:'5px'}} justifyContent="space-between" direction="row" alignItems="center" >
+                        {act.Blocked?
+                        <Typography sx = {{bgcolor:'#1DB5BE',width:'300px',borderRadius:'30px',textAlign :'center',fontWeight:'bold',display:'inline',color:'black'}}> Requiere Subir Evidencias</Typography>
+                        :
+                        <Typography sx = {{width:'300px'}}>.</Typography>}
+                        
+                        {act.ProyectoAsociado?
+                            <Typography sx ={{bgcolor:'orange',width:'300px',borderRadius:'30px',textAlign :'center',fontWeight:'bold',display:'inline'}} variant = 'h6'>
+                                {act.ProyectoTitulo}
+                            </Typography>
+                        :
+                            <Typography sx = {{width:'300px'}}>.</Typography>}
+                    </Grid>                                   
                 </Card>
             </Grid>
         ))}
