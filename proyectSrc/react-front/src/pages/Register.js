@@ -19,6 +19,7 @@ import { useHistory } from "react-router-dom";
 import Stack from '@mui/material/Stack';
 import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
 import UserPool from '../userPool';
+import { initUser } from "../userMethods";
 
 export default function Register(props){
     let history = useHistory()
@@ -70,7 +71,7 @@ export default function Register(props){
             "given_name": values.nombre,
             "nickname": username,
         }
-        //initUser(userData);
+        initUser(userData);
         history.push('/');
         alert('Usuario creado con exito');
         }

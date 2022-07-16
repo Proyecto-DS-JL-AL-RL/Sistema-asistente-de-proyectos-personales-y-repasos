@@ -11,6 +11,7 @@ import { Actividad, actividadesInfo } from "../components/horario/HorarioInfo";
  */
 
 
+
 export const horarioSlice = createSlice({
     name:'horario',
     initialState:{
@@ -47,6 +48,13 @@ export const horarioSlice = createSlice({
                 return (e.estado!=2)
             }).map((e)=> {return {...e,estado:0}})
         },
+        sobrescribirTodo: (state,action)=>{
+            state.value = action.payload
+        },
+        saveWithSobrescritura: (state) =>{
+            //state.value = sobrescribir();
+
+        },
         changeEditableActivity: (state,action)=>{
             console.log(action.payload,"XDDD")
             
@@ -59,6 +67,7 @@ export const horarioSlice = createSlice({
     }
 })
 export const {addActivity,saveActivity,
-    changeEditableActivity,
+    changeEditableActivity,saveWithSobrescritura,
+    sobrescribirTodo,
     deleteActivity,restoreActivity} = horarioSlice.actions
 export default horarioSlice.reducer

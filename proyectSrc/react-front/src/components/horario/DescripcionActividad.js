@@ -7,14 +7,17 @@ import MicIcon from '@mui/icons-material/Mic';
 import { FormControl,Slider,Typography } from '@mui/material';
 import { width } from '@mui/system';
 import MicroFormHorario from './MicroFormHorario';
-import {actividad2intervalo} from './utilsHorario';
+import {act2horario, actividad2intervalo} from './utilsHorario';
 import ClearIcon from '@mui/icons-material/Clear';
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import './descripcionHorario.css';
 import { deleteActivity,addTempActivity, addActivity,
-    saveActivity,handleTempActivity,restoreActivity, changeEditableActivity } from '../../stores/sliceHorario';
-import { useDispatch} from 'react-redux';
+    saveActivity,handleTempActivity,restoreActivity, changeEditableActivity, saveWithSobrescritura, sobrescribirTodo } from '../../stores/sliceHorario';
+import { useDispatch,useSelector} from 'react-redux';
 import { act } from 'react-dom/test-utils';
+import MensajeAlert from './MensajeAlert';
+import MensajeAlertWithBottons from './MensajeAlertWithBottons';
+import MensajesCompletos from './MensajesCompletos';
 const stateButton2String =  (state) =>{
     const stringState = ['Editar','Crear','Guardar'];
     return stringState[state];
@@ -32,16 +35,57 @@ const validarActividad = (actividades,newActividad) =>{
     });
     return flag;
 }
-
+const sobrescribir = (actividades)=>{
+    console.log("Entro");
+    const actualSave = actividades.filter((e)=> {return e.estado==1})[0];
+    console.log("Oremos");
+    const witoutTemps = actividades.filter((e)=>{
+        return (e.estado!=2)
+    });
+    const inter = null;
+    const mapeado = witoutTemps.map((e)=>{
+        if(e.dia == actualSave.dia){
+            if(e.fin>actualSave.inicio && e.inicio<actualSave.inicio){
+                //console.log(e);
+                return {...e,fin:actualSave.inicio};
+            }
+            if(e.inicio<actualSave.fin && actualSave.fin<e.fin){
+                return {...e,inicio:actualSave.fin};
+            }
+            if(e.inicio<actualSave.inicio && actualSave.fin<e.fin){
+                inter = e;
+                return {...e,estado:3};
+            }
+            if(actualSave.inicio < e.inicio && e.fin<actualSave.fin){
+                return {...e,estado:3};
+            }
+        }
+        return e;
+    });
+    console.log("Actual save:",actualSave);
+    if(inter!=null){
+        mapeado = [...mapeado,
+            {...inter,inicio:inter.incio,fin:actualSave.inicio},
+            {...inter,inicio:inter.fin,fin:actualSave.fin}]
+    }
+            
+    return mapeado.filter((e)=>{
+        return (e.estado!=3)
+    }).map((e)=>{return {...e,estado:0,intervalo:actividad2intervalo(e)}});
+}
 const diasSemana = 'L,M,M,J,V,S,D'.split(",");
 export default function DescripcionActividad(props) {
     const dispatch = useDispatch();
+    const horario = useSelector((state)=>state.horario.value);
+    const configHorario = useSelector((state)=>state.configHorario.value)
     const [stateButton,setStateButton] = useState(0);
     const [actividad,setActividad] = useState(actividadDefault);
     const [editable,setEditable] = useState(false);
     const [duracion,setDuracion] = useState([0,1]);
     const [duracionFin,setDuracionFin] = useState(24);
     const[llenarMic,setLlenarMic] = useState(null);
+    const [alertContent,setAlertContent] = useState(null);
+    
     const handleVisible = () =>{
         props.handleVisible(true);
         dispatch(restoreActivity());
@@ -73,9 +117,10 @@ export default function DescripcionActividad(props) {
         setDuracionFin(props.actividad.fin);
         
     },[props])
-    
     const handleNombre = (e) =>{
         if(!editable)return;
+        if(e.target.value.match(/^\s+/)) return;
+        
         setActividad({...actividad,nombre:e.target.value})
     }
     const handleAcr = (e) =>{
@@ -104,6 +149,23 @@ export default function DescripcionActividad(props) {
         if(!editable) return;
         setActividad({...actividad,fin:i});
     }
+    const acceptSobreescritura = ()=>{
+        console.log("Aceeept");
+        const newHorario = sobrescribir(horario);
+        console.log(newHorario);
+        dispatch(sobrescribirTodo(newHorario));
+        setStateButton(0);
+        handleVisible();
+    }
+    const handleMensajeDisplay = (msg)=>{
+        props.mensajeDisplay(<MensajesCompletos
+            content={msg} 
+            visible={props.mensajeDisplay}/>)
+        setTimeout(()=>{
+            props.mensajeDisplay(null);
+        },1500);
+    }
+    // Crear editar guardar
     const handleClickState = () =>{
         if(stateButton==0){
             setEditable(true);
@@ -113,24 +175,104 @@ export default function DescripcionActividad(props) {
             return;
         }
         if(stateButton==1){
+            if(actividad.nombre.match(/^\s*$/)){
+                setAlertContent(<MensajeAlert
+                    visible = {setAlertContent}/>)
+                console.log("Hola");
+                return;
+            }
+            const actTemp = {...actividad,
+                inicio:duracion[0],fin:duracion[1],estado:1}
+            const intervaloActTemp = actividad2intervalo(actTemp);
+            const intervaloTemp = act2horario(horario,[0]);
+            console.log("Interval ? ",intervaloActTemp);
+            let flag = false;
+            intervaloActTemp.forEach((e)=>{
+                if(intervaloTemp.indexOf(e)!=-1) flag =true;
+            })
+            
+            if(flag && !configHorario.sobrescribir){
+                
+                setAlertContent(<MensajeAlertWithBottons  
+                    mensaje = "Existe una tarea dentro del intervalo, desea sobreescribir"
+                    visible = {setAlertContent} onAccept ={acceptSobreescritura}/>)
+                //mostrar advertencia
+                return;
+            }
+            console.log("flas",flag);
+            if(flag){
+                //Guardar sobreescribirendo
+                
+                //dispatch(saveWithSobrescritura());
+                const newHorario = sobrescribir(horario);
+                console.log(newHorario);
+                dispatch(sobrescribirTodo(newHorario));
+                setStateButton(0);
+                handleVisible();
+                handleMensajeDisplay("Actividad Creada, sobreescribiendo actividad(es)");
+                return;
+            }
             dispatch(saveActivity());
             /* Falta validar cuando esta vacio */
             
             setStateButton(0);
             handleVisible();
+            handleMensajeDisplay("Actividad Creada");
             return;
         }
         if(stateButton==2){
+            if(actividad.nombre.match(/^\s*$/)){
+                setAlertContent(<MensajeAlert visible = {setAlertContent}/>)
+                return;
+            }
+            const actTemp = {...actividad,
+                inicio:duracion[0],fin:duracion[1],estado:1}
+            const intervaloActTemp = actividad2intervalo(actTemp);
+            const intervaloTemp = act2horario(horario,[0]);
+            console.log("Interval ? ",intervaloActTemp);
+            let flag = false;
+            intervaloActTemp.forEach((e)=>{
+                if(intervaloTemp.indexOf(e)!=-1) flag =true;
+            })
+            
+            if(flag && !configHorario.sobrescribir){
+                
+                //mostrar advertencia
+                return;
+            }
+            console.log("flas",flag);
+            if(flag){
+                //Guardar sobreescribirendo
+                
+                //dispatch(saveWithSobrescritura());
+                const newHorario = sobrescribir(horario);
+                console.log(newHorario);
+                dispatch(sobrescribirTodo(newHorario));
+                setStateButton(0);
+                handleVisible();
+                handleMensajeDisplay("Actividad Editada, se sobreescribieron actividad(es)");
+                return;
+            }
+
+
+
+
             dispatch(saveActivity());
             setStateButton(0);
+            handleVisible();
+            handleMensajeDisplay("Actividad Editada");
             return;
         } 
 
     }
     const handleEliminarActividad = () =>{
+        
         if(props.idAct==-1) return;
+        handleMensajeDisplay("Actividad Eliminada");
+        
         dispatch(deleteActivity(props.idAct));
         props.handleVisible(true);
+        
     }
     const handleDuracionInicio = (e) =>{
         if(!editable) return;
@@ -188,6 +330,7 @@ export default function DescripcionActividad(props) {
         dispatch(addActivity({...actTemp,intervalo:intervaloAct}))
         
     },[actividad,duracion,duracionFin])
+    
   return (
     <>
     <div className='actividad-description'>  
@@ -349,7 +492,10 @@ export default function DescripcionActividad(props) {
         </Badge>
         
     </div>
+    {alertContent}
     {llenarMic}
+    
+    
     </>
   )
 }

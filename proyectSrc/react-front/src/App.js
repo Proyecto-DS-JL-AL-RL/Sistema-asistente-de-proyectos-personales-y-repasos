@@ -84,7 +84,7 @@ function App() {
                   <div className='other-container'>
                     <div className='head-container'>
                   {showBars?<AppBarSearch stateButton={{showFeedBack, showAnadir}} 
-                      ClickButton={{setShowFeedBack, setShowAnadir}}
+                      ClickButton={{setShowFeedBack, setShowAnadir, listen}}
                       name={nameBar} setName={setNameBar}/>:null}
                     </div>
                     <div className='content-container'>
