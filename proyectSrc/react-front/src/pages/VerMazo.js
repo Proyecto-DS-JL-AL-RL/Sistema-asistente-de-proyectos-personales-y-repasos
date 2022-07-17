@@ -23,7 +23,9 @@ import * as ReactDOMServer from 'react-dom/server'
 import { useDispatch} from 'react-redux';
 import { changeContent,restoreContent } from '../stores/sliceAyuda';
 import axios from 'axios';
-
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Link from '@mui/material/Link';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 /*
 const mazos = [
   {
@@ -85,6 +87,14 @@ const mazos = [
         const dispatch = useDispatch();
         const [titulo, setTitulo] = useState('')
         const [descripcion, setDescripcion] = useState('')
+        const breadcrumbs = [
+          <Link underline="hover" key="1" color="inherit" href="/">
+            Inicio
+          </Link>,
+          <Typography key="2" color="text.primary">
+            Tarjetas
+          </Typography>
+        ]; 
         /* eslint-disable */
         useEffect(() => {
           props.showAdd.setShowAnadir({card:false, icon:true});
@@ -119,10 +129,16 @@ const mazos = [
         <React.Fragment>
                 <Box sx={{ flexGrow: 1}}>
                     <Fade timeout={2000} in={true}>
-                              <Typography mx={10} mt={6} sx={{fontWeight: 'bold'}} variant = 'h3'>
+                              <Typography mt={6} sx={{fontWeight: 'bold'}} variant = 'h3'>
                                             Tarjetas de Repaso
                                 </Typography>
                     </Fade>
+                    <Breadcrumbs
+                      separator={<NavigateNextIcon fontSize="small" />}
+                      aria-label="breadcrumb"
+                    >
+                      {breadcrumbs}
+                    </Breadcrumbs>
                 </Box>
                           
                     <Box  sx={{
