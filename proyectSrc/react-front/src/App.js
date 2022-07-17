@@ -14,7 +14,7 @@ import Tarjetas from './pages/verTarjeta';
 import Inicio from './pages/Inicio';
 import ProyectoView from './pages/projectDashboard';
 import AlgoQueHacerPage from './pages/AlgoQueHacerPage';
-
+import { styled } from '@mui/material/styles';
 import SR,{useSpeechRecognition} from 'react-speech-recognition';
 import { Beforeunload } from 'react-beforeunload';
 import {getCommands} from './util/redirectSpeech';
@@ -27,8 +27,6 @@ import Proyectos from './pages/Proyectos';
 import {  AccountContext } from './AccountContext';
 import DisplayAyuda from './components/Ayuda/DisplayAyuda';
 import axios from 'axios';
-
-
 
 function App() {
   const [nameBar,setNameBar] = useState("Inicio")
@@ -60,13 +58,12 @@ function App() {
       SR.stopListening(); 
     }
   })
-
   const listen = ()=> { SR.startListening({language:'es',continuous:false})}
 
   const [logged,setLogged] = useState(true);
   const [showFeedBack, setShowFeedBack] = useState({card:false, icon:false})
   const [showAnadir, setShowAnadir] = useState({card:false, icon:false})
-  const [showBars, setShowBars] = useState(true)
+  //const [showBars, setShowBars] = useState(true)
   
   useEffect(()=>{
     getSession()
@@ -94,13 +91,13 @@ function App() {
   return (
           <div className='container-main'>
                   
-                  {showBars?<DrawerComponent/>:null}
+                  <DrawerComponent/>
                   <div className='other-container'>
                     <div className='head-container'>
-                  {showBars?<AppBarSearch stateButton={{showFeedBack, showAnadir}} 
-                      ClickButton={{setShowFeedBack, setShowAnadir, listen}}
-                      name={nameBar} setName={setNameBar}/>:null}
-                    </div>
+                      <AppBarSearch stateButton={{showFeedBack, showAnadir}} 
+                          ClickButton={{setShowFeedBack, setShowAnadir, listen}}
+                          name={nameBar} setName={setNameBar}/>
+                        </div>
                     <div className='content-container'>
                       {transcript}
                       <Switch>

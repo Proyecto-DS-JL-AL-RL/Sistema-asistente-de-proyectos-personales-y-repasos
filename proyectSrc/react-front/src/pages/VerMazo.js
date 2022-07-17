@@ -185,7 +185,7 @@ const mazos = [
                   <Box sx={{mx:'12%',
                             position:'absolute',
                               width: '65%'}}>
-                          <Mazos getmazo={mazos} setMazo={setMazos} />
+                          <Mazos  getmazo={mazos} setMazo={setMazos} />
                   </Box>
         </React.Fragment>
     );

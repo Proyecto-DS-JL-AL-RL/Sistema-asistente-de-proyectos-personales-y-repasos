@@ -14,9 +14,6 @@ import QuestionMarkRoundedIcon from '@mui/icons-material/QuestionMarkRounded';
 import { useHistory } from "react-router-dom";
 import './presentacionPage1.css'
 import Fade from '@mui/material/Fade';
-
-
-
 //vw ch %
 /*
 const [showRecomendacion, setShowRecomendacion] = useState(false)
@@ -67,6 +64,7 @@ const [showRecomendacion, setShowRecomendacion] = useState(false)
 227, 227, 227*/
 export default function Presentacion(){
     let history = useHistory()
+    
     return (
         
             <React.Fragment> 

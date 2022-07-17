@@ -8,9 +8,9 @@
   --change-width-item:0;
 }
 
+
 /*var(--top-space) var(--height-space) var(--width-drawer)*/
 .container-main{
-  background-color: rgb(88, 154, 154);
   width: 100vw;
   height: 100vh;
   display: flex;
