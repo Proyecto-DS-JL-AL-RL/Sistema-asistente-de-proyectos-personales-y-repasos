@@ -6,6 +6,7 @@ import UserPool from './userPool';
 
 const AccountCon = function(props){
     const [sessionState,setSessionState] = React.useState({});
+    const [currentState,setCurrentState] = React.useState({});
 
     const authenticate = async(username,password) => {
         return await new Promise((resolve,reject)=>{            
@@ -20,7 +21,7 @@ const AccountCon = function(props){
                             atris[elem.Name] = elem.Value;
                             //console.log(elem.Name, elem.Value);
                         });
-                        console.log(atris);
+                        //console.log(atris);
                         setSessionState(atris);
                     });
                     resolve(data);
@@ -51,10 +52,10 @@ const AccountCon = function(props){
                                 atris[elem.Name] = elem.Value;
                                 //console.log(elem.Name, elem.Value);
                             });
-                            console.log(atris);
+                            //console.log(atris);
                             setSessionState(atris);
-                        });
-                        resolve(session);
+                            resolve(atris);
+                        });                        
                     }
                 });
             }else{
@@ -72,7 +73,7 @@ const AccountCon = function(props){
     }
 
     return(
-        <AccountContext.Provider value = {{authenticate , getSession , logout , sessionState , setSessionState}}>
+        <AccountContext.Provider value = {{authenticate , getSession , logout , sessionState , setSessionState , currentState,setCurrentState}}>
             {props.children}
         </AccountContext.Provider>
     );

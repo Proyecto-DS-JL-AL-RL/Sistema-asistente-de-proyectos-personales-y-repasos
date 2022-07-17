@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import {Box, Grid, Typography,Card, Button} from '@mui/material';
+import {Box, Grid, Typography, Button} from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
@@ -7,45 +7,66 @@ import TokenIcon from '@mui/icons-material/Token';
 import FileForm from '../components/fileForm';
 
 export default function ActividadActual(props){
-    const [actividad,SetActividad] = useState('Actividad de Prueba');
-    const [descripcion,setDescripcion] = useState('Esta es una actividad de prueba, Podra obtener avances en el PROYECTO ASOCIADO. Y puntos a su perfil Las recompensas se muestran abajo');
-    const [pointsAdded,setPointsAdded] = useState(200);
-    const [constan,setConstan] = useState(10);
-    const [proyectBind,setProyectBind] = useState('Proyecto Asociado');
-    const [started,setStarted] = useState (false);
-    const [blocked,setBlocked] = useState(true);
-    const [evidencia,setEvidencia] = useState(null);
-    const [showForm,setShowForm] = useState(false);
+    const [actividad,setActividad]  = useState(null);
+    const [constan,setConstan]      = useState(10);
+    const [started,setStarted]      = useState (false);
+    const [evidencia,setEvidencia]  = useState(null);
+    const [showForm,setShowForm]    = useState(false);
     const history = useHistory();
 
-
-    const handleStart=()=>{
-        setStarted(true);
-    };
-
+    const handleStart = ()=>props.startActivity();
     const handleEnd = ()=>{
-        if (blocked && !evidencia)
+        if (actividad?.Blocked && !evidencia)
             {
                 alert('Suba evidencias');
                 return;
             }
-        props.setDoingSomething(false);
+        props.endActivity();
     };
 
+    const setCurrActividad  = ()=>setActividad(props.currentActivity);
+    const setCurrStarted    = ()=>setStarted(props.started);
+    const setCurrEvidencia  = ()=>setEvidencia(props.evidencia);
+
+    const handleBack = ()=>{
+        if (started){
+            history.push('/');
+        }else{
+            props.setCurrentActivity(null);
+        }        
+    }
+
+    useEffect(()=>{
+        setCurrActividad();
+        setCurrStarted();
+    },[]);
+
+    useEffect(setCurrActividad,[props.currentActivity]);
+    useEffect(setCurrStarted,[props.started]);
+    useEffect(setCurrEvidencia,[props.evidencia]);
+
+
     return(
-        <React.Fragment>            
+        <React.Fragment>    
+            <Box sx = {{width:'100%'}}>
+                <Button sx = {{width:'50px',bgcolor: '#C0DAE5', borderRadius:'20px'}} variant = 'contained' mb = {1} ml = {10} onClick = {handleBack}>
+                        <Typography color = 'black' sx = {{fontWeight : 'bold'}} >
+                            Back
+                        </Typography>
+                </Button>
+            </Box>        
             <Box sx = {{minWidth:'200px',width:'50%',borderRadius:'30px',bgcolor:'pink',marginLeft:'25%',marginTop:'5%',paddingTop:'20px',paddingBottom:'20px'}}>
                 <Typography sx ={{textAlign:'center',width:'100%',marginTop:'5%',marginBottom:'5%'}} variant = 'h3'>
-                    {actividad}
+                    {actividad?.Titulo}
                 </Typography>
                 <Typography  variant="body1" sx ={{fontSize:'large', textAlign:'center',width:'80%',marginTop:'20px',marginLeft:'10%'}} >
-                    {descripcion}
+                    {actividad?.Descripcion}
                 </Typography>
                 <Grid container direction = 'row' sx = {{width :'80%',marginLeft:'10%',marginTop:'20px'}} justifyContent = 'center' alignItems='center'>
                     <Grid item xs = {6}>
                         <Typography sx ={{textAlign:'center'}} variant = 'h5'>
-                            {pointsAdded} <TokenIcon/>
-                            {pointsAdded>0?
+                            {actividad?.Puntos} <TokenIcon/>
+                            {actividad?.Puntos>0?
                                     <ArrowUpwardIcon/>
                                     :
                                     <ArrowDownwardIcon/>
@@ -63,24 +84,19 @@ export default function ActividadActual(props){
                         </Typography>
                     </Grid>
                 </Grid>
-
-                {proyectBind?
                 <Grid container justifyContent = 'space-between' alignItems = 'right' alignContent = 'flex-end' 
-                        sx = {{width:'100%',marginTop:'20px',paddingRight:'20px'}} direction='row'  >
-
-                    {blocked?
+                        sx = {{width:'100%',marginTop:'20px',paddingRight:'20px'}} direction='row'  >   
+                {actividad?.Blocked?
                     <Typography sx = {{paddingLeft:'40px'}} variant = 'h6'>
                         Requiere subir evidencias
                     </Typography>
                     :null}
-                    
+                {actividad?.ProyectoAsociado?  
                     <Typography sx ={{bgcolor:'orange',width:'300px',borderRadius:'30px',textAlign :'center',fontWeight:'bold',display:'inline'}} variant = 'h6'>
-                        {proyectBind}
-                    </Typography>
+                        {actividad?.ProyectoAsociado}
+                    </Typography>                
+                :null  }
                 </Grid>
-                :
-                null
-                }
             </Box>
             
 
@@ -120,7 +136,7 @@ export default function ActividadActual(props){
             </Grid>
 
             {showForm?
-                <FileForm close = {()=>{setShowForm(false)}} setEvidencia = {setEvidencia}/>
+                <FileForm close = {()=>{setShowForm(false)}} setEvidencia = {props.setEvidencia}/>
             :
             null
             }
