@@ -24,7 +24,7 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background: #8D538D;  
+    background: rgb(44, 47, 51);  
     ;
   }
 
@@ -63,13 +63,13 @@
     left: 0;
     height: 100%;
     width: 100%;
-    background: #8D538D;
+    background: rgb(44, 47, 51);
+    border-left: 0.3rem solid black;
     animation: typing 3s steps(10) infinite;
   }
   
   @keyframes typing {
     40%, 60%{
-      background: #8D538D;
       left: calc(100% + 30px);
     }
     100%{

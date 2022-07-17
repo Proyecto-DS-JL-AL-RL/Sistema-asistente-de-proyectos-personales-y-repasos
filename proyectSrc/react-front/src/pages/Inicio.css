@@ -28,7 +28,7 @@
   }
 
 .Titulo{
-    color:rgb(31, 55, 109);
+    color:rgb(43, 142, 12);
     text-transform: uppercase;
     font-weight:bold;
     width:100%;
@@ -37,7 +37,7 @@
 }
 
 .container-phrases {
-    color:#999;
+    color:black;
     text-align:center;
     text-transform: uppercase;
     font-size:2vw;

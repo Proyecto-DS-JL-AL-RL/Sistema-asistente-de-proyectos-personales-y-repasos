@@ -72,7 +72,7 @@ export default function Inicio(){
                         <div><div>Organices</div></div>
                         <div><div>Mejores</div></div>
                       </div>
-                      Tú puedes!
+                      Tú puedes! 🤗
                   </div>
               
           </div>

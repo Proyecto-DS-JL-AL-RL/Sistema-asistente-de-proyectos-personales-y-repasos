@@ -57,7 +57,7 @@ export default function Login(props) {
 
   return (
     <React.Fragment>
-      <Box sx={{width:'80%', height:'20vw', position: 'relative', boxShadow: 16}}>
+      <Box sx={{width:'80%', background:'white', height:'20vw', position: 'relative', boxShadow: 16}}>
       <FormControl  sx={{ mx:'6%', mt: 1, alignItems:'center', textAlign:'center', width:'45ch'}} variant="outlined">
               <FormControl sx={{mt: 3, width: '100%' }} variant="outlined">
                     <TextField id="outlined-basic" label="Correo electrónico" variant="outlined" value = {values.usuario} onChange = {handleChange('usuario')}/>

@@ -20,7 +20,7 @@ import { useDispatch} from 'react-redux';
 import { changeContent,restoreContent } from '../stores/sliceAyuda';
 import { useParams } from "react-router-dom";
 import axios from 'axios';
-
+import './Tarjetas.css'
 //<MicIcon className='button-main' sx={{p:2, borderRadius:'50%', background:'red',
 //color:'white', width: '30%', height: '30%', '&:hover': {backgroundColor: '#FF6347'} }}/>
 
@@ -36,13 +36,6 @@ const mazos = {
   }]
 }
 
-const Opt = styled(Paper)(({ theme }) => ({
-  background:'#c8a2b5',
-  width: '90%',
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-  
-}));
 
 export default function VerTarjeta(props) {
   const [page, setPage] = React.useState(1);
@@ -101,10 +94,11 @@ export default function VerTarjeta(props) {
                     mx:'4%',  
                     position: 'absolute',        
                     width: '86%',
-                    height: '70%',
+                    height: '80%',
                     color:'yellow',
                     background:'#c8a2c8',
-                    border: '3px solid black'
+                    border: '3px solid black',
+                    flexWrap:'wrap'
                 }}
                     variant="outlined" >
                         <Paper sx={{
@@ -121,7 +115,7 @@ export default function VerTarjeta(props) {
                                 <Paper sx={{
                                     mt:'1%',
                                     mx: '-1%',
-                                  
+
                                     position: 'absolute',        
                                     width: '99.9%',
                                     height: '99%',
@@ -137,24 +131,24 @@ export default function VerTarjeta(props) {
                                                         justifyContent="center">      
                                                       
                                                       <Paper sx={{mt:'2%',    
-                                                                width: '90%',
-                                                                height: '15vw',
+                                                                width: '80%',
+                                                                height: '12vw',
+                                                                position: 'relative',
                                                                 background:'#c2c2c2',
                                                                 border: '3px solid black',
                                                                 '&:hover': {backgroundColor: '#9b9b9b'}
                                                             }}
-                                                                variant="outlined" > 
-                                                                      <Typography mt={'6.5%'} sx={{textAlign: 'center',fontWeight: 'bold'}} variant="h5" component="div">{mazo.Tarjetas[page-1].Pregunta}</Typography>
+                                                            variant="outlined" > 
+                                                              <Typography className="Pregunta_Titulo" variant="h5" component="div">{mazo.Tarjetas[page-1].Pregunta}</Typography>
                                                       </Paper>
-                                                      <Opt>
-                                                          <Grid  container mx={'2%'} spacing={'1%'}>
+                                                          <Grid  container className="Opciones" spacing={'2%'}>
                                                                   <Grid item >
-                                                                          <Box sx={{ width: '100%' }}>
                                                                               <Stack spacing={'2%'}>
-                                                                                  <Button className='button-main'  sx={{height:'18ch', width: '70ch', border: '5px solid black',color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}><Typography sx={{fontWeight: 'bold'}} variant="h6" component="div"> a. {mazo.Tarjetas[page-1].Opciones[0]}</Typography></Button>
-                                                                                  <Button className='button-main'  sx={{height:'18ch', width: '70ch', border: '5px solid black', color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}><Typography sx={{fontWeight: 'bold'}}  variant="h6" component="div">b. {mazo.Tarjetas[page-1].Opciones[2]}</Typography></Button>
+                                                                                  <Button className='button-main'  sx={{maxHeight:'20ch', height:'18ch', maxwidth:'70ch', width: '70ch', border: '5px solid black',color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}>
+                                                                                      <Typography sx={{fontWeight: 'bold'}} variant="h6" component="div"> a. {mazo.Tarjetas[page-1].Opciones[0]}</Typography></Button>
+                                                                                  <Button className='button-main'  sx={{maxHeight:'20ch', height:'18ch', maxwidth:'70ch', width: '70ch', border: '5px solid black', color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}>
+                                                                                      <Typography sx={{fontWeight: 'bold'}}  variant="h6" component="div">b. {mazo.Tarjetas[page-1].Opciones[2]}</Typography></Button>
                                                                               </Stack>
-                                                                          </Box>
                                                                   </Grid>
                                                                   <Grid mt={'10%'} item xs={'10%'}>
                                                                               
@@ -162,13 +156,12 @@ export default function VerTarjeta(props) {
                                                                   <Grid item >
                                                                           <Box sx={{ width: '100%' }}>
                                                                               <Stack spacing={'2%'}>
-                                                                                  <Button className='button-main'  sx={{height:'18ch', width: '70ch',border: '5px solid black', color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}> <Typography sx={{fontWeight: 'bold'}} variant="h6" component="div">c. {mazo.Tarjetas[page-1].Opciones[1]}</Typography></Button>
-                                                                                  <Button className='button-main'  sx={{height:'18ch', width: '70ch', border: '5px solid black',  color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}><Typography sx={{fontWeight: 'bold'}} variant="h6" component="div">d. {mazo.Tarjetas[page-1].Opciones[3]}</Typography></Button>
+                                                                                  <Button className='button-main'  sx={{maxHeight:'20ch', height:'18ch', maxwidth:'70ch', width: '70ch',border: '5px solid black', color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}> <Typography sx={{fontWeight: 'bold'}} variant="h6" component="div">c. {mazo.Tarjetas[page-1].Opciones[1]}</Typography></Button>
+                                                                                  <Button className='button-main'  sx={{maxHeight:'20ch', height:'18ch', maxwidth:'70ch', width: '70ch', border: '5px solid black',  color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}><Typography sx={{fontWeight: 'bold'}} variant="h6" component="div">d. {mazo.Tarjetas[page-1].Opciones[3]}</Typography></Button>
                                                                               </Stack>
                                                                           </Box>
                                                                   </Grid>
                                                           </Grid> 
-                                                      </Opt>                                                       
                                                 </Stack>
                                             </Box>
                                 </Paper>
