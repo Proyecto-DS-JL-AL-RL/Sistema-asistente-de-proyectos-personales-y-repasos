@@ -113,7 +113,7 @@ function App() {
                         <Route path = '/proyectos'>
                           <Proyectos/>
                         </Route>
-                        <Route path = '/proyect'>
+                        <Route path = '/proyecto/:idProyecto'>
                           <ProyectoView/>
                         </Route>
                         <Route path = '/algoQueHacer'>
