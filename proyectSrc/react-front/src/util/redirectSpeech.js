@@ -6,7 +6,7 @@ const paths = {
     "Repasos":"/Mazos",
     "mazos":"/Mazos",
     "cartas":"/",
-    "proyecto":"/proyect",
+    "proyectos":"/proyectos",
     "Dashboard":"/proyect"
 }
 

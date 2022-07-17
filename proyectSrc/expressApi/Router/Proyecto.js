@@ -1,28 +1,32 @@
-//var datProyecto = require('../Datos/datUser');
+var datProyecto = require('../Datos/datProyectos');
 const express = require("express")
 const router = express.Router();
 
 
-router.get('/proyecto/:userSub', async function(req,res){
-    //let resp = await datUser.getUsers();
-    //res.json(resp);
+router.get('/Proyectos/:userSub', async function(req,res){
+    let resp = await datProyecto.getProyectListFromUser(req.params.userSub);
+    res.json(resp);
 });
 
-router.put('/proyecto/add/:userSub', async function(req,res){
-    //let resp = await datUser.updateUser(req.params.id, req.body);
+router.get('/Proyectos/getProyecto/:id', async function(req,res){
+    const resp = await datProyecto.getProyectById(req.params.id);
+    res.json(resp);
+});
+
+router.post('./Proyectos/addProyect', async function(req,res){
+    const resp = await datProyecto.createProyect(req.body);
+});
+
+router.post('/Proyectos/addObjetivo', async function(req,res){
+    //let resp = await datProyecto.addObjetivo(req.body);
     //res.json(resp);
 });
 
 //Init
-router.post('/proyecto', async function (req, res){
-    //await datUser.createUser(req.body)
-    //res.send('usuario creado')
+router.post('/Proyectos/endObjetive', async function (req, res){
+    const resp = await datProyecto.completeObjetivo(req.body);
+    res.send(resp)
 })
-
-router.delete('/proyecto/:userSub', async function(req,res){
-    //await datUser.deleteUser(req.params.id);
-    //res.send('usuario eliminado')
-});
 
 
 module.exports = router;

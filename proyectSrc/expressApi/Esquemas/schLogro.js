@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 var Logro = new Schema({
     Titulo: String,
+    Descripcion: String,
     ProyectId : {type: Schema.Types.ObjectId,ref : 'Proyecto'},
     Tipo : String,
     UrlRef : String,

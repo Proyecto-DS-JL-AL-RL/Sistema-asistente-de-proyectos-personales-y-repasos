@@ -2,10 +2,6 @@ var Actividad = require('../Esquemas/schActividad');
 var UserQueue = require('../Esquemas/schUserQueue');
 
 
-var initUserQueue = async function(userSub){
-    const newQueue = UserQueue({UserSub:userSub, Actividades:[]})
-    await newQueue.save().catch(err=> console.log(err))
-}
 
 var createActivity = async function(act){
     let puntos = 100;
@@ -71,7 +67,6 @@ var deleteCard = async function(id){
     await Tarjeta.findByIdAndDelete(id)
  }
 
-module.exports.initUserQueue = initUserQueue;
 module.exports.createActivity = createActivity;
 module.exports.getActivityFromQueue = getActivityFromQueue;
 module.exports.getActivityID = getActivityID;

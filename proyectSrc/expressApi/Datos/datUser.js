@@ -1,5 +1,4 @@
 var User = require('../Esquemas/scUser');
-var datActividades = require('../Datos/datActividades');
 let datState = require('../Datos/datState');
 //var mongoose = require('mongoose');
 
@@ -18,8 +17,7 @@ var createUser = async function(user){
         const newusr = new User(user)
         const userRes = await newusr.save().catch(err=> console.log(err))
         console.log(userRes);
-        await datActividades.initUserQueue(userRes.userSub);
-        await datState.initUserState(userRes.userSub);
+        await datState.initUserState(userRes.userSub,userRes.NombreUsuario);
 }
 
 var updateUser = async function(id, update){
