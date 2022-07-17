@@ -24,7 +24,7 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background: rgb(44, 47, 51);  
+    background: #9b9b9b;  
     ;
   }
 
@@ -63,7 +63,7 @@
     left: 0;
     height: 100%;
     width: 100%;
-    background: rgb(44, 47, 51);
+    background: #9b9b9b;
     border-left: 0.3rem solid black;
     animation: typing 3s steps(10) infinite;
   }

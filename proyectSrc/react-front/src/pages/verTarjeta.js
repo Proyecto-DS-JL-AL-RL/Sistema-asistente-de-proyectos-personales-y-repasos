@@ -40,6 +40,15 @@ const mazos = {
 export default function VerTarjeta(props) {
   const [page, setPage] = React.useState(1);
   const [mazo, setMazo] = React.useState(mazos);
+  const [colorA, setColorA] =  React.useState('#BBE7FE');
+  const [colorB, setColorB] =  React.useState('#BBE7FE');
+  const [colorC, setColorC] =  React.useState('#BBE7FE');
+  const [colorD, setColorD] =  React.useState('#BBE7FE');
+  const [disabledA, setDisabledA] = React.useState("")
+  const [disabledB, setDisabledB] = React.useState("")
+  const [disabledC, setDisabledC] = React.useState("")
+  const [disabledD, setDisabledD] = React.useState("")
+ 
   const {idSeccion} = useParams();
   const handleChange = (event, value) => {
     setPage(value);
@@ -144,9 +153,24 @@ export default function VerTarjeta(props) {
                                                           <Grid  container className="Opciones" spacing={'2%'}>
                                                                   <Grid item >
                                                                               <Stack spacing={'2%'}>
-                                                                                  <Button className='button-main'  sx={{maxHeight:'20ch', height:'18ch', maxwidth:'70ch', width: '70ch', border: '5px solid black',color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}>
+                                                                                  <Button className='button-main' onClick={()=>{
+                                                                                    //console.log(mazo.Tarjetas[page-1].Respuesta-1)
+                                                                                    if(mazo.Tarjetas[page-1].Opciones[mazo.Tarjetas[page-1].Respuesta-1] === mazo.Tarjetas[page-1].Opciones[0]){
+                                                                                      setColorA('#008000')
+                                                                                    }else{
+                                                                                      setColorA('#ff0000')
+                                                                                    }
+                                                                                    setDisabledA("disabled")
+                                                                                  }}  sx={{maxHeight:'20ch', height:'18ch', maxwidth:'70ch', width: '70ch', border: '5px solid black',color: 'black',background: colorA, '&:hover': {backgroundColor: '#0088b6'}}} disabled={disabledA}>
                                                                                       <Typography sx={{fontWeight: 'bold'}} variant="h6" component="div"> a. {mazo.Tarjetas[page-1].Opciones[0]}</Typography></Button>
-                                                                                  <Button className='button-main'  sx={{maxHeight:'20ch', height:'18ch', maxwidth:'70ch', width: '70ch', border: '5px solid black', color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}>
+                                                                                  <Button onClick={()=>{
+                                                                                    if(mazo.Tarjetas[page-1].Opciones[mazo.Tarjetas[page-1].Respuesta-1] === mazo.Tarjetas[page-1].Opciones[2]){
+                                                                                      setColorB('#008000')
+                                                                                    }else{
+                                                                                      setColorB('#ff0000')
+                                                                                    }
+                                                                                    setDisabledB("disabled")
+                                                                                  }} className='button-main'  sx={{maxHeight:'20ch', height:'18ch', maxwidth:'70ch', width: '70ch', border: '5px solid black', color: 'black',background: colorB, '&:hover': {backgroundColor: '#0088b6'}}} disabled={disabledB}>
                                                                                       <Typography sx={{fontWeight: 'bold'}}  variant="h6" component="div">b. {mazo.Tarjetas[page-1].Opciones[2]}</Typography></Button>
                                                                               </Stack>
                                                                   </Grid>
@@ -156,8 +180,22 @@ export default function VerTarjeta(props) {
                                                                   <Grid item >
                                                                           <Box sx={{ width: '100%' }}>
                                                                               <Stack spacing={'2%'}>
-                                                                                  <Button className='button-main'  sx={{maxHeight:'20ch', height:'18ch', maxwidth:'70ch', width: '70ch',border: '5px solid black', color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}> <Typography sx={{fontWeight: 'bold'}} variant="h6" component="div">c. {mazo.Tarjetas[page-1].Opciones[1]}</Typography></Button>
-                                                                                  <Button className='button-main'  sx={{maxHeight:'20ch', height:'18ch', maxwidth:'70ch', width: '70ch', border: '5px solid black',  color: 'black',background:'#BBE7FE', '&:hover': {backgroundColor: '#0088b6'}}}><Typography sx={{fontWeight: 'bold'}} variant="h6" component="div">d. {mazo.Tarjetas[page-1].Opciones[3]}</Typography></Button>
+                                                                                  <Button className='button-main' onClick={()=>{
+                                                                                    if(mazo.Tarjetas[page-1].Opciones[mazo.Tarjetas[page-1].Respuesta-1] === mazo.Tarjetas[page-1].Opciones[1]){
+                                                                                      setColorC('#008000')
+                                                                                    }else{
+                                                                                      setColorC('#ff0000')
+                                                                                    }
+                                                                                    setDisabledC("disabled")
+                                                                                  }} sx={{maxHeight:'20ch', height:'18ch', maxwidth:'70ch', width: '70ch',border: '5px solid black', color: 'black',background: colorC, '&:hover': {backgroundColor: '#0088b6'}}} disabled={disabledC}><Typography sx={{fontWeight: 'bold'}} variant="h6" component="div">c. {mazo.Tarjetas[page-1].Opciones[1]}</Typography></Button>
+                                                                                  <Button className='button-main' onClick={()=>{
+                                                                                    if(mazo.Tarjetas[page-1].Opciones[mazo.Tarjetas[page-1].Respuesta-1] === mazo.Tarjetas[page-1].Opciones[3]){
+                                                                                      setColorD('#008000')
+                                                                                    }else{
+                                                                                      setColorD('#ff0000')
+                                                                                    }
+                                                                                    setDisabledD("disabled")
+                                                                                  }} sx={{maxHeight:'20ch', height:'18ch', maxwidth:'70ch', width: '70ch', border: '5px solid black',  color: 'black',background: colorD, '&:hover': {backgroundColor: '#0088b6'}}} disabled={disabledD}><Typography sx={{fontWeight: 'bold'}} variant="h6" component="div">d. {mazo.Tarjetas[page-1].Opciones[3]}</Typography></Button>
                                                                               </Stack>
                                                                           </Box>
                                                                   </Grid>
