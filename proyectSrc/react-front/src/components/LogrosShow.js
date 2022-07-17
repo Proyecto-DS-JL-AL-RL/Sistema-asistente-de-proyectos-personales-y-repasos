@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from "react";
-import { Button,Grid,Box,Card, Typography } from "@mui/material";
+import { Button,Grid,Card, Typography } from "@mui/material";
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 
 const prueba = Array.from({length:3},(x,i)=>({titulo:'Actividad del Logro',descripcion:'Descripción',hasFile:true,fileTittle:'Archivo',fileType:'URL',fileUrl:'https://github.com/Proyecto-DS-JL-AL-RL/Sistema-asistente-de-proyectos-personales-y-repasos'}));

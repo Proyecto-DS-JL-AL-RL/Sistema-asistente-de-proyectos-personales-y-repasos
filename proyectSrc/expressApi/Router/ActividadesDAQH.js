@@ -15,7 +15,7 @@ router.post('/colaActividades/addActividad', async function(req,res){
 
 router.get('/colaActividades/getActividad/:userSub', async function(req,res){
     const resp = await datActividades.getActivityFromQueue(req.params.userSub);
-    //res.json(resp);
+    res.json(resp);
 });
 
 //Init

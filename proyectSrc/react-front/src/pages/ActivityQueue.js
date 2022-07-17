@@ -5,9 +5,6 @@ import AddIcon from '@mui/icons-material/Add';
 import ActividadForm from '../components/actividadForm';
 import { AccountContext } from '../AccountContext';
 import axios from 'axios';
-const arrayNum = Array.from({length:3},(x,i)=>({titulo:'Actividad de Prueba',descripcion:'Descripción de la actividad'}));
-
-
 
 export default function ActivityQueue(params) {
     const { sessionState } = useContext( AccountContext );   
@@ -15,7 +12,7 @@ export default function ActivityQueue(params) {
     const history = useHistory();
     const[showForm,setShowForm] = useState(false);
     
-    const getActs = async() =>{
+    const getActs = async () =>{
         const {sub} = sessionState;
         //console.log(sub);
         if (sub){            
@@ -30,13 +27,7 @@ export default function ActivityQueue(params) {
         }
         
     }
-
-/*
-    useEffect(()=>{
-        getActs();        
-    },[]);
-    */
-
+    
     useEffect(()=>{
         getActs();        
     },[sessionState]);

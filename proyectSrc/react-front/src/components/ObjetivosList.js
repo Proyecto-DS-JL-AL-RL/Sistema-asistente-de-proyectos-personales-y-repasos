@@ -1,14 +1,17 @@
 
 import React,{useEffect,useState} from 'react';
-import {Grid,Card, Typography} from '@mui/material';
+import {Grid, Typography} from '@mui/material';
 
 
 export default function ObjetivosList(props){
+    const [objetivos,setObjetivos] = useState([]);
 
+    const setCurrObjetivos = ()=>setObjetivos(props.objetivos);
+    
+    useEffect(setCurrObjetivos,[props.objetivos]);
 
     return(
         <React.Fragment>
-
                 <Grid item container sx = {{bgcolor:'#1DB5BE', width:'100%',height:'20%'}}   color = 'white' alignItems = 'center'>
                     <Grid item  sx = {{width : '100%'}}>
                         <Typography fontWeight='bold' color = 'white'  textAlign='left' ml={4} fontSize={30}>

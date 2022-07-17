@@ -9,6 +9,7 @@ var Actividad = new Schema({
     Peso : Number,
     ProyectoAsociado : { type : Schema.Types.ObjectId ,ref : 'Proyecto'},
     ProyectoTitulo : String,
+    Puntos:Number
 })
 
 module.exports = mongoose.model('Actividad', Actividad);
