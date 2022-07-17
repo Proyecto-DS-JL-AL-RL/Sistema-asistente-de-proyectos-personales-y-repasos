@@ -16,6 +16,24 @@ var setActivityState = async function(stateVar){
     return response;
 }
 
+var endActivity = async function(body){
+    const {activity,evidenceRef} = body;
+    console.log('ref',evidenceRef);
+    const {UserSub,Puntos} = activity;
+    const response = State.findOneAndUpdate(
+        { "UserSub" : UserSub },
+        { "ActividadActual" : null}
+    )
+
+    //Puntos
+        //Puntos
+    //Evidencia
+        //Logro
+    
+    return response;
+}
+
+
 var getState = async function (userSub){
     const state = await State.findOne({UserSub:userSub}).catch(err=> console.log(err));
     return state;
@@ -25,6 +43,7 @@ var getState = async function (userSub){
 module.exports.initUserState = initUserState;
 module.exports.setActivityState = setActivityState;
 module.exports.getState = getState;
+module.exports.endActivity = endActivity;
 
 
 

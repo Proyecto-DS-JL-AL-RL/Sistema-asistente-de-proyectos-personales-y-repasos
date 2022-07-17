@@ -30,7 +30,7 @@ app.use(session({
     cookie:{
         expires: 3*60*60*10000
     }
-}));//Por usar (Yo me encargo :v :v :V )
+}));
 
 app.use('/api',require('./Router/userRouter'));
 app.use('/api',require('./Router/ActividadesDAQH'));

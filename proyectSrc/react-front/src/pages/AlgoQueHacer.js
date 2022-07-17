@@ -1,4 +1,4 @@
-import { Card, Grid, Button, Typography ,Box} from '@mui/material';
+import { Grid, Button, Typography ,Box} from '@mui/material';
 import React,{useContext} from 'react';
 import { useHistory } from 'react-router-dom';
 import { AccountContext } from '../AccountContext';
@@ -6,36 +6,27 @@ import axios from 'axios';
 
 export default function AlgoQueHacer(props){
     const history = useHistory();
-
-
     const { sessionState } = useContext( AccountContext );   
 
-    const giveAnActivity = async ()=>{
-
+    const giveAnActivity = async ()=>{   
         const {sub} = sessionState;
         axios.get('http://localhost:4000/api/colaActividades/getActividad/'+sub)
-        .then((data)=>{
-            console.log(data);
-        })
-        .catch(err=>{
-            console.log(err);
-        });
-        
-        //  console.log(sub);
-
-        
-        //props.setDoingSomething(true);
-    
+            .then((data)=>{
+                console.log(data.data);
+                props.setCurrentActivity(data.data);
+                props.setStarted(false);
+            })
+            .catch(err=> console.log(err));
     }
 
     return(
         <React.Fragment>
                 <Box sx = {{width:'100%'}}>
-                <Button sx = {{width:'50px',bgcolor: '#C0DAE5', borderRadius:'20px'}} variant = 'contained' mb = {1} ml = {10} onClick = {()=>{history.push('/')}}>
-                        <Typography color = 'black' sx = {{fontWeight : 'bold'}} >
-                            Back
-                        </Typography>
-                </Button>
+                    <Button sx = {{width:'50px',bgcolor: '#C0DAE5', borderRadius:'20px'}} variant = 'contained' mb = {1} ml = {10} onClick = {()=>{history.push('/')}}>
+                            <Typography color = 'black' sx = {{fontWeight : 'bold'}} value = 'Back'>
+                                Back
+                            </Typography>
+                    </Button>
                 </Box>
 
                 <Button sx = {{width:'26vw',height:'26vw',bgcolor:'#EA2B2B', marginLeft:'35%',marginTop:'30px',borderRadius:'50%', 

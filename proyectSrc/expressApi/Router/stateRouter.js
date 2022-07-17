@@ -14,6 +14,11 @@ router.post('/state/setActivity', async function(req,res){
     res.json(resp);
 });
 
+router.post('/state/endActivity',async function(req,res){
+    let resp = await datState.endActivity(req.body);
+    res.json(resp);
+});
+
 
 
 

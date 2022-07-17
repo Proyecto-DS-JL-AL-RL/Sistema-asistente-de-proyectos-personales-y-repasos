@@ -8,7 +8,12 @@ var initUserQueue = async function(userSub){
 }
 
 var createActivity = async function(act){
-    const actividad_ = new Actividad(act)
+    let puntos = 100;
+    puntos+= act.Blocked?200:0;
+    puntos+= act.Peso? (7-act.Peso)*20:0;
+    let newActividad = {...act, Puntos:puntos}
+
+    const actividad_ = new Actividad(newActividad)
     const savedAct = await actividad_.save().catch(err=> console.log(err))
     const response = UserQueue.findOneAndUpdate(
         { "UserSub" : savedAct.UserSub },
@@ -25,8 +30,29 @@ var getActivitiesFromUser = async function (userSub){
 
 var getActivityFromQueue = async function (userSub){
     let queue = await UserQueue.findOne({UserSub:userSub}).populate('Actividades').exec().catch(err=> console.log(err));
-    console.log(queue);
-    //return response;
+    //console.log(queue.Actividades);
+    if (!queue.Actividades)
+        return 0;
+    let pesos = [];
+    let pesoMax = 0;
+    for (let i = 0;i<queue.Actividades.length;i++){
+        pesos.push(queue.Actividades[i].Peso);
+        pesoMax+=queue.Actividades[i].Peso;
+    }
+    //console.log(pesos);
+    let rand = Math.floor(Math.random()*pesoMax);
+    let sum = 0;
+    let index = 0 ;
+    for (let i = 0;i<pesos.length;i++){
+        sum+=pesos[i];
+        if (sum > rand){
+            index = i;
+            break;
+        }
+    }
+    let actividadResponse = queue.Actividades[index];
+
+    return actividadResponse;
 }
 
 var getActivityID = async function (id){
