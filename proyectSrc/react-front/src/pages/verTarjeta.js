@@ -39,10 +39,6 @@ const mazos = {
   }]
 }
 
-function handlePosition(event) {
-  event.preventDefault();
-  console.info('You clicked a breadcrumb.');
-}
 
 export default function VerTarjeta(props) {
   const [page, setPage] = React.useState(1);
@@ -56,20 +52,19 @@ export default function VerTarjeta(props) {
   const [disabledC, setDisabledC] = React.useState("")
   const [disabledD, setDisabledD] = React.useState("")
   const breadcrumbs = [
-    <Link underline="hover" key="1" color="inherit" href="/" onClick={handlePosition}>
-      MUI
+    <Link underline="hover" key="1" color="inherit" href="/">
+      Inicio
     </Link>,
     <Link
       underline="hover"
       key="2"
       color="inherit"
-      href="/material-ui/getting-started/installation/"
-      onClick={handlePosition}
+      href="/Mazos"
     >
-      Core
+      Tarjetas
     </Link>,
     <Typography key="3" color="text.primary">
-      Breadcrumb
+      {mazo.Titulo}
     </Typography>,
   ]; 
   const {idSeccion} = useParams();
