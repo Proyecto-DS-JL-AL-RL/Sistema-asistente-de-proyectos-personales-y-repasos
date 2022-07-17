@@ -94,7 +94,7 @@ const mazos = [
         const dispatch = useDispatch();
         const [titulo, setTitulo] = useState('')
         const [descripcion, setDescripcion] = useState('')
-        const [existMazos, setExistMazos] = useState(false)
+        const [existMazos, setExistMazos] = useState(true)
         const breadcrumbs = [
           <Link underline="hover" key="1" color="inherit" href="/">
             Inicio
@@ -128,10 +128,10 @@ const mazos = [
         },[]);
 
         useEffect(()=>{
-          axios.get('/api/mazos/3').then(function(response){
+          axios.get('/api/mazos/1').then(function(response){
             
             if (response.data.length === 0){
-              console.log('ok')
+              setExistMazos(false)
             }else{
               setExistMazos(true)
               setMazos(response.data)
@@ -201,6 +201,7 @@ const mazos = [
                                                                                   "Opciones":[],
                                                                                   "Respuesta": 0}]
                                                                 })
+                                                                setExistMazos(true)
                                                                 window.location.reload(false);
                                                               }} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
                                                         <SaveIcon sx={{p:1}}/>

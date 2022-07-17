@@ -28,6 +28,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import '../pages/funcionalidades.css'
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
+import AddIcon from '@mui/icons-material/Add';
 
 
 const Accordion = styled((props) => (
@@ -225,44 +226,53 @@ export default function Mazos(props) {
                     <AccordionSummary aria-controls={`panel${idx}$d-content`} id={`panel${idx}$d-header`}>
                         <Typography  variant="h5" sx={{ flexGrow: 1, color: 'white' }}>{mazo.Titulo}</Typography>
                         <Grid item>
-                          <Tooltip title="abrir" placement="right">
+                        <Tooltip title="crear tarjeta" placement="right">
+                                  <IconButton onClick={()=>{
+                                    console.log('ok')
+                                  }} sx={{color:'white',  '&:hover': {backgroundColor: '#00b347', color:'black'}}} aria-label="comment">
+                                      <AddIcon/>
+                            </IconButton>
+                          </Tooltip>
+                          <Tooltip title="Iniciar repaso" placement="right">
                                 <IconButton onClick={()=>{
                                       history.push('/Tarjetas/'+mazo._id)
                                       }}
-                                      sx={{color: "white"}}>   
+                                      sx={{color:'white',  '&:hover': {backgroundColor: '#00b347', color:'black'}}}>   
                                                     
                                           <LaunchOutlinedIcon/>
                                 </IconButton>
                           </Tooltip>
-                          <Tooltip title="editar" placement="right">
+                          <Tooltip title="editar mazo" placement="right">
                                 
                                     <IconButton onClick={()=>{
                                       setShowEdit(true)
                                       setMazo(mazo)
                                       setTitulo(mazo.Titulo)
                                       setDescripcion(mazo.Descripcion)    
-                                      }} sx={{color: "white"}}>                             
+                                      }} sx={{color:'white',  '&:hover': {backgroundColor: '#00b347', color:'black'}}}>                             
                                           <EditIcon/>
                                         </IconButton>
                                 
                           </Tooltip>
-                          <Tooltip title="borrar" placement="right">
+                          <Tooltip title="borrar mazo" placement="right">
                               <IconButton onClick={()=>{
                                   mazos.splice(idx, 1);
                                   //setMazos(mazos)
                                   axios.delete('/api/mazos/'+mazo._id)
+                                  if (mazos.length===0){
+                                    window.location.reload(false);
+                                  }
                                   //window.location.reload(false);
-                              }} sx={{color: "white"}}>                             
+                              }} sx={{color:'white',  '&:hover': {backgroundColor: '#00b347', color:'black'}}}>                             
                                   <DeleteIcon />
                                 </IconButton>
                           </Tooltip>
                         </Grid>
                     </AccordionSummary>
-                        <AccordionDetails>
-                          <Typography variant="h6">
+                        <AccordionDetails >
+                          <Typography variant="h6" sx={{ flexGrow: 1 }}>
                                 {mazo.Descripcion}
                           </Typography>
-                      
                             <List sx={{fontWeight: 'bold', color: 'white',bgcolor: '#454545'}}>
                                 {mazo.Tarjetas.map((value, idx) => (
                                 <React.Fragment key={idx}>  
