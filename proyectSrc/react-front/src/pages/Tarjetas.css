@@ -1,0 +1,21 @@
+.Pregunta_Titulo{
+    position:'absolute';
+    color:rgb(23, 64, 4);
+    height: 100%;
+    text-align: center;
+    font-size: 2em;
+    font-weight: 'bold';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Opciones{
+    position:'absolute';
+    text-align: center;
+    font-size: 2em;
+    font-weight: 'bold';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

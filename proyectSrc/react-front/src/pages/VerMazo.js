@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 //import Grid from '@mui/material/Grid';
@@ -18,9 +18,22 @@ import Grow from '@mui/material/Grow';
 import Divider from '@mui/material/Divider';
 import Fade from '@mui/material/Fade';
 //import Paper from '@mui/material/Paper';
-import happy from './img/happy.png'
+import happy from './img/happy.png'//proyectSrc/react-front/public
+import flashcard from './img/flashcard.png'
+import * as ReactDOMServer from 'react-dom/server'
+import { useDispatch} from 'react-redux';
+import { changeContent,restoreContent } from '../stores/sliceAyuda';
+import axios from 'axios';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Link from '@mui/material/Link';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import './VerMazos.css'
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined';
 
-
+/*
 const mazos = [
   {
     id:'1',
@@ -68,26 +81,78 @@ const mazos = [
       Respuestas: 1
     }]
   }
-  ]//width: 900,    height: 900, <img    style={{borderRadius: '50%'}}
+  ]*///width: 900,    height: 900, <img    style={{borderRadius: '50%'}}
  // src={"https://drive.google.com/uc?export=view&id=1e9TrTH56TwOvOuKBPzIwfEuZwrz605sn"}
  // width= "100" 
  // height="100"
- // /> 
+ // />       const [mazos, setMazos] = useState([])
+  
 
 
   export default function VerMazos(props){
+        const [mazos, setMazos] = useState([])
+        const dispatch = useDispatch();
+        const [titulo, setTitulo] = useState('')
+        const [descripcion, setDescripcion] = useState('')
+        const [existMazos, setExistMazos] = useState(false)
+        const breadcrumbs = [
+          <Link underline="hover" key="1" color="inherit" href="/">
+            Inicio
+          </Link>,
+          <Typography key="2" color="text.primary">
+            Tarjetas
+          </Typography>
+        ]; 
         /* eslint-disable */
         useEffect(() => {
           props.showAdd.setShowAnadir({card:false, icon:true});
+          
+          const suggest = <Card  sx={{ mx:100, minWidth: 600, border: '0.5px solid black'  }}>
+                              <CardContent>
+                                    <Typography  sx={{fontWeight: 'bold'}} variant="h1">
+                                        Sugerencia
+                                    </Typography>
+                                    <Divider  variant="middle" />
+                                    <Typography variant="subtitle1" color="text.secondary" component="div">
+                                      Esta parte de la página esta enfocada en la funcionalidad de repasos. 🤓<br /> Aquí 
+                                      podra separar por temas las tarjetas 🎴 que vaya creando. 
+                                    </Typography>
+                                    <img style={{width:'40%', height:'40%'}} alt='emoji' src={happy}/>
+                                </CardContent>
+                          </Card>
+          const component = ReactDOMServer.renderToString(suggest);
+          dispatch(changeContent(component));
+              return ()=>{
+                  dispatch(restoreContent());
+              }                           
         },[]);
+
+        useEffect(()=>{
+          axios.get('/api/mazos/3').then(function(response){
+            
+            if (response.data.length === 0){
+              console.log('ok')
+            }else{
+              setExistMazos(true)
+              setMazos(response.data)
+            }
+          });
+        }, [])
+
         return (
         <React.Fragment>
                 <Box sx={{ flexGrow: 1}}>
                     <Fade timeout={2000} in={true}>
-                              <Typography mx={10} mt={6} sx={{fontWeight: 'bold'}} variant = 'h3'>
+                              <Typography mt={6} sx={{fontWeight: 'bold'}} variant = 'h3'>
                                             Tarjetas de Repaso
                                 </Typography>
                     </Fade>
+                    <Breadcrumbs
+                      separator={<NavigateNextIcon fontSize="small" />}
+                      aria-label="breadcrumb"
+                    >
+                      {breadcrumbs}
+                    </Breadcrumbs>
                 </Box>
                           
                     <Box  sx={{
@@ -112,19 +177,32 @@ const mazos = [
                                             </Typography>
                                             <Box  justifyContent="center" sx={{ display: 'flex', flexWrap: 'wrap' }}>
                                                 <FormControl  sx={{m: 2, width: '45ch' }} variant="outlined">
-                                                      <TextField sx={{py:2}} id="outlined-basic" label="Titulo de la Sección" defaultValue= {''} variant="outlined" />
+                                                      <TextField sx={{py:2}} id="outlined-basic" label="Titulo de la Sección" defaultValue = {titulo} onChange={(e=>{setTitulo(e.target.value)})} variant="outlined" />
                                                       <TextField
                                                           id="outlined-multiline-static"
                                                           label="Descripcion"
                                                           multiline
                                                           rows={4}
-                                                          defaultValue={''}
+                                                          onChange={(e=>{setDescripcion(e.target.value)})}
+                                                          defaultValue={descripcion}
                                                         />
                                                 </FormControl>
                                               </Box>
                                               <Box  justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>
                                                     <Tooltip title="Guardar" placement="left">
-                                                      <Button onClick={()=>{props.showAdd.setShowAnadir({card:false, icon:true})}} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
+                                                      <Button onClick={()=>{
+                                                              props.showAdd.setShowAnadir({card:false, icon:true})
+                                                                axios.post('/api/mazos/', 
+                                                                {
+                                                                    "UserID":"1",
+                                                                    "Titulo": titulo,
+                                                                    "Descripcion":descripcion,
+                                                                    "Tarjetas": [{"Pregunta":"",
+                                                                                  "Opciones":[],
+                                                                                  "Respuesta": 0}]
+                                                                })
+                                                                window.location.reload(false);
+                                                              }} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
                                                         <SaveIcon sx={{p:1}}/>
                                                       </Button>
                                                     </Tooltip>
@@ -133,32 +211,28 @@ const mazos = [
                                 </Card>
                             </Box>
                           </Grow>:null}
-
-                          {props.showFeed.showFeedBack.card?
-                        <Grow  timeout={1000}  in={props.showFeed.showFeedBack.card}>
-                          <Card  sx={{ mx:100, minWidth: 600, border: '0.5px solid black'  }}>
-                                <CardContent>
-                                    <Tooltip title="Cancelar" placement="right">
-                                            <CloseIcon onClick={(e)=>{props.showFeed.setShowFeedBack({card:false, icon:true})}} sx={{p:1,mx:65, backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
-                                    </Tooltip>   
-                                      <Typography sx={{fontWeight: 'bold', mx:3}} variant="h4" component="div">
-                                          Sugerencia
-                                      </Typography>
-                                      <Divider  variant="middle" />
-                                      <Typography sx={{textAlign: 'center'}} variant="h6">
-                                        Esta parte de la página esta enfocada en la funcionalidad de repasos. Aquí 
-                                        podra separar por temas las tarjetas que vaya creando. 
-                                        <img style={{width:'50%', height:'50%', borderRadius: '150%'}} alt='emoji' src={happy}/> 
-                                      </Typography>
-                                  </CardContent>
-                            </Card>
-                          </Grow>:null}
-                  </Box> 
-                  <Box sx={{mx:'12%',
+                      </Box> 
+                  {existMazos?<Box sx={{mx:'12%',
                             position:'absolute',
                               width: '65%'}}>
-                          <Mazos getmazo={mazos} />
+                          <Mazos  getmazo={mazos} setMazo={setMazos} />
+                  </Box>:
+                  <Box className="container_sinTarjeta">
+                    <div className="row">
+                        <Typography variant="h2" sx={{fontWeight: 'bold', textAlign:'center', component:"div"}}>Crea Un nuevo Mazo <br/></Typography>
+                      <div className="conteiner-text">
+                        <Typography variant="h6" component="div">
+                          Bienvenido a la sección de repasos. Aqui podrá repasar los temas  que son de su interés.<br/>
+                          Puedes usar el botón de {<AddIcon sx={{width: 40, height: 40, background:'purple', color:'white', p:1, borderRadius:50, 
+                                                  '&:hover': {backgroundColor: '#6f2da8'}}}/>} para crear un mazo y/o tarjetas.
+                          Así como también {<EditIcon/>}, {<DeleteIcon />}<br/>  para editar y borrar los mazos y/o tarjetas y finalmente { <LaunchOutlinedIcon/>}
+                          para iniciar un repaso.
+                        </Typography>
+                      </div>
+                    </div>
+                    <img className="flashcard" src={flashcard} alt="flashcard"/>      
                   </Box>
+                }
         </React.Fragment>
     );
 }//aca

@@ -9,23 +9,24 @@ import { styled } from '@mui/material/styles';
 import { orange, red, blue, green } from '@mui/material/colors';
 import { useHistory } from "react-router-dom";
 //import QuestionMarkRoundedIcon from '@mui/icons-material/QuestionMarkRounded';
-import Grow from '@mui/material/Grow';
+//import Grow from '@mui/material/Grow';
 import Divider from '@mui/material/Divider';
-import Tooltip from '@mui/material/Tooltip';
+//import Tooltip from '@mui/material/Tooltip';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CloseIcon from '@mui/icons-material/Close';
+//import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import './funcionalidades.css'
+//import CardMedia from '@mui/material/CardMedia';
+import * as ReactDOMServer from 'react-dom/server'
 import mehera from './img/mehera.webp'
-<<<<<<< HEAD
-=======
+
 import { useDispatch} from 'react-redux';
 import { restoreContent,changePage } from '../stores/sliceAyuda';
 
->>>>>>> 15d8109 (MensjesCortosParaTodos)
+
     /*
     en este archivo se mostraran las funcionalidades del software 
     - Gestion de Proyectos y objetivos.
@@ -48,7 +49,7 @@ function FormRow(props) {
       <React.Fragment>
             <Grid item xs={6}>
                 <Item>
-                    <Button className='button-main' sx={{width:'90%', height:'40ch', borderRadius:'5%', backgroundColor:green[700], '&:hover': {backgroundColor: green[500]}, pl:'20%', pr: '20%'}} onClick={()=>{props.history.push('/proyect')}}>
+                    <Button className='button-main' sx={{width:'90%', height:'40ch', borderRadius:'5%', backgroundColor:green[700], '&:hover': {backgroundColor: green[500]}, pl:'20%', pr: '20%'}} onClick={()=>{props.history.push('/proyectos')}}>
                         <Typography sx={{textAlign:'center',fontSize:'3ch', color:'white'}}>Gestionar Proyectos</Typography>
                     </Button>
                 </Item>
@@ -81,14 +82,12 @@ function FormRow(props) {
 //</Box>
 export default function MostrarFuncionalidades(props) {
     let history = useHistory()
-    
+    const dispatch = useDispatch();
     //props.showAdd.setShowAnadir({card:false, icon:false});
     /* eslint-disable */
 
     useEffect(() => {
         props.showAdd.setShowAnadir({card:false, icon:false});
-<<<<<<< HEAD
-=======
         const suggest = <Card sx={{ display: 'flex' }}>
                             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                                 <CardContent  sx={{ flex: '1 0 auto' }}>  
@@ -106,11 +105,16 @@ export default function MostrarFuncionalidades(props) {
                         </Card>
                         
         const component = ReactDOMServer.renderToString(suggest);
+
         dispatch(changePage({content:component,title:"Funcionalidades" }));
+        
+
+
+        //dispatch(changeContent(component));
         return ()=>{
             dispatch(restoreContent());
         }
->>>>>>> 15d8109 (MensjesCortosParaTodos)
+
       },[]);
 
     return (
@@ -125,27 +129,7 @@ export default function MostrarFuncionalidades(props) {
                   height: '10ch',
                 }}
                 >
-                    {props.showFuncionalidades.showFeedBack.card?
-                                <Grow  timeout={1000}  in={props.showFuncionalidades.showFeedBack.card}>
-                                    <Card  sx={{position:'absolute',minWidth: '600%', mx:'825%', border: '0.5px solid black'  }}>
-                                            <CardContent>
-                                                <Tooltip title="Cancelar" placement="right">
-                                                        <CloseIcon onClick={(e)=>{props.showFuncionalidades.setShowFeedBack({card:false, icon:false})}} sx={{p:1, mx:'93%', backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
-                                                </Tooltip>   
-                                                <Typography sx={{fontWeight: 'bold', fontsize:'1vw'}} variant="h4" component="div">
-                                                    Sugerencia
-                                                </Typography>
-                                                <Divider  variant="middle" />
-                                                <Typography sx={{textAlign: 'center'}}  variant="h6" color="text.primary">
-                                                    Bienvenido 🤗. Aquí podras ver las funcionalidades del software.<b/> 👀 Recuerde que tiene la opción
-                                                    de navegar a travez de los botones de abajo o también por nuestra interfaz de voz 🎙. 
-                                                </Typography>
-                                                <img style={{width:'50%', height:'50%'}} src={mehera} alt="mehera"/>
-                                            </CardContent>
-                                            
-                                        </Card>
-                                </Grow>:null}
-                    </Box>    
+                </Box>    
                     <Fade timeout={2000} in={true}>
                                     <Typography sx={{fontWeight: 'bold'}} variant = 'h3'>
                                             Explore Nuestras Funcionalidades

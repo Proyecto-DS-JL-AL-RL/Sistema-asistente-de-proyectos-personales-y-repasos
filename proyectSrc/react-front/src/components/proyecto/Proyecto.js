@@ -1,15 +1,27 @@
 import { Box, Typography } from '@mui/material'
-import { display } from '@mui/system';
 import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom';
 import './proyect.css';
 export default function Proyecto(props) {
   const [avance,setAvance] = useState(20);
-  const [proyectName,setProyectName] = useState('Algún título tendra')
+  const [proyect,setProyect] = useState(null)
+  const history = useHistory();
+
+  const handleRedirect=()=>{
+    if (proyect){
+      history.push('/proyecto/'+proyect._id);
+    }
+  };
+
   useEffect(()=>{
-    
-    if(props.avance) setAvance(props.avance);
-    if(props.proyectName) setProyectName(props.proyectName);
-  },[])
+    setProyect(props.proyect);
+    if (props.proyect.ActividadSemanal){
+      let sum = props.proyect.ActividadSemanal.reduce((a,b)=>a+b,0);
+      let avg = 100*(sum/7);
+      setAvance(avg);
+    }
+  },[props.proyect]);
+
   return (
     <Box width={250} sx={{
       mx:2,
@@ -19,13 +31,15 @@ export default function Proyecto(props) {
       pb:'60px',
       minHeight:70,
       borderRadius:1
-    }}>
+    }}
+    onClick = {handleRedirect}
+    >
         <Typography variant='h5' align='center' 
         style={{wordWrap:'breack-word'}}
         sx={{
           pt:1
         }}>
-            {proyectName}
+            {proyect?.Titulo}
         </Typography>
         <Box className='porcentaje' sx={
           

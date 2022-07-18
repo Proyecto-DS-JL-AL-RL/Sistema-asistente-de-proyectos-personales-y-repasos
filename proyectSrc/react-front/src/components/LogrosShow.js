@@ -1,15 +1,16 @@
 import React,{useState,useEffect} from "react";
-import { Button,Grid,Box,Card, Typography } from "@mui/material";
+import { Button,Grid,Card, Typography } from "@mui/material";
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 
-const prueba = Array.from({length:3},(x,i)=>({titulo:'Actividad del Logro',descripcion:'Descripción',hasFile:true,fileTittle:'Archivo'}));
-export default function LogrosShow (){
-    const [logros,setLogros]  = useState(prueba);
-
+export default function LogrosShow (props){
+    const [logros,setLogros]  = useState([]);
+    const abrirUrl = url => {
+        window.open(url, '_blank', 'noopener,noreferrer');
+    };
 
     useEffect(()=>{
-        console.log(logros);
-    },[]);
+        setLogros(props.Logros);
+    },[props.Logros]);
     return(
         <React.Fragment>
             <Typography variant = 'h3'>
@@ -27,7 +28,7 @@ export default function LogrosShow (){
                         </Typography>
                         {logro.hasFile?
                         <Button sx = {{height:'50px'}} variant = 'contained'
-                        href = 'https://github.com/Proyecto-DS-JL-AL-RL/Sistema-asistente-de-proyectos-personales-y-repasos'>
+                            onClick = {()=>{abrirUrl(logro.fileUrl)}}>
                             {logro.fileTittle}
                             <InsertDriveFileIcon />
                         </Button>

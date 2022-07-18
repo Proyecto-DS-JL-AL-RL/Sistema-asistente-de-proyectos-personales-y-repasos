@@ -1,4 +1,5 @@
 const express = require('express');
+require('./database');
 
 const app = express();
 const cors = require('cors');
@@ -29,10 +30,18 @@ app.use(session({
     cookie:{
         expires: 3*60*60*10000
     }
-}));//Por usar (Yo me encargo :v :v :V )
+}));
 
-app.get('/asd',async (req,res)=>{
-    res.json({prueba:'La real Prueba'});
+app.use('/api',require('./Router/userRouter'));
+app.use('/api',require('./Router/ActividadesDAQH'));
+app.use('/api',require('./Router/Proyecto'));
+app.use('/api',require('./Router/stateRouter'));
+app.use('/api',require('./Router/MazosRouter'));
+
+
+
+app.get('/health',async (req,res)=>{
+    res.json({prueba:'Api Health :)'});
 });
 
 const server = app.listen(app.get('port'),()=>{
