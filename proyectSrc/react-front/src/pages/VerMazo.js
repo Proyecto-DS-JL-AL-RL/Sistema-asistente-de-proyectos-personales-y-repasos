@@ -32,7 +32,8 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined';
-
+import {  AccountContext } from './../AccountContext';
+import { useContext } from "react";
 /*
 const mazos = [
   {
@@ -94,7 +95,23 @@ const mazos = [
         const dispatch = useDispatch();
         const [titulo, setTitulo] = useState('')
         const [descripcion, setDescripcion] = useState('')
+        const {sessionState} = useContext(AccountContext);
         const [existMazos, setExistMazos] = useState(true)
+        const [idUsersub, setidUsersub] = useState('')
+        useEffect(()=>{
+          const {sub} = sessionState;
+          if (sub){
+            setidUsersub(sub)
+            axios.get('/api/mazos/'+sub).then(function(response){            
+              if (response.data.length === 0){
+                setExistMazos(false)
+              }else{
+                setExistMazos(true)
+                setMazos(response.data)
+              }
+            });
+          }
+        },[sessionState]);
         const breadcrumbs = [
           <Link underline="hover" key="1" color="inherit" href="/">
             Inicio
@@ -127,18 +144,6 @@ const mazos = [
               }                           
         },[]);
 
-        useEffect(()=>{
-          axios.get('/api/mazos/1').then(function(response){
-            
-            if (response.data.length === 0){
-              setExistMazos(false)
-            }else{
-              setExistMazos(true)
-              setMazos(response.data)
-            }
-          });
-        }, [])
-
         return (
         <React.Fragment>
                 <Box sx={{ flexGrow: 1}}>
@@ -154,9 +159,7 @@ const mazos = [
                       {breadcrumbs}
                     </Breadcrumbs>
                 </Box>
-                  {existMazos?
-                      <Box className="container-mazo" >
-                        {props.showAdd.showAnadir.card?
+                {props.showAdd.showAnadir.card?
                         <Grow  timeout={1000}  in={props.showAdd.showAnadir.card}>
                           <Box className="mazo-add" sx={{width:'100%'}}> 
                                   <Card  sx={{borderRadius: '3%', border: '0.5px solid black'}}>
@@ -188,7 +191,7 @@ const mazos = [
                                                               props.showAdd.setShowAnadir({card:false, icon:true})
                                                                 axios.post('/api/mazos/', 
                                                                 {
-                                                                    "UserID":"1",
+                                                                    "userSub":idUsersub,
                                                                     "Titulo": titulo,
                                                                     "Descripcion":descripcion,
                                                                     "Tarjetas": [{"Pregunta":"",
@@ -196,7 +199,19 @@ const mazos = [
                                                                                   "Respuesta": 0}]
                                                                 })
                                                                 setExistMazos(true)
-                                                                window.location.reload(false);
+                                                                if (mazos.length===0){
+                                                                  window.location.reload(false);
+                                                                }else{
+                                                                  mazos.push({
+                                                                        "userSub":idUsersub,
+                                                                        "Titulo": titulo,
+                                                                        "Descripcion":descripcion,
+                                                                        "Tarjetas": [{"Pregunta":"",
+                                                                                      "Opciones":[],
+                                                                                      "Respuesta": 0}]
+                                                                    })
+                                                                  setMazos(mazos)
+                                                                }
                                                               }} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
                                                         <SaveIcon sx={{p:1}}/>
                                                       </Button>
@@ -206,6 +221,8 @@ const mazos = [
                                 </Card>
                             </Box>
                           </Grow>:null}
+                  {existMazos?
+                      <Box className="container-mazo" >
                           <Mazos className="mazo_hijo" getmazo={mazos} setMazo={setMazos} />
                       </Box>:
                       <Box className="container_sinTarjeta">
@@ -217,7 +234,8 @@ const mazos = [
                                 Puedes usar el botón de {<AddIcon sx={{width: 40, height: 40, background:'purple', color:'white', p:1, borderRadius:50, 
                                                         '&:hover': {backgroundColor: '#6f2da8'}}}/>} para crear un mazo y/o tarjetas.
                                 Así como también {<EditIcon/>}, {<DeleteIcon />}<br/>  para editar y borrar los mazos y/o tarjetas y finalmente { <LaunchOutlinedIcon/>}
-                                para iniciar un repaso.
+                                para iniciar un repaso.<br/>
+                                Por defecto cuando crees un mazo se creara una tarjeta 🎴 que podras usar.
                               </Typography>
                           </div>
                         </div>

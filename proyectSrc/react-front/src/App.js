@@ -14,7 +14,7 @@ import Tarjetas from './pages/verTarjeta';
 import Inicio from './pages/Inicio';
 import ProyectoView from './pages/projectDashboard';
 import AlgoQueHacerPage from './pages/AlgoQueHacerPage';
-import { styled } from '@mui/material/styles';
+//import { styled } from '@mui/material/styles';
 import SR,{useSpeechRecognition} from 'react-speech-recognition';
 import { Beforeunload } from 'react-beforeunload';
 import {getCommands} from './util/redirectSpeech';

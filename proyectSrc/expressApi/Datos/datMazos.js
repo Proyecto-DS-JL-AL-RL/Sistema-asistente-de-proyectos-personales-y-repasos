@@ -13,7 +13,7 @@ var getMazos = async function (){
 }
 
 var getMazosByUserID = async function (id){
-    var response = await Mazos.find({"UserID":id}).catch(err=> console.log(err));
+    var response = await Mazos.find({"userSub":id}).catch(err=> console.log(err));
     return response;
 }
 
