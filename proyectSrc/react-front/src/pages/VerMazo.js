@@ -196,7 +196,9 @@ const mazos = [
                                                                     "Descripcion":descripcion,
                                                                     "Tarjetas": [{"Pregunta":"",
                                                                                   "Opciones":[],
-                                                                                  "Respuesta": 0}]
+                                                                                  "Respuesta": 0,
+                                                                                  "Puntos":0}],
+                                                                    "Puntos":0
                                                                 })
                                                                 setExistMazos(true)
                                                                 if (mazos.length===0){
@@ -208,7 +210,9 @@ const mazos = [
                                                                         "Descripcion":descripcion,
                                                                         "Tarjetas": [{"Pregunta":"",
                                                                                       "Opciones":[],
-                                                                                      "Respuesta": 0}]
+                                                                                      "Respuesta": 0,
+                                                                                      "Puntos":0}],
+                                                                        "Puntos":0
                                                                     })
                                                                   setMazos(mazos)
                                                                 }

@@ -34,13 +34,18 @@
     justify-content: center;
     top:2rem;
     left:15rem;
-    width: 74%;
+    width: 80%;
     height: 65%;
     overflow-x: hidden;
     overflow-y: scroll; 
     border-style: double;
     background: rgb(106, 106, 106);
     border: 1rem solid #bd89e4;
+}
+
+.container-mazo::-webkit-scrollbar {
+    width: 0;  
+    background: transparent; 
 }
 
 .mazo_hijo{

@@ -128,7 +128,7 @@ export default function AppBarSearch(props) {
               
             >        
               <AddIcon mx={2} onClick={()=>{
-                props.ClickButton.setShowAnadir({card:true, icon:true})}} sx={{width: 56, height: 56, background:'purple', color:'white', p:1, borderRadius:50, '&:hover': {backgroundColor: '#6f2da8'}}}/>
+                props.ClickButton.setShowAnadir({card:true, icon:true})}} sx={{ fontSize:'1.5em' , background:'purple', color:'white', p:1, borderRadius:50, '&:hover': {backgroundColor: '#6f2da8'}}}/>
             </IconButton>:null}
           </Search>
         </Toolbar>
