@@ -198,7 +198,7 @@ export default function Mazos(props) {
                                                             let key_respuesta = "Tarjetas."+tarjetaIndex+".Respuesta"
                                                             let key_opciones = "Tarjetas."+tarjetaIndex+".Opciones"
                                                             
-                                                            let update_card = new Object()   
+                                                            let update_card = {}   
                                                             update_card["$set"] = {}
                                                             update_card["$set"][key_pregunta] = pregunta
                                                             update_card["$set"][key_respuesta] = respuesta
@@ -282,7 +282,8 @@ export default function Mazos(props) {
                                                                            opcion3,
                                                                            opcion4
                                                                           ],
-                                                              "Respuesta": respuesta
+                                                              "Respuesta": respuesta,
+                                                              "Puntos":0
                                                              })
                                                              setMazo(mazo)
                                                              axios.put('/api/mazos/'+mazo._id, mazo)
