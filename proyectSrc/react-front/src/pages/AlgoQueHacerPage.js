@@ -12,6 +12,8 @@ export default function AlgoQueHacerPage(){
     const [evidencia,setEvidencia]              = useState(null);
 
     const checkSession = async () => {
+
+
         if (currentState.ActividadActual){
             axios.get('http://localhost:4000/api/colaActividades/actividad/'+currentState.ActividadActual)
                 .then(data=>{

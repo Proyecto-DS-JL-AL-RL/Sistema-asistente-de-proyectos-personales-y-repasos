@@ -62,7 +62,7 @@ var endActivity = async function(body){
     )
 
     //Puntos
-        //Puntos
+        //AgregarPunto(idProyecto);
     //Evidencia
         //Logro
     
