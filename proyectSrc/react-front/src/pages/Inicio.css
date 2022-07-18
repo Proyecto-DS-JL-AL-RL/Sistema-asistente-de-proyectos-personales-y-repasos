@@ -17,8 +17,19 @@
 }
   
   .left {
+    margin-top:14%;
     width: 65%;
+    height: 18rem;
+    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
   }
+
+  .left::-webkit-scrollbar {
+    width: 0;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
   
   /* Clear floats after the columns */
   .row:after {
@@ -86,3 +97,6 @@
     100% {margin-top:-270px;}
   }
   
+.copyright{
+  margin-top:18%;
+}

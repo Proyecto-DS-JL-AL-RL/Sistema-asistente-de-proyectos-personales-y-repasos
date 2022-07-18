@@ -24,7 +24,6 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background: #9b9b9b;  
     ;
   }
 
@@ -40,7 +39,7 @@
   }
   .dynamic-txts li{
     list-style: none;
-    color: white;
+    color: blue;
     font-size: 60px;
     font-weight: 500;
     position: relative;
@@ -63,7 +62,7 @@
     left: 0;
     height: 100%;
     width: 100%;
-    background: #9b9b9b;
+    background: white;
     border-left: 0.3rem solid black;
     animation: typing 3s steps(10) infinite;
   }
