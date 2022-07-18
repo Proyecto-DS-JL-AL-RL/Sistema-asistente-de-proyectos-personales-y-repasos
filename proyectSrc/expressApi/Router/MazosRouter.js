@@ -28,6 +28,7 @@ router.delete('/mazos/:id', async function(req,res){
 });
 
 router.put('/mazos/:id', async function(req,res){
+    //console.log(req.body)
     let resp = await datMazos.updateMazos(req.params.id, req.body);
     res.json(resp);
 });

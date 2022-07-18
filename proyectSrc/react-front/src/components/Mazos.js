@@ -74,7 +74,7 @@ export default function Mazos(props) {
   const [tarjeta, setTarjeta] = useState({})
   const [titulo, setTitulo] = useState('')
   const [descripcion, setDescripcion] = useState('')
-
+  const [showAddCard, setShowAddCard] = useState(false)
   const [tarjetaIndex, setTarjetaIndex] = useState(0)
   const [pregunta, setPregunta] = useState('')
   const [opcion1, setOpcion1] = useState('')
@@ -197,14 +197,107 @@ export default function Mazos(props) {
                                                             let key_pregunta = "Tarjetas."+tarjetaIndex+".Pregunta"
                                                             let key_respuesta = "Tarjetas."+tarjetaIndex+".Respuesta"
                                                             let key_opciones = "Tarjetas."+tarjetaIndex+".Opciones"
+                                                            
+                                                            let update_card = new Object()   
+                                                            update_card["$set"] = {}
+                                                            update_card["$set"][key_pregunta] = pregunta
+                                                            update_card["$set"][key_respuesta] = respuesta
+                                                            update_card["$set"][key_opciones] = [opcion1, 
+                                                                                                opcion2, 
+                                                                                                opcion3, 
+                                                                                                opcion4]
+                                                                                            //const a['Tarjetas.${tarjetaIndex}.Pregunta']=1
                                                             setShowEditCard(false)//`
-                                                            let update = {"$set":{key_pregunta:pregunta,
-                                                                              key_respuesta:respuesta,
-                                                                              key_opciones:[opcion1, 
-                                                                                          opcion2, 
-                                                                                          opcion3, 
-                                                                                          opcion4]}}
-                                                            axios.put('/api/mazos/'+mazo._id, update)
+                                                            //let update_tarjeta = {"$set":{update}}
+                                                            //console.log(update_card)
+                                                            //console.log(mazos.Tarjetas[tarjetaIndex])
+                                                            axios.put('/api/mazos/'+mazo._id, update_card)
+                                                            window.location.reload(false);
+                                                          }} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
+                                                              <SaveIcon sx={{p:1}}/>
+                                                          </Button>
+                                                      </Tooltip>
+                                        </Box>
+                                  </CardContent>
+                            </Card>
+                        </Box>
+                      </Grow>:null}
+                      {showAddCard?
+                      <Grow  timeout={1000}  in={showAddCard}>  
+                        <Box  justifyContent="center" sx={{mx:'120%', width: '200%', position:'absolute', mt:'4%', display: 'flex' }}>
+                            <Card  sx={{borderRadius: '3%', width: '160%', border: '0.5px solid black'}}>
+                                <CardContent >
+                                          <Button sx={{mx:'90%'}} onClick={(e)=>{setShowAddCard(false)}}>
+                                              <Tooltip title="Guardar" placement="left">  
+                                                  <CloseIcon sx={{p:1, backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
+                                              </Tooltip>
+                                          </Button>   
+                                        <Box  justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>
+                                            <FormControl  sx={{width: '45ch' }} variant="outlined">
+                                            <Typography sx={{fontWeight: 'bold', mx:'1vw'}} variant="h4" component="div">
+                                                   Añadir Tarjetas
+                                                </Typography>
+                                                <TextField onChange={(e=>{
+                                                    setPregunta(e.target.value)
+                                                    
+                                                  })} sx={{py:'2%'}} id="outlined-basic" label="Pregunta" defaultValue= {pregunta} variant="outlined" />
+                                                  <TextField onChange={(e=>{
+                                                    setOpcion1(e.target.value)
+                                                    
+                                                  })} sx={{py:'2%'}} id="outlined-basic" label="Opción 1" defaultValue= {opcion1} variant="outlined" />
+                                                  <TextField  onChange={(e=>{
+                                                    setOpcion2(e.target.value)
+                                                    
+                                                  })}sx={{py:'2%'}} id="outlined-basic" label="Opción 2" defaultValue= {opcion2} variant="outlined" />
+                                                  <TextField  onChange={(e=>{
+                                                    setOpcion3(e.target.value)
+                                                    
+                                                  })} sx={{py:'2%'}} id="outlined-basic" label="Opción 3" defaultValue= {opcion3} variant="outlined" />
+                                                  <TextField onChange={(e=>{
+                                                    setOpcion4(e.target.value)
+                                                    
+                                                  })} sx={{py:'2%'}} id="outlined-basic" label="Opción 4" defaultValue= {opcion4} variant="outlined" />
+                                                  <TextField onChange={(e=>{
+                                                    setRespuesta(e.target.value)
+                                                    
+                                                  })} sx={{py:'2%'}} id="outlined-basic" label="Respuesta (poner el número de la  rpta e.g : 1 o 2 o ..)" defaultValue= {respuesta} variant="outlined" />
+                                          </FormControl>
+                                        </Box>
+                                        <Box  justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>
+                                                      <Tooltip title="Guardar" placement="left">
+                                                          <Button onClick={()=>{
+                                                             setShowAddCard(false)
+                                                             mazo.Tarjetas.push({
+                                                              "Pregunta": pregunta,
+                                                              "Opciones": [opcion1,
+                                                                           opcion2, 
+                                                                           opcion3,
+                                                                           opcion4
+                                                                          ],
+                                                              "Respuesta": respuesta
+                                                             })
+                                                             setMazo(mazo)
+                                                             axios.put('/api/mazos/'+mazo._id, mazo)
+                                                            /*
+                                                            let key_pregunta = "Tarjetas."+tarjetaIndex+".Pregunta"
+                                                            let key_respuesta = "Tarjetas."+tarjetaIndex+".Respuesta"
+                                                            let key_opciones = "Tarjetas."+tarjetaIndex+".Opciones"
+                                                            
+                                                            let update_card = new Object()   
+                                                            update_card["$set"] = {}
+                                                            update_card["$set"][key_pregunta] = pregunta
+                                                            update_card["$set"][key_respuesta] = respuesta
+                                                            update_card["$set"][key_opciones] = [opcion1, 
+                                                                                                opcion2, 
+                                                                                                opcion3, 
+                                                                                                opcion4]
+                                                                                            //const a['Tarjetas.${tarjetaIndex}.Pregunta']=1
+                                                            setShowEditCard(false)//`
+                                                            //let update_tarjeta = {"$set":{update}}
+                                                            //console.log(update_card)
+                                                            //console.log(mazos.Tarjetas[tarjetaIndex])
+                                                            axios.put('/api/mazos/'+mazo._id, update_card)
+                                                            window.location.reload(false);*/
                                                           }} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
                                                               <SaveIcon sx={{p:1}}/>
                                                           </Button>
@@ -228,7 +321,8 @@ export default function Mazos(props) {
                         <Grid item>
                         <Tooltip title="crear tarjeta" placement="right">
                                   <IconButton onClick={()=>{
-                                    console.log('ok')
+                                    setMazo(mazo)
+                                    setShowAddCard(true)
                                   }} sx={{color:'white',  '&:hover': {backgroundColor: '#00b347', color:'black'}}} aria-label="comment">
                                       <AddIcon/>
                             </IconButton>
@@ -283,6 +377,7 @@ export default function Mazos(props) {
                                       <React.Fragment>
                                             <IconButton onClick={()=>{  
                                               setTarjetaIndex(idx)
+                                              setMazo(mazo)
                                               setPregunta(mazo.Tarjetas[idx].Pregunta)
                                               setOpcion1(mazo.Tarjetas[idx].Opciones[0])
                                               setOpcion2(mazo.Tarjetas[idx].Opciones[1])
