@@ -102,13 +102,13 @@ export default function Mazos(props) {
                   width: 350,
                   height: 350,
                   zIndex:1,
-                  position: 'absolute',
+                  position: 'relative',
                 }}
                 >
                   {showEdit?
                       <Grow  timeout={1000}  in={showEdit}>  
-                      <Box  justifyContent="center" sx={{mx:'120%', width: '200%', position:'absolute', mt:'4%', display: 'flex'}}>  
-                        <Card  sx={{borderRadius: '3%',  width: '160%', border: '0.5px solid black'}}>
+                      <Box className="mazo-edit" justifyContent="center" sx={{ position:'absolute', display: 'flex' }}>  
+                        <Card  sx={{borderRadius: '3%', border: '0.5px solid black'}}>
                             <CardContent>
                                 <Tooltip title="Cancelar" placement="right">
                                       <Button sx={{mx:'90%'}} onClick={(e)=>{setShowEdit(false)}}>
@@ -135,9 +135,9 @@ export default function Mazos(props) {
                                                 />
                                       </FormControl>
                                     </Box>
-                                    <Box  justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>
+                                    <Box className="edit-mazo-button" justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>
                                       <Tooltip title="Guardar" placement="left">
-                                            <Button onClick={()=>{setShowEdit(false)
+                                            <Button className="edit-mazo-button" onClick={()=>{setShowEdit(false)
                                                                   axios.put('/api/mazos/'+mazo._id, { "Titulo":titulo,
                                                                   "Descripcion":descripcion})
                                                                   window.location.reload(false);
@@ -152,7 +152,7 @@ export default function Mazos(props) {
                       </Grow>:null}
                       {showEditCard?
                       <Grow  timeout={1000}  in={showEditCard}>  
-                        <Box  justifyContent="center" sx={{mx:'120%', width: '200%', position:'absolute', mt:'4%', display: 'flex' }}>
+                        <Box className="mazo-edit"  justifyContent="center" sx={{ position:'absolute', display: 'flex' }}>
                             <Card  sx={{borderRadius: '3%', width: '160%', border: '0.5px solid black'}}>
                                 <CardContent >
                                           <Button sx={{mx:'90%'}} onClick={(e)=>{setShowEditCard(false)}}>
@@ -191,7 +191,7 @@ export default function Mazos(props) {
                                                   })} sx={{py:'2%'}} id="outlined-basic" label="Respuesta (poner el número de la  rpta e.g : 1 o 2 o ..)" defaultValue= {respuesta} variant="outlined" />
                                           </FormControl>
                                         </Box>
-                                        <Box  justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>
+                                        <Box  className="edit-mazo-button"  justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>
                                                       <Tooltip title="Guardar" placement="left">
                                                           <Button onClick={()=>{
                                                             let key_pregunta = "Tarjetas."+tarjetaIndex+".Pregunta"
@@ -207,11 +207,19 @@ export default function Mazos(props) {
                                                                                                 opcion3, 
                                                                                                 opcion4]
                                                                                             //const a['Tarjetas.${tarjetaIndex}.Pregunta']=1
-                                                            setShowEditCard(false)//`
+                                                            setShowEditCard(false)
+                                                            
+                                                            //`
                                                             //let update_tarjeta = {"$set":{update}}
                                                             //console.log(update_card)
                                                             //console.log(mazos.Tarjetas[tarjetaIndex])
                                                             axios.put('/api/mazos/'+mazo._id, update_card)
+                                                            setPregunta("")
+                                                             setOpcion1("")
+                                                             setOpcion2("")
+                                                             setOpcion3("")
+                                                             setOpcion4("")
+                                                             setRespuesta("")
                                                             window.location.reload(false);
                                                           }} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
                                                               <SaveIcon sx={{p:1}}/>
@@ -224,7 +232,7 @@ export default function Mazos(props) {
                       </Grow>:null}
                       {showAddCard?
                       <Grow  timeout={1000}  in={showAddCard}>  
-                        <Box  justifyContent="center" sx={{mx:'120%', width: '200%', position:'absolute', mt:'4%', display: 'flex' }}>
+                        <Box  className="mazo-edit" justifyContent="center" sx={{position:'absolute', display: 'flex' }}>
                             <Card  sx={{borderRadius: '3%', width: '160%', border: '0.5px solid black'}}>
                                 <CardContent >
                                           <Button sx={{mx:'90%'}} onClick={(e)=>{setShowAddCard(false)}}>
@@ -263,9 +271,9 @@ export default function Mazos(props) {
                                                   })} sx={{py:'2%'}} id="outlined-basic" label="Respuesta (poner el número de la  rpta e.g : 1 o 2 o ..)" defaultValue= {respuesta} variant="outlined" />
                                           </FormControl>
                                         </Box>
-                                        <Box  justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>
+                                        <Box  className="edit-mazo-button" justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>
                                                       <Tooltip title="Guardar" placement="left">
-                                                          <Button onClick={()=>{
+                                                          <Button  onClick={()=>{
                                                              setShowAddCard(false)
                                                              mazo.Tarjetas.push({
                                                               "Pregunta": pregunta,
@@ -278,6 +286,12 @@ export default function Mazos(props) {
                                                              })
                                                              setMazo(mazo)
                                                              axios.put('/api/mazos/'+mazo._id, mazo)
+                                                             setPregunta("")
+                                                             setOpcion1("")
+                                                             setOpcion2("")
+                                                             setOpcion3("")
+                                                             setOpcion4("")
+                                                             setRespuesta("")
                                                             /*
                                                             let key_pregunta = "Tarjetas."+tarjetaIndex+".Pregunta"
                                                             let key_respuesta = "Tarjetas."+tarjetaIndex+".Respuesta"
@@ -309,7 +323,7 @@ export default function Mazos(props) {
                       </Grow>:null}
         </Box> 
     <Slide direction="up" timeout={1000} in={true} mountOnEnter unmountOnExit>
-      <Box mt={'10%'} sx={{position: 'absolute',  background:'#20B2AA'}}>
+      <Box  sx={{position: 'absolute',  background:'#20B2AA'}}>
         {
         mazos.map((mazo, idx)=>{
           return  (
@@ -322,6 +336,12 @@ export default function Mazos(props) {
                         <Tooltip title="crear tarjeta" placement="right">
                                   <IconButton onClick={()=>{
                                     setMazo(mazo)
+                                    setPregunta("")
+                                    setOpcion1("")
+                                    setOpcion2("")
+                                    setOpcion3("")
+                                    setOpcion4("")
+                                    setRespuesta("")
                                     setShowAddCard(true)
                                   }} sx={{color:'white',  '&:hover': {backgroundColor: '#00b347', color:'black'}}} aria-label="comment">
                                       <AddIcon/>

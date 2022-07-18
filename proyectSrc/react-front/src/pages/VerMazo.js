@@ -154,18 +154,12 @@ const mazos = [
                       {breadcrumbs}
                     </Breadcrumbs>
                 </Box>
-                          
-                    <Box  sx={{
-                        width: 350,
-                        height: 350,
-                        zIndex:1,
-                        position: 'absolute',
-                      }}
-                      >
-                  {props.showAdd.showAnadir.card?
+                  {existMazos?
+                      <Box className="container-mazo" >
+                        {props.showAdd.showAnadir.card?
                         <Grow  timeout={1000}  in={props.showAdd.showAnadir.card}>
-                          <Box  justifyContent="center" sx={{mx:'200%', width: '200%', position:'absolute', mt:'4%', display: 'flex'}}> 
-                                  <Card  sx={{borderRadius: '3%',  width: '160%', border: '0.5px solid black'}}>
+                          <Box className="mazo-add" sx={{width:'100%'}}> 
+                                  <Card  sx={{borderRadius: '3%', border: '0.5px solid black'}}>
                                       <CardContent>
                                           <Tooltip title="Cancelar" placement="right">
                                               <Button sx={{mx:'90%'}} onClick={(e)=>{props.showAdd.setShowAnadir({card:false, icon:true})}}>
@@ -188,7 +182,7 @@ const mazos = [
                                                         />
                                                 </FormControl>
                                               </Box>
-                                              <Box  justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>
+                                              <Box className="add-mazo-button">
                                                     <Tooltip title="Guardar" placement="left">
                                                       <Button onClick={()=>{
                                                               props.showAdd.setShowAnadir({card:false, icon:true})
@@ -212,25 +206,21 @@ const mazos = [
                                 </Card>
                             </Box>
                           </Grow>:null}
-                      </Box> 
-                  {existMazos?<Box sx={{mx:'12%',
-                            position:'absolute',
-                              width: '65%'}}>
-                          <Mazos  getmazo={mazos} setMazo={setMazos} />
-                  </Box>:
-                  <Box className="container_sinTarjeta">
-                    <div className="row">
-                        <Typography variant="h2" sx={{fontWeight: 'bold', textAlign:'center', component:"div"}}>Crea Un nuevo Mazo <br/></Typography>
-                      <div className="conteiner-text">
-                        <Typography variant="h6" component="div">
-                          Bienvenido a la sección de repasos. Aqui podrá repasar los temas  que son de su interés.<br/>
-                          Puedes usar el botón de {<AddIcon sx={{width: 40, height: 40, background:'purple', color:'white', p:1, borderRadius:50, 
-                                                  '&:hover': {backgroundColor: '#6f2da8'}}}/>} para crear un mazo y/o tarjetas.
-                          Así como también {<EditIcon/>}, {<DeleteIcon />}<br/>  para editar y borrar los mazos y/o tarjetas y finalmente { <LaunchOutlinedIcon/>}
-                          para iniciar un repaso.
-                        </Typography>
-                      </div>
-                    </div>
+                          <Mazos className="mazo_hijo" getmazo={mazos} setMazo={setMazos} />
+                      </Box>:
+                      <Box className="container_sinTarjeta">
+                            <div className="row">
+                              <Typography variant="h2" sx={{fontWeight: 'bold', textAlign:'center', component:"div"}}>Crea Un nuevo Mazo <br/></Typography>
+                            <div className="conteiner-text">
+                              <Typography variant="h6" component="div">
+                                Bienvenido a la sección de repasos. Aqui podrá repasar los temas  que son de su interés.<br/>
+                                Puedes usar el botón de {<AddIcon sx={{width: 40, height: 40, background:'purple', color:'white', p:1, borderRadius:50, 
+                                                        '&:hover': {backgroundColor: '#6f2da8'}}}/>} para crear un mazo y/o tarjetas.
+                                Así como también {<EditIcon/>}, {<DeleteIcon />}<br/>  para editar y borrar los mazos y/o tarjetas y finalmente { <LaunchOutlinedIcon/>}
+                                para iniciar un repaso.
+                              </Typography>
+                          </div>
+                        </div>
                     <img className="flashcard" src={flashcard} alt="flashcard"/>      
                   </Box>
                 }

@@ -19,3 +19,17 @@
 .der{
     width: 65%;
 }
+
+.mazo-edit{
+    position:absolute;    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-mazo-button{
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
