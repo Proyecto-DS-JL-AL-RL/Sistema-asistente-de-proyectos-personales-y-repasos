@@ -14,10 +14,15 @@ import './descripcionHorario.css';
 import { deleteActivity,addTempActivity, addActivity,
     saveActivity,handleTempActivity,restoreActivity, changeEditableActivity, saveWithSobrescritura, sobrescribirTodo } from '../../stores/sliceHorario';
 import { useDispatch,useSelector} from 'react-redux';
-import { act } from 'react-dom/test-utils';
 import MensajeAlert from './MensajeAlert';
 import MensajeAlertWithBottons from './MensajeAlertWithBottons';
 import MensajesCompletos from './MensajesCompletos';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { setMensaje } from '../../stores/sliceMensajesCortos';
+
+
+
+
 const stateButton2String =  (state) =>{
     const stringState = ['Editar','Crear','Guardar'];
     return stringState[state];
@@ -85,29 +90,17 @@ export default function DescripcionActividad(props) {
     const [duracionFin,setDuracionFin] = useState(24);
     const[llenarMic,setLlenarMic] = useState(null);
     const [alertContent,setAlertContent] = useState(null);
+    const matches = useMediaQuery('(min-height:750px)');
     
+    useEffect(()=>{
+        console.log("Funciona",matches);
+    },[matches])
+
     const handleVisible = () =>{
         props.handleVisible(true);
         dispatch(restoreActivity());
     }
-    /**
-     *console.log(props.actividad,"Desp");
-        if(!props.actividad) return;
-        setEditable(props.default);
-        const newAct = {...props.actividad,intervalo:actividad2intervalo(props.actividad),estado:1}; 
-        dispatch(addActivity(newAct));
-        setActividad(newAct);
-        setDuracion([props.actividad.inicio,props.actividad.fin]);
-        setDuracionFin(props.actividad.fin);
-        if(props.default==true) {
-            setStateButton(1);
-        }
-        else {
-            setStateButton(0);
-        }
-     */
     useEffect(()=>{
-        //if(props.actividad.dia == -1) return;
         if(!props.actividad)return;
 
         setActividad(props.actividad);
@@ -209,7 +202,9 @@ export default function DescripcionActividad(props) {
                 dispatch(sobrescribirTodo(newHorario));
                 setStateButton(0);
                 handleVisible();
-                handleMensajeDisplay("Actividad Creada, sobreescribiendo actividad(es)");
+                //handleMensajeDisplay("Actividad Creada, sobreescribiendo actividad(es)");
+                dispatch(setMensaje({content:"Actividad Creada, se sobreescribieron actividad(es)"
+                    ,visible:true}));
                 return;
             }
             dispatch(saveActivity());
@@ -217,7 +212,9 @@ export default function DescripcionActividad(props) {
             
             setStateButton(0);
             handleVisible();
-            handleMensajeDisplay("Actividad Creada");
+            //handleMensajeDisplay("Actividad Creada");
+            dispatch(setMensaje({content:"Actividad Creada",
+                    visible:true}));
             return;
         }
         if(stateButton==2){
@@ -236,7 +233,9 @@ export default function DescripcionActividad(props) {
             })
             
             if(flag && !configHorario.sobrescribir){
-                
+                setAlertContent(<MensajeAlertWithBottons  
+                    mensaje = "Existe una tarea dentro del intervalo, desea sobreescribir"
+                    visible = {setAlertContent} onAccept ={acceptSobreescritura}/>)
                 //mostrar advertencia
                 return;
             }
@@ -250,7 +249,9 @@ export default function DescripcionActividad(props) {
                 dispatch(sobrescribirTodo(newHorario));
                 setStateButton(0);
                 handleVisible();
-                handleMensajeDisplay("Actividad Editada, se sobreescribieron actividad(es)");
+                //handleMensajeDisplay("Actividad Editada, se sobreescribieron actividad(es)");
+                dispatch(setMensaje({content:"Actividad Editada, se sobreescribieron actividad(es)"
+                    ,visible:true}));
                 return;
             }
 
@@ -260,7 +261,9 @@ export default function DescripcionActividad(props) {
             dispatch(saveActivity());
             setStateButton(0);
             handleVisible();
-            handleMensajeDisplay("Actividad Editada");
+            
+            dispatch(setMensaje({content:"Actividad Editada",
+                    visible:true}))
             return;
         } 
 
@@ -268,10 +271,12 @@ export default function DescripcionActividad(props) {
     const handleEliminarActividad = () =>{
         
         if(props.idAct==-1) return;
-        handleMensajeDisplay("Actividad Eliminada");
+        
         
         dispatch(deleteActivity(props.idAct));
         props.handleVisible(true);
+        dispatch(setMensaje({content:"Actividad Eliminada",
+                    visible:true}));
         
     }
     const handleDuracionInicio = (e) =>{
@@ -333,25 +338,20 @@ export default function DescripcionActividad(props) {
     
   return (
     <>
-    <div className='actividad-description'>  
-        <Badge 
-        badgeContent={
+    <div className='actividad-description'> 
+        <div className='panel-descripcion'>
+
+        
+        <div className='container-button-close'>
             <button className='button-close' onClick={handleVisible}>
                 <ClearIcon sx={{color:'white',fontSize:'1em','&:hover':{color:'black'}}}/>
-            </button>
-        }
-        sx={{
+            </button> 
+        </div>
             
-            width:'80%',
-            mx:'auto',
-            p:2,
-            border:'2px solid black',
-            borderRadius:2,
-            backgroundColor:'white',
-            boxShadow:4  
-        }}
+       
         
-        >
+        
+        
         <Box
         component="form"
         sx={{
@@ -366,20 +366,22 @@ export default function DescripcionActividad(props) {
         <div width={"100%"}>
             <TextField
             required
+            className='text-entrain'
             id="standard-required"
             label="Nombre"
             
             value={actividad.nombre}
             
-            sx={{justifyContent:'center'}}
-           
+            //inputProps={{style: {fontSize: '0.8em'}}} // font size of input text
+            //InputLabelProps={{style: {fontSize: '1em'}}} 
+            size={matches?'Normal':"small"}
             onChange={handleNombre}
             />
             <TextField
             id="standard-read-only-input"
             label="Acrónimo"
             value={actividad.acr}
-            
+            size={matches?'Normal':"small"}
             onChange={handleAcr}
             />
             
@@ -387,7 +389,7 @@ export default function DescripcionActividad(props) {
             id="standard-read-only-input"
             label="Descripcion"
             value={actividad.descrip}
-            
+            size={matches?'Normal':"small"}
             
             onChange={handleDescrip}
             />
@@ -440,6 +442,7 @@ export default function DescripcionActividad(props) {
                 value={duracion[0].toString()}
                 onChange={handleDuracionInicio}
                 sx = {{maxWidth:100}}
+                size={matches?'Normal':"small"}
                 />
                 <Box sx={{width:'100%',textAlign:'center',fontSize:'2em'}}>
                     -
@@ -450,6 +453,7 @@ export default function DescripcionActividad(props) {
                 onChange={handleDuracionFin}
                 onBlur={()=>{setDuracionFin(duracion[1])}}
                 sx = {{maxWidth:100}}
+                size={matches?'Normal':"small"}
                 />
            </FormControl>
             {actividad.link !== '' && stateButton==0?
@@ -467,7 +471,7 @@ export default function DescripcionActividad(props) {
             id="standard-read-only-input"
             label="Link"
             value={actividad.link}
-            
+            size={matches?'Normal':"small"}
             onChange={handleLink}
             />
             }
@@ -489,8 +493,8 @@ export default function DescripcionActividad(props) {
             onClick={handleMic}>
             <MicIcon  sx={{ fontSize: 40,color:'white','&:hover':{color:'green'} }} />
         </div>
-        </Badge>
         
+    </div>
     </div>
     {alertContent}
     {llenarMic}

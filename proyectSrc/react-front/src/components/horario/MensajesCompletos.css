@@ -1,11 +1,13 @@
-
+body{
+    overflow: hidden;
+}
 .ctn-mensajes-completos{
     position: absolute;
     background-color: rgb(180, 28, 164);
     bottom: 20px;
     right: 10px;
     animation-name: animation-mensaje;
-    animation-duration: 0.8s;
+    animation-duration: 0.5s;
     text-align: center;
     width: 350px;
     display: flex;

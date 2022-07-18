@@ -18,8 +18,19 @@
     background-color: rgb(237, 106, 106);
     transition: box-shadow 0.8s,background-color 0.4s;
 }
-.actividad-description{
+
+.panel-descripcion{
     border-radius:10px;
+    background-color: var(--fondo-descripcion-horario);
+    border:solid 2px black;
+    position: relative;
+    padding: 15px;
+    
+}
+.container-button-close{
+    position: absolute;
+    right: -15px;
+    top:-15px;
 }
 .button-close{
     background-color: red;

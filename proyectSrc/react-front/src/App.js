@@ -22,11 +22,12 @@ import ActivityQueue from './pages/ActivityQueue';
 import Register from './pages/Register';
 import MostrarFuncionalidades from './pages/MostrarFuncionalidades'
 import VerMazos from './pages/VerMazo'
-import {useSelector} from 'react-redux';
+import {useSelector,useDispatch} from 'react-redux';
 import Proyectos from './pages/Proyectos';
 import {  AccountContext } from './AccountContext';
 import DisplayAyuda from './components/Ayuda/DisplayAyuda';
-
+import MensajesCompletos from './components/horario/MensajesCompletos';
+import { setVisible as setVisibleMensajeCorto } from './stores/sliceMensajesCortos';
 
 
 
@@ -34,7 +35,8 @@ function App() {
   const [nameBar,setNameBar] = useState("Inicio")
   const CONTINOUS_ = false;
   const ayuda = useSelector((state)=>state.ayuda.value);
-
+  const mensajesFantasma = useSelector((state)=>(state.mensajesCortos.value));
+  const dispatch = useDispatch();
 
   const { getSession, logout , sessionState }= useContext(AccountContext);
   const location = useLocation();
@@ -42,6 +44,8 @@ function App() {
   const [listeningState,setListeningState] = useState(false);
   const commands = getCommands(location,history);
   const {listening,transcript} = useSpeechRecognition({commands:commands});
+  const [mensajesCortos,setMensajesCortos] = useState(null);
+  
   const beforeUnload = ()=>{
     if (listening)
       SR.stopListening();
@@ -75,13 +79,25 @@ function App() {
         console.log(err);
     });
   },[]);
-
+  useEffect(()=>{
+    if(mensajesFantasma.visible){
+      setMensajesCortos(<MensajesCompletos 
+        content={mensajesFantasma.content}
+        visible={setMensajesCortos}/>)
+      setTimeout(()=>{
+        setMensajesCortos(null);
+        dispatch(setVisibleMensajeCorto(false));
+      },1500)
+    }
+  },[mensajesFantasma]);
 
   //<button onClick = {()=>{listening?SR.stopListening():SR.startListening({language: 'es', continuous: CONTINOUS_});setListeningState(!listeningState)}}>xd</button>
   return (
           <div className='container-main'>
-              
+                  
                   <DrawerComponent/>
+                  
+                  
                   <div className='other-container'>
                     <div className='head-container'>
                       <AppBarSearch stateButton={{showFeedBack, showAnadir}} 
@@ -119,7 +135,7 @@ function App() {
                                   <VerMazos showAdd={{showAnadir, setShowAnadir}} showFeed={{showFeedBack, setShowFeedBack}}/>
                             </Route>
                             <Route path = '/horario'>
-                              <Horario1 setName={setNameBar}/>
+                              <Horario1/>
                             </Route>
                             <Route path = '/Presentacion'>
                                   <Presentacion/>
@@ -130,7 +146,7 @@ function App() {
                   <Beforeunload onBeforeunload= {beforeUnload} />
                   
                   {ayuda.display?<DisplayAyuda/>:null}
-                    
+                {mensajesCortos}    
             </div>
   );
 }

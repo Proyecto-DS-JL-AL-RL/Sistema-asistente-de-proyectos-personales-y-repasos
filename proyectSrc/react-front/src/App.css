@@ -6,13 +6,26 @@
   --descp-drawer-item:None;
   --avatar-drawer-display:hidden;
   --change-width-item:0;
+  --medalla-width:1.5em;
+  --primary-color: #a270f9;
+  --color-drawer:#7C3AED;
+  --color-fondo:#FFF;
+
+
 }
 
-/*var(--top-space) var(--height-space) var(--width-drawer)*/
+/*var(--top-space) var(--height-space) var(--width-drawer)
+--color-fondo: rgb(198, 122, 230);*/
 .container-main{
   width: 100vw;
   height: 100vh;
   display: flex;
+  background-color: var(--color-fondo);
+  /*background-color: #7C3AED;
+  background-color:#001;
+  background-image: radial-gradient(white 15%, transparent 16%),radial-gradient(white 15%, transparent 16%);
+  background-size: 60px 60px;
+  background-position: 0 0, 30px 30px;*/
 }
 .drawer-container{
   width: var(--width-drawer);
@@ -69,6 +82,11 @@
   
 }
 .img-medalla{
-  width: 60px;
+  height: var(--medalla-width);
+}
 
+@media (max-height:650px) {
+  :root{
+    --top-space:2px;
+  }
 }

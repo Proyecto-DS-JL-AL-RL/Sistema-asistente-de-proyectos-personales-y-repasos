@@ -10,63 +10,68 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 
-export const mainListItems = (
+import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
+import LogoutIcon from '@mui/icons-material/Logout';
+import CalendarViewWeekIcon from '@mui/icons-material/CalendarViewWeek';
+import HomeIcon from '@mui/icons-material/Home';
+import { useHistory } from 'react-router-dom';
+
+
+function ItemButttonBar(props){
+  const history = useHistory();
+  return (
+    <ListItemButton sx={{backgroundColor:'rgba(255,255,255,0.1)',mb:"3px"}} onClick={()=>{history.push(props.page)}}>
+      <ListItemIcon>
+        {props.icon || <DashboardIcon sx={{color:'white'}}/>}
+      </ListItemIcon>
+      <ListItemText primary={props.name} />
+    </ListItemButton>
+  )
+}
+export const  mainListItems = (
   <React.Fragment>
-    <ListItemButton>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <ListItemText primary="Dashboard" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Orders" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Customers" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Reports" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Integrations" />
-    </ListItemButton>
+    <ItemButttonBar pag={"/proyect"}
+    icon = {<DashboardIcon sx={{color:'white',
+    borderBottom:'solid 1px white'}}/>} name= {"Gestionar Proyectos"}/>
+    <ItemButttonBar page = {"/Mazos"}
+    icon={<ShoppingCartIcon sx={{color:'white',
+    borderBottom:'solid 1px white'}}/>} name={"Tarjetas"} />
+    <ItemButttonBar page={"/horario"} 
+    icon={<CalendarViewWeekIcon sx={{color:'white',
+    borderBottom:'solid 1px white'}}/>}  name={"Actividades"}
+    />
+    <ItemButttonBar page={"/algoQueHacer"} 
+    icon={<BarChartIcon sx={{color:'white',
+    borderBottom:'solid 1px white'}}/>}  name={"Algo que hacer"}
+    />
+    
+    
   </React.Fragment>
 );
 
 export const secondaryListItems = (
   <React.Fragment>
-    <ListSubheader component="div" inset>
-      Saved reports
+    <ListSubheader component="div" 
+    sx={{backgroundColor:'transparent',
+    borderBottom:'solid 2px white',
+    borderTop:'solid 2px white',
+    color:'white'}} inset>
+      Accesos Rapidos
     </ListSubheader>
-    <ListItemButton>
+    <ItemButttonBar 
+    icon = {<SettingsSuggestIcon sx={{color:'white',
+    borderBottom:'solid 1px white'}}/>} name={"Configuracion"}    
+    />
+    <ListItemButton sx={{backgroundColor:'rgba(255,255,255,0.1)',mb:"3px"}}>
       <ListItemIcon>
-        <AssignmentIcon />
+        <LogoutIcon sx={{color:'white',
+      borderBottom:'solid 1px white'}}/>
       </ListItemIcon>
-      <ListItemText primary="Current month" />
+      <ListItemText primary="Salir" />
     </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Last quarter" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Year-end sale" />
-    </ListItemButton>
+    
+    <ItemButttonBar page={"/"}
+    icon={<HomeIcon sx={{color:'white',
+    borderBottom:'solid 1px white'}}/>} name={"Home"}/>
   </React.Fragment>
 );

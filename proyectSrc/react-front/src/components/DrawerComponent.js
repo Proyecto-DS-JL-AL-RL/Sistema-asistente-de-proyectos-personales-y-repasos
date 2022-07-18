@@ -16,6 +16,8 @@ import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
 import AvatarScore from './AvatarScore';
@@ -46,6 +48,18 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
       },
     }),
   );
+/*
+backgroundColor:'#6969cc',
+          opacity:1,
+          backgroundImage: 'linear-gradient(135deg, #8589d8 25%, transparent 25%), linear-gradient(225deg, #8589d8 25%, transparent 25%), linear-gradient(45deg, #8589d8 25%, transparent 25%), linear-gradient(315deg, #8589d8 25%, #6969cc 25%)',
+          backgroundPosition: '33px 0, 33px 0, 0 0, 0 0',
+          backgroundSize : '33px 33px',
+          backgroundRepeat: 'repeat'
+
+backgroundImage:'radial-gradient(#8589d8 15%, transparent 16%),radial-gradient(#058ad8 15%, transparent 16%)',
+          backgroundSize: '60px 60px',
+          backgroundPosition: '0 0, 30px 30px'
+*/
 export default function DrawerComponent() {
     const [open,setOpen] = useState(false);
     useEffect(()=>{
@@ -54,21 +68,35 @@ export default function DrawerComponent() {
         },100);
       },[open]);
     return (
-        <Drawer variant="permanent" open={open} >
+        <Drawer variant="permanent" open={open} 
+        sx={{'& .MuiDrawer-paper':{
+          backgroundColor: '#7C3AED',
+          color:'white'
+        }}}>
             <Toolbar
                 sx={{
+                
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'flex-end',
                 px: [1],
                 }}
             >
-                <IconButton onClick={()=>{setOpen(!open)}}>
-                <ChevronLeftIcon />
-                </IconButton>
+              
+            <IconButton sx={{paddingBottom:'1px',
+            paddingTop:'1px'}} onClick={()=>{setOpen(!open)}}>
+                {open?<ChevronLeftIcon 
+                sx={{fontSize:'1.5em',color:'white',fontWeight:'bold'}}  />:
+                <ChevronRightIcon sx={{fontSize:'1.5em',
+                color:'white',
+                fontWeight:'bold',
+                }}/>}
+            </IconButton>
+   
+                
             </Toolbar>
             <div className='ctn-avatar'>
-                <AvatarScore></AvatarScore>
+                <AvatarScore/>
 
             </div>
             <Divider />

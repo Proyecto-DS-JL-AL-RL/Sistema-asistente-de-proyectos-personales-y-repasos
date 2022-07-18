@@ -20,6 +20,12 @@ import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import './funcionalidades.css'
 import mehera from './img/mehera.webp'
+<<<<<<< HEAD
+=======
+import { useDispatch} from 'react-redux';
+import { restoreContent,changePage } from '../stores/sliceAyuda';
+
+>>>>>>> 15d8109 (MensjesCortosParaTodos)
     /*
     en este archivo se mostraran las funcionalidades del software 
     - Gestion de Proyectos y objetivos.
@@ -78,8 +84,33 @@ export default function MostrarFuncionalidades(props) {
     
     //props.showAdd.setShowAnadir({card:false, icon:false});
     /* eslint-disable */
+
     useEffect(() => {
         props.showAdd.setShowAnadir({card:false, icon:false});
+<<<<<<< HEAD
+=======
+        const suggest = <Card sx={{ display: 'flex' }}>
+                            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                                <CardContent  sx={{ flex: '1 0 auto' }}>  
+                                    <Typography  sx={{fontWeight: 'bold'}} variant="h1">
+                                        Sugerencia
+                                    </Typography>
+                                    <Divider  variant="middle" />
+                                    <Typography variant="subtitle1" color="text.secondary" component="div">
+                                        Bienvenido 🤗. Aquí podras ver las funcionalidades del software.<br /> 👀 Recuerde que tiene la opción
+                                        de navegar a travez de los botones<br/> de abajo o también por nuestra interfaz de voz 🎙. 
+                                    </Typography>
+                                </CardContent>
+                            </Box>     
+                            <img style={{width:'50%', height:'50%'}} src={mehera} alt="mehera"/>
+                        </Card>
+                        
+        const component = ReactDOMServer.renderToString(suggest);
+        dispatch(changePage({content:component,title:"Funcionalidades" }));
+        return ()=>{
+            dispatch(restoreContent());
+        }
+>>>>>>> 15d8109 (MensjesCortosParaTodos)
       },[]);
 
     return (
