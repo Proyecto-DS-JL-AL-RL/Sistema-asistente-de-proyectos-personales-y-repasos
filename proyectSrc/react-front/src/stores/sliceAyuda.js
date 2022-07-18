@@ -6,17 +6,24 @@ export const ayudaSlice = createSlice({
     initialState:{
         value:{
             display:false,
-            content: "Adfasdfasdfasdfsadf"
+            content: "Adfasdfasdfasdfsadf",
+            title: "Inicio"
         }
         
     },
     reducers:{
         changeContent: (state,action)=>{
-            console.log()
             state.value.content = action.payload;
+        },
+        changeTittle: (state,action) =>{
+            state.value.title = action.payload;
         },
         mostrarAyuda: (state)=>{
             state.value.display=true
+        },
+        changePage: (state,action)=>{
+            state.value.content = action.payload.content;
+            state.value.title = action.payload.title;
         },
         ocultarAyuda: (state) =>{
             state.value.display = false
@@ -31,5 +38,7 @@ export const ayudaSlice = createSlice({
 
 
 })
-export const {mostrarAyuda,ocultarAyuda,changeContent,restoreContent} = ayudaSlice.actions
+export const {mostrarAyuda,ocultarAyuda,
+    changePage,changeTittle,
+    changeContent,restoreContent} = ayudaSlice.actions
 export default ayudaSlice.reducer

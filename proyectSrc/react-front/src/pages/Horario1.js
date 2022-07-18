@@ -13,7 +13,7 @@ import MensajeAlert from '../components/horario/MensajeAlert';
 import { useSelector,useDispatch} from 'react-redux';
 import {restoreActivity } from '../stores/sliceHorario';
 import { actividad2intervalo } from '../components/horario/utilsHorario';
-import { changeContent,restoreContent } from '../stores/sliceAyuda';
+import { changePage,restoreContent } from '../stores/sliceAyuda';
 import {changeIntervalo, intervaloOverFlow} from '../stores/sliceConfigHorario';
 
 import * as ReactDOMServer from 'react-dom/server';
@@ -97,7 +97,7 @@ const minDistance = 8;
 
 
 
-export default function Horario(props) {
+export default function Horario() {
     const horario = useSelector((state)=>state.horario.value);
     const configHorario = useSelector((state) => state.configHorario.value);
     
@@ -116,7 +116,7 @@ export default function Horario(props) {
     useEffect(()=>{
         const aa = <div>hola</div>
         const component=ReactDOMServer.renderToString(aa);
-        dispatch(changeContent(component));
+        dispatch(changePage({content:component,title:"Mi Horario"}));
         return ()=>{
             dispatch(restoreContent());
         }
@@ -218,52 +218,6 @@ export default function Horario(props) {
         setMinmaxIntervalo([min,max]);
         
     }
-   
-    /**
-     console.log("Default:",horario.intervaloDefault);
-        if(horario.length==1){
-            
-            if(horario[0].estado==1) return;
-        }
-        if(horario.length<1 && configHorario.intervaloDefault) {
-            dispatch(changeIntervalo([8,18]));
-
-            return;
-        } 
-        console.log(minHora,maxHora, "---", configHorario.intervalo);
-        if(configHorario.intervalo[0]==-1 && configHorario.intervalo[1]==-1){
-            dispatch(changeIntervalo([minHora,maxHora]));
-            return;
-        }
-        if((minHora>=configHorario.intervalo[0] && maxHora<=configHorario.intervalo[1]) && !configHorario.intervaloDefault){
-            return;
-        } 
-        if(minHora<configHorario.intervalo[0] || maxHora>configHorario.intervalo[1]){
-            
-            dispatch(intervaloOverFlow([Math.min(minHora,configHorario.intervalo[0])
-            ,Math.max(maxHora,configHorario.intervalo[1])]));
-            return;
-        }
-        //if((minHora<configHorario.intervalo[0] || maxHora>configHorario.intervalo[1]) && !configHorario.intervaloDefault){
-        //    dispatch(changeIntervaloDefault([minHora,maxHora]));
-        //    return;
-        //}
-
-        if(maxHora-minHora>minDistance && configHorario.intervaloDefault){
-            console.log("Entro:", minHora,maxHora);
-            dispatch(changeIntervalo([minHora,maxHora]));
-            return;
-        }
-        if(maxHora-minHora<=minDistance ){
-            const middle = Math.floor((maxHora+minHora)/2);
-            
-            dispatch(changeIntervalo([Math.min(16,middle-4),middle+4]))
-            return;
-            
-        }
-        console.log(minHora,maxHora,configHorario.intervaloDefault);
-     
-     */
     useEffect(()=>{
         
         if(!horario) return;
@@ -309,10 +263,9 @@ export default function Horario(props) {
                 itemHorario.map((e)=>{
                     let ocupado="";
                     let state = "unlock-item";
-                    let content = "N/D";
+                    let content = "***";
                     let horasclass = ""
                     let temp=""
-                    let editando = ""
                     if( (e>0 && e<8) || e%8==0) state = "lock-item";
                     if(e>0 && e<8) content = dias[e-1];
                     if(e%8==0){
@@ -321,7 +274,6 @@ export default function Horario(props) {
                     } 
                     if(e==0){
                        state = "";
-                       //horasclass="";
                        content= <IconButton size="small" onClick={() =>{setVisibleConfig(!visibleConfig)}}>
                             <HandymanIcon fontSize="inherit" sx={{fontSize:'1.2em'}}/>
                         </IconButton>
@@ -357,8 +309,6 @@ export default function Horario(props) {
             
         </div>
         {ocultarDescripcion?null:descripcionRender}
-
-
         {visibleConfig?null:<ConfigHorario minmaxIntervalo={
             [minHoraIntervalo(horario),
                 maxHoraIntervalo(horario)]

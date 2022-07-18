@@ -9,12 +9,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    
 
   }
   .contendor-info-ayuda{
     background-color: white;
     position: relative;
     padding: 10px;
+    border-style: solid;
+    border-width: 3px;
+    border-color: black;
+    border-radius: 20px;
+    box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.5);
   }
   .cerrar-ayuda{
     background-color: red;
@@ -24,4 +30,8 @@
     border-radius: 50%;
     right: -20px;
     top: -20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 3px black;
   }

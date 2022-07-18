@@ -22,8 +22,10 @@ import './funcionalidades.css'
 //import CardMedia from '@mui/material/CardMedia';
 import * as ReactDOMServer from 'react-dom/server'
 import mehera from './img/mehera.webp'
+
 import { useDispatch} from 'react-redux';
-import { changeContent,restoreContent } from '../stores/sliceAyuda';
+import { restoreContent,changePage } from '../stores/sliceAyuda';
+
 
     /*
     en este archivo se mostraran las funcionalidades del software 
@@ -83,6 +85,7 @@ export default function MostrarFuncionalidades(props) {
     const dispatch = useDispatch();
     //props.showAdd.setShowAnadir({card:false, icon:false});
     /* eslint-disable */
+
     useEffect(() => {
         props.showAdd.setShowAnadir({card:false, icon:false});
         const suggest = <Card sx={{ display: 'flex' }}>
@@ -102,10 +105,16 @@ export default function MostrarFuncionalidades(props) {
                         </Card>
                         
         const component = ReactDOMServer.renderToString(suggest);
-        dispatch(changeContent(component));
+
+        dispatch(changePage({content:component,title:"Funcionalidades" }));
+        
+
+
+        //dispatch(changeContent(component));
         return ()=>{
             dispatch(restoreContent());
         }
+
       },[]);
 
     return (

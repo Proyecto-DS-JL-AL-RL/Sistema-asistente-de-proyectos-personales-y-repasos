@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import QuestionMarkRoundedIcon from '@mui/icons-material/QuestionMarkRounded';
 import MicIcon from '@mui/icons-material/Mic';
 import AddIcon from '@mui/icons-material/Add';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { mostrarAyuda } from '../stores/sliceAyuda';
 import SR,{useSpeechRecognition} from 'react-speech-recognition';
 import { AccountContext } from '../AccountContext';
@@ -60,6 +60,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function AppBarSearch(props) {
   const dispatch = useDispatch();
+  const ayuda = useSelector((state)=>state.ayuda.value);
   const handleAyuda = () =>{
     dispatch(mostrarAyuda());
   }
@@ -77,7 +78,8 @@ export default function AppBarSearch(props) {
             aria-label="open drawer"
             sx={{ mr: 2 }}
           >
-            <img src="https://i.pinimg.com/originals/d5/16/80/d5168001add6c3c50a1ea9328b466013.png" alt="logro" className='img-medalla'></img>
+            <img src="https://i.pinimg.com/originals/d5/16/80/d5168001add6c3c50a1ea9328b466013.png"
+             alt="logro" className='img-medalla'></img>
           </IconButton>
           <Typography
             variant="h6"
@@ -85,7 +87,7 @@ export default function AppBarSearch(props) {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            Inicio
+            {ayuda.title}
             {sessionState.nickname}
           </Typography>
           <Search>
@@ -99,8 +101,9 @@ export default function AppBarSearch(props) {
               
             >
               <QuestionMarkRoundedIcon onClick={handleAyuda}
-                 sx={{width: 56, height: 56, color:'white', background:'green',
-                  p:1, borderRadius:50}}/> 
+                 sx={{color:'white', 
+                 background:'green',fontSize:'1.5em',
+                  p:1,borderRadius:50}}/> 
   
             </IconButton>
 
@@ -110,12 +113,12 @@ export default function AppBarSearch(props) {
             >        
               {listening?
                 <MicIcon sx={{p:1, borderRadius:50, background:'blue',
-                color:'white', width: 56, height: 56 }}
+                color:'white',fontSize:'1.5em' }}
                 onClick={()=>{props.ClickButton.listen()}} 
                 />
                 :
                 <MicIcon sx={{p:1, borderRadius:50, background:'red',
-                color:'white', width: 56, height: 56 }}
+                color:'white', fontSize:'1.5em' }}
                 onClick={()=>{props.ClickButton.listen()}} 
                 />
               }
