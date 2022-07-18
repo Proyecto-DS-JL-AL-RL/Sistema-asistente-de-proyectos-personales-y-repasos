@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import ActividadForm from '../components/actividadForm';
 import { AccountContext } from '../AccountContext';
+import { useSpeechRecognition } from 'react-speech-recognition';
+import { getCommandsPage } from '../speechMethods/actividadesMethods';
 import axios from 'axios';
 
 export default function ActivityQueue(params) {
@@ -11,7 +13,10 @@ export default function ActivityQueue(params) {
     const[activities,setActivities] = useState([]);
     const history = useHistory();
     const[showForm,setShowForm] = useState(false);
+
     
+
+
     const getActs = async () =>{
         const {sub} = sessionState;
         //console.log(sub);
@@ -25,9 +30,14 @@ export default function ActivityQueue(params) {
         }else{
             setActivities([]);
         }
-        
     }
-    
+
+    const initCrearActividad = ()=>{setShowForm(true)};
+    const handleBack = ()=>{history.push('/algoQueHacer')};
+
+    const commands = getCommandsPage({initCrearActividad,handleBack});
+    const {listening,transcript} = useSpeechRecognition({commands:commands});
+
     useEffect(()=>{
         getActs();        
     },[sessionState]);
@@ -35,7 +45,7 @@ export default function ActivityQueue(params) {
     return(
     <React.Fragment>
         <Grid container direction = 'row' columnGap={2} alignItems='center'>
-                <Button sx = {{width:'50px',bgcolor: '#C0DAE5', borderRadius:'20px'}} variant = 'contained' mb = {1} ml = {10} onClick = {()=>{history.push('/algoQueHacer')}}>
+                <Button sx = {{width:'50px',bgcolor: '#C0DAE5', borderRadius:'20px'}} variant = 'contained' mb = {1} ml = {10} onClick = {handleBack}>
                         <Typography color = 'black' sx = {{fontWeight : 'bold'}} >
                             Back
                         </Typography>
@@ -43,7 +53,7 @@ export default function ActivityQueue(params) {
             <Typography variant = 'h3' width = '75%'>
                 Cola de actividades
             </Typography>
-            <Button variant = 'contained' color = 'success' sx = {{width:'50px',bgcolor: '#207F18',height:'50px', borderRadius:'50%'}} onClick = {()=>{setShowForm(true)}}>
+            <Button variant = 'contained' color = 'success' sx = {{width:'50px',bgcolor: '#207F18',height:'50px', borderRadius:'50%'}} onClick = {initCrearActividad}>
                 <AddIcon/>
             </Button>
         </Grid>

@@ -2,7 +2,8 @@ import React,{useContext, useEffect, useState} from 'react';
 import {Button, Card, Checkbox, Grid, TextField, Typography,Box,Slider} from '@mui/material';
 import { AccountContext } from '../AccountContext';
 import axios from 'axios';
-
+import { useSpeechRecognition } from 'react-speech-recognition';
+import { getAgregarComands } from '../speechMethods/actividadesMethods';
 
 export default function ActividadForm(props){
 
@@ -14,6 +15,7 @@ export default function ActividadForm(props){
     const [selectingProyect, setSelectingProyect] = useState(false);
     const [currProyect,setCurrProyect] = useState(null);
     const { sessionState } = useContext(AccountContext);
+    const [puntero,setPuntero] = useState(null);
 
 
     const agregarActividad = async ()=>{
@@ -53,6 +55,35 @@ export default function ActividadForm(props){
         setSelectingProyect(false);
     }
 
+    const setPunteroPage = (puntero)=>{
+        console.log(puntero);
+        setPuntero(puntero);
+    }
+
+    const setPesosAudio = (peso_) =>{
+        setPeso(peso_); 
+    }
+
+    const setAgregarProyecto = (valor)=>{
+        setSelectingProyect(valor);
+    }
+
+    const commands = getAgregarComands({setPunteroPage,setPesosAudio,setAgregarProyecto});
+    const {listening,transcript,finalTranscript,resetTranscript} = useSpeechRecognition({commands:commands});
+
+    const setDictionary = {
+        "título":setTitulo,
+        "descripción":setDescripcion
+    }
+
+    useEffect(()=>{
+        if(puntero && listening){
+            resetTranscript();
+            setDictionary[puntero](finalTranscript);
+        }
+    },[finalTranscript]);
+
+
 
     return(
         <React.Fragment>
@@ -60,7 +91,7 @@ export default function ActividadForm(props){
                 <Button onClick = {props.close} variant = 'contained' sx = {{bgcolor :'red',left:'88%'}} >X</Button>
                 
                 <Typography variant = 'h4'>
-                    Agregando una Actividad
+                    Agregando una Actividad {puntero}
                 </Typography>
 
                 <Grid container direction = 'column' sx = {{width:'80%',marginLeft:'10%',marginTop:'20px'}} rowGap = {3} alignItems = 'center'>

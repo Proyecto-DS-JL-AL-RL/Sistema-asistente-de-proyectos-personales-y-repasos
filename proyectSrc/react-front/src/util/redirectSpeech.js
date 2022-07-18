@@ -3,21 +3,20 @@ const paths = {
     "inicio": "/",
     "dame algo que hacer":"/algoQueHacer",
     "darme algo que hacer":"/algoQueHacer",
-    "Repasos":"/Mazos",
+    "repasos":"/Mazos",
     "mazos":"/Mazos",
     "cartas":"/",
     "proyectos":"/proyectos",
-    "Dashboard":"/proyect"
+    "dashboard":"/proyect"
 }
 
 
 
 const getCommands = (location,history) =>{
     const comando = [{
-        command: ["Llévame a *"],
+        command: ["Llévame a *(.)"],
         callback: (frase) =>{
-            //alert(frase);
-            const path = paths[frase]
+            const path = paths[frase.toLowerCase()]
             if (path != null && path != undefined){
                 if (path != location.pathname){
                     history.push(path);
@@ -25,28 +24,15 @@ const getCommands = (location,history) =>{
                 else    
                     alert("Ya se encuentra en esa pagina");                
             }            
-        }
+        },
     },
     {
-        command: ["Llévame a *."],
-        callback: (frase) =>{
-            //alert(frase);
-            const path = paths[frase]
-            if (path != null && path != undefined){
-                if (path != location.pathname){
-                    history.push(path);
-                }                   
-                else    
-                    alert("Ya se encuentra en esa pagina");                
-            }            
-        }
-    },
-    {
-        command: ["Dame algo que hacer."],
-        callback: (frase) =>{
-            //alert(frase);
+        command: "Dame algo que hacer(.)",
+        callback: (command,spokeNPhrase,ratio) =>{
             history.push('/algoQueHacer')            
-        }
+        },
+        isFuzzyMatch: true,
+        fuzzyMatchingThreshold: 0.85    
     }]
 
     return comando;
