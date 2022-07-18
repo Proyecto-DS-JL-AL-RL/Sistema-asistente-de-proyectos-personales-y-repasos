@@ -1,4 +1,4 @@
-import React  from "react";
+import React , {useEffect, useState} from "react";
 import { Typography } from '@mui/material';
 //import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -14,6 +14,8 @@ import QuestionMarkRoundedIcon from '@mui/icons-material/QuestionMarkRounded';
 import { useHistory } from "react-router-dom";
 import './presentacionPage1.css'
 import Fade from '@mui/material/Fade';
+import {  AccountContext } from './../AccountContext';
+import { useContext } from "react";
 //vw ch %
 /*
 const [showRecomendacion, setShowRecomendacion] = useState(false)
@@ -64,7 +66,16 @@ const [showRecomendacion, setShowRecomendacion] = useState(false)
 227, 227, 227*/
 export default function Presentacion(){
     let history = useHistory()
-    
+    const {sessionState} = useContext(AccountContext);
+    const [nombre, setNombre] = useState('')
+    const [apellido, setApellido] = useState('')
+    useEffect(()=>{
+        const {given_name, family_name} = sessionState;
+        if (given_name){
+            setApellido(family_name)
+            setNombre(given_name)
+        }
+      },[sessionState]);
     return (
         
             <React.Fragment> 
@@ -74,7 +85,7 @@ export default function Presentacion(){
                                         <div className="row">
                                         <div className="wrapper">
                                             <ul className="dynamic-txts">
-                                            <li><span>Bienvenido Usuario</span></li>
+                                            <li><span>Bienvenido {nombre} {apellido}</span></li>
                                             <li><span>Recuerda que puedes usar nuestra</span></li>
                                             <li><span>Interfaz de voz  {<MicIcon sx={{p:1, borderRadius:50, background:'red',
                                                                             color:'white', width: '3ch', height: '3ch' }}/>}</span></li>
