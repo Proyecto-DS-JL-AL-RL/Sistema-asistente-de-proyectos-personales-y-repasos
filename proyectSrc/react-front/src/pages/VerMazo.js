@@ -18,7 +18,8 @@ import Grow from '@mui/material/Grow';
 import Divider from '@mui/material/Divider';
 import Fade from '@mui/material/Fade';
 //import Paper from '@mui/material/Paper';
-import happy from './img/happy.png'
+import happy from './img/happy.png'//proyectSrc/react-front/public
+import flashcard from './img/flashcard.png'
 import * as ReactDOMServer from 'react-dom/server'
 import { useDispatch} from 'react-redux';
 import { changeContent,restoreContent } from '../stores/sliceAyuda';
@@ -26,6 +27,12 @@ import axios from 'axios';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import './VerMazos.css'
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined';
+
 /*
 const mazos = [
   {
@@ -87,6 +94,7 @@ const mazos = [
         const dispatch = useDispatch();
         const [titulo, setTitulo] = useState('')
         const [descripcion, setDescripcion] = useState('')
+        const [existMazos, setExistMazos] = useState(false)
         const breadcrumbs = [
           <Link underline="hover" key="1" color="inherit" href="/">
             Inicio
@@ -120,9 +128,15 @@ const mazos = [
         },[]);
 
         useEffect(()=>{
-          axios.get('/api/mazos/1').then(function(response){
-            setMazos(response.data)
-        });
+          axios.get('/api/mazos/3').then(function(response){
+            
+            if (response.data.length === 0){
+              console.log('ok')
+            }else{
+              setExistMazos(true)
+              setMazos(response.data)
+            }
+          });
         }, [])
 
         return (
@@ -198,11 +212,27 @@ const mazos = [
                             </Box>
                           </Grow>:null}
                       </Box> 
-                  <Box sx={{mx:'12%',
+                  {existMazos?<Box sx={{mx:'12%',
                             position:'absolute',
                               width: '65%'}}>
                           <Mazos  getmazo={mazos} setMazo={setMazos} />
+                  </Box>:
+                  <Box className="container_sinTarjeta">
+                    <div className="row">
+                        <Typography variant="h2" sx={{fontWeight: 'bold', textAlign:'center', component:"div"}}>Crea Un nuevo Mazo <br/></Typography>
+                      <div className="conteiner-text">
+                        <Typography variant="h6" component="div">
+                          Bienvenido a la sección de repasos. Aqui podrá repasar los temas  que son de su interés.<br/>
+                          Puedes usar el botón de {<AddIcon sx={{width: 40, height: 40, background:'purple', color:'white', p:1, borderRadius:50, 
+                                                  '&:hover': {backgroundColor: '#6f2da8'}}}/>} para crear un mazo y/o tarjetas.
+                          Así como también {<EditIcon/>}, {<DeleteIcon />}<br/>  para editar y borrar los mazos y/o tarjetas y finalmente { <LaunchOutlinedIcon/>}
+                          para iniciar un repaso.
+                        </Typography>
+                      </div>
+                    </div>
+                    <img className="flashcard" src={flashcard} alt="flashcard"/>      
                   </Box>
+                }
         </React.Fragment>
     );
 }//aca

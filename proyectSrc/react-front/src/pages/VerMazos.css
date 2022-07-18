@@ -1,0 +1,29 @@
+
+.container_sinTarjeta{
+    background-color: aqua;
+    width: 70%;
+    height: 60%;
+    position:relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left:15%;
+    top:10%;
+    border-style: double;
+    border: 2rem solid purple;
+}
+.conteiner-text{
+    position:relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3em;
+    font-weight:bold;
+    color:black;
+}
+
+.flashcard{
+    position: relative;
+    max-width: 30rem;
+    max-height: 30rem;
+}
