@@ -19,6 +19,7 @@ import MensajeAlertWithBottons from './MensajeAlertWithBottons';
 import MensajesCompletos from './MensajesCompletos';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { setMensaje } from '../../stores/sliceMensajesCortos';
+import MensajeAdvertencia from './MensajeAdvertencia';
 
 
 
@@ -64,6 +65,9 @@ const sobrescribir = (actividades)=>{
             if(actualSave.inicio < e.inicio && e.fin<actualSave.fin){
                 return {...e,estado:3};
             }
+            if(actualSave.inicio == e.inicio && actualSave.fin == e.fin && e.estado!=1 ){
+                return {...e,estado:3}
+            }
         }
         return e;
     });
@@ -90,6 +94,7 @@ export default function DescripcionActividad(props) {
     const [duracionFin,setDuracionFin] = useState(24);
     const[llenarMic,setLlenarMic] = useState(null);
     const [alertContent,setAlertContent] = useState(null);
+    const [mensajeAdvertenciaDisplay,setMensajeAdvertenciaDisplay] = useState(null);
     const matches = useMediaQuery('(min-height:750px)');
     
     useEffect(()=>{
@@ -150,15 +155,43 @@ export default function DescripcionActividad(props) {
         setStateButton(0);
         handleVisible();
     }
-    const handleMensajeDisplay = (msg)=>{
+    /*const handleMensajeDisplay = (msg)=>{
         props.mensajeDisplay(<MensajesCompletos
             content={msg} 
             visible={props.mensajeDisplay}/>)
         setTimeout(()=>{
             props.mensajeDisplay(null);
         },1500);
+    }*/
+    //Crear editar guardar
+    const actividadSinNombrePaper = () =>{
+        return <MensajeAdvertencia
+        visible={setMensajeAdvertenciaDisplay}
+        content={"Al parecer tu actividad no tiene un nombre."}
+        comentario={<>
+                Puedes colocar un nombre a tu actividad que mas te recuerde a ella
+                <button className='btn-advertencia-ok' onClick={()=>{setMensajeAdvertenciaDisplay(null)}}>
+                    ok
+                </button>
+                </>}
+        />
     }
-    // Crear editar guardar
+    const actividadSobreescritaPaper = () =>{
+        return <MensajeAdvertencia
+        visible={setMensajeAdvertenciaDisplay}
+        content={"Ya tienes una actividad, Quieres sobre escribirlo"}
+        comentario={<>
+                <div className='advertencia-buttons-container'>
+                    <button className='btn-advertencia-ok' onClick={acceptSobreescritura}
+                    >Si</button>
+                    <button className='btn-advertencia-no' 
+                    onClick={()=>{setMensajeAdvertenciaDisplay(null)}}>No</button>
+                </div>
+                Puedes desactivar esta advertencia en las configuraciones.
+                
+                </>}
+        />
+    }
     const handleClickState = () =>{
         if(stateButton==0){
             setEditable(true);
@@ -167,11 +200,10 @@ export default function DescripcionActividad(props) {
             dispatch(changeEditableActivity(props.idAct));
             return;
         }
+        //Crear
         if(stateButton==1){
             if(actividad.nombre.match(/^\s*$/)){
-                setAlertContent(<MensajeAlert
-                    visible = {setAlertContent}/>)
-                console.log("Hola");
+                setMensajeAdvertenciaDisplay(actividadSinNombrePaper);
                 return;
             }
             const actTemp = {...actividad,
@@ -185,10 +217,10 @@ export default function DescripcionActividad(props) {
             })
             
             if(flag && !configHorario.sobrescribir){
-                
-                setAlertContent(<MensajeAlertWithBottons  
-                    mensaje = "Existe una tarea dentro del intervalo, desea sobreescribir"
-                    visible = {setAlertContent} onAccept ={acceptSobreescritura}/>)
+                setMensajeAdvertenciaDisplay(actividadSobreescritaPaper);
+                //setAlertContent(<MensajeAlertWithBottons  
+                //    mensaje = "Existe una tarea dentro del intervalo, desea sobreescribir"
+                //    visible = {setAlertContent} onAccept ={acceptSobreescritura}/>)
                 //mostrar advertencia
                 return;
             }
@@ -219,7 +251,8 @@ export default function DescripcionActividad(props) {
         }
         if(stateButton==2){
             if(actividad.nombre.match(/^\s*$/)){
-                setAlertContent(<MensajeAlert visible = {setAlertContent}/>)
+                setMensajeAdvertenciaDisplay(<MensajeAdvertencia
+                visible={setMensajeAdvertenciaDisplay}/>)
                 return;
             }
             const actTemp = {...actividad,
@@ -233,9 +266,10 @@ export default function DescripcionActividad(props) {
             })
             
             if(flag && !configHorario.sobrescribir){
-                setAlertContent(<MensajeAlertWithBottons  
-                    mensaje = "Existe una tarea dentro del intervalo, desea sobreescribir"
-                    visible = {setAlertContent} onAccept ={acceptSobreescritura}/>)
+                setMensajeAdvertenciaDisplay(actividadSobreescritaPaper);
+                //setAlertContent(<MensajeAlertWithBottons  
+                //    mensaje = "Existe una tarea dentro del intervalo, desea sobreescribir"
+                //visible = {setAlertContent} onAccept ={acceptSobreescritura}/>)
                 //mostrar advertencia
                 return;
             }
@@ -347,10 +381,7 @@ export default function DescripcionActividad(props) {
                 <ClearIcon sx={{color:'white',fontSize:'1em','&:hover':{color:'black'}}}/>
             </button> 
         </div>
-            
-       
-        
-        
+
         
         <Box
         component="form"
@@ -498,7 +529,7 @@ export default function DescripcionActividad(props) {
     </div>
     {alertContent}
     {llenarMic}
-    
+    {mensajeAdvertenciaDisplay}
     
     </>
   )
