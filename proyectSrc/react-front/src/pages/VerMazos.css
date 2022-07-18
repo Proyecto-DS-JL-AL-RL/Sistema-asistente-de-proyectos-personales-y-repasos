@@ -1,7 +1,7 @@
 
 .container_sinTarjeta{
     background-color: aqua;
-    width: 70%;
+    width: 80%;
     height: 60%;
     position:relative;
     display: flex;
@@ -27,3 +27,40 @@
     max-width: 30rem;
     max-height: 30rem;
 }
+
+.container-mazo{
+    position:relative;
+    display: flex;
+    justify-content: center;
+    top:2rem;
+    left:10rem;
+    width: 74%;
+    height: 65%;
+    overflow-x: hidden;
+    overflow-y: scroll; 
+    border-style: double;
+    background: rgb(106, 106, 106);
+    border: 1rem solid purple;
+}
+
+.mazo_hijo{
+    margin: 0 auto;
+}
+
+.mazo-add{
+    z-index: 1;
+    position:absolute;    
+    width:30rem;
+    left:7.5rem;
+    height:25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-mazo-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+

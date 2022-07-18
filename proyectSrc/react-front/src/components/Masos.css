@@ -1,0 +1,35 @@
+.text_column{
+    margin-top: 10%;
+    float: left;
+    padding: 10px;
+    height: 300px;
+}
+
+.fila:after{
+    content: "";
+    display: table;
+    clear: both;
+}
+.izq{
+    width: 35%;
+    height: 65px;
+    overflow: visible;
+}
+
+.der{
+    width: 65%;
+}
+
+.mazo-edit{
+    position:absolute;    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-mazo-button{
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
