@@ -29,7 +29,8 @@ import '../pages/funcionalidades.css'
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import AddIcon from '@mui/icons-material/Add';
-
+import Badge  from '@mui/material/Badge';
+import ClearIcon from '@mui/icons-material/Clear';
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -98,70 +99,96 @@ export default function Mazos(props) {
   return (
 
     <React.Fragment>
-       <Box sx={{
-                  width: 350,
-                  height: 350,
-                  zIndex:1,
-                  position: 'relative',
-                }}
-                >
+       <Box className="config-mazos" sx={{zIndex: 1}}>
                   {showEdit?
                       <Grow  timeout={1000}  in={showEdit}>  
-                      <Box className="mazo-edit" justifyContent="center" sx={{ position:'absolute', display: 'flex', flexWrap:'wrap' }}>  
-                        <Card  sx={{borderRadius: '3%', border: '0.5px solid black'}}>
-                            <CardContent>
-                                <Tooltip title="Cancelar" placement="right">
-                                      <Button sx={{mx:'90%'}} onClick={(e)=>{setShowEdit(false)}}>
-                                        <CloseIcon sx={{p:1, backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
-                                      </Button>
-                                 </Tooltip>   
-                                    <Box  justifyContent="center" sx={{ display: 'flex', flexWrap: 'wrap' }}>
-                                        <FormControl  sx={{m: 2, width: '45ch' }} variant="outlined">
-                                            <Typography sx={{fontWeight: 'bold', mx:'1vw'}} variant="h4" component="div">
-                                                Editar Mazo
-                                            </Typography>
-                                              <TextField  onChange={(e=>{setTitulo(e.target.value)})} sx={{py:2}} id="outlined-basic" label="Titulo de la Sección" value= {titulo} variant="outlined" />
-                                              <TextField
-                                                  
-                                                  id="outlined-multiline-static"
-                                                  label="Descripcion"
-                                                  multiline
-                                                  rows={4}
-                                                  onChange={(e=>{
-                                                    setDescripcion(e.target.value)
-                                                    
-                                                  })}
-                                                  value={descripcion}
-                                                />
-                                      </FormControl>
-                                    </Box>
-                                    <Box className="edit-mazo-button" justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>
-                                      <Tooltip title="Guardar" placement="left">
-                                            <Button className="edit-mazo-button" onClick={()=>{setShowEdit(false)
-                                                                  axios.put('/api/mazos/'+mazo._id, { "Titulo":titulo,
-                                                                  "Descripcion":descripcion})
-                                                                  window.location.reload(false);
-                                            }} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
-                                                <SaveIcon sx={{p:1}}/>
-                                            </Button>
-                                        </Tooltip>
+                      <Box className="mazo-edit" sx={{mt:'3%'}}>  
+                        <Badge 
+                                      badgeContent={
+                                        <Tooltip title="Guardar" placement="left">
+                                            <button className='button-close' onClick={(e)=>{setShowEdit(false)}}>
+                                                <ClearIcon sx={{color:'white',fontSize:'1em','&:hover':{color:'black'}}}/>
+                                            </button>
+                                          </Tooltip>
+                                      }
+                                      sx={{
+                                          width:'80%',
+                                          height:'80%',
+                                          mx:'auto',
+                                          p:3,
+                                          boxShadow:  '0 0 8px 8px rgba(0, 0,0 , 0.6)',
+                                          borderRadius:'3%',
+                                          border:'2px solid black',
+                                          backgroundColor:'white',   
+                                      }}
+                                      
+                                      >  
+                            <Card>
+                                <CardContent>
+                                        <Box  justifyContent="center" sx={{ display: 'flex', flexWrap: 'wrap' }}>
+                                            <FormControl  sx={{ width: '25vw' }} variant="outlined">
+                                                <Typography sx={{fontWeight: 'bold', mx:'1vw'}} variant="h4" component="div">
+                                                    Editar Mazo
+                                                </Typography>
+                                                  <TextField  onChange={(e=>{setTitulo(e.target.value)})} sx={{py:2}} 
+                                                    id="outlined-basic" label="Titulo de la Sección" value= {titulo} variant="outlined" />
+                                                  <TextField
+                                                      
+                                                      id="outlined-multiline-static"
+                                                      label="Descripcion"
+                                                      multiline
+                                                      rows={4}
+                                                      onChange={(e=>{
+                                                        setDescripcion(e.target.value)
+                                                        
+                                                      })}
+                                                      value={descripcion}
+                                                    />
+                                          </FormControl>
                                         </Box>
-                              </CardContent>
-                        </Card>
-                        </Box>
-                      </Grow>:null}
+                                        <Box className="edit-mazo-button" justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>
+                                          <Tooltip title="Guardar" placement="left">
+                                                <Button className="edit-mazo-button" onClick={()=>{setShowEdit(false)
+                                                                      axios.put('/api/mazos/'+mazo._id, { "Titulo":titulo,
+                                                                      "Descripcion":descripcion})
+                                                                      window.location.reload(false);
+                                                }} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
+                                                    <SaveIcon sx={{p:1}}/>
+                                                </Button>
+                                            </Tooltip>
+                                            </Box>
+                                          </CardContent>
+                                      </Card>
+                                    </Badge>
+                              </Box>
+                          </Grow>:null}
                       {showEditCard?
                       <Grow  timeout={1000}  in={showEditCard}>  
-                        <Box className="mazo-edit"  justifyContent="center" sx={{ position:'absolute', display: 'flex' }}>
-                            <Card  sx={{borderRadius: '3%', width: '160%', border: '0.5px solid black'}}>
+                        <Box className="mazo-edit"  justifyContent="center" sx={{mt:'3%'}}>
+                        <Badge 
+                                    badgeContent={
+                                      <Tooltip title="Guardar" placement="left">
+                                          <button className='button-close' onClick={(e)=>{setShowEditCard(false)}}>
+                                              <ClearIcon sx={{color:'white',fontSize:'1em','&:hover':{color:'black'}}}/>
+                                          </button>
+                                        </Tooltip>
+                                    }
+                                    sx={{
+                                        width:'80%',
+                                        height:'80%',
+                                        mx:'auto',
+                                        p:3,
+                                        boxShadow:  '0 0 8px 8px rgba(0, 0,0 , 0.6)',
+                                        borderRadius:'3%',
+                                        border:'2px solid black',
+                                        backgroundColor:'white',   
+                                    }}
+                                    
+                                    >  
+                            <Card>
                                 <CardContent >
-                                          <Button sx={{mx:'90%'}} onClick={(e)=>{setShowEditCard(false)}}>
-                                              <Tooltip title="Guardar" placement="left">  
-                                                  <CloseIcon sx={{p:1, backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
-                                              </Tooltip>
-                                          </Button>   
-                                        <Box  justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>
-                                            <FormControl  sx={{width: '45ch' }} variant="outlined">
+                                        <Box  justifyContent="center" sx={{display: 'flex', flexWrap: 'wrap'  }}>
+                                            <FormControl  sx={{width: '25vw' }} variant="outlined">
                                             <Typography sx={{fontWeight: 'bold', mx:'1vw'}} variant="h4" component="div">
                                                     Editar Tarjeta
                                                 </Typography>
@@ -228,49 +255,65 @@ export default function Mazos(props) {
                                         </Box>
                                   </CardContent>
                             </Card>
+                          </Badge>
                         </Box>
                       </Grow>:null}
                       {showAddCard?
                       <Grow  timeout={1000}  in={showAddCard}>  
-                        <Box  className="mazo-edit" justifyContent="center" sx={{position:'absolute', display: 'flex' }}>
-                            <Card  sx={{borderRadius: '3%', width: '160%', border: '0.5px solid black'}}>
-                                <CardContent >
-                                          <Button sx={{mx:'90%'}} onClick={(e)=>{setShowAddCard(false)}}>
-                                              <Tooltip title="Guardar" placement="left">  
-                                                  <CloseIcon sx={{p:1, backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
-                                              </Tooltip>
-                                          </Button>   
-                                        <Box  justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>
-                                            <FormControl  sx={{width: '45ch' }} variant="outlined">
-                                            <Typography sx={{fontWeight: 'bold', mx:'1vw'}} variant="h4" component="div">
-                                                   Añadir Tarjetas
-                                                </Typography>
-                                                <TextField onChange={(e=>{
-                                                    setPregunta(e.target.value)
-                                                    
-                                                  })} sx={{py:'2%'}} id="outlined-basic" label="Pregunta" defaultValue= {pregunta} variant="outlined" />
-                                                  <TextField onChange={(e=>{
-                                                    setOpcion1(e.target.value)
-                                                    
-                                                  })} sx={{py:'2%'}} id="outlined-basic" label="Opción 1" defaultValue= {opcion1} variant="outlined" />
-                                                  <TextField  onChange={(e=>{
-                                                    setOpcion2(e.target.value)
-                                                    
-                                                  })}sx={{py:'2%'}} id="outlined-basic" label="Opción 2" defaultValue= {opcion2} variant="outlined" />
-                                                  <TextField  onChange={(e=>{
-                                                    setOpcion3(e.target.value)
-                                                    
-                                                  })} sx={{py:'2%'}} id="outlined-basic" label="Opción 3" defaultValue= {opcion3} variant="outlined" />
-                                                  <TextField onChange={(e=>{
-                                                    setOpcion4(e.target.value)
-                                                    
-                                                  })} sx={{py:'2%'}} id="outlined-basic" label="Opción 4" defaultValue= {opcion4} variant="outlined" />
-                                                  <TextField onChange={(e=>{
-                                                    setRespuesta(e.target.value)
-                                                    
-                                                  })} sx={{py:'2%'}} id="outlined-basic" label="Respuesta (poner el número de la  rpta e.g : 1 o 2 o ..)" defaultValue= {respuesta} variant="outlined" />
-                                          </FormControl>
-                                        </Box>
+                        <Box  className="mazo-edit" justifyContent="center" sx={{mt:'3%'}}>
+                        <Badge 
+                                    badgeContent={
+                                      <Tooltip title="Guardar" placement="left">
+                                          <button className='button-close' onClick={(e)=>{setShowAddCard(false)}}>
+                                              <ClearIcon sx={{color:'white',fontSize:'1em','&:hover':{color:'black'}}}/>
+                                          </button>
+                                        </Tooltip>
+                                    }
+                                    sx={{
+                                        width:'80%',
+                                        height:'80%',
+                                        mx:'auto',
+                                        p:3,
+                                        boxShadow:  '0 0 8px 8px rgba(0, 0,0 , 0.6)',
+                                        borderRadius:'3%',
+                                        border:'2px solid black',
+                                        backgroundColor:'white',   
+                                    }}
+                                    
+                                    >  
+                            <Card>
+                              <CardContent >    
+                                  <Box  justifyContent="center" sx={{ display: 'flex', flexWrap: 'wrap' }}>
+                                      <FormControl  sx={{width: '25vw' }} variant="outlined">
+                                      <Typography sx={{fontWeight: 'bold'}} variant="h4" component="div">
+                                              Añadir Tarjetas
+                                          </Typography>
+                                          <TextField requerid  onChange={(e=>{
+                                              setPregunta(e.target.value)
+                                              
+                                            })} sx={{py:'2%'}} id="outlined-basic" label="Pregunta" defaultValue= {pregunta} variant="outlined" />
+                                            <TextField onChange={(e=>{
+                                              setOpcion1(e.target.value)
+                                              
+                                            })} sx={{py:'2%'}} id="outlined-basic" label="Opción 1" defaultValue= {opcion1} variant="outlined" />
+                                            <TextField  onChange={(e=>{
+                                              setOpcion2(e.target.value)
+                                              
+                                            })}sx={{py:'2%'}} id="outlined-basic" label="Opción 2" defaultValue= {opcion2} variant="outlined" />
+                                            <TextField  onChange={(e=>{
+                                              setOpcion3(e.target.value)
+                                              
+                                            })} sx={{py:'2%'}} id="outlined-basic" label="Opción 3" defaultValue= {opcion3} variant="outlined" />
+                                            <TextField onChange={(e=>{
+                                              setOpcion4(e.target.value)
+                                              
+                                            })} sx={{py:'2%'}} id="outlined-basic" label="Opción 4" defaultValue= {opcion4} variant="outlined" />
+                                            <TextField onChange={(e=>{
+                                              setRespuesta(e.target.value)
+                                              
+                                            })} sx={{py:'2%'}} id="outlined-basic" label="Respuesta (poner el número de la  rpta e.g : 1 o 2 o ..)" defaultValue= {respuesta} variant="outlined" />
+                                    </FormControl>
+                                  </Box>
                                         <Box  className="edit-mazo-button" justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>
                                                       <Tooltip title="Guardar" placement="left">
                                                           <Button  onClick={()=>{
@@ -318,8 +361,9 @@ export default function Mazos(props) {
                                                           </Button>
                                                       </Tooltip>
                                         </Box>
-                                  </CardContent>
-                            </Card>
+                                  </CardContent>    
+                              </Card>
+                            </Badge>
                         </Box>
                       </Grow>:null}
         </Box> 
