@@ -21,17 +21,21 @@ export default function ObjetivosList(props){
                 </Grid>
                 <Grid container item  sx = {{overflowY :'auto', width:'100%',bgcolor:'#D9D9D9',height:'80%'}}>
                     <Grid item container sx = {{bgcolor:'#D9D9D9', height : '100%'}} direction = 'row'>
-                            {props.objetivos.map((obj,idx)=>(
+                            {objetivos.map((obj,idx)=>{
+                                const fecha = new Date(obj.Fecha);
+                                const fechaStringArr = [String(fecha.getDate()),String(fecha.getMonth()+1),String(fecha.getFullYear())]
+                                const stringFecha = fechaStringArr.join('/');
+                                return (
                                 <Grid container key = {idx} item xs ={12} height = '100px'  direction = 'column'>
                                     <Typography variant = 'h5'>
-                                        {obj.titulo}
+                                        {obj.Titulo + " - "+stringFecha}
                                     </Typography>
                                     <Typography variant = 'h6'>
-                                        {obj.descripcion}
+                                        {obj.Descripcion}
                                     </Typography>
                                    
                                 </Grid>
-                            ))}
+                            )})}
                     </Grid>
 
             </Grid>

@@ -45,29 +45,19 @@ function App() {
   const { getSession, logout , sessionState , setSessionState,setCurrentState,currentState }= useContext(AccountContext);
   const location = useLocation();
   const history = useHistory();
-  const [listeningState,setListeningState] = useState(false);
-  const commands = getCommands(location,history);
+  const [lAfterComandFlag,setAfterCommandFlag] = useState(false);
+  const commands = getCommands(location,history,setAfterCommandFlag,lAfterComandFlag);
   const {listening,transcript} = useSpeechRecognition({commands:commands});
   const [mensajesCortos,setMensajesCortos] = useState(null);
   
   const beforeUnload = ()=>{
-    if (listening)
-      SR.stopListening();
+    if (listening){
+      setAfterCommandFlag(false);
+      SR.stopListening();      
+    }      
   }
 
-  document.addEventListener("visibilitychange", event => {
-    
 
-    if (listeningState){
-    if (document.visibilityState === "visible") {
-      SR.startListening({language: 'es', continuous: CONTINOUS_});
-    } else {
-      SR.stopListening();
-    }
-    }else{
-      SR.stopListening(); 
-    }
-  })
   const listen = ()=> { SR.startListening({language:'es',continuous:false})}
 
   const [logged,setLogged] = useState(true);
@@ -110,13 +100,21 @@ function App() {
     }
   },[sessionState]);
 
+  useEffect(()=>{
+    if (listening){
+      setAfterCommandFlag(false);
+    }else{
+      if (lAfterComandFlag)
+        listen();
+    }
+  },[listening]);
 
-  //<button onClick = {()=>{listening?SR.stopListening():SR.startListening({language: 'es', continuous: CONTINOUS_});setListeningState(!listeningState)}}>xd</button>
+
+
   return (
           <div className='container-main'>
                   
                   <DrawerComponent/>
-                  
                   
                   <div className='other-container'>
                     <div className='head-container'>

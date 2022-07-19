@@ -7,6 +7,7 @@ var Logro = new Schema({
     ProyectId : {type: Schema.Types.ObjectId,ref : 'Proyecto'},
     Tipo : String,
     UrlRef : String,
+    RefTitle:String,
     Puntos : Number,
     Fecha : Date
 })

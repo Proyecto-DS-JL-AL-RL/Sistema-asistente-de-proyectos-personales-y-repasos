@@ -12,7 +12,7 @@ const paths = {
 
 
 
-const getCommands = (location,history) =>{
+const getCommands = (location,history,setAfterCommandFlag,lAfterComandFlag) =>{
     const comando = [{
         command: ["Llévame a *(.)"],
         callback: (frase) =>{
@@ -33,6 +33,15 @@ const getCommands = (location,history) =>{
         },
         isFuzzyMatch: true,
         fuzzyMatchingThreshold: 0.85    
+    },
+    {
+        command: "g",
+        callback: (command,spokeNPhrase,ratio) =>{
+            if (!lAfterComandFlag)
+                setAfterCommandFlag(true);         
+        },
+        isFuzzyMatch: true,
+        fuzzyMatchingThreshold: 0    
     }]
 
     return comando;

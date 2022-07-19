@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var Proyecto = new Schema({
     UserSub : String,
     Titulo : String,
-    Objetivos : [{Titulo : String , Descripcion : String}],
+    Objetivos : [{type: Schema.Types.ObjectId , ref: 'Objetivo'}],
     Puntajes : {type: Schema.Types.ObjectId , ref: 'Puntaje'},
     Logros : [{type: Schema.Types.ObjectId, ref : 'Logro'}],
     Progreso : Number,

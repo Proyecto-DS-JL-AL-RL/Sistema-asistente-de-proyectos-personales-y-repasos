@@ -18,8 +18,8 @@ router.post('./Proyectos/addProyect', async function(req,res){
 });
 
 router.post('/Proyectos/addObjetivo', async function(req,res){
-    //let resp = await datProyecto.addObjetivo(req.body);
-    //res.json(resp);
+    let resp = await datProyecto.addObjetivo(req.body);
+    res.json(resp);
 });
 
 //Init
