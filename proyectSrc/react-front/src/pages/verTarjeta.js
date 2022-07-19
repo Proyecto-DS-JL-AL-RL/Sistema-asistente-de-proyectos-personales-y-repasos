@@ -54,6 +54,7 @@ export default function VerTarjeta(props) {
   const [disabledB, setDisabledB] = React.useState("")
   const [disabledC, setDisabledC] = React.useState("")
   const [disabledD, setDisabledD] = React.useState("")
+  const tab = <>&nbsp;&nbsp;&nbsp;&nbsp;</>;
   let history = useHistory()
   const breadcrumbs = [
     <Link underline="hover" key="1" color="inherit" href="/">
@@ -140,22 +141,26 @@ export default function VerTarjeta(props) {
       
         <Box className="box-result">       
         <Typography sx={{fontSize:'3vw', fontWeight: 'bold', color:'gold'}} variant="h2">Resultados</Typography>
-            <Typography sx={{fontSize:'1.5vw', fontWeight: 'bold', color:'white'}} className="text-result" variant="h5">
+            <Typography sx={{ fontWeight: 'bold', color:'white'}} className="text-result" variant="h5">
               <ul>
                 {puntajeTarjeta.map((puntaje, index) =>
                     <li key={index}>
-                    Puntaje de la tarjeta {index+1}:  {puntaje.toFixed(3)}
+                    Puntaje de la tarjeta {index+1}: {tab}  {puntaje.toFixed(3)}
                     </li>
                     )}
               </ul>
-              Puntaje promedio del Mazo:     {puntajeMazo.toFixed(3)} <br/>
-          </Typography> 
-              <Button onClick={
-              ()=>{
-                history.push('/Mazos');
-              }
-            } className="Botton-voler-inicio" sx={{p:2,  borderRadius: 5, py: 2, color: 'white' ,background:'#0000cc'}} variant="contained" size="large">
-          <Typography sx= {{fontWeight: 'bold', fontSize:'1vw'}} variant = 'h6'>ir a Mazos</Typography>
+            <Divider sx={{mt:'2%', color:'black', border:'0.1rem solid black'}} variant="middle" />
+            <Typography sx={{mt:'2%', fontWeight: 'bold', color:'white'}} className="text-result" variant="h4">
+                Puntaje del Mazo:   {puntajeMazo.toFixed(3)} <br/>
+              </Typography>
+          </Typography>
+        </Box>
+        <Button onClick={
+                    ()=>{
+                      history.push('/Mazos');
+                    }
+                  } className="Botton-voler-inicio" sx={{p:2,  borderRadius: 5, py: 2, color: 'white' ,background:'#0000cc'}} variant="contained" size="large">
+                  <Typography sx= {{fontWeight: 'bold', fontSize:'1vw'}} variant = 'h6'>ir a Mazos</Typography>
               </Button>
               <Button className="Botton-voler-intentar-again" onClick={
                 ()=>{
@@ -164,7 +169,6 @@ export default function VerTarjeta(props) {
               } sx={{py:2, borderRadius: 5, color: 'white', background:'#00b347'}} variant="contained" size="large">
                   <Typography sx= {{fontWeight: 'bold', fontSize:'1vw'}} variant = 'h6'>volver intentar</Typography>
               </Button>
-        </Box>
     </Box>:null}  
     <Grow in={true}>
                 <Paper sx={{
@@ -229,7 +233,7 @@ export default function VerTarjeta(props) {
                                                                                       setDisabledB("disabled")
                                                                                       setDisabledC("disabled")
                                                                                       setDisabledD("disabled")
-                                                                                      let puntaje = ((4-intentos)/4)*300
+                                                                                      let puntaje = ((4-intentos)/4)*100
                                                                                       let update = {}
                                                                                       update['$set'] = {}
                                                                                       let key_puntos = "Tarjetas."+(page-1)+".Puntos"
@@ -240,10 +244,10 @@ export default function VerTarjeta(props) {
                                                                                       
                                                                                         if (page === mazo.Tarjetas.length){
                                                                                           let sum = puntajeTarjeta.reduce((previous, current) => current += previous);
-                                                                                          let avg = sum / puntajeTarjeta.length;
-                                                                                          setPuntajesMazo(avg)
+                                                                                          //let avg = sum / puntajeTarjeta.length;
+                                                                                          setPuntajesMazo(sum)
                                                                                           axios.put('/api/mazos/'+mazo._id, {
-                                                                                            "Puntos":avg
+                                                                                            "Puntos":sum
                                                                                           })
                                                                                           setShowResult(true)
                                                                                         }
@@ -264,7 +268,7 @@ export default function VerTarjeta(props) {
                                                                                       setDisabledB("disabled")
                                                                                       setDisabledC("disabled")
                                                                                       setDisabledD("disabled")
-                                                                                      let puntaje = ((4-intentos)/4)*300
+                                                                                      let puntaje = ((4-intentos)/4)*100
                                                                                       let update = {}
                                                                                       update['$set'] = {}
                                                                                       let key_puntos = "Tarjetas."+(page-1)+".Puntos"
@@ -275,10 +279,10 @@ export default function VerTarjeta(props) {
                                                                                      
                                                                                         if (page === mazo.Tarjetas.length){
                                                                                           let sum = puntajeTarjeta.reduce((previous, current) => current += previous);
-                                                                                          let avg = sum / puntajeTarjeta.length;
-                                                                                          setPuntajesMazo(avg)
+                                                                                          //let avg = sum / puntajeTarjeta.length;
+                                                                                          setPuntajesMazo(sum)
                                                                                           axios.put('/api/mazos/'+mazo._id, {
-                                                                                            "Puntos":avg
+                                                                                            "Puntos":sum
                                                                                           })
                                                                                           setShowResult(true)
                                                                                         }
@@ -305,7 +309,7 @@ export default function VerTarjeta(props) {
                                                                                       setDisabledB("disabled")
                                                                                       setDisabledC("disabled")
                                                                                       setDisabledD("disabled")
-                                                                                      let puntaje = ((4-intentos)/4)*300
+                                                                                      let puntaje = ((4-intentos)/4)*100
                                                                                       let update = {}
                                                                                       update['$set'] = {}
                                                                                       let key_puntos = "Tarjetas."+(page-1)+".Puntos"
@@ -316,10 +320,10 @@ export default function VerTarjeta(props) {
                                                                                       
                                                                                         if (page === mazo.Tarjetas.length){
                                                                                           let sum = puntajeTarjeta.reduce((previous, current) => current += previous);
-                                                                                          let avg = sum / puntajeTarjeta.length;
-                                                                                          setPuntajesMazo(avg)
+                                                                                        //  let avg = sum / puntajeTarjeta.length;
+                                                                                          setPuntajesMazo(sum)
                                                                                           axios.put('/api/mazos/'+mazo._id, {
-                                                                                            "Puntos":avg
+                                                                                            "Puntos":sum
                                                                                           })
                                                                                           setShowResult(true)
                                                                                         }
@@ -348,10 +352,10 @@ export default function VerTarjeta(props) {
                                                                                       setPuntajeTarjeta(puntajeTarjeta)
                                                                                       if (page === mazo.Tarjetas.length){
                                                                                         let sum = puntajeTarjeta.reduce((previous, current) => current += previous);
-                                                                                        let avg = sum / puntajeTarjeta.length;
-                                                                                        setPuntajesMazo(avg)
+                                                                                        //let avg = sum / puntajeTarjeta.length;
+                                                                                        setPuntajesMazo(sum)
                                                                                         axios.put('/api/mazos/'+mazo._id, {
-                                                                                          "Puntos":avg
+                                                                                          "Puntos":sum
                                                                                         })
                                                                                         setShowResult(true)
                                                                                       }

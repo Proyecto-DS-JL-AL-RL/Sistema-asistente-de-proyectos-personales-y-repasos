@@ -44,13 +44,20 @@
     flex-wrap:wrap;
     align-items: center;
     border-radius: 5%;
+    overflow-x: hidden;
+    overflow-y: scroll; 
     background-color:#9179ba;
     border:0.5rem solid  #00FFFF;
 
 }
 
+.box-result::-webkit-scrollbar {
+    width: 0;  
+    background: transparent; 
+}
+
 .Botton-voler-inicio{
-    top:22%;
+    top:83%;
     left: 0rem;
     position: relative;
     justify-content: center;
@@ -60,7 +67,7 @@
 }
 
 .Botton-voler-intentar-again{
-    top: 22%;
+    top: 83%;
     left: 1rem;
     position: relative;
     justify-content: center;

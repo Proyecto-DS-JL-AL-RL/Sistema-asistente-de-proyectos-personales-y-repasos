@@ -15,9 +15,27 @@
 }
 
 .container-mehera{ 
-    Display: flex;
-    Height: 100vh;
-    Width: 100vw; 
-    Align-Items: center;
-    Justify-Content: centre;
+    display: flex;
+    height: 100vh;
+    width: 100vw; 
+    align-items: center;
+    justify-Content: center;
+}
+
+.container-box-funcionalidades{
+    margin-top: 5vw;
+    margin-left: 15vw;
+    display: flex;
+    position:relative;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-box-butttons-funcionalidades{
+    border: 1rem solid rgb(152, 76, 182);
+    border-radius: 3%;
+    display: flex;
+    flex-wrap:wrap;
+    background:'#BDBEC3';
+    width:65vw;
 }
