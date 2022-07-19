@@ -33,4 +33,16 @@ router.put('/mazos/:id', async function(req,res){
     res.json(resp);
 });
 
+//router.put('/tarjetas/puntos/:id', async function(req,res){
+    //console.log(req.body)
+    //let puntaje = ((4-req.body.intentos)/4)*300
+    //let update = {}
+    //update['$set'] = {}
+    //let key_puntos = "Tarjetas."+(req.body.index-1)+".Puntos"
+    //update['$set'][key_puntos] =  puntaje
+    //console.log(update)
+    //let resp = await datMazos.updateMazos(req.params.id, update);
+    //res.json(resp);
+//});
+
 module.exports = router;

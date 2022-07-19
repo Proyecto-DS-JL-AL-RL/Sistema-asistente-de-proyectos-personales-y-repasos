@@ -8,8 +8,10 @@ var Mazos = new Schema({
     Tarjetas:[{
             Pregunta: String,
             Opciones: [String],
-            Respuesta: Number
-    }]
+            Respuesta: Number,
+            Puntos: Number
+    }],
+    Puntos:Number
 })
 
 module.exports = mongoose.model('Mazos', Mazos);
