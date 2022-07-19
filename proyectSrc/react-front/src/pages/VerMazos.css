@@ -2,7 +2,7 @@
 .container_sinTarjeta{
     background-color: aqua;
     width: 80%;
-    height: 60%;
+    height: 70%;
     position:relative;
     display: flex;
     justify-content: center;
@@ -15,17 +15,16 @@
 .conteiner-text{
     position:relative;
     display: flex;
-    justify-content: center;
+    font-size: 5vw;
     align-items: center;
-    font-size: 3em;
     font-weight:bold;
     color:black;
 }
 
 .flashcard{
     position: relative;
-    max-width: 30rem;
-    max-height: 30rem;
+    max-width: 30vw;
+    max-height: 30vw;
 }
 
 .container-mazo{

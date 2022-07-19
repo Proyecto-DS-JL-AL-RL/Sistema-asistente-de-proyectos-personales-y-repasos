@@ -231,9 +231,9 @@ const mazos = [
                       </Box>:
                       <Box className="container_sinTarjeta">
                             <div className="row">
-                              <Typography variant="h2" sx={{fontWeight: 'bold', textAlign:'center', component:"div"}}>Crea Un nuevo Mazo <br/></Typography>
+                            <Typography variant="h3" sx={{fontWeight: 'bold', textAlign:'center', component:"div"}}>Crea Un nuevo Mazo <br/></Typography>
                             <div className="conteiner-text">
-                              <Typography variant="h6" component="div">
+                              <Typography sx={{maxWidth:'100%'}} component="div">
                                 Bienvenido a la sección de repasos. Aqui podrá repasar los temas  que son de su interés.<br/>
                                 Puedes usar el botón de {<AddIcon sx={{width: 40, height: 40, background:'purple', color:'white', p:1, borderRadius:50, 
                                                         '&:hover': {backgroundColor: '#6f2da8'}}}/>} para crear un mazo y/o tarjetas.

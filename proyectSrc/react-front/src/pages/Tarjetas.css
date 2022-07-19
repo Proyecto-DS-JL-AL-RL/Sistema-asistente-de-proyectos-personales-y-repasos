@@ -19,3 +19,50 @@
     justify-content: center;
     align-items: center;
 }
+
+
+
+.container-showResult{
+    z-index: 1;
+    box-shadow: 0 0 8px 8px rgba(0, 0,0 , 0.6);
+    margin-top:4rem;
+    background-color:  #bd89e4;
+    height:36rem;
+    width:45rem;
+    position:relative;
+    text-align: center;
+    border-radius: 5%;
+    justify-content: center;
+}
+
+.box-result{
+    position: absolute;
+    margin-top: 1rem;
+    width:95%;
+    left:1rem;
+    height:25rem;
+    border-radius: 5%;
+    background-color:#a270f9;
+    border:1rem solid  #00FFFF;
+}
+
+.Botton-voler-inicio{
+    top:27rem;
+    height:3.5rem;
+    text-align: center;
+    width:15rem;
+}
+
+.Botton-voler-intentar-again{
+    top:27rem;
+    height:3.5rem;
+    text-align: center;
+    width:15rem;
+}
+
+.box-text-result{
+    
+    justify-content: flex-end;
+    position: relative;
+    margin-top: 100rem;
+}

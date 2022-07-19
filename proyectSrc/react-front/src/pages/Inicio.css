@@ -11,15 +11,15 @@
   }
   
   .right {
-    width: 35%;
+    width: 40%;
     height: 65px;
     overflow: visible;
 }
   
   .left {
     margin-top:14%;
-    width: 65%;
-    height: 18rem;
+    width: 60%;
+    height: 25rem;
     overflow: hidden;
     overflow-x: hidden;
     overflow-y: scroll;
