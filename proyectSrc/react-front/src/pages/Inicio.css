@@ -11,14 +11,14 @@
   }
   
   .right {
-    width: 40%;
+    width: 25%;
     height: 65px;
     overflow: visible;
 }
   
   .left {
     margin-top:14%;
-    width: 60%;
+    width: 70%;
     height: 25rem;
     overflow: hidden;
     overflow-x: hidden;
