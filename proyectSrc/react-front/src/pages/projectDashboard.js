@@ -4,18 +4,18 @@ import LogrosShow from '../components/LogrosShow';
 import ProjectStats from '../components/ProjectStats';
 import ObjetivosList from '../components/ObjetivosList';
 import { useHistory, useParams } from 'react-router-dom';
+import { AccountContext } from '../AccountContext';
 import ObjetivoForm from '../components/objForm';
 import axios from 'axios';
 
-const arrayNum = Array.from({length:2},(x,i)=>({titulo:'Titulo de un Objetivo',descripcion:'Descripcion'}));
-const prueba = Array.from({length:3},(x,i)=>({titulo:'Actividad del Logro',descripcion:'Descripción',hasFile:true,fileTittle:'Archivo',fileType:'URL',fileUrl:'https://github.com/Proyecto-DS-JL-AL-RL/Sistema-asistente-de-proyectos-personales-y-repasos'}));
 export default function ProyectoView(){
     const history = useHistory();
     const {idProyecto} = useParams();
     const [pTitulo,setPTitulo] = useState ('Titulo Proyecto');
 
-    const [objetivos,setObjetivos] = useState(arrayNum);
-    const [logros,setLogros] = useState(prueba);
+    const [objetivos,setObjetivos] = useState([]);
+    const [logros,setLogros] = useState([]);
+    const [stats,setStats] = useState({Puntos:0,ConstanciaDiff:0,LogrosDiff:0});
     const[showForm,setShowForm] = useState(false);
     
     const getProyectInfo = async () => {
@@ -24,8 +24,11 @@ export default function ProyectoView(){
             axios.get('http://localhost:4000/api/Proyectos/getProyecto/'+idProyecto)
                 .then(data=>{
                     console.log(data.data);
-                    const {Titulo} = data.data;
+                    const {Titulo,Objetivos,Logros,Puntajes} = data.data;
                     setPTitulo(Titulo);
+                    setLogros(Logros);
+                    setObjetivos(Objetivos);
+                    setStats(Puntajes);
                 })
                 .catch(err=>console.log(err));
         }
@@ -61,7 +64,7 @@ export default function ProyectoView(){
                                 </Typography>
                             </Button>
                             <Box sx = {{height:'80%',marginTop:'10px'}}>
-                            <ProjectStats/>
+                            <ProjectStats stats = {stats}/>
                             </Box>
                     </Grid>
                 </Grid>
@@ -71,7 +74,7 @@ export default function ProyectoView(){
                 </Box>
 
             {showForm?
-            <ObjetivoForm close = {()=>setShowForm(false)} activities = {objetivos} setActivities = {setObjetivos} />
+            <ObjetivoForm close = {()=>setShowForm(false)} activities = {objetivos} setActivities = {setObjetivos} idProyecto = {idProyecto}/>
             :
             null
             }

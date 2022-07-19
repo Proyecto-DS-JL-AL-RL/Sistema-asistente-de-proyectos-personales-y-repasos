@@ -7,7 +7,8 @@ var Objetivo = new Schema({
     Descripcion : String,
     Peso : Number,
     ProyectoAsociado : { type : Schema.Types.ObjectId ,ref : 'Proyecto'},
-    Puntos:Number
+    Puntos:Number,
+    Fecha: Date
 })
 
 module.exports = mongoose.model('Objetivo', Objetivo);

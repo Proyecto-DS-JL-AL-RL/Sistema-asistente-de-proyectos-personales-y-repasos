@@ -76,6 +76,8 @@ var getState = async function (userSub){
 }
 
 
+
+
 module.exports.initUserState = initUserState;
 module.exports.setActivityState = setActivityState;
 module.exports.getState = getState;

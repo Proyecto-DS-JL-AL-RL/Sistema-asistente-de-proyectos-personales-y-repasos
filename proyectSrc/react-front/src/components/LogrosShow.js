@@ -14,22 +14,22 @@ export default function LogrosShow (props){
     return(
         <React.Fragment>
             <Typography variant = 'h3'>
-            Logros Recientes
+            Actividad Reciente
             </Typography> 
             <Grid container item sx={{ height : '100%'}} direction = 'row' spacing={1}>
             {logros.map((logro,idx)=>(
                 <Grid item key = {idx} sx ={{}} xs={12} mr = {2}>
                     <Card sx ={{height:'180px',padding:'20px'}}>
                         <Typography variant = 'h4'>
-                            {logro.titulo}
+                            {logro.Titulo}
                         </Typography>
                         <Typography variant = 'h5' sx = {{height:'50%'}}>
-                            {logro.descripcion}
+                            {logro.Descripcion}
                         </Typography>
-                        {logro.hasFile?
+                        {logro.Tipo?
                         <Button sx = {{height:'50px'}} variant = 'contained'
-                            onClick = {()=>{abrirUrl(logro.fileUrl)}}>
-                            {logro.fileTittle}
+                            onClick = {()=>{abrirUrl(logro.UrlRef)}}>
+                            {logro.RefTitle}
                             <InsertDriveFileIcon />
                         </Button>
                         :
