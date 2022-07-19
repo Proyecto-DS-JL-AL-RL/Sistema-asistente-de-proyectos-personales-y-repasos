@@ -107,7 +107,7 @@ export default function Mazos(props) {
                 >
                   {showEdit?
                       <Grow  timeout={1000}  in={showEdit}>  
-                      <Box className="mazo-edit" justifyContent="center" sx={{ position:'absolute', display: 'flex' }}>  
+                      <Box className="mazo-edit" justifyContent="center" sx={{ position:'absolute', display: 'flex', flexWrap:'wrap' }}>  
                         <Card  sx={{borderRadius: '3%', border: '0.5px solid black'}}>
                             <CardContent>
                                 <Tooltip title="Cancelar" placement="right">

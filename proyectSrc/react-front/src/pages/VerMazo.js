@@ -174,8 +174,9 @@ const mazos = [
                                             </Typography>
                                             <Box  justifyContent="center" sx={{ display: 'flex', flexWrap: 'wrap' }}>
                                                 <FormControl  sx={{m: 2, width: '45ch' }} variant="outlined">
-                                                      <TextField sx={{py:2}} id="outlined-basic" label="Titulo de la Sección" defaultValue = {titulo} onChange={(e=>{setTitulo(e.target.value)})} variant="outlined" />
+                                                      <TextField required sx={{py:2}} id="outlined-basic" label="Titulo de la Sección" defaultValue = {titulo} onChange={(e=>{setTitulo(e.target.value)})} variant="outlined" />
                                                       <TextField
+                                                          required
                                                           id="outlined-multiline-static"
                                                           label="Descripcion"
                                                           multiline

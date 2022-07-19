@@ -137,33 +137,34 @@ export default function VerTarjeta(props) {
       > 
     {showResult?
     <Box className="container-showResult">
-      <Typography variant="h2">Resultados</Typography>
+      
         <Box className="box-result">       
-            <Typography variant="h5">
-              Puntaje del Mazo:     {puntajeMazo.toFixed(3)} <br/>
+        <Typography sx={{fontSize:'3vw', fontWeight: 'bold', color:'gold'}} variant="h2">Resultados</Typography>
+            <Typography sx={{fontSize:'1.5vw', fontWeight: 'bold', color:'white'}} className="text-result" variant="h5">
               <ul>
                 {puntajeTarjeta.map((puntaje, index) =>
                     <li key={index}>
-                      Puntaje de la tarjeta {index+1}:  {puntaje.toFixed(3)}
+                    Puntaje de la tarjeta {index+1}:  {puntaje.toFixed(3)}
                     </li>
                     )}
               </ul>
-            </Typography> 
+              Puntaje promedio del Mazo:     {puntajeMazo.toFixed(3)} <br/>
+          </Typography> 
+              <Button onClick={
+              ()=>{
+                history.push('/Mazos');
+              }
+            } className="Botton-voler-inicio" sx={{p:2,  borderRadius: 5, py: 2, color: 'white' ,background:'#0000cc'}} variant="contained" size="large">
+          <Typography sx= {{fontWeight: 'bold', fontSize:'1vw'}} variant = 'h6'>ir a Mazos</Typography>
+              </Button>
+              <Button className="Botton-voler-intentar-again" onClick={
+                ()=>{
+                  window.location.reload(false);
+                }
+              } sx={{py:2, borderRadius: 5, color: 'white', background:'#00b347'}} variant="contained" size="large">
+                  <Typography sx= {{fontWeight: 'bold', fontSize:'1vw'}} variant = 'h6'>volver intentar</Typography>
+              </Button>
         </Box>
-        <Button onClick={
-          ()=>{
-            history.push('/Mazos');
-          }
-        } className="Botton-voler-inicio" sx={{p:2,  borderRadius: 5, py: 2, color: 'white' ,background:'#0000cc'}} variant="contained" size="large">
-            <Typography sx= {{fontWeight: 'bold'}} variant = 'h6'>ir a Mazos</Typography>
-        </Button>
-        <Button className="Botton-voler-intentar-again" onClick={
-          ()=>{
-            window.location.reload(false);
-          }
-        } sx={{py:2, borderRadius: 5, color: 'white', background:'#00b347'}} variant="contained" size="large">
-            <Typography sx= {{fontWeight: 'bold'}} variant = 'h6'>volver intentar</Typography>
-        </Button>
     </Box>:null}  
     <Grow in={true}>
                 <Paper sx={{
