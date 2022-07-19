@@ -17,6 +17,8 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { useContext } from 'react';
+import { AccountContext } from '../AccountContext';
 
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
@@ -61,6 +63,7 @@ backgroundImage:'radial-gradient(#8589d8 15%, transparent 16%),radial-gradient(#
           backgroundPosition: '0 0, 30px 30px'
 */
 export default function DrawerComponent() {
+    const {sessionState} = useContext(AccountContext);
     const [open,setOpen] = useState(false);
     useEffect(()=>{
         setTimeout(()=>{
@@ -97,8 +100,10 @@ export default function DrawerComponent() {
             </Toolbar>
             <div className='ctn-avatar'>
                 <AvatarScore/>
-
             </div>
+            <Typography sx ={{width:'100%',textAlign:'center' ,display:'inline'}} variant = 'h5' >{((sessionState?.nickname)&&open)?sessionState.nickname:null}</Typography>
+ 
+
             <Divider />
             <List component="nav">
                 {mainListItems}

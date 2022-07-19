@@ -9,12 +9,15 @@ import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
-
+import StyleIcon from '@mui/icons-material/Style';
+import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
 import LogoutIcon from '@mui/icons-material/Logout';
 import CalendarViewWeekIcon from '@mui/icons-material/CalendarViewWeek';
 import HomeIcon from '@mui/icons-material/Home';
 import { useHistory } from 'react-router-dom';
+import { useContext } from 'react';
+import { AccountContext } from '../AccountContext';
 
 
 function ItemButttonBar(props){
@@ -28,20 +31,33 @@ function ItemButttonBar(props){
     </ListItemButton>
   )
 }
+
+function LoggoutButttonBar(props){
+  const {logout} = useContext(AccountContext);;
+  return (
+    <ListItemButton sx={{backgroundColor:'rgba(255,255,255,0.1)',mb:"3px"}} onClick={logout}>
+      <ListItemIcon>
+        <LogoutIcon sx={{color:'white', borderBottom:'solid 1px white'}}/>
+      </ListItemIcon>
+      <ListItemText primary="Salir" />      
+    </ListItemButton>
+  )
+}
+
 export const  mainListItems = (
   <React.Fragment>
-    <ItemButttonBar pag={"/proyect"}
+    <ItemButttonBar page={"/proyectos"}
     icon = {<DashboardIcon sx={{color:'white',
     borderBottom:'solid 1px white'}}/>} name= {"Gestionar Proyectos"}/>
     <ItemButttonBar page = {"/Mazos"}
-    icon={<ShoppingCartIcon sx={{color:'white',
+    icon={<StyleIcon sx={{color:'white',
     borderBottom:'solid 1px white'}}/>} name={"Tarjetas"} />
     <ItemButttonBar page={"/horario"} 
     icon={<CalendarViewWeekIcon sx={{color:'white',
     borderBottom:'solid 1px white'}}/>}  name={"Actividades"}
     />
     <ItemButttonBar page={"/algoQueHacer"} 
-    icon={<BarChartIcon sx={{color:'white',
+    icon={<PlayCircleFilledWhiteIcon sx={{color:'white',
     borderBottom:'solid 1px white'}}/>}  name={"Algo que hacer"}
     />
     
@@ -62,13 +78,7 @@ export const secondaryListItems = (
     icon = {<SettingsSuggestIcon sx={{color:'white',
     borderBottom:'solid 1px white'}}/>} name={"Configuracion"}    
     />
-    <ListItemButton sx={{backgroundColor:'rgba(255,255,255,0.1)',mb:"3px"}}>
-      <ListItemIcon>
-        <LogoutIcon sx={{color:'white',
-      borderBottom:'solid 1px white'}}/>
-      </ListItemIcon>
-      <ListItemText primary="Salir" />
-    </ListItemButton>
+    <LoggoutButttonBar/>
     
     <ItemButttonBar page={"/"}
     icon={<HomeIcon sx={{color:'white',

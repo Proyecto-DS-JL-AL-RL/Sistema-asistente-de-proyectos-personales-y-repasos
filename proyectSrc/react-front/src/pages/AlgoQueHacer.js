@@ -10,13 +10,16 @@ export default function AlgoQueHacer(props){
 
     const giveAnActivity = async ()=>{   
         const {sub} = sessionState;
-        axios.get('http://localhost:4000/api/colaActividades/getActividad/'+sub)
+        if (sub){
+            axios.get('http://localhost:4000/api/colaActividades/getActividad/'+sub)
             .then((data)=>{
                 console.log(data.data);
                 props.setCurrentActivity(data.data);
                 props.setStarted(false);
             })
             .catch(err=> console.log(err));
+        }       
+
     }
 
     return(

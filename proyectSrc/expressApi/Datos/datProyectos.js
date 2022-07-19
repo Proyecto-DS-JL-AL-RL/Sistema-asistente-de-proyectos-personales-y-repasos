@@ -133,3 +133,4 @@ module.exports.getProyectById = getProyectById;
 module.exports.getProyectListFromUser = getProyectListFromUser;
 module.exports.addObjetivo = addObjetivo;
 module.exports.completeObjetivo = completeObjetivo;
+module.exports.sumarPuntos = sumarPuntos;

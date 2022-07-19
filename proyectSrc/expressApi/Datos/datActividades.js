@@ -19,37 +19,48 @@ var createActivity = async function(act){
 }
 
 var getActivitiesFromUser = async function (userSub){
+    console.log(userSub);
     let queue = await UserQueue.findOne({UserSub:userSub}).populate('Actividades').exec().catch(err=> console.log(err));
     return queue.Actividades;
     //return response;
 }
 
 var getActivityFromQueue = async function (userSub){
-    let queue = await UserQueue.findOne({UserSub:userSub}).populate('Actividades').exec().catch(err=> console.log(err));
-    //console.log(queue.Actividades);
-    if (!queue.Actividades)
-        return 0;
-    let pesos = [];
-    let pesoMax = 0;
-    for (let i = 0;i<queue.Actividades.length;i++){
-        pesos.push(queue.Actividades[i].Peso);
-        pesoMax+=queue.Actividades[i].Peso;
-    }
-    //console.log(pesos);
-    let rand = Math.floor(Math.random()*pesoMax);
-    let sum = 0;
-    let index = 0 ;
-    for (let i = 0;i<pesos.length;i++){
-        sum+=pesos[i];
-        if (sum > rand){
-            index = i;
-            break;
+    //console.log(userSub);
+    if (userSub){
+        let queue = await UserQueue.findOne({UserSub:userSub}).populate('Actividades').exec().catch(err=> console.log(err));
+        //console.log(queue.Actividades);
+        if (!queue.Actividades){
+            console.log(userSub);
+            return 0;
         }
-    }
-    let actividadResponse = queue.Actividades[index];
+            
+        let pesos = [];
+        let pesoMax = 0;
+        for (let i = 0;i<queue.Actividades.length;i++){
+            pesos.push(queue.Actividades[i].Peso);
+            pesoMax+=queue.Actividades[i].Peso;
+        }
+        //console.log(pesos);
+        let rand = Math.floor(Math.random()*pesoMax);
+        let sum = 0;
+        let index = 0 ;
+        for (let i = 0;i<pesos.length;i++){
+            sum+=pesos[i];
+            if (sum > rand){
+                index = i;
+                break;
+            }
+        }
+        let actividadResponse = queue.Actividades[index];
 
-    return actividadResponse;
+        return actividadResponse;
+    }else{
+        console.log(userSub);
+        return null;
+    }
 }
+
 
 var getActivityID = async function (id){
     var response = await Actividad.findById(id).catch(err=> console.log(err));

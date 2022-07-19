@@ -2,4 +2,5 @@ proyectSrc/react-front/node_modules
 proyectSrc/expressApi/node_modules
 proyectSrc/expressApi/requests.http
 proyectSrc/expressApi/.env
+proyectSrc/react-front/.env
 proyectSrc/.env
