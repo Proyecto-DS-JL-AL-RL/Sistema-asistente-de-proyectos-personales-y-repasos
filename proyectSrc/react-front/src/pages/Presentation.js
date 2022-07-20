@@ -13,7 +13,7 @@ import QuestionMarkRoundedIcon from '@mui/icons-material/QuestionMarkRounded';
 //import Grow from '@mui/material/Grow';
 import { useHistory } from "react-router-dom";
 import './presentacionPage1.css'
-import Fade from '@mui/material/Fade';
+//import Fade from '@mui/material/Fade';
 import {  AccountContext } from './../AccountContext';
 import { useContext } from "react";
 //vw ch %
@@ -62,7 +62,20 @@ const [showRecomendacion, setShowRecomendacion] = useState(false)
                                                         </Slide>
                                                     </Grid>
                                                 </Grid>
-                                            </Box>
+                                            </Box> {nombre} {apellido}
+                                            <Fade direction="up" timeout={2000} in={true}>
+                                                <Button onClick= {()=>{
+                                                                        history.push('/')
+                                                                    }}  sx={{mt:'10%' , borderRadius:'5%',                           
+                                                            width: '20ch', height: '5ch',
+                                                            fontWeight: 'bold',
+                                                            color:'white', background:'#00b347',
+                                                            fontSize:30, 
+                                                            '&:hover': {backgroundColor: '#cfe619', color:'#808080'}
+                                                            }} variant="contained" size="large">
+                                                    <Typography  sx={{fontWeight: 'bold'}} variant = 'h5'>Continuar</Typography>
+                                                </Button>
+                                            </Fade>
 227, 227, 227*/
 export default function Presentacion(){
     let history = useHistory()
@@ -85,26 +98,14 @@ export default function Presentacion(){
                                         <div className="row">
                                         <div className="wrapper">
                                             <ul className="dynamic-txts">
-                                            <li><span>Bienvenido {nombre} {apellido}</span></li>
-                                            <li><span>Recuerda que puedes usar nuestra</span></li>
-                                            <li><span>Interfaz de voz  {<MicIcon sx={{p:1, borderRadius:50, background:'red',
+                                            <li><span>Bienvenido 😃 </span></li>
+                                            <li><span>organizate, estudia y crea proyectos con nosotros 🤓 </span></li>
+                                            <li><span>prueba nuestra interfaz de voz  {<MicIcon sx={{p:1, borderRadius:50, background:'red',
                                                                             color:'white', width: '3ch', height: '3ch' }}/>}</span></li>
-                                            <li><span>Asistente de ayuda {<QuestionMarkRoundedIcon  sx={{width: '3ch', height: '3ch', color:'white', background:'green', p:1, borderRadius:50}}/>}</span></li>
+                                            <li><span>Si tienes dudas usa nuestro botón de ayuda {<QuestionMarkRoundedIcon  sx={{width: '3ch', height: '3ch', color:'white', background:'green', p:1, borderRadius:50}}/>}</span></li>
                                             </ul>
                                         </div>
-                                        <Fade direction="up" timeout={2000} in={true}>
-                                                <Button onClick= {()=>{
-                                                                        history.push('/')
-                                                                    }}  sx={{mt:'10%' , borderRadius:'5%',                           
-                                                            width: '20ch', height: '5ch',
-                                                            fontWeight: 'bold',
-                                                            color:'white', background:'#00b347',
-                                                            fontSize:30, 
-                                                            '&:hover': {backgroundColor: '#cfe619', color:'#808080'}
-                                                            }} variant="contained" size="large">
-                                                    <Typography  sx={{fontWeight: 'bold'}} variant = 'h5'>Continuar</Typography>
-                                                </Button>
-                                            </Fade>
+                                        
                                         </div>
                                     </div>
                                 </div>

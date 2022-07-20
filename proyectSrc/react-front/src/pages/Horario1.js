@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useEffect,useState } from 'react';
 
 
@@ -11,12 +11,19 @@ import ConfigHorario from '../components/horario/ConfigHorario';
 
 import MensajeAlert from '../components/horario/MensajeAlert';
 import { useSelector,useDispatch} from 'react-redux';
-import {restoreActivity } from '../stores/sliceHorario';
+import {inciarHorario, restoreActivity } from '../stores/sliceHorario';
 import { actividad2intervalo } from '../components/horario/utilsHorario';
 import { changePage,restoreContent } from '../stores/sliceAyuda';
-import {changeIntervalo, intervaloOverFlow} from '../stores/sliceConfigHorario';
+import {changeIntervalo, intervaloOverFlow,changeBase} from '../stores/sliceConfigHorario';
+import { getIniHorario} from '../stores/sliceHorario';
+import  {getIniHorarioConfig}  from '../stores/sliceConfigHorario';
+
 
 import * as ReactDOMServer from 'react-dom/server';
+import { AccountContext } from '../AccountContext';
+
+import axios from 'axios';
+
 
 
 const itemHorario = Array.from({length:200},(v,i)=>i);
@@ -95,17 +102,37 @@ const getFinWithDefault = (dia,inicio,horasOcupadas) =>{
 const minDistance = 8;
 
 
+const actualizarHorarioConfigRequest = async(config,sub) =>{
+    if(!sub) return;
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    const content = JSON.stringify({
+        ...config
+    })
+    const requestOptions = {
+        method: 'PATCH',
+        headers: myHeaders,
+        body: content,
+        redirect: 'follow'
+    }
+    const res = await fetch(`http://localhost:4000/api/horarioconfig/${sub}`,requestOptions);
+    return res;
 
+}
 
 export default function Horario() {
     const horario = useSelector((state)=>state.horario.value);
     const configHorario = useSelector((state) => state.configHorario.value);
-    
+    const configBase = useSelector((state)=>state.configHorario.base);
+
+
     const dispatch = useDispatch();
+    const {sessionState} = useContext(AccountContext);
 
     const [ocultarDescripcion, setOcultarDescripcion] = useState(true);
     const [visibleConfig,setVisibleConfig] = useState(true);
     const [intervaloHoras,setIntervaloHoras]=useState(false);
+    const [temporalActividad,setActividadTemporal] = useState(null);
     const [minmaxIntervalo,setMinmaxIntervalo] = useState([0,24]);
     const [horasOcupadas,setHorasOcupadas] = useState([]);
     const [contentDescription,setContentDescription] = useState("");
@@ -113,7 +140,29 @@ export default function Horario() {
     const [descripcionRender,setDescripcionRender] = useState(null);
     const [visibleAlert,setVisibleAlert] = useState(null);
     const [mensajesAlertComplete,setMensajesAlertComplete] = useState(null);
+    const iniHorario = async() =>{
+        const {sub} = sessionState;
+        if(sub){
+            dispatch(getIniHorario(sub));
+            dispatch(getIniHorarioConfig(sub));
+        }
+        
+    }
+    const getSub = () =>{
+        const {sub} = sessionState;
+        return sub;
+    }
+    
     useEffect(()=>{
+        iniHorario();
+    },[sessionState])
+    useEffect(()=>{
+        if(!temporalActividad) return;
+        dispatch(inciarHorario(temporalActividad.horario));
+        console.log(temporalActividad);
+    },[temporalActividad])
+    useEffect(()=>{
+        
         const aa = <div>hola</div>
         const component=ReactDOMServer.renderToString(aa);
         dispatch(changePage({content:component,title:"Mi Horario"}));
@@ -161,9 +210,12 @@ export default function Horario() {
                 setIdSelect(numEle);
                 setOcultarDescripcion(false);
                 const acts = id2ObtainAllActivities(horario,idSelect);
-                console.log("Estados",acts.map((e)=>e.estado));
-
+               // console.log("Estados",acts.map((e)=>e.estado));
+                const {sub} = sessionState;
+                if(sub){
+                    dispatch(changeBase());
                 setDescripcionRender(<DescripcionActividad
+                    sub = {sub}
                     mensajeDisplay={setMensajesAlertComplete}
                     actividad = {id2actividadClick(numEle)}
                     idAct = {numEle}
@@ -171,7 +223,7 @@ export default function Horario() {
                     
                     minmax={minmaxIntervalo} 
                     />)
-                
+                }
             }
             elementos[i].onmouseover = () =>{
                 const descriptionContent = document.getElementById("description-content-horario");
@@ -203,7 +255,7 @@ export default function Horario() {
                 descpHorario.style.display='None';
             }
         }
-        console.log("XDD",configHorario.intervalo);
+        //console.log("XDD",configHorario.intervalo);
     },[horasOcupadas,configHorario]);
     
     
@@ -212,12 +264,15 @@ export default function Horario() {
         setIntervaloHoras(e.target.checked);
     }
     const handleVisibleConfig = () =>{
+        
         setVisibleConfig(!visibleConfig);
+        
     }
     const handleMinMax = (min,max) =>{
         setMinmaxIntervalo([min,max]);
         
     }
+    
     useEffect(()=>{
         
         if(!horario) return;
@@ -227,7 +282,14 @@ export default function Horario() {
         })
         if (!flag_horario) return;
         setHorasOcupadas(act2horario(horario));
-        
+        //console.log(horario,act2horario(horario,[1]));
+        if(horario.length==1 ){
+            if(horario[0].estado==0) return;
+            const intervaloRetry = actividades2Intervalo(horario);
+            dispatch(changeIntervalo([Math.min(6,intervaloRetry[0]),Math.max(18,intervaloRetry[1])]));
+            return;
+        }
+
         if((act2horario(horario,[0])).length==0){
             dispatch(changeIntervalo([Math.min(6,configHorario.intervalo[0]),Math.max(18,configHorario.intervalo[1])]));
             return;
@@ -236,23 +298,42 @@ export default function Horario() {
         
         const minHora = minHoraIntervalo(horario);
         const maxHora = maxHoraIntervalo(horario);
+        if(minHora== configHorario.intervalo[0] && maxHora == configHorario.intervalo[1]) return;
         if(!configHorario.intervaloDefault){
             if(minHora<configHorario.intervalo[0] || maxHora>configHorario.intervalo[1]){
                 dispatch(intervaloOverFlow([minHora,maxHora]));
             }
             return;
         }
-        console.log(minHora,maxHora);
         if(maxHora-minHora<minDistance){
             console.log("Hola Min");
             const val = Math.floor((minDistance- (maxHora-minHora))/2)+1;
             dispatch(changeIntervalo([minHora-val,maxHora+val]))
             return;
         }
+        
         dispatch(changeIntervalo([minHora,maxHora]));
         
         
     },[horario])
+    useEffect(()=>{
+        
+        if(ocultarDescripcion && configBase){
+            if(JSON.stringify(configHorario)===JSON.stringify(configBase)) return;
+            //if(config)
+            // de intervaloDefault intervalo 
+            const intervaloActual = actividades2Intervalo(horario);
+            if(!configHorario.intervaloDefault ){
+
+            }
+            console.log("Comparando:",intervaloActual);
+            
+            actualizarHorarioConfigRequest(configHorario,getSub());
+
+            console.log(configHorario)
+            console.log(configBase);
+        }
+    },[ocultarDescripcion]);
   return (
     
     <div className='horario-container' >
@@ -309,7 +390,9 @@ export default function Horario() {
             
         </div>
         {ocultarDescripcion?null:descripcionRender}
-        {visibleConfig?null:<ConfigHorario minmaxIntervalo={
+        {visibleConfig?null:<ConfigHorario 
+        sub = {getSub()}
+        minmaxIntervalo={
             [minHoraIntervalo(horario),
                 maxHoraIntervalo(horario)]
         }

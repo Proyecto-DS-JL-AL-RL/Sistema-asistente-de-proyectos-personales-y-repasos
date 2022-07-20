@@ -78,7 +78,7 @@ export default function AppBarSearch(props) {
             aria-label="open drawer"
             sx={{ mr: 2 }}
           >
-            <img src="https://i.pinimg.com/originals/d5/16/80/d5168001add6c3c50a1ea9328b466013.png"
+            <img src="./medalla.png"
              alt="logro" className='img-medalla'></img>
           </IconButton>
           <Typography

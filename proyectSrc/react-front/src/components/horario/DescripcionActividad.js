@@ -20,6 +20,7 @@ import MensajesCompletos from './MensajesCompletos';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { setMensaje } from '../../stores/sliceMensajesCortos';
 import MensajeAdvertencia from './MensajeAdvertencia';
+import { restoreValueConfig } from '../../stores/sliceConfigHorario';
 
 
 
@@ -82,11 +83,41 @@ const sobrescribir = (actividades)=>{
         return (e.estado!=3)
     }).map((e)=>{return {...e,estado:0,intervalo:actividad2intervalo(e)}});
 }
+
+const saveActual = (actividades) =>{
+
+    return actividades.filter((e)=>{
+        return (e.estado!=2)
+    }).map((e)=> {return {...e,estado:0}})
+}
+const deleteForActivity = (actividades,idAct) =>{
+    return actividades.filter((e)=>{
+        return (e.intervalo.indexOf(idAct)==-1)
+    })
+}
+const actualizarHorarioRequest = async(newHorario,sub) =>{
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    const content = JSON.stringify({
+        horario:newHorario
+    })
+    const requestOptions = {
+        method: 'PATCH',
+        headers: myHeaders,
+        body: content,
+        redirect: 'follow'
+    }
+    const res = await fetch(`http://localhost:4000/api/horario/${sub}`,requestOptions);
+    return res;
+
+}
+
 const diasSemana = 'L,M,M,J,V,S,D'.split(",");
 export default function DescripcionActividad(props) {
     const dispatch = useDispatch();
     const horario = useSelector((state)=>state.horario.value);
     const configHorario = useSelector((state)=>state.configHorario.value)
+    const configBase = useSelector((state)=>state.configHorario.base);
     const [stateButton,setStateButton] = useState(0);
     const [actividad,setActividad] = useState(actividadDefault);
     const [editable,setEditable] = useState(false);
@@ -97,12 +128,19 @@ export default function DescripcionActividad(props) {
     const [mensajeAdvertenciaDisplay,setMensajeAdvertenciaDisplay] = useState(null);
     const matches = useMediaQuery('(min-height:750px)');
     
-    useEffect(()=>{
-        console.log("Funciona",matches);
-    },[matches])
+    //useEffect(()=>{
+    //    console.log("Funciona",matches);
+    //},[matches])
 
     const handleVisible = () =>{
+        
         props.handleVisible(true);
+        
+        
+    }
+    const closeDescription = () =>{
+        props.handleVisible(true);
+        dispatch(restoreValueConfig());
         dispatch(restoreActivity());
     }
     useEffect(()=>{
@@ -151,7 +189,8 @@ export default function DescripcionActividad(props) {
         console.log("Aceeept");
         const newHorario = sobrescribir(horario);
         console.log(newHorario);
-        dispatch(sobrescribirTodo(newHorario));
+        dispatch(sobrescribirTodo(newHorario)); 
+        actualizarHorarioRequest(newHorario,props.sub);
         setStateButton(0);
         handleVisible();
     }
@@ -180,6 +219,7 @@ export default function DescripcionActividad(props) {
         return <MensajeAdvertencia
         visible={setMensajeAdvertenciaDisplay}
         content={"Ya tienes una actividad, Quieres sobre escribirlo"}
+
         comentario={<>
                 <div className='advertencia-buttons-container'>
                     <button className='btn-advertencia-ok' onClick={acceptSobreescritura}
@@ -232,6 +272,7 @@ export default function DescripcionActividad(props) {
                 const newHorario = sobrescribir(horario);
                 console.log(newHorario);
                 dispatch(sobrescribirTodo(newHorario));
+                actualizarHorarioRequest(newHorario,props.sub);
                 setStateButton(0);
                 handleVisible();
                 //handleMensajeDisplay("Actividad Creada, sobreescribiendo actividad(es)");
@@ -239,9 +280,12 @@ export default function DescripcionActividad(props) {
                     ,visible:true}));
                 return;
             }
-            dispatch(saveActivity());
+            //dispatch(saveActivity());
             /* Falta validar cuando esta vacio */
-            
+            const newHorario = saveActual(horario);
+            dispatch(sobrescribirTodo(newHorario));
+            actualizarHorarioRequest(newHorario,props.sub);
+
             setStateButton(0);
             handleVisible();
             //handleMensajeDisplay("Actividad Creada");
@@ -281,6 +325,7 @@ export default function DescripcionActividad(props) {
                 const newHorario = sobrescribir(horario);
                 console.log(newHorario);
                 dispatch(sobrescribirTodo(newHorario));
+                actualizarHorarioRequest(newHorario,props.sub);
                 setStateButton(0);
                 handleVisible();
                 //handleMensajeDisplay("Actividad Editada, se sobreescribieron actividad(es)");
@@ -292,7 +337,9 @@ export default function DescripcionActividad(props) {
 
 
 
-            dispatch(saveActivity());
+            const newHorario = saveActual(horario);
+            dispatch(sobrescribirTodo(newHorario));
+            actualizarHorarioRequest(newHorario,props.sub);
             setStateButton(0);
             handleVisible();
             
@@ -308,6 +355,8 @@ export default function DescripcionActividad(props) {
         
         
         dispatch(deleteActivity(props.idAct));
+        const newHorario = deleteForActivity(horario,props.idAct);
+        actualizarHorarioRequest(newHorario,props.sub);
         props.handleVisible(true);
         dispatch(setMensaje({content:"Actividad Eliminada",
                     visible:true}));
@@ -377,7 +426,7 @@ export default function DescripcionActividad(props) {
 
         
         <div className='container-button-close'>
-            <button className='button-close' onClick={handleVisible}>
+            <button className='button-close' onClick={closeDescription}>
                 <ClearIcon sx={{color:'white',fontSize:'1em','&:hover':{color:'black'}}}/>
             </button> 
         </div>

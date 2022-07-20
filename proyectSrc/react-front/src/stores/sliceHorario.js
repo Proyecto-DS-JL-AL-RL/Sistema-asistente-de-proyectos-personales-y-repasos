@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { Actividad, actividadesInfo } from "../components/horario/HorarioInfo";
+import { createAsyncThunk ,createSlice } from "@reduxjs/toolkit";
+//import { Actividad, actividadesInfo } from "../components/horario/HorarioInfo";
 
 
 /*
@@ -9,15 +9,23 @@ import { Actividad, actividadesInfo } from "../components/horario/HorarioInfo";
     2:editando
   }
  */
-
+export const getIniHorario = createAsyncThunk('horario/getIniHorario', async (sub)=>{
+    const response= await fetch(`http://localhost:4000/api/horarioInit/${sub}`);
+    const rpta = await response.json();
+    return rpta.horario;
+} )
 
 
 export const horarioSlice = createSlice({
     name:'horario',
     initialState:{
-        value: actividadesInfo
+        value: []
     },
     reducers:{
+        iniciarHorario:(state,action)=>{
+            //console.log(action.payload,"Slice");
+            state.value = action.payload;
+        },
         addActivity: (state,action) =>{
             const activities = state.value.filter((e)=>{
                 return (e.estado!=1)
@@ -43,6 +51,7 @@ export const horarioSlice = createSlice({
             });
             
         },
+        
         saveActivity: (state) =>{
             state.value =  state.value.filter((e)=>{
                 return (e.estado!=2)
@@ -56,7 +65,7 @@ export const horarioSlice = createSlice({
 
         },
         changeEditableActivity: (state,action)=>{
-            console.log(action.payload,"XDDD")
+            //console.log(action.payload,"XDDD")
             
             state.value = state.value.map((e)=>{
                 if(e.estado==0&& e.intervalo.indexOf(action.payload)!=-1) return {...e,estado:2}
@@ -64,10 +73,16 @@ export const horarioSlice = createSlice({
             })
         }
 
+    },
+    extraReducers:builder =>{
+        builder
+        .addCase(getIniHorario.fulfilled,(state,action)=>{
+            state.value = action.payload;
+        })
     }
 })
 export const {addActivity,saveActivity,
     changeEditableActivity,saveWithSobrescritura,
-    sobrescribirTodo,
+    sobrescribirTodo,inciarHorario,
     deleteActivity,restoreActivity} = horarioSlice.actions
 export default horarioSlice.reducer
