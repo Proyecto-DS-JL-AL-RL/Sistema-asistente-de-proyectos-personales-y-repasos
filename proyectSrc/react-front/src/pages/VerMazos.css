@@ -2,13 +2,13 @@
 .container_sinTarjeta{
     background-color: aqua;
     width: 80%;
-    height: 70%;
-    position:relative;
+    height: 65%;
+    position:absolute;  
     display: flex;
     justify-content: center;
     align-items: center;
     left:10%;
-    top:10%;
+    top: 26vh;
     border-style: double;
     border: 2rem solid purple;
 }

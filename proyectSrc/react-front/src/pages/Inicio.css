@@ -1,25 +1,56 @@
-* {
-    box-sizing: border-box;
-  }
-  
-  /* Create two unequal columns that floats next to each other */
-  .column {
-    float: left;
-    padding: 3vw;
-    height: 100vh; /* Should be removed. Only for demonstration */
-  }
-  
-  .right {
-    margin-top:8%;
-    width: 25%;
-    height: 20vh;
-    overflow: visible;
+
+
+.split {
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
 }
-  
+
+.right {
+  right: 0;
+  background-color: whitesmoke;
+  width: 25%;
+}
+
+.left {
+  left: 0;
+  background-color: #8244d8;
+  width: 75%;
+  font-size: 1vw;
+  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+
+
+.left::-webkit-scrollbar {
+  width: 0;  
+  background: transparent; 
+}
+
+.centered-logo {
+  position: absolute;
+  margin-top: 30%;
+  left: 3%;
+  align-items: center;
+  text-align: center;
+}
+
+.centered {
+  position: relative;
+  margin-top: 10%;
+  text-align: center;
+}
+  /*
   .left {
-    width: 70%;
+    width: 65%;
     background-color: #8244d8;
-    height: 40vw;
+    height: 45vw;
     overflow: hidden;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -30,8 +61,9 @@
     width: 0;  
     background: transparent; 
 }
-  
-  /* Clear floats after the columns */
+*/ 
+
+/*
   .row:after {
     content: "";
     display: table;
@@ -39,16 +71,33 @@
   }
 
 .Titulo{
-    color:rgb(43, 142, 12);
+    color:rgb(255, 124, 9);
     text-transform: uppercase;
     font-weight:bold;
-    width:100%;
-    font-size: 10vw;
+    font-size: 2vw;
     text-align:center;
 }
 
+.Titulo-logo{
+  color:rgb(255, 124, 9);
+  text-transform: uppercase;
+  font-weight:bold;
+  font-size: 2vw;
+  text-align:center;
+}
+*/
 .container-phrases {
-    color:black;
+    color:rgb(0, 0, 0);
+    text-align:center;
+    text-transform: uppercase;
+    font-size:1vw;
+    font-weight:bold;
+    width:100%;
+    display:block;
+  }  
+
+.container-phrases-logo {
+    color:rgb(0, 0, 0);
     text-align:center;
     text-transform: uppercase;
     font-size:2vw;
@@ -57,6 +106,7 @@
     display:block;
   }  
 
+
 .flip {
     height:3vw;
     overflow:hidden;
@@ -64,9 +114,9 @@
 
 .flip > div > div {
     color:#fff;
-    padding:0.8vw 1vh;
-    height:4vw;
-    margin-bottom:0.8vw;
+    padding:0.5vw 1vh;
+    height:3.5vw;
+    margin-bottom:0.4vw;
     display:inline-block;
   }
   
@@ -97,6 +147,3 @@
     100% {margin-top:-270px;}
   }
   
-.copyright{
-  margin-top:6vw;
-}

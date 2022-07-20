@@ -23,42 +23,39 @@
 
 
 .container-showResult{
-    z-index: 1;
-    box-shadow: 0 0 8px 8px rgba(0, 0,0 , 0.6);
-    margin-top:4rem;
-    background-color:  grey;
-    height:25vw;
-    width:40%;
+    z-index: 2;
+    height:90%;
+    width:50%;
+    padding:2%;
     position:relative;
     text-align: center;
     border-radius: 5%;
     justify-content: center;
+    background-color:aquamarine;
 }
 
-.box-result{
-    position: absolute;
-    width:100%;
+.img-result{
+    z-index:3;
+    position: relative;
+    width:80%;
     align-items: center;
     text-align: center;
     height:80%;
-    flex-wrap:wrap;
     align-items: center;
     border-radius: 5%;
     overflow-x: hidden;
     overflow-y: scroll; 
-    background-color:#9179ba;
-    border:0.5rem solid  #00FFFF;
-
 }
 
-.box-result::-webkit-scrollbar {
+.img-result::-webkit-scrollbar {
     width: 0;  
     background: transparent; 
 }
 
 .Botton-voler-inicio{
     top:83%;
-    left: 0rem;
+    z-index: 4;
+    left: -1rem;
     position: relative;
     justify-content: center;
     text-align: center;
@@ -68,6 +65,7 @@
 
 .Botton-voler-intentar-again{
     top: 83%;
+    z-index: 4;
     left: 1rem;
     position: relative;
     justify-content: center;
