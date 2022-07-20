@@ -11,7 +11,7 @@ const getDescCommands = (methods) =>{
         callback: (command,spoken,ratio) =>{
             methods.setPunteroPage(null);
             const ind = arrayDias.indexOf(command.toLowerCase())
-            if (ind > 0 && ind < 7){
+            if (ind >= 0 && ind < 7){                
                 methods.handleDia(ind);
             }
         },
