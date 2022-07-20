@@ -118,3 +118,33 @@
 .itemp-editando{
     background-color: blueviolet;
 }
+.sugerencia-contenido{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.sugenrencia-contenido-img{
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+}
+.sugenrencia-contenido-img>div{
+    color: rgba(0,0,0,0.5);
+    font-size: 1.2em;
+}
+.sugenrencia-contenido-img>img{
+    height: 100%;
+    width: 100%;
+}
+.sugerencia-contenido-descripcion{
+    max-width: 300px;
+}
+.sugerencia-descripcion{
+    font-weight: 900;
+}
+.sugerencia-descripcion>*{
+    font-size: 10px;
+}

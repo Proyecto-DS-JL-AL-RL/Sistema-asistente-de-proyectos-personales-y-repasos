@@ -34,8 +34,10 @@ export default function NofoundPage() {
                     Prueba con estas opciones que te llevaran a nuestras funcionalidades.
                 </div>
                 <div className='content-buttons-rediret-no-found'>
-                    {opcionesDefault.map((e)=>{
-                        return <button className='button-redirect-no-found' onClick={()=>{history.push(e.page)}}>
+                    {opcionesDefault.map((e,i)=>{
+                        return <button className='button-redirect-no-found' 
+                            key={`item-button-${i}`}
+                            onClick={()=>{history.push(e.page)}}>
                             {e.icon}
                         </button>
                     })}

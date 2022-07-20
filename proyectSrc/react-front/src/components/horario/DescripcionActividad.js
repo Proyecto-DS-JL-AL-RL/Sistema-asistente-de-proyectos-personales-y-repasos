@@ -211,6 +211,7 @@ export default function DescripcionActividad(props) {
         return <MensajeAdvertencia
         visible={setMensajeAdvertenciaDisplay}
         content={"Al parecer tu actividad no tiene un nombre."}
+        imgContent={"./Existe.jpg"}
         comentario={<>
                 Puedes colocar un nombre a tu actividad que mas te recuerde a ella
                 <button className='btn-advertencia-ok' onClick={()=>{setMensajeAdvertenciaDisplay(null)}}>
@@ -223,7 +224,7 @@ export default function DescripcionActividad(props) {
         return <MensajeAdvertencia
         visible={setMensajeAdvertenciaDisplay}
         content={"Ya tienes una actividad, Quieres sobre escribirlo"}
-
+        
         comentario={<>
                 <div className='advertencia-buttons-container'>
                     <button className='btn-advertencia-ok' onClick={acceptSobreescritura}
@@ -603,9 +604,9 @@ export default function DescripcionActividad(props) {
         <div className='micro-form' 
             onClick={handleMic}>
             {listening?
-            <MicIcon  sx={{p:1,  borderRadius:50, background:'blue', color:'white',cursor:'pointer', width: 40, height: 40 ,'&:hover':{color:'green'} }} />
+            <MicIcon  sx={{p:1,  borderRadius:50, background:'blue', color:'white',cursor:'pointer', width: 50, height: 50 ,'&:hover':{color:'green'} }} />
             :
-            <MicIcon  sx={{p:1,  borderRadius:50, background:'red', color:'white',cursor:'pointer', width: 40, height: 40 ,'&:hover':{color:'green'} }} />
+            <MicIcon  sx={{p:1,  borderRadius:50, background:'red', color:'white',cursor:'pointer', width: 50, height: 50 ,'&:hover':{color:'green'} }} />
             }
             
         </div>
