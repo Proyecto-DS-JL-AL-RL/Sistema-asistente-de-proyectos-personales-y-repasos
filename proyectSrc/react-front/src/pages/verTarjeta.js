@@ -180,7 +180,7 @@ export default function VerTarjeta(props) {
             setValuestring(
                   "Puedes hacerlo mejor, vuelvelo a intentar 😬"                  )
           }else if(mazo.Tarjetas.length*50 < sum && sum < mazo.Tarjetas.length*75){
-            setValuestring("Estas logrando el objetivo pero se que aún puedes seguir mejorando 🤗")
+            setValuestring("Estas logrando el objetivo pero puedes seguir mejorando 🤗")
           }else{
             
             setValuestring("Bien hecho, sigue así 😃")
@@ -424,7 +424,7 @@ export default function VerTarjeta(props) {
             <Divider sx={{mt:'2%', color:'black', border:'0.1rem solid black'}} variant="middle" />
             <Typography sx={{fontWeight: 'bold', color:'black'}} className="text-result" variant="h5">
                 Puntaje del Mazo: {puntajeMazo.toFixed(3)} <br/>
-                <Typography variant="h3">{valuestring}</Typography>
+                <Typography  sx={{textAlign:'center', mt:'5%', fontWeight: 'bold', fontSize: '1em'}} variant="h4">{valuestring}</Typography>
                
               </Typography>
           </Typography>
