@@ -19,7 +19,23 @@ function valuetext(value) {
     return `${value}°C`;
   }
 
+  const actualizarHorarioConfigRequest = async(config,sub) =>{
+    if(!sub) return;
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    const content = JSON.stringify({
+        ...config
+    })
+    const requestOptions = {
+        method: 'PATCH',
+        headers: myHeaders,
+        body: content,
+        redirect: 'follow'
+    }
+    const res = await fetch(`http://localhost:4000/api/horarioconfig/${sub}`,requestOptions);
+    return res;
 
+}
 const minDistance = 8;
 const temasDisponibles = Array.from({length:4},(_,e)=>{return "tema"+e})
 export default function ConfigHorario(props) {
@@ -39,6 +55,7 @@ export default function ConfigHorario(props) {
         if(!Array.isArray(props.intervalo)) return;
         setIntervaloMinMax(props.intervalo);
     },[props])*/
+    
     useState(()=>{
         //if(!horario) return;
         setMinMax(actividades2Intervalo(horario));
@@ -80,7 +97,10 @@ export default function ConfigHorario(props) {
             dispatch(changeIntervaloDefault(e.target.checked));
             
             if((act2horario(horario,[0])).length!=0){
-                dispatch(changeIntervalo(minmax));
+                if(minmax[1]-minmax[0]>8){
+                    dispatch(changeIntervalo(minmax));
+                }
+                
             }
             
         }else{
@@ -91,11 +111,16 @@ export default function ConfigHorario(props) {
     const handleSobrescribir = (e) =>{
         dispatch(changeSobreescribir(e.target.checked));
     }
+    const cerrarConfig = () =>{
+        props.handleVisible();
+        
+        actualizarHorarioConfigRequest(configHorario,props.sub)
+    }
   return (
     <div className='config-horario'>
         <Badge 
         badgeContent={
-            <button className='button-close' onClick={props.handleVisible}>
+            <button className='button-close' onClick={cerrarConfig}>
                 <ClearIcon sx={{color:'white',fontSize:'1em','&:hover':{color:'black'}}}/>
             </button>
         }

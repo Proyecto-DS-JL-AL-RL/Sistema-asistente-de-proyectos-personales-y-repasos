@@ -4,11 +4,15 @@ import ayudaReducer from './sliceAyuda'
 import configHorarioRecucer from './sliceConfigHorario'
 import mensajesCortosReducer from './sliceMensajesCortos'
 
-export default configureStore({
+
+const store = configureStore({
     reducer: {
         horario:horarioReducer,
         ayuda:ayudaReducer,
         configHorario:configHorarioRecucer,
         mensajesCortos:mensajesCortosReducer,
     }
+
 })
+
+export default store;
