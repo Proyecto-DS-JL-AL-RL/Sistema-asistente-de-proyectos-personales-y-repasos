@@ -7,8 +7,12 @@ import { AccountContext } from '../AccountContext';
 import { useSpeechRecognition } from 'react-speech-recognition';
 import { getCommandsPage } from '../speechMethods/actividadesMethods';
 import axios from 'axios';
+import  ReactDOMServer from 'react-dom/server';
+import { useDispatch } from 'react-redux';
+import { changePage } from '../stores/sliceAyuda';
 
 export default function ActivityQueue(params) {
+    const dispatch = useDispatch();
     const { sessionState,currentState } = useContext( AccountContext );   
     const history = useHistory();
 
@@ -66,6 +70,10 @@ export default function ActivityQueue(params) {
         getProyects(); 
     },[sessionState,currentState]);
 
+    useEffect (()=>{
+        const component = ReactDOMServer.renderToString(<div>Ayuda No disponible</div>);
+        dispatch(changePage({content:component,title:"Cola de Actividades"}));
+    },[]);
     return(
     <React.Fragment>
         <Grid container direction = 'row' columnGap={2} alignItems='center'>

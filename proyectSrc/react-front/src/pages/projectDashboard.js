@@ -9,8 +9,11 @@ import { getCommandsPage } from '../speechMethods/projectSpecific';
 import { useSpeechRecognition } from 'react-speech-recognition';
 import ObjetivoForm from '../components/objForm';
 import axios from 'axios';
-
+import  ReactDOMServer from 'react-dom/server';
+import { useDispatch } from 'react-redux';
+import { changePage } from '../stores/sliceAyuda';
 export default function ProyectoView(){
+    const dispatch = useDispatch();
     const history = useHistory();
     const {idProyecto} = useParams();
     const [pTitulo,setPTitulo] = useState ('Titulo Proyecto');
@@ -40,7 +43,7 @@ export default function ProyectoView(){
         if(showForm){
             setShowForm(false);
         }else{
-            history.push('/');
+            history.push('/proyectos');
         }
     }
     const initCrearPendiente = ()=>{
@@ -51,6 +54,11 @@ export default function ProyectoView(){
     useEffect(()=>{
         getProyectInfo();
     },[idProyecto]);
+
+    useEffect (()=>{
+        const component = ReactDOMServer.renderToString(<div>Ayuda No disponible</div>);
+        dispatch(changePage({content:component,title:"Gestión de Proyectos"}));
+    },[]);
 
     const commands = getCommandsPage({handleBack,initCrearPendiente});
     const {listening,transcript,finalTranscript,resetTranscript} = useSpeechRecognition({commands:commands});

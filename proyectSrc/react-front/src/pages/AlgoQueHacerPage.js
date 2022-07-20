@@ -9,8 +9,12 @@ import { useSpeechRecognition } from 'react-speech-recognition';
 import {getCommandsPage} from '../speechMethods/algoQueHacerMethods'
 import MensajeAdvertencia from '../components/horario/MensajeAdvertencia'
 import { Box } from '@mui/material';
+import  ReactDOMServer from 'react-dom/server';
+import { useDispatch } from 'react-redux';
+import { changePage } from '../stores/sliceAyuda';
 
 export default function AlgoQueHacerPage(){
+    const dispatch = useDispatch();
     const history = useHistory();
     const [mensajeAdvertenciaDisplay,setMensajeAdvertenciaDisplay] = useState(null);
     const {sessionState,currentState,setCurrentState} = useContext(AccountContext);
@@ -122,6 +126,10 @@ export default function AlgoQueHacerPage(){
     useEffect(()=>{setDoingSomething(!(currentActivity==null)); },[currentActivity]);
     useEffect(()=>{checkSession();},[currentState]);
 
+    useEffect (()=>{
+        const component = ReactDOMServer.renderToString(<div>Ayuda No disponible</div>);
+        dispatch(changePage({content:component,title:"Dame algo que hacer"}));
+    },[]);
 
     return (
         <React.Fragment>

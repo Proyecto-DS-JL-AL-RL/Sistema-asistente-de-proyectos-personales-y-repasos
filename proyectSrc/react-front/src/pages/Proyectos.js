@@ -9,10 +9,14 @@ import ProyectoForm from '../components/projectForm';
 import MensajeAdvertencia from '../components/horario/MensajeAdvertencia';
 import { getCommandsPage } from '../speechMethods/proyectosMethods';
 import { useSpeechRecognition } from 'react-speech-recognition';
+import  ReactDOMServer from 'react-dom/server';
 
 import './proyectos.css'
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { changePage } from '../stores/sliceAyuda';
 export default function Proyectos() {
+  const dispatch = useDispatch();
   const history = useHistory();
   const [proyects,setProyects] = useState([]);
   const [escribiendo,setEscribiendo] = useState(false);
@@ -70,7 +74,11 @@ export default function Proyectos() {
       }      
   };
   
+  
+
   useEffect(()=>{
+    const component = ReactDOMServer.renderToString(<div>Ayuda No disponible</div>);
+    dispatch(changePage({content:component,title:"Gestión de Proyectos"}));
     getProyects();
   },[sessionState]);
 
