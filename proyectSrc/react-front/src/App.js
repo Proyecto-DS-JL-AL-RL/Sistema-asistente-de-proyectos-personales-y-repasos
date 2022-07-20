@@ -171,6 +171,7 @@ function App() {
                         <Route exact path = '/registro'>
                           <Register/>
                         </Route>
+                        
                       </Switch>
                       }
                     </div>

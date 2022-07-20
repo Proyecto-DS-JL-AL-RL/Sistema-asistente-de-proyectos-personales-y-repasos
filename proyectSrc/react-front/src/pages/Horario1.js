@@ -164,7 +164,24 @@ export default function Horario() {
     },[temporalActividad])
     useEffect(()=>{
         
-        const aa = <div>hola</div>
+        const aa = <div className='sugerencia-contenido'>
+            <div className='sugenrencia-contenido-img'>
+            
+                <img  src='./Sugerencia.jpg'/>
+                <div>Sugerencia</div>
+            </div>
+            <div className='sugerencia-contenido-descripcion'>
+                Aqui puedes colocar tus actividades que realizas en una semana, asi tener mas ordenado tus
+                actividades, puedes colocar un link, para poder redirigirte al momento que ir a dicha actividad.
+                <div className='sugerencia-descripcion'>
+                    🖱️Da click a un recuadro "***" para añadir una actividad
+                </div>
+                <div className='sugerencia-descripcion'>
+                🖱️Da click a un recuadro 🛠
+                 para configurar
+                </div>
+            </div>
+        </div>
         const component=ReactDOMServer.renderToString(aa);
         dispatch(changePage({content:component,title:"Mi Horario"}));
         return ()=>{
@@ -396,6 +413,7 @@ export default function Horario() {
             [minHoraIntervalo(horario),
                 maxHoraIntervalo(horario)]
         }
+        
         handleMinMax={handleMinMax}
         handleVisible={handleVisibleConfig}
         intervalo={minmaxIntervalo}

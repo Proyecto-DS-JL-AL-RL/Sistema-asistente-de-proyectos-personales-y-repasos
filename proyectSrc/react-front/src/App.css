@@ -84,6 +84,7 @@
   
 }
 .img-medalla{
+  width: 50px;
   height: var(--medalla-width);
 }
 

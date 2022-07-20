@@ -6,7 +6,7 @@
     margin-right: 20px;
     border-radius: 50%;
     background-color: red;
-    padding: 5px;
+    padding: 0px;
     display: flex;
     align-items: center;
     box-shadow: 0 0 3px 3px rgba(0, 0,0 , 0.7);
@@ -44,10 +44,36 @@
     box-shadow: 0 0 1px 1px rgba(0, 0,0 , 0.7);
     cursor: pointer;
 }
+.content-button-display{
+
+    display: flex;
+    justify-content: center;
+}
+.button-save{
+    height: 30px;
+
+    color:white;
+    font-size: 1em;
+    background-color: green;
+    cursor: pointer;
+    box-shadow: 0 0 1px 1px rgba(0, 0,0 , 0.7);
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    border-radius: 4px;
+}
+.button-save:hover{
+    box-shadow: 0 0 4px 4px rgba(0, 0,0 , 0.6);
+    
+    transition: box-shadow 0.5s;
+}
 .button-close:hover{
     box-shadow: 0 0 4px 4px rgba(0, 0,0 , 0.6);
     
     transition: box-shadow 0.5s;
+}
+.button-save:hover>*{
+    color:yellow;
 }
 .ctn-bld{
     width: 100%;

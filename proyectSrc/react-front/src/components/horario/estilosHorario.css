@@ -19,6 +19,7 @@
 .item-tema{
     background-color: red;
     margin: 5px;
+    text-align: center;
 }
 .item-temp{
     background-color: var(--color-horario-2);

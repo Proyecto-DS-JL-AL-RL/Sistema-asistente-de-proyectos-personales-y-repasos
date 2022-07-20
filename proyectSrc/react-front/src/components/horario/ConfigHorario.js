@@ -9,6 +9,10 @@ import ClearIcon from '@mui/icons-material/Clear';
 import {useSelector,useDispatch} from 'react-redux';
 import { changeIntervalo,changeIntervaloDefault, changeSobreescribir, changeTema } from '../../stores/sliceConfigHorario';
 import {actividades2Intervalo,act2horario, temaChangeCSS}from './utilsHorario';
+import SaveIcon from '@mui/icons-material/Save';
+import ConstructionIcon from '@mui/icons-material/Construction';
+import MicIcon from '@mui/icons-material/Mic';
+import { setMensaje } from '../../stores/sliceMensajesCortos';
 
 //const stateButton2String =  (state) =>{
 //    const stringState = ['Editar','Crear','Guardar'];
@@ -87,6 +91,8 @@ export default function ConfigHorario(props) {
         
         dispatch(changeTema(e.target.value));
         temaChangeCSS(e.target.value);
+        dispatch(setMensaje({content:"Cambiando tema",
+        visible:true}))
     }
     const handleOnlyMinMax = (e) =>{
         console.log(e.target.checked);
@@ -107,11 +113,15 @@ export default function ConfigHorario(props) {
     }
     const handleSobrescribir = (e) =>{
         dispatch(changeSobreescribir(e.target.checked));
+        dispatch(setMensaje({content:e.target.checked===true?"Se sobreescribiran las actividades automaticamente":"Se desactivo la sobrescritura",
+        visible:true}))
     }
     const cerrarConfig = () =>{
         props.handleVisible();
         
-        actualizarHorarioConfigRequest(configHorario,props.sub)
+        actualizarHorarioConfigRequest(configHorario,props.sub);
+        dispatch(setMensaje({content:"Guardando Configuraciones",
+        visible:true}))
     }
   return (
     <div className='config-horario'>
@@ -124,16 +134,21 @@ export default function ConfigHorario(props) {
         sx={{
             width:'80%',
             mx:'auto',
-            p:2,
+            p:3,
             border:'2px solid black',
-            backgroundColor:'white',   
+            backgroundColor:'white',
+            borderRadius:'10px',
+            boxShadow:'0 0 4px 4px rgba(0, 0,0 , 0.6)'   
         }}
         >
         
         <Box sx={{
             width:'100%'
         }}>
-            <Typography variant='h5'>Configuracion Horario:</Typography>
+            <Typography variant='h5' sx={{display:'flex',alignItems:'center'}}>
+                <ConstructionIcon/>
+                Configuracion Horario:
+            </Typography>
             <Box>
                 <Typography>
                     Intervalo Horas : 
@@ -195,11 +210,18 @@ export default function ConfigHorario(props) {
 
                 } label="sobreEscribir "/>
             </FormGroup>
-           
+           <div className='content-button-display'>
+                <button className='button-save' onClick={cerrarConfig}>
+                    <SaveIcon sx={{color:'white',fontSize:'2em','&:hover':{color:'black'}}}/>
+                    <div>Guardar</div>
+                </button> 
+           </div>
             
         
         </Box>
-        
+        <div className='micro-form'>
+            <MicIcon  sx={{p:1,  borderRadius:50, background:'transparent', color:'white',cursor:'pointer', width: 50, height: 50 ,'&:hover':{color:'green'} }}/>
+        </div>
         
         </Badge>
     </div>
