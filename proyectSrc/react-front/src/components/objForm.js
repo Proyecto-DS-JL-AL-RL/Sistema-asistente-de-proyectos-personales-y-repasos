@@ -3,6 +3,8 @@ import { AccountContext } from '../AccountContext';
 import {Button, Card, Grid, TextField, Typography,Box,Slider} from '@mui/material';
 import axios from 'axios';
 import MensajeAdvertencia from './horario/MensajeAdvertencia';
+import { getAgregarComands } from '../speechMethods/projectSpecific';
+import { useSpeechRecognition } from 'react-speech-recognition';
 
 export default function ObjetivoForm(props){
     const [mensajeAdvertenciaDisplay,setMensajeAdvertenciaDisplay] = useState(null);
@@ -10,7 +12,7 @@ export default function ObjetivoForm(props){
     const [titulo,setTitulo] = useState('');
     const [descripcion,setDescripcion] = useState('');
     const [peso,setPeso] = useState(4);
-
+    const [puntero,setPuntero] = useState(null);
 
     const AdvertenciaT = () =>{
         return <MensajeAdvertencia 
@@ -51,7 +53,22 @@ export default function ObjetivoForm(props){
                 .catch(err=>console.log(err));           
         }
     }
+    const setPunteroPage     = (puntero)=>setPuntero(puntero);
+    const setPesosAudio      = (peso_)  =>setPeso(peso_);
 
+    const commands = getAgregarComands({setPunteroPage,setPesosAudio,agregarActividad});
+    const {listening,transcript,finalTranscript,resetTranscript} = useSpeechRecognition({commands:commands});
+
+    const setDictionary = {
+        "título":setTitulo,
+        "descripción":setDescripcion
+    }
+    useEffect(()=>{
+        if(puntero && listening){
+            resetTranscript();
+            setDictionary[puntero](finalTranscript);
+        }
+    },[finalTranscript]);
 
     return(
         <React.Fragment>
@@ -63,6 +80,10 @@ export default function ObjetivoForm(props){
                 </Typography>
 
                 <Grid container direction = 'column' sx = {{width:'80%',marginLeft:'10%',marginTop:'70px'}} rowGap = {3} alignItems = 'center'>
+                    {puntero?
+                    <Typography variant = 'h6'>Escribiendo: {puntero}</Typography>
+                    :
+                    null}
                     <TextField label="Titulo" value = {titulo} sx = {{width : '100%'}} onChange = {(e)=>{setTitulo(e.target.value)}}>
                         asd
                     </TextField>

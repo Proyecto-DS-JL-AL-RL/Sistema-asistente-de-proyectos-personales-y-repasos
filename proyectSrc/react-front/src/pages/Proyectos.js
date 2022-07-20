@@ -7,10 +7,15 @@ import OrderProyect from '../components/proyecto/OrderProyect';
 import Proyecto from '../components/proyecto/Proyecto'
 import ProyectoForm from '../components/projectForm';
 import MensajeAdvertencia from '../components/horario/MensajeAdvertencia';
+import { getCommandsPage } from '../speechMethods/proyectosMethods';
+import { useSpeechRecognition } from 'react-speech-recognition';
 
 import './proyectos.css'
+import { useHistory } from 'react-router-dom';
 export default function Proyectos() {
+  const history = useHistory();
   const [proyects,setProyects] = useState([]);
+  const [escribiendo,setEscribiendo] = useState(false);
   const {sessionState} = useContext(AccountContext);
   const [tituloInput,setTituloInput] = useState("");
   const [showForm,setShowForm] = useState(false);  
@@ -72,6 +77,45 @@ export default function Proyectos() {
   useEffect(()=>{
     getProyects();
   },[sessionState]);
+
+  const handleBack = ()=>{
+    if (showForm){
+      setShowForm(false)
+    }else{
+      history.push('/');
+    }
+  }
+
+  const handleContinuar = ()=>{
+    if (showForm){
+      addProyect();
+    }
+  }
+
+  const addCreateProyect = ()=>{
+    setShowForm(true);
+  }
+
+  const setEscribir = ()=>{
+    if (showForm){
+      setEscribiendo(true);
+    }
+  }
+
+  const commands = getCommandsPage({handleBack , addCreateProyect ,handleContinuar,setEscribiendo,setEscribir});
+  const {listening,transcript,finalTranscript,resetTranscript} = useSpeechRecognition({commands:commands});
+
+  useEffect(()=>{
+    if(escribiendo && listening){
+        resetTranscript();
+        setTituloInput(finalTranscript);
+    }
+  },[finalTranscript]);
+
+  useEffect(()=>{
+    if(!showForm)
+      setEscribiendo(false);
+  },[showForm]);
 
   return (
     <React.Fragment>
