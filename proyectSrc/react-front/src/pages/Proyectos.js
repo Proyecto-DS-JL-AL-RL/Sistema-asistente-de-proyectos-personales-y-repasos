@@ -1,4 +1,4 @@
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import React,{useState,useContext,useEffect} from 'react';
 import { AccountContext } from '../AccountContext';
 import axios from 'axios';
@@ -6,6 +6,7 @@ import AddProyect from '../components/proyecto/AddProyect';
 import OrderProyect from '../components/proyecto/OrderProyect';
 import Proyecto from '../components/proyecto/Proyecto'
 import ProyectoForm from '../components/projectForm';
+import MensajeAdvertencia from '../components/horario/MensajeAdvertencia';
 
 import './proyectos.css'
 export default function Proyectos() {
@@ -13,6 +14,20 @@ export default function Proyectos() {
   const {sessionState} = useContext(AccountContext);
   const [tituloInput,setTituloInput] = useState("");
   const [showForm,setShowForm] = useState(false);  
+  const [mensajeAdvertenciaDisplay,setMensajeAdvertenciaDisplay] = useState(null);
+
+  const Advertencia = () =>{
+    return <MensajeAdvertencia 
+    visible={setMensajeAdvertenciaDisplay}
+    content={"A su proyecto le falta un Título"}
+    comentario={<>
+            Debes colocarle un Título a tu nuevo Proyecto.
+            <button className='btn-advertencia-ok' onClick={()=>{setMensajeAdvertenciaDisplay(null)}}>
+                ok
+            </button>
+            </>}
+    />
+  }
 
   const getProyects = async ()=>{
     const {sub} = sessionState;
@@ -31,6 +46,7 @@ export default function Proyectos() {
 
   const addProyect = async ()=>{
     if (tituloInput == ''){
+      setMensajeAdvertenciaDisplay(Advertencia);
       return;
     }
     const {sub} = sessionState;
@@ -59,6 +75,7 @@ export default function Proyectos() {
 
   return (
     <React.Fragment>
+    <Typography variant = 'h3' sx = {{fontWeight:'bold'}}> Tus Proyectos</Typography>
     <Box className='containerProyect' display={'flex'} sx={{
       justifyContent:'center',
       flexWrap:'wrap',
@@ -88,6 +105,10 @@ export default function Proyectos() {
           <ProyectoForm setTitulo = {setTituloInput} titulo = {tituloInput} agregarProyecto = {addProyect} close = {close}/>
           </React.Fragment>
         :null}
+
+        <Box sx = {{left:'50%',top:'50%',marginLeft:'-250px',marginTop:'-5%',position:'absolute'}}>
+            {mensajeAdvertenciaDisplay}                 
+        </Box>
     </React.Fragment>
   )
 }

@@ -7,14 +7,32 @@ import {parseUrlFromKey,uploadFile} from '../S3methods';
 import { useHistory } from 'react-router-dom';
 import { useSpeechRecognition } from 'react-speech-recognition';
 import {getCommandsPage} from '../speechMethods/algoQueHacerMethods'
+import MensajeAdvertencia from '../components/horario/MensajeAdvertencia'
+import { Box } from '@mui/material';
 
 export default function AlgoQueHacerPage(){
     const history = useHistory();
+    const [mensajeAdvertenciaDisplay,setMensajeAdvertenciaDisplay] = useState(null);
     const {sessionState,currentState,setCurrentState} = useContext(AccountContext);
     const [doingSomething,setDoingSomething]    = useState(false);    
     const [currentActivity,setCurrentActivity]  = useState(null);
     const [started,setStarted]                  = useState(false);
     const [evidencia,setEvidencia]              = useState(null);
+
+
+    const AdvertenciaFinalizar = () =>{
+        return <MensajeAdvertencia 
+        visible={setMensajeAdvertenciaDisplay}
+        content={"Actividad completada"}
+        imgContent={"./bienImage.jpg"}
+        comentario={<>
+                Se te ha agregado {currentActivity?.Puntos} puntos a {currentActivity?.ProyectoTitulo||"Tu proyecto Personal"}
+                <button className='btn-advertencia-ok' onClick={()=>{setMensajeAdvertenciaDisplay(null)}}>
+                    ok
+                </button>
+                </>}
+        />
+    }
 
     const checkSession = async () => {
         if (currentState.ActividadActual){
@@ -57,13 +75,17 @@ export default function AlgoQueHacerPage(){
                     RefTitle = "Dirección URL";
                 }
             }            
+                
             const evidenceBody = {tipo,UrlRef,RefTitle}
             const body = {activity: currentActivity, evidenceBody:evidenceBody };
             axios.post('http://localhost:4000/api/state/endActivity',body)
                 .then((data)=>{
                     console.log(data.data);
-                    setCurrentState({...currentState,ActividadActual: null });             
+                    setCurrentState({...currentState,ActividadActual: null }); 
+                    setMensajeAdvertenciaDisplay(AdvertenciaFinalizar);            
                     setCurrentActivity(null);
+                    setStarted(false);
+                    setEvidencia(null);
                 }).catch(err=>console.log(err));
         }    
     }
@@ -116,6 +138,9 @@ export default function AlgoQueHacerPage(){
                 <AlgoQueHacer       giveAnActivity   = {giveAnActivity}    
                                     />
             }
+            <Box sx = {{left:'50%',top:'50%',marginLeft:'-250px',marginTop:'-5%',position:'absolute'}}>
+            {mensajeAdvertenciaDisplay}                 
+            </Box>
         </React.Fragment>
     );
 }

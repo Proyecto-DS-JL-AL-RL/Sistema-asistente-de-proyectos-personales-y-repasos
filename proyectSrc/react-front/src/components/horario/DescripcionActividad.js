@@ -445,7 +445,7 @@ export default function DescripcionActividad(props) {
     useEffect(()=>{
         if (puntero in setDictionary)
             if(puntero && listening){
-                alert("|"+puntero+"|");
+                //alert("|"+puntero+"|");
                 resetTranscript();
                 setDictionary[puntero](finalTranscript);
             }
@@ -476,6 +476,13 @@ export default function DescripcionActividad(props) {
         autoComplete="off"
         >
         <div width={"100%"}>
+            {puntero?
+            <Typography variant = 'h6' sx = {{width:'100%',textAlign:'center'}}>
+                Escribiendo en : {puntero}
+            </Typography>
+            :
+            null}
+
             <TextField
             required
             className='text-entrain'
