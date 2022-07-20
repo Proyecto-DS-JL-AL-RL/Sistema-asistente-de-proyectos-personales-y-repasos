@@ -172,9 +172,26 @@ export default function VerTarjeta(props) {
         }}
       > 
 
-    {!showResult?
+    {showResult?
     <Box className="container-showResult"> 
-    <Button onClick={
+    
+      
+      <Typography sx={{fontSize:'3vw', fontWeight: 'bold', color:'brown'}} variant="h2">Resultados</Typography>
+            <Typography sx={{mt:'3%', fontWeight: 'bold', color:'black'}} className="text-result" variant="h5">
+              <ul>
+                {puntajeTarjeta.map((puntaje, index) =>
+                    <li key={index}>
+                    Puntaje de la tarjeta {index+1}: {tab}  {puntaje.toFixed(3)}
+                    </li>
+                    )}
+              </ul>
+            <Divider sx={{mt:'2%', color:'black', border:'0.1rem solid black'}} variant="middle" />
+            <Typography sx={{fontWeight: 'bold', color:'black'}} className="text-result" variant="h5">
+                Puntaje del Mazo: {puntajeMazo.toFixed(3)} <br/>
+              </Typography>
+          </Typography>
+          <img className={"img-result"} src={star} alt="start"/>
+          <Button onClick={
                     ()=>{
                       history.push('/Mazos');
                     }
@@ -188,7 +205,6 @@ export default function VerTarjeta(props) {
       } sx={{py:2, borderRadius: 5, color: 'white', background:'#00b347'}} variant="contained" size="large">
           <Typography sx= {{fontWeight: 'bold', fontSize:'1vw'}} variant = 'h6'>volver intentar</Typography>
       </Button>
-      <img className={"img-result"} src={star} alt="start"/>
     </Box>:null}  
     <Grow in={true}>
                 <Paper sx={{

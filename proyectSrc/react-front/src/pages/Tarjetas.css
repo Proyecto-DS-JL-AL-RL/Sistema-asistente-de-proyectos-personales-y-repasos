@@ -24,8 +24,8 @@
 
 .container-showResult{
     z-index: 2;
-    height:90%;
-    width:50%;
+    height:70vh;
+    width:40%;
     padding:2%;
     position:relative;
     text-align: center;
@@ -34,27 +34,39 @@
     background-color:aquamarine;
 }
 
-.img-result{
-    z-index:3;
-    position: relative;
-    width:80%;
+.text-result{
+    z-index: 4;
     align-items: center;
+    justify-content: center;
+    position: absolute;
     text-align: center;
-    height:80%;
-    align-items: center;
-    border-radius: 5%;
     overflow-x: hidden;
+    width:80%;
+    height:40vh;
+
     overflow-y: scroll; 
 }
 
-.img-result::-webkit-scrollbar {
+.img-result{
+    z-index:2;
+    position: absolute;
+    width:80%;
+    align-items: center;
+    height:40vh;
+    
+    align-items: center;
+    border-radius: 5%;
+
+}
+
+.text-result::-webkit-scrollbar {
     width: 0;  
     background: transparent; 
 }
 
 .Botton-voler-inicio{
-    top:83%;
-    z-index: 4;
+    top:70%;
+    z-index: 3;
     left: -1rem;
     position: relative;
     justify-content: center;
@@ -64,8 +76,8 @@
 }
 
 .Botton-voler-intentar-again{
-    top: 83%;
-    z-index: 4;
+    top: 70%;
+    z-index: 3;
     left: 1rem;
     position: relative;
     justify-content: center;
@@ -75,8 +87,3 @@
 }
 
 
-.text-result{
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap ;
-}
