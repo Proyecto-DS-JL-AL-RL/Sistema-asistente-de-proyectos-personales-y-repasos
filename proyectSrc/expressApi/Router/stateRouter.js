@@ -19,7 +19,9 @@ router.post('/state/endActivity',async function(req,res){
     res.json(resp);
 });
 
-
-
+router.post('/state/sumPuntos',async function(req,res){
+    let resp = await datState.agregarPuntos(req.body);
+    res.json(resp);
+});
 
 module.exports = router;

@@ -7,8 +7,11 @@ import TokenIcon from '@mui/icons-material/Token';
 import FileForm from '../components/fileForm';
 import { getCommandsActividad } from '../speechMethods/algoQueHacerMethods';
 import { useSpeechRecognition } from 'react-speech-recognition';
+import MensajeAdvertencia from '../components/horario/MensajeAdvertencia';
+
 
 export default function ActividadActual(props){
+    const [mensajeAdvertenciaDisplay,setMensajeAdvertenciaDisplay] = useState(null);
     const [actividad,setActividad]  = useState(null);
     const [constan,setConstan]      = useState(10);
     const [started,setStarted]      = useState (false);
@@ -16,11 +19,25 @@ export default function ActividadActual(props){
     const [showForm,setShowForm]    = useState(false);
     const history = useHistory();
 
+    const AdvertenciaEvidencia = () =>{
+        return <MensajeAdvertencia 
+        visible={setMensajeAdvertenciaDisplay}
+        content={"Suba Evidencias"}
+        comentario={<>
+                Esta actividad fue configurada para requerir evidencias para completarlo.
+                <button className='btn-advertencia-ok' onClick={()=>{setMensajeAdvertenciaDisplay(null)}}>
+                    ok
+                </button>
+                </>}
+        />
+    }
+
+
     const handleStart = ()=>props.startActivity();
     const handleFinalizarActividad = ()=>{
         if (actividad?.Blocked && !evidencia)
             {
-                alert('Suba evidencias');
+                setMensajeAdvertenciaDisplay(AdvertenciaEvidencia);
                 return;
             }
         props.endActivity();
@@ -88,16 +105,7 @@ export default function ActividadActual(props){
                                 }
                         </Typography>
                     </Grid>
-                    <Grid item xs = {6} >
-                        <Typography sx ={{textAlign:'center'}} variant = 'h5'>
-                            {constan} %
-                            {constan>0?
-                                    <ArrowUpwardIcon/>
-                                    :
-                                    <ArrowDownwardIcon/>
-                                }
-                        </Typography>
-                    </Grid>
+
                 </Grid>
                 <Grid container justifyContent = 'space-between' alignItems = 'right' alignContent = 'flex-end' 
                         sx = {{width:'100%',marginTop:'20px',paddingRight:'20px'}} direction='row'  >   
@@ -108,7 +116,7 @@ export default function ActividadActual(props){
                     :null}
                 {actividad?.ProyectoAsociado?  
                     <Typography sx ={{bgcolor:'orange',width:'300px',borderRadius:'30px',textAlign :'center',fontWeight:'bold',display:'inline'}} variant = 'h6'>
-                        {actividad?.ProyectoAsociado}
+                        {actividad?.ProyectoTitulo}
                     </Typography>                
                 :null  }
                 </Grid>
@@ -156,5 +164,8 @@ export default function ActividadActual(props){
             null
             }
 
+            <Box sx = {{left:'50%',top:'50%',marginLeft:'-250px',marginTop:'-5%',position:'absolute'}}>
+            {mensajeAdvertenciaDisplay}                 
+            </Box>
         </React.Fragment>
 );}

@@ -4,6 +4,10 @@ import { AccountContext } from '../AccountContext';
 import axios from 'axios';
 import { useSpeechRecognition } from 'react-speech-recognition';
 import { getAgregarComands } from '../speechMethods/actividadesMethods';
+import MensajeAdvertencia from './horario/MensajeAdvertencia';
+
+
+
 
 export default function ActividadForm(props){
     const [titulo,setTitulo] = useState('');
@@ -15,17 +19,31 @@ export default function ActividadForm(props){
     const [currProyect,setCurrProyect] = useState(null);
     const { sessionState } = useContext(AccountContext);
     const [puntero,setPuntero] = useState(null);
+    const [mensajeAdvertenciaDisplay,setMensajeAdvertenciaDisplay] = useState(null);
+
+    const actividadSinNombrePaper = () =>{
+        return <MensajeAdvertencia 
+        visible={setMensajeAdvertenciaDisplay}
+        content={"Al parecer tu actividad no tiene un nombre."}
+        comentario={<>
+                Debes colocar un titulo a tu actividad, la descripción es opcional
+                <button className='btn-advertencia-ok' onClick={()=>{setMensajeAdvertenciaDisplay(null)}}>
+                    ok
+                </button>
+                </>}
+        />
+    }
 
     const agregarActividad = async ()=>{
         if (titulo == ''){
-            alert('Ponga un titulo');
-            return;
+                setMensajeAdvertenciaDisplay(actividadSinNombrePaper);
+                return;
         }
         
         const {sub} = sessionState;
         const p = currProyect||{titulo:null,id:null};
-        const tituloProyect = p.titulo;
-        const proyectId = p.id;
+        const tituloProyect = p.Titulo;
+        const proyectId = p._id;
 
         const Item = {
             "UserSub": sub,
@@ -43,12 +61,12 @@ export default function ActividadForm(props){
             })
             .catch(err=>console.log(err));  
 
-        console.log(Item);
+        console.log('agregado',Item);
         props.setActivities([...props.activities,Item])
         props.close();
     }
     const establecerProyecto = (proyecto)=>{
-        //console.log(proyecto);
+        console.log('proyproy',proyecto);
         setCurrProyect(proyecto);
         setSelectingProyect(false);
     }
@@ -95,7 +113,7 @@ export default function ActividadForm(props){
 
     return(
         <React.Fragment>
-            <Card sx = {{width:'40%',height:'60%',maxHeight:'650px', position:'absolute',top:'25%',left:'30%',border :'solid',borderColor:'black',padding:'20px', overflowY:'auto'}}>
+            <Card sx = {{width:'40%',minHeight:'60%',maxHeight:'700px', position:'absolute',top:'25%',left:'30%',border :'solid',borderColor:'black',padding:'20px', overflowY:'auto'}}>
                 <Button onClick = {props.close} variant = 'contained' sx = {{bgcolor :'red',left:'88%'}} >X</Button>
                 
                 <Typography variant = 'h4'>
@@ -210,8 +228,10 @@ export default function ActividadForm(props){
             :
             null
             }
-            
-            
+        <Box sx = {{left:'50%',top:'50%',marginLeft:'-250px',marginTop:'-5%',position:'absolute'}}>
+            {mensajeAdvertenciaDisplay}                 
+        </Box>
+        
         </React.Fragment>
     );
 }

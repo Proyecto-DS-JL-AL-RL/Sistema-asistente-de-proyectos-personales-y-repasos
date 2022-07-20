@@ -2,19 +2,33 @@ import React,{useEffect, useState,useContext} from 'react';
 import { AccountContext } from '../AccountContext';
 import {Button, Card, Grid, TextField, Typography,Box,Slider} from '@mui/material';
 import axios from 'axios';
-
+import MensajeAdvertencia from './horario/MensajeAdvertencia';
 
 export default function ObjetivoForm(props){
+    const [mensajeAdvertenciaDisplay,setMensajeAdvertenciaDisplay] = useState(null);
     const {sessionState} = useContext(AccountContext);
     const [titulo,setTitulo] = useState('');
     const [descripcion,setDescripcion] = useState('');
     const [peso,setPeso] = useState(4);
 
+
+    const AdvertenciaT = () =>{
+        return <MensajeAdvertencia 
+        visible={setMensajeAdvertenciaDisplay}
+        content={"Parece que su Nuevo Pendiente no tiene un Titulo"}
+        comentario={<>
+                Debe ponerle un Titulo a su pendiente para poder identificarlo.
+                <button className='btn-advertencia-ok' onClick={()=>{setMensajeAdvertenciaDisplay(null)}}>
+                    ok
+                </button>
+                </>}
+        />
+    }
     const agregarActividad = async ()=>{
         const {sub} = sessionState;
         if (sub){
             if (titulo == ''){
-                alert('Ponga un titulo');
+                setMensajeAdvertenciaDisplay(AdvertenciaT);
                 return;
             }
     
@@ -78,6 +92,9 @@ export default function ObjetivoForm(props){
                     </Button>
                 </Grid>
             </Card>
+            <Box sx = {{left:'50%',top:'50%',marginLeft:'-250px',marginTop:'-5%',position:'absolute'}}>
+            {mensajeAdvertenciaDisplay}                 
+            </Box>
         </React.Fragment>
     );
 }

@@ -96,13 +96,18 @@ var getState = async function (userSub){
     return state;
 }
 
-
+var agregarPuntos = async function (body){
+    const {proyecto,Puntos} = body;
+    console.log(proyecto,'-',Puntos);
+    const response = await datProyectos.sumarPuntos(proyecto,Puntos,false);
+    return response
+}
 
 
 module.exports.initUserState = initUserState;
 module.exports.setActivityState = setActivityState;
 module.exports.getState = getState;
 module.exports.endActivity = endActivity;
-
+module.exports.agregarPuntos = agregarPuntos;
 
 

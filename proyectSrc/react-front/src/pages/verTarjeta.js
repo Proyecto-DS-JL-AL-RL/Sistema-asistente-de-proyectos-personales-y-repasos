@@ -28,6 +28,7 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import SR,{useSpeechRecognition} from 'react-speech-recognition';
 import { getInGameCommands } from '../speechMethods/tarjetasMethods';
 import star from './img/star.png';
+import { AccountContext } from '../AccountContext';
 
 //<MicIcon className='button-main' sx={{p:2, borderRadius:'50%', background:'red',
 //color:'white', width: '30%', height: '30%', '&:hover': {backgroundColor: '#FF6347'} }}/>
@@ -79,6 +80,7 @@ const mazos = {
     </Box>
 */
 export default function VerTarjeta(props) {
+  const {currentState} = useContext(AccountContext);
   const [page, setPage] = React.useState(1);
   const [mazo, setMazo] = React.useState(mazos);
   const [intentos, setIntentos] = React.useState(0);
@@ -127,6 +129,11 @@ export default function VerTarjeta(props) {
   const dispatch = useDispatch();
   /* eslint-disable */
 
+  const sendPuntos= async (sum) =>{
+    if (currentState){
+      axios.post('/api/state/sumPuntos',{proyecto: currentState.BaseProyect, Puntos:sum}).then(data=>console.log(data.data)).catch(err=>console.log(err))
+    }
+  }
 
   const nextCard = ()=>{
     if (showResult){
@@ -170,6 +177,7 @@ export default function VerTarjeta(props) {
           axios.put('/api/mazos/'+mazo._id, {
             "Puntos":sum
           })
+          sendPuntos(sum);
           setShowResult(true)
         }
     }else{
@@ -204,6 +212,7 @@ export default function VerTarjeta(props) {
           axios.put('/api/mazos/'+mazo._id, {
             "Puntos":sum
           })
+          sendPuntos(sum);
           setShowResult(true)
         }
      
@@ -240,6 +249,7 @@ export default function VerTarjeta(props) {
           axios.put('/api/mazos/'+mazo._id, {
             "Puntos":sum
           })
+          sendPuntos(sum);
           setShowResult(true)
         }
       
@@ -276,6 +286,7 @@ export default function VerTarjeta(props) {
         axios.put('/api/mazos/'+mazo._id, {
           "Puntos":sum
         })
+        sendPuntos(sum);
         setShowResult(true)
       }
     }else{

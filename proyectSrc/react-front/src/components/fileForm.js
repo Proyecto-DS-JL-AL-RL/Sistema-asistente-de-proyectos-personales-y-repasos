@@ -1,18 +1,46 @@
 import React,{useEffect, useState} from 'react';
-import {Button, Card, Grid, TextField, Typography,FormControl,FormLabel,Radio,RadioGroup,FormControlLabel} from '@mui/material';
+import {Button, Card, Grid,Box  , TextField, Typography,FormControl,FormLabel,Radio,RadioGroup,FormControlLabel} from '@mui/material';
 import { useSpeechRecognition } from 'react-speech-recognition';
 import { getCommandsForm } from '../speechMethods/algoQueHacerMethods';
+import MensajeAdvertencia from './horario/MensajeAdvertencia';
+
+
 
 export default function FileForm(props){
-
+    const [mensajeAdvertenciaDisplay,setMensajeAdvertenciaDisplay] = useState(null);
     const [url,setUrl] = useState('');
     const [file,setFile] = useState(null);
     const [tipo,setTipo] = useState('URL');
 
+    const AdvertenciaURL = () =>{
+        return <MensajeAdvertencia 
+        visible={setMensajeAdvertenciaDisplay}
+        content={"Debe poner un URL"}
+        comentario={<>
+                Debes colocar una dirección URL en el campo URL.
+                <button className='btn-advertencia-ok' onClick={()=>{setMensajeAdvertenciaDisplay(null)}}>
+                    ok
+                </button>
+                </>}
+        />
+    }
+    const AdvertenciaArchivo = () =>{
+        return <MensajeAdvertencia 
+        visible={setMensajeAdvertenciaDisplay}
+        content={"Suba un archivo"}
+        comentario={<>
+                Parece que no ha subido un archivo aun
+                <button className='btn-advertencia-ok' onClick={()=>{setMensajeAdvertenciaDisplay(null)}}>
+                    ok
+                </button>
+                </>}
+        />
+    }
+
     const agregarActividad = ()=>{
         if (tipo == 'URL'){
             if (url == ''){
-                alert('Agregue un URL')
+                setMensajeAdvertenciaDisplay(AdvertenciaURL);
                 return;
             }else{
                 const evidencia = {tipo:tipo,url : url}
@@ -26,7 +54,7 @@ export default function FileForm(props){
                 props.setEvidencia(evidencia);
                 props.close();
             }else{
-                alert('Suba un archivo');
+                setMensajeAdvertenciaDisplay(AdvertenciaArchivo);
                 return;
             }
         }
@@ -113,6 +141,10 @@ export default function FileForm(props){
                     </Button>
                 </Grid>
             </Card>
+
+            <Box sx = {{left:'50%',top:'50%',marginLeft:'-250px',marginTop:'-5%',position:'absolute'}}>
+            {mensajeAdvertenciaDisplay}                 
+            </Box>
         </React.Fragment>
     );
 }

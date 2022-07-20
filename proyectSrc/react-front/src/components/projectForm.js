@@ -4,9 +4,13 @@ import {Button, Card, Grid, TextField, Typography,Box,Slider} from '@mui/materia
 import axios from 'axios';
 
 
-export default function ProyectoForm(props){
 
+
+export default function ProyectoForm(props){
+    
     const [titulo,setTitulo] = useState('');
+
+
 
     useEffect(()=>{
         setTitulo(props.titulo);
