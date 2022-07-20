@@ -88,12 +88,9 @@ export default function AppBarSearch(props) {
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
             {ayuda.title}
-            {sessionState.nickname}
+
           </Typography>
           <Search>
-            <Button onClick = {()=>{logout()}}>
-              logout
-            </Button>
 
 
             <IconButton

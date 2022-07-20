@@ -15,7 +15,7 @@ export default function ObjetivosList(props){
                 <Grid item container sx = {{bgcolor:'#1DB5BE', width:'100%',height:'20%'}}   color = 'white' alignItems = 'center'>
                     <Grid item  sx = {{width : '100%'}}>
                         <Typography fontWeight='bold' color = 'white'  textAlign='left' ml={4} fontSize={30}>
-                            Próximos Objetivos
+                            Pendientes
                         </Typography>
                     </Grid>
                 </Grid>
