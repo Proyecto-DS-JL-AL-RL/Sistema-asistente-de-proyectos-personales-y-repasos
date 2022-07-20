@@ -128,14 +128,12 @@ function App() {
                           name={nameBar} setName={setNameBar}/>
                         </div>
                     <div className='content-container'>
-                      {transcript}
+                      {sessionState?.nickname?
                       <Switch>
                         <Route exact path = '/'>
                           <MostrarFuncionalidades showAdd={{showAnadir, setShowAnadir}} showFuncionalidades={{showFeedBack, setShowFeedBack}}/>
                         </Route>
-                        <Route exact path = '/registro'>
-                          <Register/>
-                        </Route>
+                
                         <Route path = '/proyectos'>
                           <Proyectos/>
                         </Route>
@@ -147,9 +145,6 @@ function App() {
                         </Route>
                         <Route path = '/activityQueue'>
                           <ActivityQueue/>
-                        </Route>
-                        <Route exact path = "/inicio" >
-                          <Inicio  logged={{logged,setLogged}}/>
                         </Route>
                         <Route exact path = "/Tarjetas/:idSeccion" >
                                 <Tarjetas showFuncionalidades={{showFeedBack, setShowFeedBack}} showAdd={{showAnadir, setShowAnadir}} />
@@ -164,6 +159,16 @@ function App() {
                                   <Presentacion/>
                             </Route>
                       </Switch>
+                      :
+                      <Switch>
+                        <Route exact path = '/'>
+                          <Inicio  logged={{logged,setLogged}}/>
+                        </Route>
+                        <Route exact path = '/registro'>
+                          <Register/>
+                        </Route>
+                      </Switch>
+                      }
                     </div>
                   </div>
                   <Beforeunload onBeforeunload= {beforeUnload} />

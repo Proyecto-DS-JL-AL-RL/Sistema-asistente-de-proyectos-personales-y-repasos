@@ -269,8 +269,7 @@ export default function Horario() {
         
     }
     const handleMinMax = (min,max) =>{
-        setMinmaxIntervalo([min,max]);
-        
+        setMinmaxIntervalo([min,max]);        
     }
     
     useEffect(()=>{

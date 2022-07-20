@@ -21,6 +21,8 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { setMensaje } from '../../stores/sliceMensajesCortos';
 import MensajeAdvertencia from './MensajeAdvertencia';
 import { restoreValueConfig } from '../../stores/sliceConfigHorario';
+import SR,{ useSpeechRecognition } from 'react-speech-recognition';
+import { getDescCommands } from '../../speechMethods/horarioMethods';
 
 
 
@@ -125,6 +127,7 @@ export default function DescripcionActividad(props) {
     const [duracionFin,setDuracionFin] = useState(24);
     const[llenarMic,setLlenarMic] = useState(null);
     const [alertContent,setAlertContent] = useState(null);
+    const [puntero,setPuntero] = useState(null);
     const [mensajeAdvertenciaDisplay,setMensajeAdvertenciaDisplay] = useState(null);
     const matches = useMediaQuery('(min-height:750px)');
     
@@ -153,6 +156,7 @@ export default function DescripcionActividad(props) {
         setDuracionFin(props.actividad.fin);
         
     },[props])
+    
     const handleNombre = (e) =>{
         if(!editable)return;
         if(e.target.value.match(/^\s+/)) return;
@@ -378,6 +382,7 @@ export default function DescripcionActividad(props) {
         setDuracion([newMin,duracion[1]]);
 
     }
+    
     const handleDuracionFin = (e) =>{
         if(!editable) return;
         if(e.target.value==""){
@@ -408,8 +413,15 @@ export default function DescripcionActividad(props) {
             
         }
     }
+
+
+
     const handleMic=()=>{
-        setLlenarMic(<MicroFormHorario setVisible={setLlenarMic}/>)
+        //setLlenarMic(<MicroFormHorario setVisible={setLlenarMic}/>)   
+        if (listening)
+            SR.stopListening();
+        else
+            SR.startListening({language:'es',continuous:false});   
     }
     useEffect(()=>{
         const actTemp = {...actividad,
@@ -419,6 +431,25 @@ export default function DescripcionActividad(props) {
         
     },[actividad,duracion,duracionFin])
     
+    const setPunteroPage     = (puntero)=>setPuntero(puntero);
+    const setDictionary = {
+        "nombre": (tra)=>{handleNombre({target:{value:tra}})} ,
+        "descripción": (tra)=>{handleDescrip({target:{value:tra}})},
+        "acrónimo": (tra)=>{handleAcr({target:{value:tra}})},
+    }
+
+    const commands = getDescCommands({handleDia,handleDuracionInicio,handleDuracionFin,setDuracion,setDuracionFin,setPunteroPage,handleClickState});
+    const {listening,transcript,finalTranscript,resetTranscript} = useSpeechRecognition({commands:commands});
+
+    useEffect(()=>{
+        if (puntero in setDictionary)
+            if(puntero && listening){
+                alert("|"+puntero+"|");
+                resetTranscript();
+                setDictionary[puntero](finalTranscript);
+            }
+    },[finalTranscript]);
+
   return (
     <>
     <div className='actividad-description'> 
@@ -571,7 +602,12 @@ export default function DescripcionActividad(props) {
         </Box>
         <div className='micro-form' 
             onClick={handleMic}>
-            <MicIcon  sx={{ fontSize: 40,color:'white','&:hover':{color:'green'} }} />
+            {listening?
+            <MicIcon  sx={{p:1,  borderRadius:50, background:'blue', color:'white',cursor:'pointer', width: 40, height: 40 ,'&:hover':{color:'green'} }} />
+            :
+            <MicIcon  sx={{p:1,  borderRadius:50, background:'red', color:'white',cursor:'pointer', width: 40, height: 40 ,'&:hover':{color:'green'} }} />
+            }
+            
         </div>
         
     </div>
