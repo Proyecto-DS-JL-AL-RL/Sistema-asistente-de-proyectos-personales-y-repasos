@@ -12,7 +12,7 @@ import ConfigHorario from '../components/horario/ConfigHorario';
 import MensajeAlert from '../components/horario/MensajeAlert';
 import { useSelector,useDispatch} from 'react-redux';
 import {inciarHorario, restoreActivity } from '../stores/sliceHorario';
-import { actividad2intervalo } from '../components/horario/utilsHorario';
+import { actividad2intervalo, temaChangeCSS } from '../components/horario/utilsHorario';
 import { changePage,restoreContent } from '../stores/sliceAyuda';
 import {changeIntervalo, intervaloOverFlow,changeBase} from '../stores/sliceConfigHorario';
 import { getIniHorario} from '../stores/sliceHorario';
@@ -155,6 +155,7 @@ export default function Horario() {
     
     useEffect(()=>{
         iniHorario();
+        //temaChangeCSS(2);
     },[sessionState])
     useEffect(()=>{
         if(!temporalActividad) return;
@@ -209,12 +210,12 @@ export default function Horario() {
                 const numEle = parseInt(elementos[i].id.match(/(\d+)/)[0]);
                 setIdSelect(numEle);
                 setOcultarDescripcion(false);
-                const acts = id2ObtainAllActivities(horario,idSelect);
-               // console.log("Estados",acts.map((e)=>e.estado));
+                //const acts = id2ObtainAllActivities(horario,idSelect);
+                //console.log("Estados",acts.map((e)=>e.estado));
                 const {sub} = sessionState;
                 if(sub){
                     dispatch(changeBase());
-                setDescripcionRender(<DescripcionActividad
+                    setDescripcionRender(<DescripcionActividad
                     sub = {sub}
                     mensajeDisplay={setMensajesAlertComplete}
                     actividad = {id2actividadClick(numEle)}

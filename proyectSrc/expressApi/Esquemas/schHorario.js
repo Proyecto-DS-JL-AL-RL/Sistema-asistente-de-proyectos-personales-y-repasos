@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const configHorario = new Schema({
     userSub: String,
     intervaloDefault : {type: Boolean, default:false},
-    tema: {type: Number, default:1},
+    tema: {type: Number, default:0},
     sobrescribir: {type:Boolean, default:true},
     intervalo:{type:Array,default:[6,18]}
 })

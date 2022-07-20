@@ -14,7 +14,7 @@
     width: 100%;
     display: grid;
     
-    grid-template-columns: repeat(4,1fr);
+    grid-template-columns: repeat(5,1fr);
 }
 .item-tema{
     background-color: red;
@@ -22,4 +22,19 @@
 }
 .item-temp{
     background-color: var(--color-horario-2);
+}
+#descrip-tema-0{
+    background-color: var(--color-horario-1);
+}
+#descrip-tema-1{
+    background-color: var(--color-horario-2);
+}
+#descrip-tema-2{
+    background-color: var(--color-horario-3);
+}
+#descrip-tema-3{
+    background-color: var(--color-horario-4);
+}
+#descrip-tema-4{
+    background-color: var(--color-horario-5);
 }
