@@ -24,6 +24,11 @@ body{
 .content-mensaje{
     flex-grow: 1;
     width: 100%;
+    color:white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 1000;
 }
 @keyframes animation-mensaje{
     from{

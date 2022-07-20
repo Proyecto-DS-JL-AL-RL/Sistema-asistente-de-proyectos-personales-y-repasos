@@ -1,0 +1,12 @@
+.content-display-escuchando{
+    position: absolute;
+    right: 10px;
+    top: calc(var(--head-space));
+    max-width: 350px;
+    background-color: blue;
+    color:white;
+    overflow: none;
+    display: flex;
+    align-items: center;
+    padding: 4px;
+}

@@ -194,6 +194,8 @@ export default function DescripcionActividad(props) {
         const newHorario = sobrescribir(horario);
         console.log(newHorario);
         dispatch(sobrescribirTodo(newHorario)); 
+        dispatch(setMensaje({content:"Se sobreescribieron actividad(es)"
+        ,visible:true}))
         actualizarHorarioRequest(newHorario,props.sub);
         setStateButton(0);
         handleVisible();

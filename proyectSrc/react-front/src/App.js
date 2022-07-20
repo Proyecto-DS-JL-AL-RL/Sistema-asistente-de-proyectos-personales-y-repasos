@@ -34,6 +34,7 @@ import { setVisible as setVisibleMensajeCorto } from './stores/sliceMensajesCort
 
 import axios from 'axios';
 import NofoundPage from './components/redirect/NofoundPage';
+import EscuchandoDisplay from './components/Ayuda/EscuchandoDisplay';
 
 
 function App() {
@@ -89,7 +90,7 @@ function App() {
       setTimeout(()=>{
         setMensajesCortos(null);
         dispatch(setVisibleMensajeCorto(false));
-      },1500)
+      },1700)
     }
   },[mensajesFantasma]);
 
@@ -179,6 +180,7 @@ function App() {
                   <Beforeunload onBeforeunload= {beforeUnload} />
                   
                   {ayuda.display?<DisplayAyuda/>:null}
+                  {listening?<EscuchandoDisplay mensaje={transcript}/>:null}
                 {mensajesCortos}    
             </div>
   );
