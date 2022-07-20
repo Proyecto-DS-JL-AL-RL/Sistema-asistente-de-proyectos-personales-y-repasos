@@ -1,10 +1,12 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
+import { temaChangeCSS } from "../components/horario/utilsHorario";
 
 
 export const getIniHorarioConfig = createAsyncThunk('configHorario/getIniHorario', async (sub)=>{
     const response= await fetch(`http://localhost:4000/api/horarioInit/${sub}`);
     const rpta = await response.json();
     const {intervalo,sobrescribir, intervaloDefault,tema}=rpta.config;
+    temaChangeCSS(tema);
     return {intervalo,sobrescribir:sobrescribir,intervaloDefault,tema};
 } )
 
@@ -13,7 +15,7 @@ export const configHorarioSlice = createSlice({
     initialState:{
         value:{
             sobrescribir:true,
-            tema:1,
+            tema:0,
             intervaloDefault:false,
             //intervaloMaxMin:[6,18],
             intervalo: [4,20]

@@ -1,20 +1,30 @@
 :root{
-    --color-horario-1: rgb(255, 205, 113);
-    --color-horario-2: rgb(90, 206, 241);
-    --color-horario-3: rgb(29, 241, 138);
-    --color-horario-4: rgb(228, 228, 32);
-    --color-horario-5: white;
+    --color-horario-1: rgb(7, 172, 255);
+    --color-horario-2: rgb(255, 55, 0);
+    --color-horario-3: rgb(43, 255, 0);
+    --color-horario-4: rgb(28, 88, 255);
+    --color-horario-5: #a270f9;
+    --color-horario-6: white;
     --fondo-descripcion-horario: white;
+    --color-text-tabla:black;
+}
+#description-content-horario{
+    color: var(--color-text-tabla);
+}
+#item-horario-0>*{
+    color:var(--color-text-tabla);
 }
 /*
 1-> Ocupada
 2-> Seleccionada
 3-> Encima
 4-> TextDescripcion
-5-> Fondo rgb(116, 116, 222)
+5-> unlock 
+6-> Fondo rgb(116, 116, 222)
 */
-.horario-container{
 
+.horario-container{
+    
     height: 100%;
     display: flex;
     align-items: center;
@@ -33,7 +43,6 @@
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
-    
    
 }
 .item-horario{
@@ -47,8 +56,8 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    background-color: var(--color-horario-5);
-    color:black;
+    background-color: var(--color-horario-6);
+    color:var(--color-text-tabla);
 }
 .unlock-item:hover{
     background-color: var(--color-horario-4);
@@ -99,7 +108,7 @@
     }
 }
 .lock-item{
-    background-color: var(--primary-color);
+    background-color: var(--color-horario-5);
     color: white;
     border-color: black;
 }

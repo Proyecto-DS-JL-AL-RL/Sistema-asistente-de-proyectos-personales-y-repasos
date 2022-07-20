@@ -7,13 +7,13 @@ import Badge  from '@mui/material/Badge';
 import { FormControl, FormControlLabel, FormGroup, FormHelperText, InputLabel, MenuItem, Select, Slider, Switch as Sw, Typography} from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 import {useSelector,useDispatch} from 'react-redux';
-import { changeIntervalo,changeIntervaloDefault, changeSobreescribir } from '../../stores/sliceConfigHorario';
-import {actividades2Intervalo,act2horario}from './utilsHorario';
+import { changeIntervalo,changeIntervaloDefault, changeSobreescribir, changeTema } from '../../stores/sliceConfigHorario';
+import {actividades2Intervalo,act2horario, temaChangeCSS}from './utilsHorario';
 
-const stateButton2String =  (state) =>{
-    const stringState = ['Editar','Crear','Guardar'];
-    return stringState[state];
-}
+//const stateButton2String =  (state) =>{
+//    const stringState = ['Editar','Crear','Guardar'];
+//    return stringState[state];
+//}
 
 function valuetext(value) {
     return `${value}°C`;
@@ -43,12 +43,12 @@ export default function ConfigHorario(props) {
     const horario = useSelector((state)=>state.horario.value);
     const dispatch = useDispatch();
 
-    const [stateButton,setStateButton] = useState(0);
-    const [intervaloHoras,setIntervaloHoras]=useState(false);
-    const [value, setValue] = useState([2, 15]);
+    //const [stateButton,setStateButton] = useState(0);
+    //const [intervaloHoras,setIntervaloHoras]=useState(false);
+    //const [value, setValue] = useState([2, 15]);
     const [temaValue,setTemaValue] = useState(0);
-    const [onlyMinMax,setOnlyMinMax] = useState(true);
-    const [intervaloMinMax,setIntervaloMinMax ] = useState(actividades2Intervalo(horario));
+   // const [onlyMinMax,setOnlyMinMax] = useState(true);
+    //const [intervaloMinMax,setIntervaloMinMax ] = useState(actividades2Intervalo(horario));
     const [minmax,setMinMax] = useState(actividades2Intervalo(horario));
 
     /*useState(()=>{
@@ -81,16 +81,13 @@ export default function ConfigHorario(props) {
             }
         }
     };
-    const handleTemaValue = (e) =>{
-        console.log(e.target.value)
-        setTemaValue(e.target.value)
+   
+    
+    const handleTema = (e) =>{
         
+        dispatch(changeTema(e.target.value));
+        temaChangeCSS(e.target.value);
     }
-    const [age, setAge] = React.useState('');
-
-    const handleChange1 = (event) => {
-        setAge(event.target.value);
-    };
     const handleOnlyMinMax = (e) =>{
         console.log(e.target.checked);
         if(e.target.checked){
@@ -125,14 +122,12 @@ export default function ConfigHorario(props) {
             </button>
         }
         sx={{
-            
             width:'80%',
             mx:'auto',
             p:2,
             border:'2px solid black',
             backgroundColor:'white',   
         }}
-        
         >
         
         <Box sx={{
@@ -164,13 +159,15 @@ export default function ConfigHorario(props) {
                 Tema
             </Typography>
             <FormControl sx={{ m: 1, minWidth: '100%' }}>
-                <InputLabel id="demo-simple-select-helper-label">Age</InputLabel>
+                <InputLabel id="demo-simple-select-helper-label">
+                    Age
+                </InputLabel>
                 <Select
                 labelId="demo-simple-select-helper-label"
                 id="demo-simple-select-helper"
-                value={age}
+                value={configHorario.tema}
                 label="Age"
-                onChange={handleChange1}
+                onChange={handleTema}
                 >
                 {temasDisponibles.map((e,i)=>{
                     return <MenuItem key={"tema-select-"+i} value={i}>
@@ -182,18 +179,13 @@ export default function ConfigHorario(props) {
                 <FormHelperText>Selecciona un tema para el horario</FormHelperText>
             </FormControl>
             <div className='mostrar-tema'>
-                <div className='item-tema'>
-                    a
-                </div>
-                <div className='item-tema'>
-                    b
-                </div>
-                <div className='item-tema'>
-                    c
-                </div>
-                <div className='item-tema'>
-                    d
-                </div>
+                {(Array.from({length:5},(_,e)=>e)).map((e)=>{
+                    return <div className='item-tema' id={`descrip-tema-${e}`} key={`item-des-${e}`}>
+                        {e}
+                    </div>
+                })}
+                
+                
             </div>
             <FormGroup>
                 <FormControlLabel control={
