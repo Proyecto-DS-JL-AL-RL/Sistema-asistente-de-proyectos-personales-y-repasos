@@ -18,7 +18,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import { useHistory } from 'react-router-dom';
 import { useContext } from 'react';
 import { AccountContext } from '../AccountContext';
-
+import InfoIcon from '@mui/icons-material/Info';
 
 function ItemButttonBar(props){
   const history = useHistory();
@@ -83,5 +83,10 @@ export const secondaryListItems = (
     <ItemButttonBar page={"/"}
     icon={<HomeIcon sx={{color:'white',
     borderBottom:'solid 1px white'}}/>} name={"Home"}/>
+    <ItemButttonBar page={"/microAyuda"}
+    icon={<InfoIcon sx={{color:'white',
+    borderBottom:'solid 1px white'}}/>} name={"Info Voz"}
+    />
   </React.Fragment>
+    
 );
