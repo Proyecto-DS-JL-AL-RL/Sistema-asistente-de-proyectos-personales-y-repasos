@@ -78,7 +78,7 @@ export default function ActividadForm(props){
     const setProyectoAsociado= (idPro)  =>{
         if (selectingProyect) {
             //console.log(idPro);
-            if (idPro > 0 && idPro < proyectos.length){                
+            if (idPro >= 0 && idPro < proyectos.length){                
                 establecerProyecto(proyectos[idPro]);
             }            
         }
@@ -216,10 +216,10 @@ export default function ActividadForm(props){
                     }}} alignItems ='center' direction = 'row' 
                         onClick = {()=>{establecerProyecto(p)}}
                     >
-                        <Typography variant= 'h4' sx = {{width:'50px',bgcolor:'#D5FAFC',borderRadius:'30px',height:'50px',textAlign:'center',margin:'5px',paddingTop:'5px'}} alignContent = 'center'>
+                        <Typography variant= 'h4' sx = {{width:'50px',bgcolor:'#D5FAFC',borderRadius:'30px',minHeight:'50px',textAlign:'center',margin:'5px',paddingTop:'5px'}} alignContent = 'center'>
                             {idx} 
                         </Typography>
-                        <Typography variant= 'h4' sx = {{width:'70%',bgcolor:'#D5FAFC',borderRadius:'30px',height:'50px',padding:'10px',margin:'10px',paddingTop:'10px',textAlign:'center'}} alignContent = 'center'>
+                        <Typography variant= 'h4' sx = {{width:'70%',bgcolor:'#D5FAFC',borderRadius:'30px',minHeight:'50px',padding:'10px',margin:'10px',paddingTop:'10px',textAlign:'center'}} alignContent = 'center'>
                             {p.Titulo}
                         </Typography>
                     </Grid>

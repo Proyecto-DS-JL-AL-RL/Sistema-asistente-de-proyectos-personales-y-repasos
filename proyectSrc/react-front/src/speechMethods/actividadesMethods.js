@@ -91,7 +91,7 @@ const getAgregarComands = (methods) =>{
             }else{
                 idP = parseInt(frase.toLowerCase());
             }  
-            alert(idP)
+            //lert(idP)
             methods.setProyectoAsociado(idP);
         },
      },

@@ -64,11 +64,7 @@ export default function Proyectos() {
           .then(data=>{
             console.log('data:', data.data);
             setShowForm(false);
-            setProyects([...proyects, {
-              ...proyect_,
-              ActividadSemanal: [1,1,1,1,1,1,1],
-              Puntajes:{Puntos:50}
-            }])
+            getProyects();
             setTituloInput("");
           }).catch(err=>console.log(err));
       }      
