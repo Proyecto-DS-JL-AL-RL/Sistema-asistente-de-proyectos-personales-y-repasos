@@ -1,4 +1,5 @@
 const numerosDict = {
+    "cero":0,   "una":1,
     "uno":1,    "dos":2,
     "tres":3,    "cuatro":4,
     "cinco":5,    "seis":6,
