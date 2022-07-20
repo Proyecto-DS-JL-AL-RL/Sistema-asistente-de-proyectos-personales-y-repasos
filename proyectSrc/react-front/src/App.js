@@ -121,7 +121,7 @@ function App() {
   return (
           <div className='container-main'>
                   
-                  <DrawerComponent/>
+                  <DrawerComponent />
                   
                   <div className='other-container'>
                     <div className='head-container'>
@@ -137,7 +137,7 @@ function App() {
                         </Route>
                 
                         <Route path = '/proyectos'>
-                          <Proyectos/>
+                          <Proyectos showAdd={{showAnadir, setShowAnadir}}/>
                         </Route>
                         <Route path = '/proyecto/:idProyecto'>
                           <ProyectoView/>

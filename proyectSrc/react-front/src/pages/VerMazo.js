@@ -234,6 +234,8 @@ const mazos = [
                                                                       "Puntos":0
                                                                   })
                                                                 setMazos(mazos)
+                                                                setTitulo("")
+                                                                setDescripcion("")
                                                               }
                                                             }} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
                                                       <SaveIcon sx={{p:1}}/>
