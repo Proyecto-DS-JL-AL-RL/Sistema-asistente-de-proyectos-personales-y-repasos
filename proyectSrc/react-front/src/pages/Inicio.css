@@ -4,22 +4,22 @@
   
   /* Create two unequal columns that floats next to each other */
   .column {
-    margin-top: 10%;
     float: left;
-    padding: 10px;
-    height: 300px; /* Should be removed. Only for demonstration */
+    padding: 3vw;
+    height: 100vh; /* Should be removed. Only for demonstration */
   }
   
   .right {
+    margin-top:8%;
     width: 25%;
-    height: 65px;
+    height: 20vh;
     overflow: visible;
 }
   
   .left {
-    margin-top:14%;
     width: 70%;
-    height: 25rem;
+    background-color: #8244d8;
+    height: 40vw;
     overflow: hidden;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -98,5 +98,5 @@
   }
   
 .copyright{
-  margin-top:13vw;
+  margin-top:6vw;
 }

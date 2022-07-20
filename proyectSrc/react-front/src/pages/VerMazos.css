@@ -28,11 +28,11 @@
 }
 
 .container-mazo{
-    position:relative;
+    position:absolute;
     display: flex;
     justify-content: center;
-    top:2rem;
-    left:12rem;
+    top:26vh;
+    left:15rem;
     width: 80%;
     height: 65%;
     overflow-x: hidden;
@@ -52,11 +52,7 @@
 }
 
 .mazo-add{
-    z-index: 1;
-    position:absolute;    
-    width:30rem;
-    left:7.5rem;
-    height:25rem;
+    position:relative;    
     display: flex;
     justify-content: center;
     align-items: center;
@@ -68,3 +64,9 @@
     align-items: center;
 }
 
+.config-mazos-add{
+    position:absolute;    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
