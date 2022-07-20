@@ -97,7 +97,7 @@ export default function Inicio(){
           
           <div className="split right">
                 <div className="centered-logo">
-                <Typography className="Titulo-logo" variant="h1">Titulo</Typography>
+                <Typography className="Titulo-logo" variant="h1">YourProjects</Typography>
                   <div className="container-phrases-logo">
                       Deseamos que 
                       <div className="flip">
