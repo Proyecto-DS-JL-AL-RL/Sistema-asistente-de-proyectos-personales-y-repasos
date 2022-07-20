@@ -43,6 +43,7 @@ const mazos = {
     Respuestas: ''
   }]
 }
+
 /* 
 <Box className="container-showResult">
       
@@ -92,6 +93,7 @@ export default function VerTarjeta(props) {
   const [disabledB, setDisabledB] = React.useState("")
   const [disabledC, setDisabledC] = React.useState("")
   const [disabledD, setDisabledD] = React.useState("")
+  const [valuestring, setValuestring] = React.useState("")
   const tab = <>&nbsp;&nbsp;&nbsp;&nbsp;</>;
   let history = useHistory()
   const breadcrumbs = [
@@ -167,6 +169,16 @@ export default function VerTarjeta(props) {
           let sum = puntajeTarjeta.reduce((previous, current) => current += previous);
           //let avg = sum / puntajeTarjeta.length;
           setPuntajesMazo(sum)
+          if (sum <= mazo.Tarjetas.length*50){
+            setValuestring(
+                  "Puedes hacerlo mejor, vuelvelo a intentar 😬"                  )
+          }else if(mazo.Tarjetas.length*50 < sum && sum < mazo.Tarjetas.length*75){
+            setValuestring("Estas logrando el objetivo pero se que aún puedes seguir mejorando 🤗")
+          }else{
+            
+            setValuestring("Bien hecho, sigue así 😃")
+  
+          }
           axios.put('/api/mazos/'+mazo._id, {
             "Puntos":sum
           })
@@ -196,11 +208,22 @@ export default function VerTarjeta(props) {
       axios.put('/api/mazos/'+mazo._id, update)
       puntajeTarjeta.push(puntaje)
       setPuntajeTarjeta(puntajeTarjeta)
-     
+        
+      
         if (page === mazo.Tarjetas.length){
           let sum = puntajeTarjeta.reduce((previous, current) => current += previous);
           //let avg = sum / puntajeTarjeta.length;
           setPuntajesMazo(sum)
+          if (sum <= mazo.Tarjetas.length*50){
+            setValuestring(
+                  "Puedes hacerlo mejor, vuelvelo a intentar 😬"                  )
+          }else if(mazo.Tarjetas.length*50 < sum && sum < mazo.Tarjetas.length*75){
+            setValuestring("Estas logrando el objetivo pero se que aún puedes seguir mejorando 🤗")
+          }else{
+            
+            setValuestring("Bien hecho, sigue así 😃")
+  
+          }
           axios.put('/api/mazos/'+mazo._id, {
             "Puntos":sum
           })
@@ -237,6 +260,16 @@ export default function VerTarjeta(props) {
           let sum = puntajeTarjeta.reduce((previous, current) => current += previous);
         //  let avg = sum / puntajeTarjeta.length;
           setPuntajesMazo(sum)
+          if (sum <= mazo.Tarjetas.length*50){
+            setValuestring(
+                  "Puedes hacerlo mejor, vuelvelo a intentar 😬"                  )
+          }else if(mazo.Tarjetas.length*50 < sum && sum < mazo.Tarjetas.length*75){
+            setValuestring("Estas logrando el objetivo pero se que aún puedes seguir mejorando 🤗")
+          }else{
+            
+            setValuestring("Bien hecho, sigue así 😃")
+  
+          }
           axios.put('/api/mazos/'+mazo._id, {
             "Puntos":sum
           })
@@ -273,6 +306,15 @@ export default function VerTarjeta(props) {
         let sum = puntajeTarjeta.reduce((previous, current) => current += previous);
         //let avg = sum / puntajeTarjeta.length;
         setPuntajesMazo(sum)
+        if (sum <= mazo.Tarjetas.length*50){
+          setValuestring("Puedes hacerlo mejor, vuelvelo a intentar 😬")
+        }else if(mazo.Tarjetas.length*50 < sum && sum < mazo.Tarjetas.length*75){
+          setValuestring("Estas logrando el objetivo pero se que aún puedes seguir mejorando 🤗")
+        }else{
+          
+          setValuestring("Bien hecho, sigue así 😃")
+
+        }
         axios.put('/api/mazos/'+mazo._id, {
           "Puntos":sum
         })
@@ -371,6 +413,8 @@ export default function VerTarjeta(props) {
             <Divider sx={{mt:'2%', color:'black', border:'0.1rem solid black'}} variant="middle" />
             <Typography sx={{fontWeight: 'bold', color:'black'}} className="text-result" variant="h5">
                 Puntaje del Mazo: {puntajeMazo.toFixed(3)} <br/>
+                <Typography variant="h3">{valuestring}</Typography>
+               
               </Typography>
           </Typography>
           <img className={"img-result"} src={star} alt="start"/>

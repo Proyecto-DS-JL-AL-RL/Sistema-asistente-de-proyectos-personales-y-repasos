@@ -32,7 +32,7 @@ import AddIcon from '@mui/icons-material/Add';
 import Badge  from '@mui/material/Badge';
 import ClearIcon from '@mui/icons-material/Clear';
 import nani from '../pages/img/menheranani.webp'
-
+import MensajeAdvertencia from './horario/MensajeAdvertencia';
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -88,7 +88,64 @@ export default function Mazos(props) {
   const [respuesta, setRespuesta] = useState('') 
   const [showdeleteCard, setDeleteCard] = useState(false)
   const [showdeleteMazo, setDeleteMazo] = useState(false)
+  const [mensajeAdvertenciaDisplay, setMensajeAdvertenciaDisplay] = useState(null)
+  
+  const deletecard = (newMazo) =>{
+                      //console.log(mazo)
+                      newMazo.Tarjetas.splice(tarjetaIndex, 1);
+                      setMazo(newMazo.Tarjetas)
+                      axios.put('/api/mazos/'+mazo._id, {"Tarjetas":newMazo.Tarjetas})
+  }
+
+  const deleteMazo = (newMazos, mazo, idx) =>{
+        newMazos.splice(idx, 1);
+        //console.log(mazoIndex)
+        axios.delete('/api/mazos/'+mazo._id)
+        if (newMazos.length===0){
+          window.location.reload(false);
+        }
+  }
+  const AdvertenciaTarjeta = ()=>{
+
+    return <MensajeAdvertencia
+      visible={setMensajeAdvertenciaDisplay}
+      content={"¿Deseas Borrar esta tarjeta #" + (tarjetaIndex+1)+"?"}
+      imgContent={nani}
+      comentario={<>
+        <div className='advertencia-buttons-container'>
+                    <button className='btn-advertencia-ok' onClick={()=>{
+                     deletecard(mazo)
+                     setMensajeAdvertenciaDisplay(null)
+                    }}
+                    >Si</button>
+                    <button className='btn-advertencia-no' 
+                    onClick={()=>{setMensajeAdvertenciaDisplay(null)}}>No</button>
+                </div>
+      </>}
+    />
+  }
+
+/*  const AdvertenciaMazo = ()=>{
+
+    return <MensajeAdvertencia
+      visible={setMensajeAdvertenciaDisplay}
+      content={"¿Deseas borrar el mazo #"+(mazoIndex+1)+"?"}
+      imgContent={nani}
+      comentario={<>
+        <div className='advertencia-buttons-container'>
+                    <button className='btn-advertencia-ok' onClick={()=>{
+                     deleteMazo(mazos)
+                     setMensajeAdvertenciaDisplay(null)
+                    }}
+                    >Si</button>
+                    <button className='btn-advertencia-no' 
+                    onClick={()=>{setMensajeAdvertenciaDisplay(null)}}>No</button>
+                </div>
+      </>}
+    />
+  }*/
   let history = useHistory()
+
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
@@ -110,7 +167,7 @@ export default function Mazos(props) {
                       <Box className="mazo-edit" sx={{mt:'3%'}}>  
                         <Badge 
                                       badgeContent={
-                                        <Tooltip title="Guardar" placement="left">
+                                        <Tooltip title="cerrar" placement="left">
                                             <button className='button-close' onClick={(e)=>{setShowEdit(false)}}>
                                                 <ClearIcon sx={{color:'white',fontSize:'1em','&:hover':{color:'black'}}}/>
                                             </button>
@@ -172,7 +229,7 @@ export default function Mazos(props) {
                         <Box className="mazo-edit"  justifyContent="center" sx={{mt:'3%'}}>
                         <Badge 
                                     badgeContent={
-                                      <Tooltip title="Guardar" placement="left">
+                                      <Tooltip title="cerrar" placement="left">
                                           <button className='button-close' onClick={(e)=>{setShowEditCard(false)}}>
                                               <ClearIcon sx={{color:'white',fontSize:'1em','&:hover':{color:'black'}}}/>
                                           </button>
@@ -267,7 +324,7 @@ export default function Mazos(props) {
                       {showdeleteCard?<Box className="mazo-edit"  justifyContent="center" sx={{mt:'4%'}}>
                         <Badge 
                                     badgeContent={
-                                      <Tooltip title="eliminar" placement="left">
+                                      <Tooltip title="cerrar" placement="left">
                                           <button className='button-close' onClick={(e)=>{setDeleteCard(false)}}>
                                               <ClearIcon sx={{color:'white',fontSize:'1em','&:hover':{color:'black'}}}/>
                                           </button>
@@ -307,7 +364,9 @@ export default function Mazos(props) {
                             </Card>
                         </Badge>
                       </Box>:null}
-
+                      <Box sx={{position:'absolute', zIndex:2, top:'3%', marginLeft:'-20%'}}> 
+                                                    {mensajeAdvertenciaDisplay}
+                      </Box>               
                       {showdeleteMazo?<Box className="mazo-edit"  justifyContent="center" sx={{mt:'4%'}}>
                         <Badge 
                                     badgeContent={
@@ -356,12 +415,15 @@ export default function Mazos(props) {
                         </Badge>
                       </Box>:null}
 
+                         
+
+
                       {showAddCard?
                       <Grow  timeout={1000}  in={showAddCard}>  
                         <Box  className="mazo-edit" justifyContent="center" sx={{mt:'3%'}}>
                         <Badge 
                                     badgeContent={
-                                      <Tooltip title="Guardar" placement="left">
+                                      <Tooltip title="cerrar" placement="left">
                                           <button className='button-close' onClick={(e)=>{setShowAddCard(false)}}>
                                               <ClearIcon sx={{color:'white',fontSize:'1em','&:hover':{color:'black'}}}/>
                                           </button>
@@ -386,7 +448,7 @@ export default function Mazos(props) {
                                       <Typography sx={{fontWeight: 'bold'}} variant="h4" component="div">
                                               Añadir Tarjetas
                                           </Typography>
-                                          <TextField requerid  onChange={(e=>{
+                                          <TextField   onChange={(e=>{
                                               setPregunta(e.target.value)
                                               
                                             })} sx={{py:'2%'}} id="outlined-basic" label="Pregunta" defaultValue= {pregunta} variant="outlined" />
@@ -515,7 +577,24 @@ export default function Mazos(props) {
                               <IconButton onClick={()=>{
                                   setIndexMazo(idx)
                                   setMazo(mazo)
-                                  setDeleteMazo(true)
+                                  console.log(idx)
+                                  return setMensajeAdvertenciaDisplay( <MensajeAdvertencia
+                                    visible={setMensajeAdvertenciaDisplay}
+                                    content={"¿Deseas borrar el mazo #"+(idx+1)+"?"}
+                                    imgContent={nani}
+                                    comentario={<>
+                                      <div className='advertencia-buttons-container'>
+                                                  <button className='btn-advertencia-ok' onClick={()=>{
+                                                   deleteMazo(mazos, mazo,idx)
+                                                   setMensajeAdvertenciaDisplay(null)
+                                                  }}
+                                                  >Si</button>
+                                                  <button className='btn-advertencia-no' 
+                                                  onClick={()=>{setMensajeAdvertenciaDisplay(null)}}>No</button>
+                                              </div>
+                                    </>}
+                                  />)
+                                  //setDeleteMazo(true)
                                   //window.location.reload(false);
                               }} sx={{color:'white',  '&:hover': {backgroundColor: '#00b347', color:'black'}}}>                             
                                   <DeleteIcon />
@@ -550,9 +629,10 @@ export default function Mazos(props) {
                                                 <EditIcon/>
                                             </IconButton>
                                             <IconButton onClick={()=>{
-                                              setDeleteCard(true)
+                                              
                                               setTarjetaIndex(idx)
                                               setMazo(mazo)
+                                              return setMensajeAdvertenciaDisplay(AdvertenciaTarjeta)
                                             }}  sx={{color:'white',  '&:hover': {backgroundColor: '#00b347', color:'black'}}} aria-label="comment">
                                                 <DeleteIcon />
                                             </IconButton>
