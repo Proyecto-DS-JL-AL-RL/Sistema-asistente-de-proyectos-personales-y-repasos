@@ -5,6 +5,8 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import TokenIcon from '@mui/icons-material/Token';
 import FileForm from '../components/fileForm';
+import { getCommandsActividad } from '../speechMethods/algoQueHacerMethods';
+import { useSpeechRecognition } from 'react-speech-recognition';
 
 export default function ActividadActual(props){
     const [actividad,setActividad]  = useState(null);
@@ -15,7 +17,7 @@ export default function ActividadActual(props){
     const history = useHistory();
 
     const handleStart = ()=>props.startActivity();
-    const handleEnd = ()=>{
+    const handleFinalizarActividad = ()=>{
         if (actividad?.Blocked && !evidencia)
             {
                 alert('Suba evidencias');
@@ -29,13 +31,26 @@ export default function ActividadActual(props){
     const setCurrEvidencia  = ()=>setEvidencia(props.evidencia);
 
     const handleBack = ()=>{
-        if (started){
-            history.push('/');
+        if (showForm){
+            setShowForm(false);
         }else{
-            props.setCurrentActivity(null);
-        }        
+            if (started){
+                history.push('/');
+            }else{
+                props.setCurrentActivity(null);
+            }    
+        }            
     }
+    
+    const handleContinuar = () => {
+        if (!showForm){
+            handleFinalizarActividad();
+        }
+    };
+    const limpiarEvidencia = async ()=>{setEvidencia(null);}
 
+    const commands = getCommandsActividad({handleBack,handleContinuar,limpiarEvidencia,setShowForm});
+    const {listening,transcript} = useSpeechRecognition({commands:commands});
     useEffect(()=>{
         setCurrActividad();
         setCurrStarted();
@@ -121,7 +136,7 @@ export default function ActividadActual(props){
                     }
                     </Grid>
                     <Grid item container xs = {4}  justifyContent='center' >
-                        <Button variant = 'contained'  sx = {{width:'250px',minHeight:'70px', bgcolor: '#F3443C',borderRadius:'20px'}}  onClick ={handleEnd}>
+                        <Button variant = 'contained'  sx = {{width:'250px',minHeight:'70px', bgcolor: '#F3443C',borderRadius:'20px'}}  onClick ={handleFinalizarActividad}>
                         <Typography variant = 'h6' color = 'black' fontWeight = 'bold'>Terminar</Typography>
                         </Button>
                     </Grid>

@@ -4,19 +4,24 @@ var Puntaje = require('../Esquemas/schPuntajes');
 var ObjetivosMong = require('../Esquemas/schObjetivo');
 var Logros_ = require('../Esquemas/schLogro');
 
-var createProyect = async function(body){
-    const puntajeBase = new Puntaje({ UserSub:userSub ,Puntos : 50, ConstanciaDiff : 0, LogrosDiff : 0})
+var createProyect = async function(bodyBase){
+    const body = {...bodyBase,
+        Objetivos : [],
+        Logros : [],
+        Progreso : 0,
+        UltimaActividad : new Date(),
+        ActividadSemanal: [1,1,1,1,1,1,1]
+    }
+    const {UserSub} = bodyBase
+    const puntajeBase = new Puntaje({ UserSub:UserSub ,Puntos : 50, ConstanciaDiff : 1, LogrosDiff : 1})
     const savedScore = await puntajeBase.save().catch(err=>console.log(err));
 
     let newProyecto = {...body,Puntajes:savedScore._id};    
     const proyecto_ = new Proyecto(newProyecto)
     const savedP = await proyecto_.save().catch(err=> console.log(err))
-    const response = UserItems.findOneAndUpdate(
-        { "UserSub" : savedP.UserSub },
-        { "$push": { "Proyectos": savedP._id }}
-    )
 
-    const LogroBienvenida = new Logro({
+
+    const LogroBienvenida = new Logros_({
         Titulo: "Empezó :"+savedP.Titulo,
         Descripcion: "Empezó un nuevo Proyecto",
         ProyectId : savedP._id,
@@ -28,8 +33,12 @@ var createProyect = async function(body){
     const savedLogro = await LogroBienvenida.save().catch(err=>console.log(err));
     savedP.Logros.push(savedLogro._id);
     //console.log('savedP:' , savedP);
-    savedP.save().catch(err=>console.log(err));
-    return savedP;
+    const savedP2 = await savedP.save().catch(err=>console.log(err));
+    const response = UserItems.findOneAndUpdate(
+        { "UserSub" : savedP.UserSub },
+        { "$push": { "Proyectos": savedP2._id }}
+    )
+    return response;
 }
 
 var getProyectById = async function(id){
@@ -128,9 +137,23 @@ var completeObjetivo = async function(body){
 
 }
 
+var getProyectNameListFromUser = async function (UserSub){
+    let queue = await UserItems.findOne({UserSub:UserSub}).populate('Proyectos').exec().catch(err=> console.log(err));
+    let arrayResponse = []
+    if (queue?.Proyectos){
+        for (let i = 0 ;i<queue.Proyectos.length;i++){
+            const {Titulo,_id} = queue.Proyectos[i];
+            arrayResponse.push({Titulo,_id});
+        }
+    }
+    return arrayResponse; 
+}
+
+
 module.exports.createProyect = createProyect;
 module.exports.getProyectById = getProyectById;
 module.exports.getProyectListFromUser = getProyectListFromUser;
 module.exports.addObjetivo = addObjetivo;
 module.exports.completeObjetivo = completeObjetivo;
 module.exports.sumarPuntos = sumarPuntos;
+module.exports.getProyectNameListFromUser = getProyectNameListFromUser;

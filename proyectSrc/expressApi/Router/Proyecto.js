@@ -8,13 +8,19 @@ router.get('/Proyectos/:userSub', async function(req,res){
     res.json(resp);
 });
 
+router.get('/Proyectos/Nombres/:userSub', async function(req,res){
+    let resp = await datProyecto.getProyectNameListFromUser(req.params.userSub);
+    res.json(resp);
+});
+
 router.get('/Proyectos/getProyecto/:id', async function(req,res){
     const resp = await datProyecto.getProyectById(req.params.id);
     res.json(resp);
 });
 
-router.post('./Proyectos/addProyect', async function(req,res){
+router.post('/Proyectos/addProyect', async function(req,res){
     const resp = await datProyecto.createProyect(req.body);
+    res.json(resp);
 });
 
 router.post('/Proyectos/addObjetivo', async function(req,res){

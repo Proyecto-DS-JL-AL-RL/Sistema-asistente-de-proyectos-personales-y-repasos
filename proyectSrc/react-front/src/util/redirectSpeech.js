@@ -7,7 +7,8 @@ const paths = {
     "mazos":"/Mazos",
     "cartas":"/",
     "proyectos":"/proyectos",
-    "dashboard":"/proyect"
+    "dashboard":"/proyect",
+    "cola de actividades":"/activityQueue",
 }
 
 
@@ -29,10 +30,49 @@ const getCommands = (location,history,setAfterCommandFlag,lAfterComandFlag) =>{
     {
         command: "Dame algo que hacer(.)",
         callback: (command,spokeNPhrase,ratio) =>{
-            history.push('/algoQueHacer')            
+            if (location.pathname == '/algoQueHacer')
+                return;
+            else
+                history.push('/algoQueHacer')            
         },
         isFuzzyMatch: true,
         fuzzyMatchingThreshold: 0.85    
+    },
+    {
+        command: ["Gestionar Proyectos(.)","Ver proyectos(.)","Mis Proyectos(.)"],
+        callback: (command,spokeNPhrase,ratio) =>{
+            history.push('/proyectos')            
+        },
+        isFuzzyMatch: true,
+        fuzzyMatchingThreshold: 0.85,
+        bestMatchOnly:true    
+    },
+    {
+        command: ["Quiero repasar(.)","Ver mis Mazos(.)","Tarjetas de repaso(.)"],
+        callback: (command,spokeNPhrase,ratio) =>{
+            history.push('/Mazos')            
+        },
+        isFuzzyMatch: true,
+        fuzzyMatchingThreshold: 0.85  ,
+        bestMatchOnly:true    
+    },
+    {
+        command: ["Organizador de actividades(.)","Organizar actividades(.)"],
+        callback: (command,spokeNPhrase,ratio) =>{
+            history.push('/horario')            
+        },
+        isFuzzyMatch: true,
+        fuzzyMatchingThreshold: 0.85 ,
+        bestMatchOnly:true  
+    },
+    {
+        command: ["Ver cola de actividades(.)","Cola de Actividades(.)"],
+        callback: (command,spokeNPhrase,ratio) =>{
+            history.push('/activityQueue')            
+        },
+        isFuzzyMatch: true,
+        fuzzyMatchingThreshold: 0.85 ,
+        bestMatchOnly:true  
     },
     {
         command: "g",
