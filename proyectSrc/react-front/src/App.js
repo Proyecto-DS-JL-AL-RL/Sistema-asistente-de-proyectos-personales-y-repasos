@@ -33,6 +33,7 @@ import { setVisible as setVisibleMensajeCorto } from './stores/sliceMensajesCort
 
 
 import axios from 'axios';
+import NofoundPage from './components/redirect/NofoundPage';
 
 
 function App() {
@@ -163,6 +164,9 @@ function App() {
                             <Route path = '/Presentacion'>
                                   <Presentacion/>
                             </Route>
+                        <Route>
+                          <NofoundPage/>
+                        </Route>
                       </Switch>
                     </div>
                   </div>
