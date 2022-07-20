@@ -35,6 +35,7 @@ import { setVisible as setVisibleMensajeCorto } from './stores/sliceMensajesCort
 import axios from 'axios';
 import NofoundPage from './components/redirect/NofoundPage';
 import EscuchandoDisplay from './components/Ayuda/EscuchandoDisplay';
+import AyudaMicro from './components/Ayuda/AyudaMicro';
 
 
 function App() {
@@ -154,6 +155,9 @@ function App() {
                         </Route>
                         <Route path = '/activityQueue'>
                           <ActivityQueue/>
+                        </Route>
+                        <Route path='/microAyuda'>
+                          <AyudaMicro/>
                         </Route>
                         <Route exact path = "/Tarjetas/:idSeccion" >
                                 <Tarjetas showFuncionalidades={{showFeedBack, setShowFeedBack}} showAdd={{showAnadir, setShowAnadir}} />
