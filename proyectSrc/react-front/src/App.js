@@ -119,15 +119,21 @@ function App() {
 
   return (
           <div className='container-main'>
+                  {sessionState?.nickname?
+                  <React.Fragment><DrawerComponent/> </React.Fragment>:
+                    null
+                  }
                   
-                  <DrawerComponent/>
                   
                   <div className='other-container'>
-                    <div className='head-container'>
+                    {sessionState?.nickname?
+                      <div className='head-container'>
                       <AppBarSearch stateButton={{showFeedBack, showAnadir}} 
                           ClickButton={{setShowFeedBack, setShowAnadir, listen}}
                           name={nameBar} setName={setNameBar}/>
-                        </div>
+                        </div>:null
+                    }
+                    
                     <div className='content-container'>
                       {sessionState?.nickname?
                       <Switch>
@@ -165,11 +171,12 @@ function App() {
                       </Switch>
                       :
                       <Switch>
-                        <Route exact path = '/'>
-                          <Inicio  logged={{logged,setLogged}}/>
-                        </Route>
+                  
                         <Route exact path = '/registro'>
                           <Register/>
+                        </Route>
+                        <Route default>
+                          <Inicio  logged={{logged,setLogged}}/>
                         </Route>
                         
                       </Switch>

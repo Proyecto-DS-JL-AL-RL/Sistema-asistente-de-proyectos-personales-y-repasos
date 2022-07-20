@@ -5,6 +5,8 @@ import ProjectStats from '../components/ProjectStats';
 import ObjetivosList from '../components/ObjetivosList';
 import { useHistory, useParams } from 'react-router-dom';
 import { AccountContext } from '../AccountContext';
+import { getCommandsPage } from '../speechMethods/projectSpecific';
+import { useSpeechRecognition } from 'react-speech-recognition';
 import ObjetivoForm from '../components/objForm';
 import axios from 'axios';
 
@@ -34,10 +36,24 @@ export default function ProyectoView(){
         }
     }
 
+    const handleBack = ()=>{
+        if(showForm){
+            setShowForm(false);
+        }else{
+            history.push('/');
+        }
+    }
+    const initCrearPendiente = ()=>{
+        if (!showForm)
+            setShowForm(true);
+    }
+
     useEffect(()=>{
         getProyectInfo();
     },[idProyecto]);
 
+    const commands = getCommandsPage({handleBack,initCrearPendiente});
+    const {listening,transcript,finalTranscript,resetTranscript} = useSpeechRecognition({commands:commands});
 
     return (
         <React.Fragment>
