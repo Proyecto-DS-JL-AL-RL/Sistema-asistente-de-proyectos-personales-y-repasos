@@ -6,17 +6,15 @@ import { useSpeechRecognition } from 'react-speech-recognition';
 import { getAgregarComands } from '../speechMethods/actividadesMethods';
 
 export default function ActividadForm(props){
-
     const [titulo,setTitulo] = useState('');
     const [descripcion,setDescripcion] = useState('');
     const [blocked,setBlocked] = useState(false);
     const [peso,setPeso] = useState(4);
-    const [proyectos,setProyectos] = useState([{id:'1',titulo:'xd'},{id:'1',titulo:'xd'},{id:'1',titulo:'xd'},{id:'1',titulo:'xd'},{id:'1',titulo:'xd'},{id:'1',titulo:'xd'}]);
+    const [proyectos,setProyectos] = useState([]);
     const [selectingProyect, setSelectingProyect] = useState(false);
     const [currProyect,setCurrProyect] = useState(null);
     const { sessionState } = useContext(AccountContext);
     const [puntero,setPuntero] = useState(null);
-
 
     const agregarActividad = async ()=>{
         if (titulo == ''){
@@ -40,35 +38,43 @@ export default function ActividadForm(props){
           };
 
         axios.post('http://localhost:4000/api/colaActividades/addActividad',Item)
-        .then(data=>{
-            console.log(data);
-        })
-        .catch(err=>console.log(err));  
+            .then(data=>{
+                console.log(data);
+            })
+            .catch(err=>console.log(err));  
 
         console.log(Item);
         props.setActivities([...props.activities,Item])
         props.close();
     }
     const establecerProyecto = (proyecto)=>{
-        console.log(proyecto);
+        //console.log(proyecto);
         setCurrProyect(proyecto);
         setSelectingProyect(false);
     }
 
-    const setPunteroPage = (puntero)=>{
-        console.log(puntero);
-        setPuntero(puntero);
+    const setPunteroPage     = (puntero)=>setPuntero(puntero);
+    const setPesosAudio      = (peso_)  =>setPeso(peso_);
+    const setAgregarProyecto = (valor)  =>setSelectingProyect(valor);
+
+    const setProyectoAsociado= (idPro)  =>{
+        if (selectingProyect) {
+            //console.log(idPro);
+            if (idPro > 0 && idPro < proyectos.length){                
+                establecerProyecto(proyectos[idPro]);
+            }            
+        }
     }
 
-    const setPesosAudio = (peso_) =>{
-        setPeso(peso_); 
+    const handleBack = () =>{
+        if (selectingProyect){
+            setSelectingProyect(false);
+        }else{
+            props.close();
+        }
     }
 
-    const setAgregarProyecto = (valor)=>{
-        setSelectingProyect(valor);
-    }
-
-    const commands = getAgregarComands({setPunteroPage,setPesosAudio,setAgregarProyecto});
+    const commands = getAgregarComands({setPunteroPage,setPesosAudio,setAgregarProyecto,handleBack,setProyectoAsociado,agregarActividad,setBlocked});
     const {listening,transcript,finalTranscript,resetTranscript} = useSpeechRecognition({commands:commands});
 
     const setDictionary = {
@@ -83,24 +89,26 @@ export default function ActividadForm(props){
         }
     },[finalTranscript]);
 
-
+    useEffect(()=>{
+        setProyectos(props.proyectList);
+    },[props.proyectList]);
 
     return(
         <React.Fragment>
-            <Card sx = {{width:'40%',height:'60%',maxHeight:'500px', position:'absolute',top:'25%',left:'30%',border :'solid',borderColor:'black',padding:'20px', overflowY:'auto'}}>
+            <Card sx = {{width:'40%',height:'60%',maxHeight:'650px', position:'absolute',top:'25%',left:'30%',border :'solid',borderColor:'black',padding:'20px', overflowY:'auto'}}>
                 <Button onClick = {props.close} variant = 'contained' sx = {{bgcolor :'red',left:'88%'}} >X</Button>
                 
                 <Typography variant = 'h4'>
-                    Agregando una Actividad {puntero}
+                    Agregando una Actividad 
                 </Typography>
 
                 <Grid container direction = 'column' sx = {{width:'80%',marginLeft:'10%',marginTop:'20px'}} rowGap = {3} alignItems = 'center'>
-                    <TextField label="Titulo" value = {titulo} sx = {{width : '100%'}} onChange = {(e)=>{setTitulo(e.target.value)}}>
-                        asd
-                    </TextField>
-                    <TextField label = "descripcion" value = {descripcion} sx = {{width : '100%'}}  onChange = {(e)=>{setDescripcion(e.target.value)}}>
-                        asd
-                    </TextField>
+                    {puntero?
+                    <Typography variant = 'h6'>Escribiendo: {puntero}</Typography>
+                    :
+                    null}
+                    <TextField label={selectingProyect?"":"Titulo"} value = {titulo} sx = {{width : '100%'}} onChange = {(e)=>{setTitulo(e.target.value)}}/>
+                    <TextField label ={selectingProyect?"":"Descripcion"} value = {descripcion} sx = {{width : '100%'}}  onChange = {(e)=>{setDescripcion(e.target.value)}}/>
 
                     <Grid container sx = {{width:'100%', direction : 'row'}} alignItems = 'center' justifyContent = 'center'>
                         <Typography sx = {{ paddingTop :'7px'}} variant = 'h6' >
@@ -113,7 +121,7 @@ export default function ActividadForm(props){
                         <React.Fragment>
                             <Typography variant = 'h6' >Proyecto Asociado:   </Typography>
                             <Typography  sx ={{marginLeft:'30px',bgcolor:'orange',width:'300px',borderRadius:'30px',textAlign :'center',fontWeight:'bold',display:'inline'}} variant = 'h6'>
-                                {currProyect.titulo}
+                                {currProyect.Titulo}
                             </Typography>
                             <Button sx = {{marginLeft:'30px',bgcolor:'#75E3EA',color:'black',borderRadius:'10px',':hover':{bgcolor:'#1DB5BE'}}}
                             onClick = {()=>{setSelectingProyect(true)}}>
@@ -155,13 +163,14 @@ export default function ActividadForm(props){
                 </Grid>
             </Card>
 
+                        
 
             {selectingProyect?
             <Card sx = {{width:'30%',height:'50%',maxHeight:'400px', position:'absolute',
                         top:'30%',left:'35%',border :'solid',borderColor:'black',padding:'20px', overflowY:'auto',bgcolor:'#75E3EA',borderRadius:'30px'}}>
                 <Button sx = {{width : '20%', borderRadius:'20px' ,marginLeft:'40%',bgcolor:'#DD2B2B',color:'white',fontWeight:'800',
                                 ':hover':{bgcolor:'#850D0D'}}} onClick = {()=>{setSelectingProyect(false)}}>
-                    Volver
+                    X
                 </Button>
                 {currProyect?
                 <Grid container justifyContent  = 'center' sx = {{width:'100%' , ":hover":{
@@ -169,7 +178,7 @@ export default function ActividadForm(props){
                     }}} alignItems ='center' direction = 'row' 
                         onClick = {()=>{establecerProyecto(null)}}
                     >
-                        <Typography variant= 'h5' sx = {{width:'80%',bgcolor:'#D5FAFC',borderRadius:'30px',height:'50px',padding:'10px',margin:'10px',paddingTop:'20px',textAlign:'center'}} alignContent = 'center'>
+                        <Typography variant= 'h5' sx = {{width:'80%',bgcolor:'#D5FAFC',borderRadius:'30px',height:'50px',padding:'10px',margin:'10px',paddingTop:'10px',textAlign:'center'}} alignContent = 'center'>
                             Sin proyecto Asociado
                         </Typography>
                 </Grid>
@@ -177,17 +186,23 @@ export default function ActividadForm(props){
                 null
                 }
 
+                {proyectos.length<1?
+                <Typography sx = {{marginTop:'20%',textAlign:'center',fontWeight:'bold'}} variant = 'h5'>
+                    No tiene Proyectos Creados. Sus puntos Irán a su Proyecto Base de Usuario
+                </Typography>                
+                :null}
+
                 {proyectos.map((p,idx)=>(
                     <Grid container sx = {{width:'100%' , ":hover":{
                         bgcolor:'#1DB5BE' ,cursor:'pointer'
                     }}} alignItems ='center' direction = 'row' 
                         onClick = {()=>{establecerProyecto(p)}}
                     >
-                        <Typography variant= 'h4' sx = {{width:'50px',bgcolor:'#D5FAFC',borderRadius:'30px',height:'50px',textAlign:'center',margin:'5px'}} alignContent = 'center'>
+                        <Typography variant= 'h4' sx = {{width:'50px',bgcolor:'#D5FAFC',borderRadius:'30px',height:'50px',textAlign:'center',margin:'5px',paddingTop:'5px'}} alignContent = 'center'>
                             {idx} 
                         </Typography>
-                        <Typography variant= 'h4' sx = {{width:'70%',bgcolor:'#D5FAFC',borderRadius:'30px',height:'50px',padding:'10px',margin:'10px',paddingTop:'20px'}} alignContent = 'center'>
-                            {p.titulo}
+                        <Typography variant= 'h4' sx = {{width:'70%',bgcolor:'#D5FAFC',borderRadius:'30px',height:'50px',padding:'10px',margin:'10px',paddingTop:'10px',textAlign:'center'}} alignContent = 'center'>
+                            {p.Titulo}
                         </Typography>
                     </Grid>
                 ))}

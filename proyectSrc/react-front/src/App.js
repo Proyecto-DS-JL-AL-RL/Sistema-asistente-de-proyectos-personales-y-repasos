@@ -58,7 +58,12 @@ function App() {
   }
 
 
-  const listen = ()=> { SR.startListening({language:'es',continuous:false})}
+  const listen = ()=> { 
+    if (listening)
+      SR.stopListening();
+    else
+      SR.startListening({language:'es',continuous:false});   
+    }
 
   const [logged,setLogged] = useState(true);
   const [showFeedBack, setShowFeedBack] = useState({card:false, icon:false})

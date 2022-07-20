@@ -1,6 +1,7 @@
 import React,{useEffect, useState} from 'react';
 import {Button, Card, Grid, TextField, Typography,FormControl,FormLabel,Radio,RadioGroup,FormControlLabel} from '@mui/material';
-
+import { useSpeechRecognition } from 'react-speech-recognition';
+import { getCommandsForm } from '../speechMethods/algoQueHacerMethods';
 
 export default function FileForm(props){
 
@@ -36,6 +37,13 @@ export default function FileForm(props){
         const File_ = e.target.files[0];
         setFile(File_);
     };
+
+    const handleContinuar = ()=>{
+        agregarActividad(); 
+    }
+
+    const commands = getCommandsForm({ setTipo , handleContinuar});
+    const {listening,transcript} = useSpeechRecognition({commands:commands});
 
     return(
         <React.Fragment>

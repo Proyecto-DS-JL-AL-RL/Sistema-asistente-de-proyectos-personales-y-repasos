@@ -8,18 +8,8 @@ export default function AlgoQueHacer(props){
     const history = useHistory();
     const { sessionState } = useContext( AccountContext );   
 
-    const giveAnActivity = async ()=>{   
-        const {sub} = sessionState;
-        if (sub){
-            axios.get('http://localhost:4000/api/colaActividades/getActividad/'+sub)
-            .then((data)=>{
-                console.log(data.data);
-                props.setCurrentActivity(data.data);
-                props.setStarted(false);
-            })
-            .catch(err=> console.log(err));
-        }       
-
+    const giveAnActivity = async () =>{
+        props.giveAnActivity();
     }
 
     return(

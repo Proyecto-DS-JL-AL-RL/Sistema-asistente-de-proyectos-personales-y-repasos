@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect,useState,useContext} from 'react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Pagination from '@mui/material/Pagination';
@@ -25,7 +25,10 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import { useHistory } from "react-router-dom";
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import SR,{useSpeechRecognition} from 'react-speech-recognition';
+import { getInGameCommands } from '../speechMethods/tarjetasMethods';
 import star from './img/star.png';
+
 //<MicIcon className='button-main' sx={{p:2, borderRadius:'50%', background:'red',
 //color:'white', width: '30%', height: '30%', '&:hover': {backgroundColor: '#FF6347'} }}/>
 
@@ -123,6 +126,186 @@ export default function VerTarjeta(props) {
   const [showResult, setShowResult] = React.useState(false)
   const dispatch = useDispatch();
   /* eslint-disable */
+
+
+  const nextCard = ()=>{
+    if (showResult){
+      history.push('/Mazos');
+    }else{
+      if (page < mazo.Tarjetas.length){      
+        handleChange(null,page+1);
+      }
+    }      
+  }
+  const previousCard = ()=>{
+    if (page > 1){
+      handleChange(null,page-1)
+    }
+  }
+
+  const handleClickA = ()=>{
+    if (disabledA == "disabled"){
+      return
+    }
+    //console.log(mazo.Tarjetas[page-1].Respuesta-1)
+    if(mazo.Tarjetas[page-1].Opciones[mazo.Tarjetas[page-1].Respuesta-1] === mazo.Tarjetas[page-1].Opciones[0]){
+      setColorA('#008000')
+      setDisabledA("disabled")
+      setDisabledB("disabled")
+      setDisabledC("disabled")
+      setDisabledD("disabled")
+      let puntaje = ((4-intentos)/4)*100
+      let update = {}
+      update['$set'] = {}
+      let key_puntos = "Tarjetas."+(page-1)+".Puntos"
+      update['$set'][key_puntos] =  puntaje
+      axios.put('/api/mazos/'+mazo._id, update)
+      puntajeTarjeta.push(puntaje)
+      setPuntajeTarjeta(puntajeTarjeta)
+      
+        if (page === mazo.Tarjetas.length){
+          let sum = puntajeTarjeta.reduce((previous, current) => current += previous);
+          //let avg = sum / puntajeTarjeta.length;
+          setPuntajesMazo(sum)
+          axios.put('/api/mazos/'+mazo._id, {
+            "Puntos":sum
+          })
+          setShowResult(true)
+        }
+    }else{
+      setColorA('#ff0000')
+      setDisabledA("disabled")
+      setIntentos(intentos+1);
+    }    
+  }
+  const handleClickB = ()=>{
+    if (disabledB == "disabled"){
+      return
+    }
+    if(mazo.Tarjetas[page-1].Opciones[mazo.Tarjetas[page-1].Respuesta-1] === mazo.Tarjetas[page-1].Opciones[2]){
+      setColorB('#008000')
+      setDisabledA("disabled")
+      setDisabledB("disabled")
+      setDisabledC("disabled")
+      setDisabledD("disabled")
+      let puntaje = ((4-intentos)/4)*100
+      let update = {}
+      update['$set'] = {}
+      let key_puntos = "Tarjetas."+(page-1)+".Puntos"
+      update['$set'][key_puntos] =  puntaje
+      axios.put('/api/mazos/'+mazo._id, update)
+      puntajeTarjeta.push(puntaje)
+      setPuntajeTarjeta(puntajeTarjeta)
+     
+        if (page === mazo.Tarjetas.length){
+          let sum = puntajeTarjeta.reduce((previous, current) => current += previous);
+          //let avg = sum / puntajeTarjeta.length;
+          setPuntajesMazo(sum)
+          axios.put('/api/mazos/'+mazo._id, {
+            "Puntos":sum
+          })
+          setShowResult(true)
+        }
+     
+    }else{
+      setColorB('#ff0000')
+      setDisabledB("disabled")
+      setIntentos(intentos+1);
+    }
+  }
+
+  const handleClickC = ()=>{
+    if (disabledC == "disabled"){
+      return
+    }
+    if(mazo.Tarjetas[page-1].Opciones[mazo.Tarjetas[page-1].Respuesta-1] === mazo.Tarjetas[page-1].Opciones[1]){
+      setColorC('#008000')
+      setDisabledA("disabled")
+      setDisabledB("disabled")
+      setDisabledC("disabled")
+      setDisabledD("disabled")
+      let puntaje = ((4-intentos)/4)*100
+      let update = {}
+      update['$set'] = {}
+      let key_puntos = "Tarjetas."+(page-1)+".Puntos"
+      update['$set'][key_puntos] =  puntaje
+      axios.put('/api/mazos/'+mazo._id, update)
+      puntajeTarjeta.push(puntaje)
+      setPuntajeTarjeta(puntajeTarjeta)
+      
+        if (page === mazo.Tarjetas.length){
+          let sum = puntajeTarjeta.reduce((previous, current) => current += previous);
+        //  let avg = sum / puntajeTarjeta.length;
+          setPuntajesMazo(sum)
+          axios.put('/api/mazos/'+mazo._id, {
+            "Puntos":sum
+          })
+          setShowResult(true)
+        }
+      
+    }else{
+      setColorC('#ff0000')
+      setDisabledC("disabled")
+      setIntentos(intentos+1);
+    }
+  }
+
+  const handleClickD = ()=>{
+    if (disabledD == "disabled"){
+      return
+    }
+    if(mazo.Tarjetas[page-1].Opciones[mazo.Tarjetas[page-1].Respuesta-1] === mazo.Tarjetas[page-1].Opciones[3]){
+      setColorD('#008000')
+      setDisabledA("disabled")
+      setDisabledB("disabled")
+      setDisabledC("disabled")
+      setDisabledD("disabled")
+      let puntaje = ((4-intentos)/4)*100
+      let update = {}
+      update['$set'] = {}
+      let key_puntos = "Tarjetas."+(page-1)+".Puntos"
+      update['$set'][key_puntos] =  puntaje
+      axios.put('/api/mazos/'+mazo._id, update)
+      
+      puntajeTarjeta.push(puntaje)
+      setPuntajeTarjeta(puntajeTarjeta)
+      if (page === mazo.Tarjetas.length){
+        let sum = puntajeTarjeta.reduce((previous, current) => current += previous);
+        //let avg = sum / puntajeTarjeta.length;
+        setPuntajesMazo(sum)
+        axios.put('/api/mazos/'+mazo._id, {
+          "Puntos":sum
+        })
+        setShowResult(true)
+      }
+    }else{
+      setColorD('#ff0000')
+      setDisabledD("disabled")
+      setIntentos(intentos+1);
+    }
+  }
+
+
+  const dictAction = {"a":handleClickA,"b":handleClickB,"c":handleClickC,"d":handleClickD}
+  const handleOption = (opcion)=>{
+    if (opcion in dictAction){
+      //alert(opcion);
+      dictAction[opcion]();
+    }      
+  }
+
+  const commands = getInGameCommands({handleOption,nextCard,previousCard});
+
+  const {listening,transcript} = useSpeechRecognition({commands:commands});
+  const listen = ()=> { 
+    if (listening)
+      SR.stopListening();
+    else
+      SR.startListening({language:'es',continuous:false});   
+    }
+  
+
+
   useEffect(() => {
     props.showAdd.setShowAnadir({card:false, icon:false});
     const suggest = <Card>
@@ -261,146 +444,25 @@ export default function VerTarjeta(props) {
                                                           <Grid  container className="Opciones" spacing={'2%'}>
                                                                   <Grid item >
                                                                               <Stack spacing={'2%'}>
-                                                                                  <Button className='button-main' onClick={()=>{
-                                                                                    //console.log(mazo.Tarjetas[page-1].Respuesta-1)
-                                                                                    if(mazo.Tarjetas[page-1].Opciones[mazo.Tarjetas[page-1].Respuesta-1] === mazo.Tarjetas[page-1].Opciones[0]){
-                                                                                      setColorA('#008000')
-                                                                                      setDisabledA("disabled")
-                                                                                      setDisabledB("disabled")
-                                                                                      setDisabledC("disabled")
-                                                                                      setDisabledD("disabled")
-                                                                                      let puntaje = ((4-intentos)/4)*100
-                                                                                      let update = {}
-                                                                                      update['$set'] = {}
-                                                                                      let key_puntos = "Tarjetas."+(page-1)+".Puntos"
-                                                                                      update['$set'][key_puntos] =  puntaje
-                                                                                      axios.put('/api/mazos/'+mazo._id, update)
-                                                                                      puntajeTarjeta.push(puntaje)
-                                                                                      setPuntajeTarjeta(puntajeTarjeta)
-                                                                                      
-                                                                                        if (page === mazo.Tarjetas.length){
-                                                                                          let sum = puntajeTarjeta.reduce((previous, current) => current += previous);
-                                                                                          //let avg = sum / puntajeTarjeta.length;
-                                                                                          setPuntajesMazo(sum)
-                                                                                          axios.put('/api/mazos/'+mazo._id, {
-                                                                                            "Puntos":sum
-                                                                                          })
-                                                                                          setShowResult(true)
-                                                                                        }
-                                                                                      
-                                                                                      
-                                                                                    }else{
-                                                                                      setColorA('#ff0000')
-                                                                                      setDisabledA("disabled")
-                                                                                      setIntentos(intentos+1);
-                                                                                    }
-                                                                                    
-                                                                                  }}  sx={{maxHeight:'20ch', height:'18ch', maxwidth:'70ch', width: '70ch', border: '5px solid black',color: 'black',background: colorA, '&:hover': {backgroundColor: '#0088b6'}}} disabled={disabledA}>
+                                                                                  <Button className='button-main' onClick={handleClickA}  sx={{maxHeight:'20ch', height:'18ch', maxwidth:'70ch', width: '70ch', border: '5px solid black',color: 'black',background: colorA, '&:hover': {backgroundColor: '#0088b6'}}} disabled={disabledA}>
                                                                                       <Typography sx={{fontWeight: 'bold'}} variant="h6" component="div"> a. {mazo.Tarjetas[page-1].Opciones[0]}</Typography></Button>
-                                                                                  <Button onClick={()=>{
-                                                                                    if(mazo.Tarjetas[page-1].Opciones[mazo.Tarjetas[page-1].Respuesta-1] === mazo.Tarjetas[page-1].Opciones[2]){
-                                                                                      setColorB('#008000')
-                                                                                      setDisabledA("disabled")
-                                                                                      setDisabledB("disabled")
-                                                                                      setDisabledC("disabled")
-                                                                                      setDisabledD("disabled")
-                                                                                      let puntaje = ((4-intentos)/4)*100
-                                                                                      let update = {}
-                                                                                      update['$set'] = {}
-                                                                                      let key_puntos = "Tarjetas."+(page-1)+".Puntos"
-                                                                                      update['$set'][key_puntos] =  puntaje
-                                                                                      axios.put('/api/mazos/'+mazo._id, update)
-                                                                                      puntajeTarjeta.push(puntaje)
-                                                                                      setPuntajeTarjeta(puntajeTarjeta)
-                                                                                     
-                                                                                        if (page === mazo.Tarjetas.length){
-                                                                                          let sum = puntajeTarjeta.reduce((previous, current) => current += previous);
-                                                                                          //let avg = sum / puntajeTarjeta.length;
-                                                                                          setPuntajesMazo(sum)
-                                                                                          axios.put('/api/mazos/'+mazo._id, {
-                                                                                            "Puntos":sum
-                                                                                          })
-                                                                                          setShowResult(true)
-                                                                                        }
-                                                                                     
-                                                                                    }else{
-                                                                                      setColorB('#ff0000')
-                                                                                      setDisabledB("disabled")
-                                                                                      setIntentos(intentos+1);
-                                                                                    }
-                                                                                  }} className='button-main'  sx={{maxHeight:'20ch', height:'18ch', maxwidth:'70ch', width: '70ch', border: '5px solid black', color: 'black',background: colorB, '&:hover': {backgroundColor: '#0088b6'}}} disabled={disabledB}>
+                                                                                  <Button onClick={handleClickB} className='button-main'  sx={{maxHeight:'20ch', height:'18ch', maxwidth:'70ch', width: '70ch', border: '5px solid black', color: 'black',background: colorB, '&:hover': {backgroundColor: '#0088b6'}}} disabled={disabledB}>
                                                                                       <Typography sx={{fontWeight: 'bold'}}  variant="h6" component="div">b. {mazo.Tarjetas[page-1].Opciones[2]}</Typography></Button>
                                                                               </Stack>
                                                                   </Grid>
                                                                   <Grid mt={'10%'} item xs={'10%'}>
-                                                                              <MicIcon sx={{p:2,  borderRadius:50, background:'red', color:'white', width: 100, height: 100 }} size="large" />
+                                                                            {listening?
+                                                                              <MicIcon sx={{p:2,  borderRadius:50, background:'blue', color:'white',cursor:'pointer', width: 100, height: 100 }} size="large" onClick = {listen} />
+                                                                            :
+                                                                              <MicIcon sx={{p:2,  borderRadius:50, background:'red', color:'white',cursor:'pointer', width: 100, height: 100 }} size="large" onClick = {listen}/>
+                                                                            }
+                                                                              
                                                                   </Grid>
                                                                   <Grid item >
                                                                           <Box sx={{ width: '100%' }}>
                                                                               <Stack spacing={'2%'}>
-                                                                                  <Button className='button-main' onClick={()=>{
-                                                                                    if(mazo.Tarjetas[page-1].Opciones[mazo.Tarjetas[page-1].Respuesta-1] === mazo.Tarjetas[page-1].Opciones[1]){
-                                                                                      setColorC('#008000')
-                                                                                      setDisabledA("disabled")
-                                                                                      setDisabledB("disabled")
-                                                                                      setDisabledC("disabled")
-                                                                                      setDisabledD("disabled")
-                                                                                      let puntaje = ((4-intentos)/4)*100
-                                                                                      let update = {}
-                                                                                      update['$set'] = {}
-                                                                                      let key_puntos = "Tarjetas."+(page-1)+".Puntos"
-                                                                                      update['$set'][key_puntos] =  puntaje
-                                                                                      axios.put('/api/mazos/'+mazo._id, update)
-                                                                                      puntajeTarjeta.push(puntaje)
-                                                                                      setPuntajeTarjeta(puntajeTarjeta)
-                                                                                      
-                                                                                        if (page === mazo.Tarjetas.length){
-                                                                                          let sum = puntajeTarjeta.reduce((previous, current) => current += previous);
-                                                                                        //  let avg = sum / puntajeTarjeta.length;
-                                                                                          setPuntajesMazo(sum)
-                                                                                          axios.put('/api/mazos/'+mazo._id, {
-                                                                                            "Puntos":sum
-                                                                                          })
-                                                                                          setShowResult(true)
-                                                                                        }
-                                                                                      
-                                                                                    }else{
-                                                                                      setColorC('#ff0000')
-                                                                                      setDisabledC("disabled")
-                                                                                      setIntentos(intentos+1);
-                                                                                    }
-                                                                                  }} sx={{maxHeight:'20ch', height:'18ch', maxwidth:'70ch', width: '70ch',border: '5px solid black', color: 'black',background: colorC, '&:hover': {backgroundColor: '#0088b6'}}} disabled={disabledC}><Typography sx={{fontWeight: 'bold'}} variant="h6" component="div">c. {mazo.Tarjetas[page-1].Opciones[1]}</Typography></Button>
-                                                                                  <Button className='button-main' onClick={()=>{
-                                                                                    if(mazo.Tarjetas[page-1].Opciones[mazo.Tarjetas[page-1].Respuesta-1] === mazo.Tarjetas[page-1].Opciones[3]){
-                                                                                      setColorD('#008000')
-                                                                                      setDisabledA("disabled")
-                                                                                      setDisabledB("disabled")
-                                                                                      setDisabledC("disabled")
-                                                                                      setDisabledD("disabled")
-                                                                                      let puntaje = ((4-intentos)/4)*100
-                                                                                      let update = {}
-                                                                                      update['$set'] = {}
-                                                                                      let key_puntos = "Tarjetas."+(page-1)+".Puntos"
-                                                                                      update['$set'][key_puntos] =  puntaje
-                                                                                      axios.put('/api/mazos/'+mazo._id, update)
-                                                                                      
-                                                                                      puntajeTarjeta.push(puntaje)
-                                                                                      setPuntajeTarjeta(puntajeTarjeta)
-                                                                                      if (page === mazo.Tarjetas.length){
-                                                                                        let sum = puntajeTarjeta.reduce((previous, current) => current += previous);
-                                                                                        //let avg = sum / puntajeTarjeta.length;
-                                                                                        setPuntajesMazo(sum)
-                                                                                        axios.put('/api/mazos/'+mazo._id, {
-                                                                                          "Puntos":sum
-                                                                                        })
-                                                                                        setShowResult(true)
-                                                                                      }
-                                                                                    }else{
-                                                                                      setColorD('#ff0000')
-                                                                                      setDisabledD("disabled")
-                                                                                      setIntentos(intentos+1);
-                                                                                    }
-                                                                                  }} sx={{maxHeight:'20ch', height:'18ch', maxwidth:'70ch', width: '70ch', border: '5px solid black',  color: 'black',background: colorD, '&:hover': {backgroundColor: '#0088b6'}}} disabled={disabledD}><Typography sx={{fontWeight: 'bold'}} variant="h6" component="div">d. {mazo.Tarjetas[page-1].Opciones[3]}</Typography></Button>
+                                                                                  <Button className='button-main' onClick={handleClickC} sx={{maxHeight:'20ch', height:'18ch', maxwidth:'70ch', width: '70ch',border: '5px solid black', color: 'black',background: colorC, '&:hover': {backgroundColor: '#0088b6'}}} disabled={disabledC}><Typography sx={{fontWeight: 'bold'}} variant="h6" component="div">c. {mazo.Tarjetas[page-1].Opciones[1]}</Typography></Button>
+                                                                                  <Button className='button-main' onClick={handleClickD} sx={{maxHeight:'20ch', height:'18ch', maxwidth:'70ch', width: '70ch', border: '5px solid black',  color: 'black',background: colorD, '&:hover': {backgroundColor: '#0088b6'}}} disabled={disabledD}><Typography sx={{fontWeight: 'bold'}} variant="h6" component="div">d. {mazo.Tarjetas[page-1].Opciones[3]}</Typography></Button>
                                                                               </Stack>
                                                                           </Box>
                                                                   </Grid>

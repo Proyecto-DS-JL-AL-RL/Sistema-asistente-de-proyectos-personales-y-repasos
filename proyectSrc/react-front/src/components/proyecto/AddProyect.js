@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material'
 import React from 'react'
 import PlusOneIcon from '@mui/icons-material/PlusOne';
 
-export default function AddProyect() {
+export default function AddProyect(props) {
   return (
     <Box width={250} sx={{
         mx:2,
@@ -14,7 +14,9 @@ export default function AddProyect() {
         alignItems:'center',
         flexDirection:'column',
         cursor:'pointer'
-        }}>
+        }}
+        onClick = {()=>{props.setShowForm(true)}}
+        >
             <Box  sx={{
                 borderRadius:50,
                 

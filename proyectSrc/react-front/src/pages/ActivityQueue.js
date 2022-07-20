@@ -9,12 +9,28 @@ import { getCommandsPage } from '../speechMethods/actividadesMethods';
 import axios from 'axios';
 
 export default function ActivityQueue(params) {
-    const { sessionState } = useContext( AccountContext );   
-    const[activities,setActivities] = useState([]);
+    const { sessionState,currentState } = useContext( AccountContext );   
     const history = useHistory();
-    const[showForm,setShowForm] = useState(false);
 
-    
+    const [activities,setActivities]     = useState([]);    
+    const [showForm,setShowForm]         = useState(false);
+    const [proyectList,setProyectList]   = useState([]);
+
+    const getProyects = async()=>{
+        const {sub} = sessionState;
+        const {BaseProyect} = currentState;
+        if (sub && BaseProyect){
+            axios.get('http://localhost:4000/api/Proyectos/Nombres/'+sub)
+                .then(data=>{
+                    if (data.data){
+                        const arr = data.data.filter((value,ind,arr) => (BaseProyect!=value._id));
+                        //console.log(data.data);
+                        //console.log(arr);
+                        setProyectList(arr);
+                    }
+                }).catch(err=>console.log(err));
+        }
+    }
 
 
     const getActs = async () =>{
@@ -23,7 +39,7 @@ export default function ActivityQueue(params) {
         if (sub){            
             axios.get('http://localhost:4000/api/colaActividades/'+sub)
             .then((data)=>{
-                console.log(data.data);
+                //console.log(data.data);
                 setActivities(data.data);
             })
             .catch(err=>console.log(err));
@@ -33,14 +49,22 @@ export default function ActivityQueue(params) {
     }
 
     const initCrearActividad = ()=>{setShowForm(true)};
-    const handleBack = ()=>{history.push('/algoQueHacer')};
+    const handleBack = ()=>{
+        if (!showForm){
+            history.push('/algoQueHacer');
+        }
+    };
 
     const commands = getCommandsPage({initCrearActividad,handleBack});
     const {listening,transcript} = useSpeechRecognition({commands:commands});
 
     useEffect(()=>{
-        getActs();        
+        getActs();  
     },[sessionState]);
+
+    useEffect(()=>{
+        getProyects(); 
+    },[sessionState,currentState]);
 
     return(
     <React.Fragment>
@@ -56,10 +80,7 @@ export default function ActivityQueue(params) {
             <Button variant = 'contained' color = 'success' sx = {{width:'50px',bgcolor: '#207F18',height:'50px', borderRadius:'50%'}} onClick = {initCrearActividad}>
                 <AddIcon/>
             </Button>
-        </Grid>
-        
-
-
+        </Grid> 
 
         <Grid container direction='row' sx={{width:'70%',marginLeft:'15%',bgcolor:'#C4B5FD',padding:'20px',borderRadius : '30px',
                                             marginTop:'20px',maxHeight:'80%',overflowY:'auto'}} rowGap = {2}>
@@ -87,12 +108,8 @@ export default function ActivityQueue(params) {
         </Grid>
         
         {showForm?
-        <ActividadForm close = {()=>setShowForm(false)} activities = {activities} setActivities = {setActivities} />
-        :
-        null
-        }
-
-
+        <ActividadForm close = {()=>setShowForm(false)} activities = {activities} setActivities = {setActivities} proyectList = {proyectList} />
+        :null}
     </React.Fragment>
     );
 }

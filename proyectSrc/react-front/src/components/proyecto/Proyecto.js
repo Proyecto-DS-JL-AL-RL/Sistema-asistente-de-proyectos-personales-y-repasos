@@ -17,7 +17,7 @@ export default function Proyecto(props) {
     setProyect(props.proyect);
     if (props.proyect.ActividadSemanal){
       let sum = props.proyect.ActividadSemanal.reduce((a,b)=>a+b,0);
-      let avg = 100*(sum/7);
+      let avg = Math.round(100*(sum/7));
       setAvance(avg);
     }
   },[props.proyect]);
