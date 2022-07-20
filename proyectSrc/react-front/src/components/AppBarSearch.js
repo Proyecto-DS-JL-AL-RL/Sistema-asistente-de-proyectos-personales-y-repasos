@@ -102,7 +102,7 @@ export default function AppBarSearch(props) {
             >
               <QuestionMarkRoundedIcon onClick={handleAyuda}
                  sx={{color:'white', 
-                 background:'green',fontSize:'1.5em',
+                 background:'green',fontSize:'2em',
                   p:1,borderRadius:50}}/> 
   
             </IconButton>
@@ -113,12 +113,12 @@ export default function AppBarSearch(props) {
             >        
               {listening?
                 <MicIcon sx={{p:1, borderRadius:50, background:'blue',
-                color:'white',fontSize:'1.5em' }}
+                color:'white',fontSize:'2em' }}
                 onClick={()=>{props.ClickButton.listen()}} 
                 />
                 :
                 <MicIcon sx={{p:1, borderRadius:50, background:'red',
-                color:'white', fontSize:'1.5em' }}
+                color:'white', fontSize:'2em' }}
                 onClick={()=>{props.ClickButton.listen()}} 
                 />
               }
