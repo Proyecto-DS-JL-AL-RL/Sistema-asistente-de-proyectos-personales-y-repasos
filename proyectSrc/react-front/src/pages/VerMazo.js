@@ -165,7 +165,7 @@ const mazos = [
                         <Box className="mazo-add" sx={{mt:'15vh',zIndex: 1}}>
                           <Badge 
                                       badgeContent={
-                                        <Tooltip title="Guardar" placement="left">
+                                        <Tooltip title="Eliminar" placement="left">
                                             <button className='button-close' onClick={(e)=>{props.showAdd.setShowAnadir({card:false, icon:true})}}>
                                                 <ClearIcon sx={{color:'white',fontSize:'1em','&:hover':{color:'black'}}}/>
                                             </button>

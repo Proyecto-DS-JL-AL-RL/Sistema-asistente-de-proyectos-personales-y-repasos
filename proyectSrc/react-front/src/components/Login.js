@@ -61,7 +61,7 @@ export default function Login(props) {
       <Box className="container-box">
       <FormControl  sx={{ textAlign:'center', width:'45ch'}} variant="outlined">
               <FormControl sx={{ width: '100%' }} variant="outlined">
-                    <TextField id="outlined-basic" label="Correo electrónico" variant="outlined" value = {values.usuario} onChange = {handleChange('usuario')}/>
+                    <TextField id="outlined-basic" label="Nombre de usuario" variant="outlined" value = {values.usuario} onChange = {handleChange('usuario')}/>
               </FormControl>
               <FormControl sx={{mt: 3, width: '100%'}} variant="outlined">
                     

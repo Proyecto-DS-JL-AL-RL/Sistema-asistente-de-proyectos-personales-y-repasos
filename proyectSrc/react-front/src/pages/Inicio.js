@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Login from '../components/Login.js'
 import { styled } from '@mui/material/styles';
 //import Box from '@mui/material/Box';
@@ -7,15 +7,18 @@ import { styled } from '@mui/material/styles';
 import './Inicio.css'
 //import img from './img/aver.jpg'
 import {  Typography } from '@mui/material';
+//import Stack from '@mui/material/Stack';
+import Presentacion from './Presentation.js'
 
-const useStyles = styled({
+
+/*const useStyles = styled({
   bg: {
     backgroundColor: "grey"
   },
   copyright: {
     color: "white"
   }
-});
+});*/
 
 //import PanelControl from '../components/componentesALL/PanelControl'
 //import MostrarFuncionalidades from '../components/componentesALL/MostrarFuncionalidades'
@@ -57,14 +60,45 @@ const Copyright = function Copyright(props) {
 
 */
 export default function Inicio(){
-    const classes = useStyles();
-
+    //const classes = useStyles();
+    const [showinfo, setshowInfo] = useState(true)
     return (
       <React.Fragment>
-        <div className="row"> 
-          <div className="column left">           
-              <Typography className="Titulo" variant="h1">Titulo</Typography>
-                  <div className="container-phrases">
+        <div > 
+          <div className="split left">           
+          {showinfo?<div className="centered-logo ">
+                    <Presentacion/>
+              </div>: 
+              <div  className="centered">
+                    <Typography  className="Titulo" variant="h2">¿Que es Titulo?</Typography>
+                    <Typography  className="container-phrases" variant="h5">
+                      Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                      Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+                      when an unknown printer took a galley of type and scrambled it to make a type 
+                      specimen book. It has survived not only five centuries, but also the leap into
+                      electronic typesetting, remaining essentially unchanged. It was popularised in the 
+                      1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more 
+                      recently with desktop publishing software like Aldus PageMaker including versions of 
+                      Lorem Ipsum.dedede
+                    </Typography>
+                    <Typography  className="Titulo" variant="h2">¿Quienes somos?</Typography>
+                    <Typography  className="container-phrases" variant="h5">
+                        Somos un grupo de estudiantes 🤓 de la carrera de ciencia en computación 💻 orientados
+                        al desarrollo de software. Tenemos como meta crear tecnología para el alcanze de todos
+                        los úsuarios.🤗
+                    </Typography>
+                    <Typography  className="Titulo" variant="h2">Créditos</Typography>
+                    <Typography  className="container-phrases" variant="h5">
+                      Creditos al creador de Menhera-chan. Usamos la imágens de manera referencial
+                      no perdemos ni ganamos nada. Solo nota.
+                    </Typography>
+              </div>}
+          </div>
+          
+          <div className="split right">
+                <div className="centered-logo">
+                <Typography className="Titulo-logo" variant="h1">Titulo</Typography>
+                  <div className="container-phrases-logo">
                       Deseamos que 
                       <div className="flip">
                         <div><div>Aprendas</div></div>
@@ -73,36 +107,15 @@ export default function Inicio(){
                       </div>
                       Tú puedes! 🤗
                   </div>
-                  <Typography className="Titulo" variant="h2">¿Que es Titulo?</Typography>
-                  <Typography className="container-phrases" variant="h5">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                    when an unknown printer took a galley of type and scrambled it to make a type 
-                    specimen book. It has survived not only five centuries, but also the leap into
-                    electronic typesetting, remaining essentially unchanged. It was popularised in the 
-                    1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more 
-                    recently with desktop publishing software like Aldus PageMaker including versions of 
-                    Lorem Ipsum.
-                  </Typography>
-                  <Typography className="Titulo" variant="h2">¿Quienes somos?</Typography>
-                  <Typography className="container-phrases" variant="h5">
-                      Somos un grupo de estudiantes 🤓 de la carrera de ciencia en computación 💻 orientados
-                      al desarrollo de software. Tenemos como meta crear tecnología para el alcanze de todos
-                      los úsuarios.🤗
-                  </Typography>
-                  <Typography className="Titulo" variant="h2">Créditos</Typography>
-                  <Typography className="container-phrases" variant="h5">
-                    Creditos al creador de Menhera-chan. Usamos la imágens de manera referencial
-                    no perdemos ni ganamos nada. Solo nota.
-                  </Typography>
+                      <Login/>  
+                      <Copyright/>
+                  </div>
           </div>
-          <div className="column right">
-                <Login/>
-          </div>                          
+                   
         </div>
-        <div className="copyright">
-        <Copyright/>
-        </div>
+        
+       
+        
       </React.Fragment>
         );
     }

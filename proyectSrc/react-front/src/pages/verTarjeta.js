@@ -25,6 +25,7 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import { useHistory } from "react-router-dom";
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import star from './img/star.png';
 //<MicIcon className='button-main' sx={{p:2, borderRadius:'50%', background:'red',
 //color:'white', width: '30%', height: '30%', '&:hover': {backgroundColor: '#FF6347'} }}/>
 
@@ -39,7 +40,41 @@ const mazos = {
     Respuestas: ''
   }]
 }
-
+/* 
+<Box className="container-showResult">
+      
+        <Box className="box-result">       
+        <Typography sx={{fontSize:'3vw', fontWeight: 'bold', color:'gold'}} variant="h2">Resultados</Typography>
+            <Typography sx={{ fontWeight: 'bold', color:'white'}} className="text-result" variant="h5">
+              <ul>
+                {puntajeTarjeta.map((puntaje, index) =>
+                    <li key={index}>
+                    Puntaje de la tarjeta {index+1}: {tab}  {puntaje.toFixed(3)}
+                    </li>
+                    )}
+              </ul>
+            <Divider sx={{mt:'2%', color:'black', border:'0.1rem solid black'}} variant="middle" />
+            <Typography sx={{mt:'2%', fontWeight: 'bold', color:'white'}} className="text-result" variant="h4">
+                Puntaje del Mazo:   {puntajeMazo.toFixed(3)} <br/>
+              </Typography>
+          </Typography>
+        </Box>
+        <Button onClick={
+                    ()=>{
+                      history.push('/Mazos');
+                    }
+                  } className="Botton-voler-inicio" sx={{p:2,  borderRadius: 5, py: 2, color: 'white' ,background:'#0000cc'}} variant="contained" size="large">
+                  <Typography sx= {{fontWeight: 'bold', fontSize:'1vw'}} variant = 'h6'>ir a Mazos</Typography>
+              </Button>
+              <Button className="Botton-voler-intentar-again" onClick={
+                ()=>{
+                  window.location.reload(false);
+                }
+              } sx={{py:2, borderRadius: 5, color: 'white', background:'#00b347'}} variant="contained" size="large">
+                  <Typography sx= {{fontWeight: 'bold', fontSize:'1vw'}} variant = 'h6'>volver intentar</Typography>
+              </Button>
+    </Box>
+*/
 export default function VerTarjeta(props) {
   const [page, setPage] = React.useState(1);
   const [mazo, setMazo] = React.useState(mazos);
@@ -136,39 +171,24 @@ export default function VerTarjeta(props) {
           display: 'flex',
         }}
       > 
-    {showResult?
-    <Box className="container-showResult">
-      
-        <Box className="box-result">       
-        <Typography sx={{fontSize:'3vw', fontWeight: 'bold', color:'gold'}} variant="h2">Resultados</Typography>
-            <Typography sx={{ fontWeight: 'bold', color:'white'}} className="text-result" variant="h5">
-              <ul>
-                {puntajeTarjeta.map((puntaje, index) =>
-                    <li key={index}>
-                    Puntaje de la tarjeta {index+1}: {tab}  {puntaje.toFixed(3)}
-                    </li>
-                    )}
-              </ul>
-            <Divider sx={{mt:'2%', color:'black', border:'0.1rem solid black'}} variant="middle" />
-            <Typography sx={{mt:'2%', fontWeight: 'bold', color:'white'}} className="text-result" variant="h4">
-                Puntaje del Mazo:   {puntajeMazo.toFixed(3)} <br/>
-              </Typography>
-          </Typography>
-        </Box>
-        <Button onClick={
+
+    {!showResult?
+    <Box className="container-showResult"> 
+    <Button onClick={
                     ()=>{
                       history.push('/Mazos');
                     }
                   } className="Botton-voler-inicio" sx={{p:2,  borderRadius: 5, py: 2, color: 'white' ,background:'#0000cc'}} variant="contained" size="large">
                   <Typography sx= {{fontWeight: 'bold', fontSize:'1vw'}} variant = 'h6'>ir a Mazos</Typography>
-              </Button>
-              <Button className="Botton-voler-intentar-again" onClick={
-                ()=>{
-                  window.location.reload(false);
-                }
-              } sx={{py:2, borderRadius: 5, color: 'white', background:'#00b347'}} variant="contained" size="large">
-                  <Typography sx= {{fontWeight: 'bold', fontSize:'1vw'}} variant = 'h6'>volver intentar</Typography>
-              </Button>
+      </Button>
+      <Button className="Botton-voler-intentar-again" onClick={
+        ()=>{
+          window.location.reload(false);
+        }
+      } sx={{py:2, borderRadius: 5, color: 'white', background:'#00b347'}} variant="contained" size="large">
+          <Typography sx= {{fontWeight: 'bold', fontSize:'1vw'}} variant = 'h6'>volver intentar</Typography>
+      </Button>
+      <img className={"img-result"} src={star} alt="start"/>
     </Box>:null}  
     <Grow in={true}>
                 <Paper sx={{
