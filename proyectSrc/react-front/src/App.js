@@ -125,6 +125,7 @@ function App() {
                     null
                   }
                   
+
                   
                   <div className='other-container'>
                     {sessionState?.nickname?
@@ -143,7 +144,7 @@ function App() {
                         </Route>
                 
                         <Route path = '/proyectos'>
-                          <Proyectos/>
+                          <Proyectos showAdd={{showAnadir, setShowAnadir}}/>
                         </Route>
                         <Route path = '/proyecto/:idProyecto'>
                           <ProyectoView/>

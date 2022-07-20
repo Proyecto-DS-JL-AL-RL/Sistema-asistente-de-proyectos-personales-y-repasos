@@ -62,7 +62,7 @@ backgroundImage:'radial-gradient(#8589d8 15%, transparent 16%),radial-gradient(#
           backgroundSize: '60px 60px',
           backgroundPosition: '0 0, 30px 30px'
 */
-export default function DrawerComponent() {
+export default function DrawerComponent(props) {
     const {sessionState} = useContext(AccountContext);
     const [open,setOpen] = useState(false);
     useEffect(()=>{
