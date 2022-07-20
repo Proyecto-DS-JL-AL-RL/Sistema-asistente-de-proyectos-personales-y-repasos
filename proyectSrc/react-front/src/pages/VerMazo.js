@@ -9,7 +9,8 @@ import Mazos from '../components/Mazos'
 import Tooltip from '@mui/material/Tooltip';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CloseIcon from '@mui/icons-material/Close';
+import Badge  from '@mui/material/Badge';
+import ClearIcon from '@mui/icons-material/Clear';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -158,82 +159,102 @@ const mazos = [
                     >
                       {breadcrumbs}
                     </Breadcrumbs>
+                    {props.showAdd.showAnadir.card?
+                      
+                      <Grow  timeout={1000}  in={props.showAdd.showAnadir.card}>
+                        <Box className="mazo-add" sx={{mt:'15vh',zIndex: 1}}>
+                          <Badge 
+                                      badgeContent={
+                                        <Tooltip title="Guardar" placement="left">
+                                            <button className='button-close' onClick={(e)=>{props.showAdd.setShowAnadir({card:false, icon:true})}}>
+                                                <ClearIcon sx={{color:'white',fontSize:'1em','&:hover':{color:'black'}}}/>
+                                            </button>
+                                          </Tooltip>
+                                      }
+                                      sx={{
+                                          width:'20%',
+                                          height:'20%',
+                                          mx:'auto',
+                                          p:3,
+                                          boxShadow:  '0 0 8px 8px rgba(0, 0,0 , 0.6)',
+                                          borderRadius:'3%',
+                                          border:'2px solid black',
+                                          backgroundColor:'white',   
+                                      }}
+                                      
+                                      >
+                             
+                                <Card>
+                                    <CardContent>
+                                          <Typography sx={{fontWeight: 'bold'}} variant="h4" component="div">
+                                              Añadir Mazo
+                                          </Typography>
+                                          <Box  justifyContent="center" sx={{ display: 'flex', flexWrap: 'wrap' }}>
+                                              <FormControl  sx={{width: '20vw' }} variant="outlined">
+                                                    <TextField required sx={{py:2}} id="outlined-basic" label="Titulo de la Sección" defaultValue = {titulo} onChange={(e=>{setTitulo(e.target.value)})} variant="outlined" />
+                                                    <TextField
+                                                        required
+                                                        id="outlined-multiline-static"
+                                                        label="Descripcion"
+                                                        multiline
+                                                        rows={4}
+                                                        onChange={(e=>{setDescripcion(e.target.value)})}
+                                                        defaultValue={descripcion}
+                                                      />
+                                              </FormControl>
+                                            </Box>
+                                            <Box className="add-mazo-button">
+                                                  <Tooltip title="Guardar" placement="left">
+                                                    <Button onClick={()=>{
+                                                            props.showAdd.setShowAnadir({card:false, icon:true})
+                                                              axios.post('/api/mazos/', 
+                                                              {
+                                                                  "userSub":idUsersub,
+                                                                  "Titulo": titulo,
+                                                                  "Descripcion":descripcion,
+                                                                  "Tarjetas": [{"Pregunta":"",
+                                                                                "Opciones":[],
+                                                                                "Respuesta": 0,
+                                                                                "Puntos":0}],
+                                                                  "Puntos":0
+                                                              })
+                                                              setExistMazos(true)
+                                                              if (mazos.length===0){
+                                                                window.location.reload(false);
+                                                              }else{
+                                                                mazos.push({
+                                                                      "userSub":idUsersub,
+                                                                      "Titulo": titulo,
+                                                                      "Descripcion":descripcion,
+                                                                      "Tarjetas": [{"Pregunta":"",
+                                                                                    "Opciones":[],
+                                                                                    "Respuesta": 0,
+                                                                                    "Puntos":0}],
+                                                                      "Puntos":0
+                                                                  })
+                                                                setMazos(mazos)
+                                                              }
+                                                            }} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
+                                                      <SaveIcon sx={{p:1}}/>
+                                                    </Button>
+                                                  </Tooltip>
+                                            </Box>
+                                        </CardContent>
+                                      </Card>
+                              </Badge> 
+                          </Box>
+                        </Grow>:null}
                 </Box>
-                {props.showAdd.showAnadir.card?
-                        <Grow  timeout={1000}  in={props.showAdd.showAnadir.card}>
-                          <Box className="mazo-add" sx={{width:'100%'}}> 
-                                  <Card  sx={{borderRadius: '3%', border: '0.5px solid black'}}>
-                                      <CardContent>
-                                          <Tooltip title="Cancelar" placement="right">
-                                              <Button sx={{mx:'90%'}} onClick={(e)=>{props.showAdd.setShowAnadir({card:false, icon:true})}}>
-                                                      <CloseIcon  sx={{p:1, backgroundColor: 'red', '&:hover': {backgroundColor: '#FF6347'},borderRadius: '50%', color: 'white'}}/>
-                                              </Button>
-                                          </Tooltip>   
-                                            <Typography sx={{fontWeight: 'bold', mx:3}} variant="h4" component="div">
-                                                Añadir Mazo
-                                            </Typography>
-                                            <Box  justifyContent="center" sx={{ display: 'flex', flexWrap: 'wrap' }}>
-                                                <FormControl  sx={{m: 2, width: '45ch' }} variant="outlined">
-                                                      <TextField sx={{py:2}} id="outlined-basic" label="Titulo de la Sección" defaultValue = {titulo} onChange={(e=>{setTitulo(e.target.value)})} variant="outlined" />
-                                                      <TextField
-                                                          id="outlined-multiline-static"
-                                                          label="Descripcion"
-                                                          multiline
-                                                          rows={4}
-                                                          onChange={(e=>{setDescripcion(e.target.value)})}
-                                                          defaultValue={descripcion}
-                                                        />
-                                                </FormControl>
-                                              </Box>
-                                              <Box className="add-mazo-button">
-                                                    <Tooltip title="Guardar" placement="left">
-                                                      <Button onClick={()=>{
-                                                              props.showAdd.setShowAnadir({card:false, icon:true})
-                                                                axios.post('/api/mazos/', 
-                                                                {
-                                                                    "userSub":idUsersub,
-                                                                    "Titulo": titulo,
-                                                                    "Descripcion":descripcion,
-                                                                    "Tarjetas": [{"Pregunta":"",
-                                                                                  "Opciones":[],
-                                                                                  "Respuesta": 0,
-                                                                                  "Puntos":0}],
-                                                                    "Puntos":0
-                                                                })
-                                                                setExistMazos(true)
-                                                                if (mazos.length===0){
-                                                                  window.location.reload(false);
-                                                                }else{
-                                                                  mazos.push({
-                                                                        "userSub":idUsersub,
-                                                                        "Titulo": titulo,
-                                                                        "Descripcion":descripcion,
-                                                                        "Tarjetas": [{"Pregunta":"",
-                                                                                      "Opciones":[],
-                                                                                      "Respuesta": 0,
-                                                                                      "Puntos":0}],
-                                                                        "Puntos":0
-                                                                    })
-                                                                  setMazos(mazos)
-                                                                }
-                                                              }} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
-                                                        <SaveIcon sx={{p:1}}/>
-                                                      </Button>
-                                                    </Tooltip>
-                                              </Box>
-                                      </CardContent>
-                                </Card>
-                            </Box>
-                          </Grow>:null}
+
                   {existMazos?
                       <Box className="container-mazo" >
                           <Mazos className="mazo_hijo" getmazo={mazos} setMazo={setMazos} />
                       </Box>:
                       <Box className="container_sinTarjeta">
                             <div className="row">
-                              <Typography variant="h2" sx={{fontWeight: 'bold', textAlign:'center', component:"div"}}>Crea Un nuevo Mazo <br/></Typography>
+                            <Typography variant="h3" sx={{fontWeight: 'bold', textAlign:'center', component:"div"}}>Crea Un nuevo Mazo <br/></Typography>
                             <div className="conteiner-text">
-                              <Typography variant="h6" component="div">
+                              <Typography sx={{maxWidth:'100%'}} component="div">
                                 Bienvenido a la sección de repasos. Aqui podrá repasar los temas  que son de su interés.<br/>
                                 Puedes usar el botón de {<AddIcon sx={{width: 40, height: 40, background:'purple', color:'white', p:1, borderRadius:50, 
                                                         '&:hover': {backgroundColor: '#6f2da8'}}}/>} para crear un mazo y/o tarjetas.

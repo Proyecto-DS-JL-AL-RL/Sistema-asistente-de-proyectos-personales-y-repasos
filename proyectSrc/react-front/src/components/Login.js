@@ -12,6 +12,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
 import { useHistory } from "react-router-dom";
 import {  AccountContext } from '../AccountContext';
+import './login.css'
 /*
     login simple:
         - correo 
@@ -57,9 +58,9 @@ export default function Login(props) {
 
   return (
     <React.Fragment>
-      <Box sx={{width:'80%', background:'white', height:'20vw', position: 'relative', boxShadow: 16}}>
-      <FormControl  sx={{ mx:'6%', mt: 1, alignItems:'center', textAlign:'center', width:'45ch'}} variant="outlined">
-              <FormControl sx={{mt: 3, width: '100%' }} variant="outlined">
+      <Box className="container-box">
+      <FormControl  sx={{ textAlign:'center', width:'45ch'}} variant="outlined">
+              <FormControl sx={{ width: '100%' }} variant="outlined">
                     <TextField id="outlined-basic" label="Correo electrónico" variant="outlined" value = {values.usuario} onChange = {handleChange('usuario')}/>
               </FormControl>
               <FormControl sx={{mt: 3, width: '100%'}} variant="outlined">

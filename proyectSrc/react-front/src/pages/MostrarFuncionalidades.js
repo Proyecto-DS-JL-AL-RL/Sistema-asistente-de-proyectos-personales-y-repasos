@@ -37,7 +37,7 @@ import { restoreContent,changePage } from '../stores/sliceAyuda';
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor:'#BDBEC3',
     borderRadius:'2.5%',
-    padding: theme.spacing('2ch'),
+    padding: theme.spacing('1ch'),
     textAlign: 'center',
    }));
 
@@ -49,27 +49,30 @@ function FormRow(props) {
       <React.Fragment>
             <Grid item xs={6}>
                 <Item>
-                    <Button className='button-main' sx={{width:'90%', height:'40ch', borderRadius:'5%', backgroundColor:green[700], '&:hover': {backgroundColor: green[500]}, pl:'20%', pr: '20%'}} onClick={()=>{props.history.push('/proyectos')}}>
-                        <Typography sx={{textAlign:'center',fontSize:'3ch', color:'white'}}>Gestionar Proyectos</Typography>
+                        <Button className='button-main' sx={{width:'90%', height:'40ch', borderRadius:'5%', backgroundColor:green[700], 
+                        '&:hover': {backgroundColor: green[500],  boxShadow: '0 0 8px 8px rgba(0, 0,0 , 0.6)'}, pl:'20%', pr: '20%'}} onClick={()=>{props.history.push('/proyectos')}}>
+                            <Typography sx={{textAlign:'center',fontSize:'3ch', color:'white'}}>Gestionar Proyectos</Typography>
+                        </Button>
+                    </Item>
+                <Item>
+                    <Button className='button-main' sx={{width:'90%', height:'40ch', borderRadius:'5%', 
+                    backgroundColor:orange[700], '&:hover': {backgroundColor: orange[600],  boxShadow: '0 0 8px 8px rgba(0, 0,0 , 0.6)'}, 
+                    pl:'20%', pr: '20%'}}
+                    onClick={()=>{props.history.push('/horario')}}>
+                        <Typography sx={{textAlign:'center',fontWeight: 'bold', fontSize:'3ch', color:'white'}}>Organizar Actividades</Typography>
                     </Button>
                 </Item>
-            <Item>
-                <Button className='button-main' sx={{width:'90%', height:'40ch', borderRadius:'5%', 
-                backgroundColor:orange[700], '&:hover': {backgroundColor: orange[600]}, 
-                pl:'20%', pr: '20%'}}
-                onClick={()=>{props.history.push('/horario')}}>
-                    <Typography sx={{textAlign:'center',fontWeight: 'bold', fontSize:'3ch', color:'white'}}>Organizar Actividades</Typography>
-                </Button>
-            </Item>
             </Grid>
             <Grid item xs={6}>
                 <Item>
-                    <Button className='button-main' sx={{width:'90%', height:'40ch', borderRadius:'5%',backgroundColor:blue[700], '&:hover': {backgroundColor: blue[500]},pl:'20%', pr: '20%'}} onClick={()=>{props.history.push('/Mazos')}} >
+                    <Button className='button-main' sx={{width:'90%', height:'40ch', borderRadius:'5%',backgroundColor:blue[700], 
+                    '&:hover': {backgroundColor: blue[500],  boxShadow: '0 0 8px 8px rgba(0, 0,0 , 0.6)'},pl:'20%', pr: '20%'}} onClick={()=>{props.history.push('/Mazos')}} >
                         <Typography  sx={{textAlign:'center', fontSize:'3ch', color:'white'}}>Tarjetas de Repaso</Typography>
                     </Button>
                 </Item>
                 <Item>
-                        <Button className='button-main' sx={{width:'90%', height:'40ch', borderRadius:'5%',backgroundColor:red[700], '&:hover': {backgroundColor: red[500]}, pl:'20%', pr: '20%'}} onClick={()=>{props.history.push('/algoQueHacer')}}>
+                        <Button className='button-main' sx={{width:'90%', height:'40ch', borderRadius:'5%',backgroundColor:red[700], 
+                        '&:hover': {backgroundColor: red[500],  boxShadow: '0 0 8px 8px rgba(0, 0,0 , 0.6)'}, pl:'20%', pr: '20%'}} onClick={()=>{props.history.push('/algoQueHacer')}}>
                             <Typography  sx={{textAlign:'center', fontSize:'3ch', color:'white'}}>Dame algo que hacer</Typography>
                         </Button>
                 </Item>
@@ -118,37 +121,24 @@ export default function MostrarFuncionalidades(props) {
       },[]);
 
     return (
-        <React.Fragment>
-            <Box sx={{ display:"flex"}}>
-            <Box sx={{
-                  position:'absolute',
-                  justifyContent:"center",
-                  zIndex:1,
-                  mt:'15ch',
-                  width: '10ch', 
-                  height: '10ch',
-                }}
-                >
-                </Box>    
-                    <Fade timeout={2000} in={true}>
-                                    <Typography sx={{fontWeight: 'bold'}} variant = 'h3'>
-                                            Explore Nuestras Funcionalidades
-                                    </Typography>
-                            
-                    </Fade>
-                </Box>   
-                <Box mt={'3%'} ml={'17%'}>
-                    <Slide direction="up" timeout={1000} in={true} mountOnEnter unmountOnExit>
-                            <Grid   container spacing={'2%'}>
-                                    <Grid  item >
-                                            <Box flexWrap={'wrap'} sx={{height:'100%', width:'190%',background:'#BDBEC3',border:'5px solid black', borderRadius:'2.5ch', display: 'flex'}}> 
-                                                <FormRow history={history}/>
-                                            </Box>
-                                    </Grid>
-                                
-                        </Grid>
-                    </Slide>
-                </Box>
+        <React.Fragment>   
+            <Fade timeout={2000} in={true}>
+                                <Typography sx={{fontWeight: 'bold'}} variant = 'h3'>
+                                        Explore Nuestras Funcionalidades
+                                </Typography>        
+            </Fade>
+            <Box className="container-box-funcionalidades">
+                <Slide direction="up" timeout={1000} in={true} mountOnEnter unmountOnExit>
+                    <Grid container>
+                            <Grid  item >
+                                    <Box className="container-box-butttons-funcionalidades"> 
+                                        <FormRow history={history}/>
+                                    </Box>
+                            </Grid>
+                        
+                    </Grid>
+                </Slide>
+            </Box>
         </React.Fragment>
     )
 }   

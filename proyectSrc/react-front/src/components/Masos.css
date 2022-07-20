@@ -33,3 +33,10 @@
     justify-content: center;
     align-items: center;
 }
+
+.config-mazos{
+    position:relative;    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
