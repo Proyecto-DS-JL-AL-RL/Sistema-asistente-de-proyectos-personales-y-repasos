@@ -72,7 +72,7 @@ export default function ObjetivoForm(props){
 
     return(
         <React.Fragment>
-            <Card sx = {{width:'40%',height:'60%', position:'absolute',top:'25%',left:'30%',border :'solid',borderColor:'black',padding:'20px'}}>
+            <Card sx = {{width:'40%',height:'60%', position:'absolute',top:'25%',left:'30%',border :'solid',borderColor:'black',padding:'20px',overflowY:'auto'}}>
                 <Button onClick = {props.close} variant = 'contained' sx = {{bgcolor :'red',left:'94%'}} >X</Button>
                 
                 <Typography variant = 'h4'>

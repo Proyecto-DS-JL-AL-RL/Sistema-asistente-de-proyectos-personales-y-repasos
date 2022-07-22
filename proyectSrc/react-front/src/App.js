@@ -97,8 +97,8 @@ function App() {
 
 
   useEffect(()=>{
-    if (sessionState.nickname){
-        axios.get('http://localhost:4000/api/state/'+sessionState.sub)
+    if (sessionState?.nickname){
+        axios.get('http://localhost:4000/api/state/'+sessionState.sub+'/'+sessionState.nickname)
         .then(data=>{
           setCurrentState(data.data);
         })
