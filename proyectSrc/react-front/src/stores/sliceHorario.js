@@ -1,6 +1,6 @@
 import { createAsyncThunk ,createSlice } from "@reduxjs/toolkit";
 //import { Actividad, actividadesInfo } from "../components/horario/HorarioInfo";
-
+import { BACK_IP } from "../publicConstants";
 
 /*
   estados:{
@@ -10,7 +10,7 @@ import { createAsyncThunk ,createSlice } from "@reduxjs/toolkit";
   }
  */
 export const getIniHorario = createAsyncThunk('horario/getIniHorario', async (sub)=>{
-    const response= await fetch(`http://localhost:4000/api/horarioInit/${sub}`);
+    const response= await fetch(`${BACK_IP}/api/horarioInit/${sub}`);
     const rpta = await response.json();
     return rpta.horario;
 } )

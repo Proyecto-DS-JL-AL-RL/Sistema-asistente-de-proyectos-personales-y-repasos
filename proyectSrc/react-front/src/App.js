@@ -29,7 +29,7 @@ import DisplayAyuda from './components/Ayuda/DisplayAyuda';
 
 import MensajesCompletos from './components/horario/MensajesCompletos';
 import { setVisible as setVisibleMensajeCorto } from './stores/sliceMensajesCortos';
-
+import { BACK_IP } from './publicConstants';
 
 
 import axios from 'axios';
@@ -98,7 +98,7 @@ function App() {
 
   useEffect(()=>{
     if (sessionState?.nickname){
-        axios.get('http://localhost:4000/api/state/'+sessionState.sub+'/'+sessionState.nickname)
+        axios.get(BACK_IP+'/api/state/'+sessionState.sub+'/'+sessionState.nickname)
         .then(data=>{
           setCurrentState(data.data);
         })

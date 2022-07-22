@@ -15,6 +15,7 @@ import './proyectos.css'
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { changePage } from '../stores/sliceAyuda';
+import { BACK_IP } from '../publicConstants';
 
 export default function Proyectos() {
   const dispatch = useDispatch();
@@ -56,7 +57,7 @@ export default function Proyectos() {
     const {sub} = sessionState;
     if (sub){
       //console.log('subb:',sub);
-      axios.get('http://localhost:4000/api/Proyectos/'+sub)
+      axios.get(BACK_IP+'/api/Proyectos/'+sub)
         .then(data=>{
           if(data.data.error){
             console.log(data.data)
@@ -84,7 +85,7 @@ export default function Proyectos() {
           UserSub : sub,
           Titulo : tituloInput,
         }
-        axios.post('http://localhost:4000/api/Proyectos/addProyect',proyect_)
+        axios.post(BACK_IP+'/api/Proyectos/addProyect',proyect_)
           .then(data=>{
             console.log('data:', data.data);
             setShowForm(false);

@@ -11,7 +11,7 @@ import  ReactDOMServer from 'react-dom/server';
 import { useDispatch } from 'react-redux';
 import { changePage } from '../stores/sliceAyuda';
 import MensajeAdvertencia from '../components/horario/MensajeAdvertencia';
-
+import { BACK_IP } from '../publicConstants';
 
 export default function ActivityQueue(params) {
     const dispatch = useDispatch();
@@ -40,7 +40,7 @@ export default function ActivityQueue(params) {
         const {sub} = sessionState;
         const {BaseProyect} = currentState;
         if (sub && BaseProyect){
-            axios.get('http://localhost:4000/api/Proyectos/Nombres/'+sub)
+            axios.get(BACK_IP+'/api/Proyectos/Nombres/'+sub)
                 .then(data=>{
                     if (data.data){
                         if (data.data.error){
@@ -65,7 +65,7 @@ export default function ActivityQueue(params) {
         const {sub} = sessionState;
         //console.log(sub);
         if (sub){            
-            axios.get('http://localhost:4000/api/colaActividades/'+sub)
+            axios.get(BACK_IP+'/api/colaActividades/'+sub)
             .then((data)=>{
                 //console.log(data.data);
                 setActivities(data.data);

@@ -13,6 +13,7 @@ import axios from 'axios';
 import  ReactDOMServer from 'react-dom/server';
 import { useDispatch } from 'react-redux';
 import { changePage } from '../stores/sliceAyuda';
+import { BACK_IP } from '../publicConstants';
 export default function ProyectoView(){
     const dispatch = useDispatch();
     const history = useHistory();
@@ -41,7 +42,7 @@ export default function ProyectoView(){
     const getProyectInfo = async () => {
         if(idProyecto){
             console.log('ProyectInfo:',idProyecto);
-            axios.get('http://localhost:4000/api/Proyectos/getProyecto/'+idProyecto)
+            axios.get(BACK_IP+'/api/Proyectos/getProyecto/'+idProyecto)
                 .then(data=>{
                     if (data.data.error){
                         console.log(data.data);

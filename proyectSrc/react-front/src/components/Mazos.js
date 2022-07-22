@@ -33,6 +33,7 @@ import Badge  from '@mui/material/Badge';
 import ClearIcon from '@mui/icons-material/Clear';
 import nani from '../pages/img/menheranani.webp'
 import MensajeAdvertencia from './horario/MensajeAdvertencia';
+import { BACK_IP } from '../publicConstants';
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -89,18 +90,19 @@ export default function Mazos(props) {
   const [showdeleteCard, setDeleteCard] = useState(false)
   const [showdeleteMazo, setDeleteMazo] = useState(false)
   const [mensajeAdvertenciaDisplay, setMensajeAdvertenciaDisplay] = useState(null)
-  
+
+
   const deletecard = (newMazo) =>{
                       //console.log(mazo)
                       newMazo.Tarjetas.splice(tarjetaIndex, 1);
                       setMazo(newMazo.Tarjetas)
-                      axios.put('/api/mazos/'+mazo._id, {"Tarjetas":newMazo.Tarjetas})
+                      axios.put(BACK_IP+'/api/mazos/'+mazo._id, {"Tarjetas":newMazo.Tarjetas})
   }
 
   const deleteMazo = (newMazos, mazo, idx) =>{
         newMazos.splice(idx, 1);
         //console.log(mazoIndex)
-        axios.delete('/api/mazos/'+mazo._id)
+        axios.delete(BACK_IP+'/api/mazos/'+mazo._id)
         if (newMazos.length===0){
           window.location.reload(false);
         }
@@ -211,7 +213,7 @@ export default function Mazos(props) {
                                         <Box className="edit-mazo-button" justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>
                                           <Tooltip title="Guardar" placement="left">
                                                 <Button className="edit-mazo-button" onClick={()=>{setShowEdit(false)
-                                                                      axios.put('/api/mazos/'+mazo._id, { "Titulo":titulo,
+                                                                      axios.put(BACK_IP+'/api/mazos/'+mazo._id, { "Titulo":titulo,
                                                                       "Descripcion":descripcion})
                                                                       window.location.reload(false);
                                                 }} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
@@ -302,7 +304,7 @@ export default function Mazos(props) {
                                                             //let update_tarjeta = {"$set":{update}}
                                                             //console.log(update_card)
                                                             //console.log(mazos.Tarjetas[tarjetaIndex])
-                                                            axios.put('/api/mazos/'+mazo._id, update_card)
+                                                            axios.put(BACK_IP+'/api/mazos/'+mazo._id, update_card)
                                                             setPregunta("")
                                                              setOpcion1("")
                                                              setOpcion2("")
@@ -352,7 +354,7 @@ export default function Mazos(props) {
                                       mazo.Tarjetas.splice(tarjetaIndex, 1);
                                       setMazo(mazo.Tarjetas)
                                        setDeleteCard(false)
-                                      axios.put('/api/mazos/'+mazo._id, {"Tarjetas":mazo.Tarjetas})
+                                      axios.put(BACK_IP+'/api/mazos/'+mazo._id, {"Tarjetas":mazo.Tarjetas})
                                     }}>Si</Button>
                                     <Button onClick={()=>{
                                       setDeleteCard(false)
@@ -397,7 +399,7 @@ export default function Mazos(props) {
                                     onClick={()=>{
                                       mazos.splice(mazoIndex, 1);
                                       //setMazos(mazos)
-                                      axios.delete('/api/mazos/'+mazo._id)
+                                      axios.delete(BACK_IP+'/api/mazos/'+mazo._id)
                                       if (mazos.length===0){
                                         window.location.reload(false);
                                       }
@@ -489,7 +491,7 @@ export default function Mazos(props) {
                                                               "Puntos":0
                                                              })
                                                              setMazo(mazo)
-                                                             axios.put('/api/mazos/'+mazo._id, mazo)
+                                                             axios.put(BACK_IP+'/api/mazos/'+mazo._id, mazo)
                                                              setPregunta("")
                                                              setOpcion1("")
                                                              setOpcion2("")

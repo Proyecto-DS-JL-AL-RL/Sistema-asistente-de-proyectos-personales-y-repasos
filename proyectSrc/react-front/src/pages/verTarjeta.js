@@ -29,6 +29,7 @@ import SR,{useSpeechRecognition} from 'react-speech-recognition';
 import { getInGameCommands } from '../speechMethods/tarjetasMethods';
 import star from './img/star.png';
 import { AccountContext } from '../AccountContext';
+import { BACK_IP } from '../publicConstants';
 
 //<MicIcon className='button-main' sx={{p:2, borderRadius:'50%', background:'red',
 //color:'white', width: '30%', height: '30%', '&:hover': {backgroundColor: '#FF6347'} }}/>
@@ -133,7 +134,7 @@ export default function VerTarjeta(props) {
 
   const sendPuntos= async (sum) =>{
     if (currentState){
-      axios.post('/api/state/sumPuntos',{proyecto: currentState.BaseProyect, Puntos:sum}).then(data=>console.log(data.data)).catch(err=>console.log(err))
+      axios.post(BACK_IP+'/api/state/sumPuntos',{proyecto: currentState.BaseProyect, Puntos:sum}).then(data=>console.log(data.data)).catch(err=>console.log(err))
     }
   }
 
@@ -168,7 +169,7 @@ export default function VerTarjeta(props) {
       update['$set'] = {}
       let key_puntos = "Tarjetas."+(page-1)+".Puntos"
       update['$set'][key_puntos] =  puntaje
-      axios.put('/api/mazos/'+mazo._id, update)
+      axios.put(BACK_IP+'/api/mazos/'+mazo._id, update)
       puntajeTarjeta.push(puntaje)
       setPuntajeTarjeta(puntajeTarjeta)
       
@@ -186,7 +187,7 @@ export default function VerTarjeta(props) {
             setValuestring("Bien hecho, sigue así 😃")
   
           }
-          axios.put('/api/mazos/'+mazo._id, {
+          axios.put(BACK_IP+'/api/mazos/'+mazo._id, {
             "Puntos":sum
           })
           sendPuntos(sum);
@@ -213,7 +214,7 @@ export default function VerTarjeta(props) {
       update['$set'] = {}
       let key_puntos = "Tarjetas."+(page-1)+".Puntos"
       update['$set'][key_puntos] =  puntaje
-      axios.put('/api/mazos/'+mazo._id, update)
+      axios.put(BACK_IP+'/api/mazos/'+mazo._id, update)
       puntajeTarjeta.push(puntaje)
       setPuntajeTarjeta(puntajeTarjeta)
         
@@ -232,7 +233,7 @@ export default function VerTarjeta(props) {
             setValuestring("Bien hecho, sigue así 😃")
   
           }
-          axios.put('/api/mazos/'+mazo._id, {
+          axios.put(BACK_IP+'/api/mazos/'+mazo._id, {
             "Puntos":sum
           })
           sendPuntos(sum);
@@ -261,7 +262,7 @@ export default function VerTarjeta(props) {
       update['$set'] = {}
       let key_puntos = "Tarjetas."+(page-1)+".Puntos"
       update['$set'][key_puntos] =  puntaje
-      axios.put('/api/mazos/'+mazo._id, update)
+      axios.put(BACK_IP+'/api/mazos/'+mazo._id, update)
       puntajeTarjeta.push(puntaje)
       setPuntajeTarjeta(puntajeTarjeta)
       
@@ -279,7 +280,7 @@ export default function VerTarjeta(props) {
             setValuestring("Bien hecho, sigue así 😃")
   
           }
-          axios.put('/api/mazos/'+mazo._id, {
+          axios.put(BACK_IP+'/api/mazos/'+mazo._id, {
             "Puntos":sum
           })
           sendPuntos(sum);
@@ -308,7 +309,7 @@ export default function VerTarjeta(props) {
       update['$set'] = {}
       let key_puntos = "Tarjetas."+(page-1)+".Puntos"
       update['$set'][key_puntos] =  puntaje
-      axios.put('/api/mazos/'+mazo._id, update)
+      axios.put(BACK_IP+'/api/mazos/'+mazo._id, update)
       
       puntajeTarjeta.push(puntaje)
       setPuntajeTarjeta(puntajeTarjeta)
@@ -325,7 +326,7 @@ export default function VerTarjeta(props) {
           setValuestring("Bien hecho, sigue así 😃")
 
         }
-        axios.put('/api/mazos/'+mazo._id, {
+        axios.put(BACK_IP+'/api/mazos/'+mazo._id, {
           "Puntos":sum
         })
         sendPuntos(sum);
@@ -386,7 +387,7 @@ export default function VerTarjeta(props) {
   },[]);
 
   useEffect(() => {
-    axios.get('/api/mazosID/'+idSeccion).then(function(response){
+    axios.get(BACK_IP+'/api/mazosID/'+idSeccion).then(function(response){
       setMazo(response.data)
     })}, [mazos])
 
