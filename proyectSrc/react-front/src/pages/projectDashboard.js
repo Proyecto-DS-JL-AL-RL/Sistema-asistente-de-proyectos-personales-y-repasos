@@ -8,6 +8,7 @@ import { AccountContext } from '../AccountContext';
 import { getCommandsPage } from '../speechMethods/projectSpecific';
 import { useSpeechRecognition } from 'react-speech-recognition';
 import ObjetivoForm from '../components/objForm';
+import MensajeAdvertencia from '../components/horario/MensajeAdvertencia';
 import axios from 'axios';
 import  ReactDOMServer from 'react-dom/server';
 import { useDispatch } from 'react-redux';
@@ -16,24 +17,46 @@ export default function ProyectoView(){
     const dispatch = useDispatch();
     const history = useHistory();
     const {idProyecto} = useParams();
-    const [pTitulo,setPTitulo] = useState ('Titulo Proyecto');
+    const [pTitulo,setPTitulo] = useState (null);
 
     const [objetivos,setObjetivos] = useState([]);
     const [logros,setLogros] = useState([]);
     const [stats,setStats] = useState({Puntos:0,ConstanciaDiff:0,LogrosDiff:0});
     const[showForm,setShowForm] = useState(false);
-    
+    const [mensajeAdvertenciaDisplay,setMensajeAdvertenciaDisplay] = useState(null);
+
+    const AdvertenciaNotFound = () =>{
+        return <MensajeAdvertencia 
+        visible={setMensajeAdvertenciaDisplay}
+        content={"Proyecto No existe"}
+        comentario={<>
+                Parece que este proyecto no existe en nuestra base de datos
+                <button className='btn-advertencia-ok' onClick={()=>{setMensajeAdvertenciaDisplay(null);history.push('/proyectos');}}>
+                    volver
+                </button>
+                </>}
+        />
+      }
+
     const getProyectInfo = async () => {
         if(idProyecto){
             console.log('ProyectInfo:',idProyecto);
             axios.get('http://localhost:4000/api/Proyectos/getProyecto/'+idProyecto)
                 .then(data=>{
-                    console.log(data.data);
-                    const {Titulo,Objetivos,Logros,Puntajes} = data.data;
-                    setPTitulo(Titulo);
-                    setLogros(Logros);
-                    setObjetivos(Objetivos);
-                    setStats(Puntajes);
+                    if (data.data.error){
+                        console.log(data.data);
+                        if (data.data.error == 'not_found'){
+                            setMensajeAdvertenciaDisplay(AdvertenciaNotFound);
+                            setPTitulo(null);
+                        }
+                    }else{
+                        console.log(data.data);
+                        const {Titulo,Objetivos,Logros,Puntajes} = data.data;
+                        setPTitulo(Titulo);
+                        setLogros(Logros||[]);
+                        setObjetivos(Objetivos||[]);
+                        setStats(Puntajes||[]);
+                    }
                 })
                 .catch(err=>console.log(err));
         }
@@ -47,8 +70,11 @@ export default function ProyectoView(){
         }
     }
     const initCrearPendiente = ()=>{
-        if (!showForm)
-            setShowForm(true);
+        if (!pTitulo){
+            return;
+        }else
+            if (!showForm)
+                setShowForm(true);
     }
 
     useEffect(()=>{
@@ -82,7 +108,7 @@ export default function ProyectoView(){
                     </Grid>
                     <Grid item container  sm = {4} lg = {4} xl = {4} direction = 'column'>
 
-                            <Button sx = {{width:'80%',bgcolor: '#C0DAE5', borderRadius:'20px',height:'15%', marginLeft: '10%'}} variant = 'contained' mb = {1} onClick = {()=>{setShowForm(true)}}>
+                            <Button sx = {{width:'80%',bgcolor: '#C0DAE5', borderRadius:'20px',height:'15%', marginLeft: '10%'}} variant = 'contained' mb = {1} onClick = {initCrearPendiente}>
                                 <Typography color = 'black' sx = {{fontWeight : 'bold'}}>
                                     Agregar
                                 </Typography>
@@ -102,6 +128,9 @@ export default function ProyectoView(){
             :
             null
             }
+            <Box sx = {{left:'50%',top:'50%',marginLeft:'-250px',marginTop:'-5%',position:'absolute'}}>
+            {mensajeAdvertenciaDisplay}                 
+            </Box>
         </React.Fragment>
     );
 }

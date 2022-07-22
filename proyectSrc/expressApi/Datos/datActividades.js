@@ -15,13 +15,19 @@ var createActivity = async function(act){
         { "UserSub" : savedAct.UserSub },
         { "$push": { "Actividades": savedAct._id }}
     )
-    return response;
+    if (response)
+        return response;
+    else
+        return({error: 'no_init'});
 }
 
 var getActivitiesFromUser = async function (userSub){
     console.log(userSub);
     let queue = await UserQueue.findOne({UserSub:userSub}).populate('Actividades').exec().catch(err=> console.log(err));
-    return queue.Actividades;
+    if (queue?.Actividades)
+        return queue.Actividades;
+    else
+        return({error: 'no_init'});
     //return response;
 }
 
@@ -31,12 +37,17 @@ var getActivityFromQueue = async function (userSub){
         let queue = await UserQueue.findOne({UserSub:userSub}).populate('Actividades').exec().catch(err=> console.log(err));
         //console.log(queue.Actividades);
         if (!queue.Actividades){
-            console.log(userSub);
-            return 0;
+            console.log('NO-INIT:',userSub);
+            return({error: 'no_init'});
         }
             
         let pesos = [];
         let pesoMax = 0;
+
+        if(queue.Actividades.length < 1){
+            return ({error:'no_activities'});
+        }
+
         for (let i = 0;i<queue.Actividades.length;i++){
             pesos.push(queue.Actividades[i].Peso);
             pesoMax+=queue.Actividades[i].Peso;

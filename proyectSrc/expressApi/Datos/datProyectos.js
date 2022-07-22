@@ -38,28 +38,35 @@ var createProyect = async function(bodyBase){
         { "UserSub" : savedP.UserSub },
         { "$push": { "Proyectos": savedP2._id }}
     )
-    return response;
+    if (response)
+        return response;
+    else
+        return({error: 'no_init'});
 }
 
 var getProyectById = async function(id){
     let response = await Proyecto.findById(id).populate(['Puntajes','Logros','Objetivos']).exec().catch(err=> console.log(err));
-    const hoy = new Date();
-    const hoyDias = Math.round(hoy.getTime()/(1000*60*6024))
-    const sorted = response.Objetivos.sort((o1,o2)=>{
-        const o1Dias = Math.round(o1.Fecha.getTime()/(1000*60*6024));
-        const o2Dias = Math.round(o2.Fecha.getTime()/(1000*60*6024));
-        const dif1 = hoy - o1Dias;
-        const dif2 = hoy - o2Dias;
-        if (dif1 + o1.Peso > dif2 + o2.Peso){
-            return 1;
-        }else if(dif1 + o1.Peso < dif2 + o2.Peso){
-            return -1;
-        }
-        return 0;
-    });
-    response.Objetivos = sorted;
-    //console.log(response);
-    return response;
+    if (response){
+        const hoy = new Date();
+        const hoyDias = Math.round(hoy.getTime()/(1000*60*6024))
+        const sorted = response.Objetivos.sort((o1,o2)=>{
+            const o1Dias = Math.round(o1.Fecha.getTime()/(1000*60*6024));
+            const o2Dias = Math.round(o2.Fecha.getTime()/(1000*60*6024));
+            const dif1 = hoy - o1Dias;
+            const dif2 = hoy - o2Dias;
+            if (dif1 + o1.Peso > dif2 + o2.Peso){
+                return 1;
+            }else if(dif1 + o1.Peso < dif2 + o2.Peso){
+                return -1;
+            }
+            return 0;
+        });
+        response.Objetivos = sorted;
+        //console.log(response);
+        return response;
+    }else{
+        return {error: "not_found"}
+    }
 }
 
 
@@ -109,28 +116,37 @@ var actualizarConstanciaZero = async function(projectID){
         const {Puntajes} = proyect;
         const puntos_ = await Puntaje.findById(Puntajes).catch(err=>console.log(err));              
         puntos_.ConstanciaDiff = proyect.ActividadSemanal.reduce((a,b)=>a+b) / 7;      
-        puntos_.save();
-        proyect.save();
+        await puntos_.save();
+        await proyect.save();
     }
 };
 
 
 var getProyectListFromUser = async function(UserSub){
     let userItems = await UserItems.findOne({UserSub:UserSub}).exec().catch(err=> console.log(err));
-    userItems.Proyectos?.forEach(async p=>await actualizarConstanciaZero(p));
-    //console.log('userSub'+UserSub);
-    let queue = await UserItems.findOne({UserSub:UserSub}).populate('Proyectos').exec().catch(err=> console.log(err));
-    return queue.Proyectos;    
+    if (userItems){
+        userItems?.Proyectos?.forEach(async p=>await actualizarConstanciaZero(p));
+        //console.log('userSub'+UserSub);
+        let queue = await UserItems.findOne({UserSub:UserSub}).populate('Proyectos').exec().catch(err=> console.log(err));
+        return queue.Proyectos||{error:'something-else'};   
+    }else{
+        return({error: 'no_init'});
+    }
 }
 
 var addObjetivo = async function(body){
     const {objetivo,proyectId} = body;
+    if (proyectId && objetivo){
     const objetivo_ = new ObjetivosMong(objetivo);
     const savedObj = await objetivo_.save().catch(err=>console.log(err))
     const response = Proyecto.findOneAndUpdate(
         {"_id":proyectId},
         {"$push": { "Objetivos": savedObj._id }});
     return response;
+    }else
+    {
+        return {error:'not_allowed'}
+    }
 }
 
 var completeObjetivo = async function(body){
@@ -140,6 +156,7 @@ var completeObjetivo = async function(body){
 var getProyectNameListFromUser = async function (UserSub){
     let queue = await UserItems.findOne({UserSub:UserSub}).populate('Proyectos').exec().catch(err=> console.log(err));
     let arrayResponse = []
+    console.log(queue);
     if (queue?.Proyectos){
         for (let i = 0 ;i<queue.Proyectos.length;i++){
             const {Titulo,_id} = queue.Proyectos[i];
@@ -148,6 +165,7 @@ var getProyectNameListFromUser = async function (UserSub){
     }
     return arrayResponse; 
 }
+
 
 
 module.exports.createProyect = createProyect;

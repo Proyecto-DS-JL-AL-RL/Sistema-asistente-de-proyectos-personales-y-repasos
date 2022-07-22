@@ -4,7 +4,7 @@ const dictRef = {"la opción a":"a","la opción b":"b","la opción c":"c","la op
 
 const getInGameCommands = (methods) =>{
     const comando = [{
-        command: ["(La )Opción A(.)","(La) Opción B(.)","(La) Opción C(.)","(La) Opción D(.)"],
+        command: ["(La) Opción A(.)","(La) Opción B(.)","(La) Opción C(.)","(La) Opción D(.)"],
         callback: (command,spoken,ratio) =>{
             const lett = command.toLowerCase();
             console.log('Command-',lett)

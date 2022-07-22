@@ -15,6 +15,7 @@ import './proyectos.css'
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { changePage } from '../stores/sliceAyuda';
+
 export default function Proyectos() {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -38,14 +39,33 @@ export default function Proyectos() {
     />
   }
 
+  const AdvertenciaNoInit = () =>{
+    return <MensajeAdvertencia 
+    visible={setMensajeAdvertenciaDisplay}
+    content={"Usuario no inicializado"}
+    comentario={<>
+            Parece que hubo un problema al momento de preparar la bienvenida a su usuario. Estamos trabajando en ello. Pruebe recargar la página. O vuelva en un rato.
+            <button className='btn-advertencia-ok' onClick={()=>{setMensajeAdvertenciaDisplay(null)}}>
+                ok
+            </button>
+            </>}
+    />
+  }
+
   const getProyects = async ()=>{
     const {sub} = sessionState;
     if (sub){
       //console.log('subb:',sub);
       axios.get('http://localhost:4000/api/Proyectos/'+sub)
         .then(data=>{
-          //console.log(data.data);
-          setProyects(data.data);
+          if(data.data.error){
+            console.log(data.data)
+            setProyects([]);
+            if(data.data.error == 'no_init'){
+              setMensajeAdvertenciaDisplay(AdvertenciaNoInit);
+            }
+          }else
+            setProyects(data.data);
         })
         .catch(err=>console.log(err));
     }
