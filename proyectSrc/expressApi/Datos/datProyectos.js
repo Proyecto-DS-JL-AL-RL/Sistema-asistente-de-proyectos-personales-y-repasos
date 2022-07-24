@@ -3,6 +3,8 @@ var UserItems =require('../Esquemas/schUserQueue');
 var Puntaje = require('../Esquemas/schPuntajes');
 var ObjetivosMong = require('../Esquemas/schObjetivo');
 var Logros_ = require('../Esquemas/schLogro');
+var StateUser = require('../Esquemas/schState');
+var Actividades_ = require('../Esquemas/schActividad');
 
 var createProyect = async function(bodyBase){
     const body = {...bodyBase,
@@ -50,18 +52,26 @@ var getProyectById = async function(id){
         const hoy = new Date();
         const hoyDias = Math.round(hoy.getTime()/(1000*60*6024))
         const sorted = response.Objetivos.sort((o1,o2)=>{
-            const o1Dias = Math.round(o1.Fecha.getTime()/(1000*60*6024));
-            const o2Dias = Math.round(o2.Fecha.getTime()/(1000*60*6024));
+            const o1Dias = Math.floor(o1.Fecha.getTime()/(1000*60*6024));
+            const o2Dias = Math.floor(o2.Fecha.getTime()/(1000*60*6024));
             const dif1 = hoy - o1Dias;
             const dif2 = hoy - o2Dias;
             if (dif1 + o1.Peso > dif2 + o2.Peso){
-                return 1;
-            }else if(dif1 + o1.Peso < dif2 + o2.Peso){
                 return -1;
+            }else if(dif1 + o1.Peso < dif2 + o2.Peso){
+                return 1;
             }
             return 0;
         });
-        response.Objetivos = sorted;
+        response.Objetivos = sorted;        
+        let o1 = new Date(response.UltimaActividad);
+        let o2 = new Date()
+        const o1Dias = Math.floor(o1.getTime()/(1000*60*6024));
+        const o2Dias = Math.floor(o2.getTime()/(1000*60*6024));
+        const diasDiff = o2Dias-o1Dias;
+        if (response.Puntajes){
+            response.Puntajes.ConstanciaDiff = diasDiff;
+        }
         //console.log(response);
         return response;
     }else{
@@ -80,8 +90,8 @@ var sumarPuntos = async function (projectID,Puntos,actividad = false){
         const hoy = new Date();
         const ultimo = proyect.UltimaActividad;
         const diasDiff = Math.round(hoy.getTime()/(1000*60*6024)) - Math.round(ultimo.getTime()/(1000*60*6024));
-        if (diasDiff > 0){
-            proyect.UltimaActividad = hoy;
+        proyect.UltimaActividad = hoy;
+        if (diasDiff > 0){            
             proyect.ActividadSemanal.shift();
             proyect.ActividadSemanal.push(1);            
             puntos_.ConstanciaDiff = proyect.ActividadSemanal.reduce((a,b)=>a+b) / 7;                 
@@ -125,7 +135,7 @@ var actualizarConstanciaZero = async function(projectID){
 var getProyectListFromUser = async function(UserSub){
     let userItems = await UserItems.findOne({UserSub:UserSub}).exec().catch(err=> console.log(err));
     if (userItems){
-        userItems?.Proyectos?.forEach(async p=>await actualizarConstanciaZero(p));
+        //userItems?.Proyectos?.forEach(async p=>await actualizarConstanciaZero(p));
         //console.log('userSub'+UserSub);
         let queue = await UserItems.findOne({UserSub:UserSub}).populate('Proyectos').exec().catch(err=> console.log(err));
         return queue.Proyectos||{error:'something-else'};   
@@ -149,14 +159,26 @@ var addObjetivo = async function(body){
     }
 }
 
-var completeObjetivo = async function(body){
-
+var completeObjetivo = async function(idObj){
+    console.log(idObj)
+    let objetivo_ = await ObjetivosMong.findById(idObj).catch(err=>console.log(err))
+    if (objetivo_){
+        let proyect_ = await Proyecto.findById(objetivo_.ProyectoAsociado).catch(err=> console.log(err));
+        if (proyect_?.Objetivos){
+            proyect_.Objetivos = proyect_.Objetivos.filter(element => element != idObj);
+            proyect_.save();
+        }
+        objetivo_.delete().catch(err=>console.log(err));
+        return objetivo_;
+    }else{
+        return {error:'not_found'}
+    }
 }
 
 var getProyectNameListFromUser = async function (UserSub){
     let queue = await UserItems.findOne({UserSub:UserSub}).populate('Proyectos').exec().catch(err=> console.log(err));
     let arrayResponse = []
-    console.log(queue);
+    //console.log(queue);
     if (queue?.Proyectos){
         for (let i = 0 ;i<queue.Proyectos.length;i++){
             const {Titulo,_id} = queue.Proyectos[i];
@@ -166,6 +188,39 @@ var getProyectNameListFromUser = async function (UserSub){
     return arrayResponse; 
 }
 
+var deleteProyecto = async function (idP) {
+    let proyect_ = await Proyecto.findById(idP).catch(err=>console.log(err));
+    //console.log(proyect_);
+    if (proyect_){
+        let state_ = await StateUser.findOne({UserSub:proyect_.UserSub}).catch(err=>console.log(err));
+        let items_ = await UserItems.findOne({UserSub:proyect_.UserSub}).populate('Actividades').exec().catch(err=>console.log(err));
+        if (state_){
+            if (idP == state_.BaseProyect)
+                return {error:'not_allowed'}
+            if(items_?.Proyectos){
+                items_.Proyectos = items_.Proyectos.filter(element => element != idP);
+                
+            }
+            if (items_?.Actividades){
+                items_.Actividades = items_.Actividades.filter(async act => {
+                    if (act.ProyectoAsociado == idP){
+                        await Actividades_.findOneAndUpdate({_id:act._id},{ProyectoAsociado:null});
+                        return false;
+                    }
+                    return true;
+                });
+            }
+            items_?.save();
+        }
+        proyect_.Objetivos?.forEach(ObjetivoId=>ObjetivosMong.deleteOne({_id:ObjetivoId}).exec())
+        proyect_.Logros?.forEach(logroId=> Logros_.deleteOne({_id:logroId}).exec())
+        Puntaje.deleteOne({_id:proyect_.Puntajes}).exec();
+        const resp = await proyect_.delete().catch(err=>console.log(err));
+        return resp;
+
+    }
+    
+}
 
 
 module.exports.createProyect = createProyect;
@@ -175,3 +230,4 @@ module.exports.addObjetivo = addObjetivo;
 module.exports.completeObjetivo = completeObjetivo;
 module.exports.sumarPuntos = sumarPuntos;
 module.exports.getProyectNameListFromUser = getProyectNameListFromUser;
+module.exports.deleteProyecto = deleteProyecto;

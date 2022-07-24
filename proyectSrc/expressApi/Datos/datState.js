@@ -79,7 +79,7 @@ var endActivity = async function(body){
     const {UserSub,Puntos,ProyectoAsociado,Titulo} = activity;
     const {tipo,UrlRef,RefTitle} = evidenceBody;
     const hoy = new Date();
-    const parsedDate = [String(hoy.getMonth()),String(hoy.getDate()),String(hoy.getFullYear())].join('/');
+    const parsedDate = [String(hoy.getDate()),String(hoy.getMonth()+1),String(hoy.getFullYear())].join('/');
     const descripcion = "Completada actividad: "+Titulo+" de la Cola de Actividades en 'Dame algo que hacer' - "+parsedDate;
 
     const newLogro = new Logro({
@@ -111,7 +111,7 @@ var endActivity = async function(body){
 
 
 var getState = async function (userSub,userNickname){
-    console.log('flag1',userSub)
+    //console.log('flag1',userSub)
     if (userSub){
         await checkConsistency(userSub,userNickname);
         const state = await State.findOne({UserSub:userSub}).catch(err=> console.log(err));
@@ -129,7 +129,7 @@ var agregarPuntos = async function (body){
 
 var checkConsistency = async function (UserSub,userNick){
     let userF = await State.findOne({UserSub:UserSub}).catch(err=>console.log(err));
-    console.log("CHECKING CONSISTENCY = ",userF);
+    //console.log("CHECKING CONSISTENCY = ",userF);
     if (userF){
         return null;
     }else{

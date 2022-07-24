@@ -85,13 +85,26 @@ var updateCard = async function(id, update){
 }
 
 
-var deleteCard = async function(id){
-    await Tarjeta.findByIdAndDelete(id)
+var deleteActivity = async function(id){
+    let actividad_ = await Actividad.findById(id).catch(err=>console.log(err))
+    if (actividad_){
+        let queue = await UserQueue.findOne({UserSub:actividad_.UserSub}).catch(err=> console.log(err));
+        //console.log(queue)
+        if (queue?.Actividades){
+            queue.Actividades = queue.Actividades.filter(element => element != id);
+            queue.save();
+        }
+        actividad_.delete().catch(err=>console.log(err));
+        return actividad_;
+    }else{
+        return {error:'not_found'}
+    }
+    //await Tarjeta.findByIdAndDelete(id)
  }
 
 module.exports.createActivity = createActivity;
 module.exports.getActivityFromQueue = getActivityFromQueue;
 module.exports.getActivityID = getActivityID;
 module.exports.getActivitiesFromUser = getActivitiesFromUser;
-
+module.exports.deleteActivity = deleteActivity;
 

@@ -78,7 +78,6 @@ function App() {
     setInitFlag(false)
     getSession()
     .then((session)=>{
-        console.log('State:',session);
         setInitFlag(true);
     })
     .catch((err)=>{

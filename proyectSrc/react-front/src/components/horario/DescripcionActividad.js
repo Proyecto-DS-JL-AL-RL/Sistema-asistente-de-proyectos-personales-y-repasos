@@ -130,7 +130,7 @@ export default function DescripcionActividad(props) {
     const [duracionFin,setDuracionFin] = useState(24);
     const[llenarMic,setLlenarMic] = useState(null);
     const [alertContent,setAlertContent] = useState(null);
-    const [puntero,setPuntero] = useState(null);
+
     const [mensajeAdvertenciaDisplay,setMensajeAdvertenciaDisplay] = useState(null);
     const matches = useMediaQuery('(min-height:750px)');
     
@@ -437,24 +437,15 @@ export default function DescripcionActividad(props) {
         
     },[actividad,duracion,duracionFin])
     
-    const setPunteroPage     = (puntero)=>setPuntero(puntero);
-    const setDictionary = {
-        "nombre": (tra)=>{handleNombre({target:{value:tra}})} ,
-        "descripción": (tra)=>{handleDescrip({target:{value:tra}})},
-        "acrónimo": (tra)=>{handleAcr({target:{value:tra}})},
-    }
+    const setNombre         =  (tra)=>{handleNombre({target:{value:tra}})} ;
+    const setDescripcion    = (tra)=>{handleDescrip({target:{value:tra}})};
+    const setAcronimo       = (tra)=>{handleAcr({target:{value:tra}})};
+    
 
-    const commands = getDescCommands({handleDia,handleDuracionInicio,handleDuracionFin,setDuracion,setDuracionFin,setPunteroPage,handleClickState});
+    const commands = getDescCommands({handleDia,handleDuracionInicio,handleDuracionFin,setDuracion,handleEliminarActividad,setDuracionFin,stateButton,setNombre,setDescripcion,setAcronimo,handleClickState});
     const {listening,transcript,finalTranscript,resetTranscript} = useSpeechRecognition({commands:commands});
 
-    useEffect(()=>{
-        if (puntero in setDictionary)
-            if(puntero && listening){
-                //alert("|"+puntero+"|");
-                resetTranscript();
-                setDictionary[puntero](finalTranscript);
-            }
-    },[finalTranscript]);
+
 
   return (
     <>
@@ -481,12 +472,6 @@ export default function DescripcionActividad(props) {
         autoComplete="off"
         >
         <div width={"100%"}>
-            {puntero?
-            <Typography variant = 'h6' sx = {{width:'100%',textAlign:'center'}}>
-                Escribiendo en : {puntero}
-            </Typography>
-            :
-            null}
 
             <TextField
             required

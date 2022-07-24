@@ -41,6 +41,19 @@ export default function AlgoQueHacerPage(props){
         />
     }
 
+    const AdvertenciaNoActividades = () =>{
+        return <MensajeAdvertencia 
+        visible={setMensajeAdvertenciaDisplay}
+        content={"Actividad completada"}
+        comentario={<>
+                Parece que no tiene ninguna actividad creada. Cree una en cola de actividades 
+                <button className='btn-advertencia-ok' onClick={()=>{setMensajeAdvertenciaDisplay(null);history.push('/activityQueue')}}>
+                    Ir a cola de actividades
+                </button>
+                </>}
+        />
+    }
+
     const checkSession = async () => {
         if (currentState.ActividadActual){
             axios.get(BACK_IP+'/api/colaActividades/actividad/'+currentState.ActividadActual)
@@ -58,7 +71,6 @@ export default function AlgoQueHacerPage(props){
             const body = {userSub:sub,activity:currentActivity._id}
             axios.post(BACK_IP+'/api/state/setActivity',body)
                 .then((data)=>{
-                    console.log(data.data);
                     setCurrentState({...currentState,ActividadActual: currentActivity._id });
                 }).catch(err=>console.log(err));
         }        
@@ -87,7 +99,6 @@ export default function AlgoQueHacerPage(props){
             const body = {activity: currentActivity, evidenceBody:evidenceBody };
             axios.post(BACK_IP+'/api/state/endActivity',body)
                 .then((data)=>{
-                    console.log(data.data);
                     setCurrentState({...currentState,ActividadActual: null }); 
                     setMensajeAdvertenciaDisplay(AdvertenciaFinalizar);            
                     setCurrentActivity(null);
@@ -103,8 +114,17 @@ export default function AlgoQueHacerPage(props){
         if (sub){
             axios.get(BACK_IP+'/api/colaActividades/getActividad/'+sub)
             .then((data)=>{
-                setCurrentActivity(data.data);
-                setStarted(false);
+                if(data.data){
+                    if (data.data.error){
+                        if (data.data.error == 'no_activities'){
+                            setMensajeAdvertenciaDisplay(AdvertenciaNoActividades); 
+                        }
+                    }else{
+                        setCurrentActivity(data.data);
+                        setStarted(false);
+                    }
+                }
+                
             })
             .catch(err=> console.log(err));
         } 

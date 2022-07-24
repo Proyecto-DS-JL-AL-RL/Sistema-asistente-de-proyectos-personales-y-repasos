@@ -34,6 +34,8 @@ import ClearIcon from '@mui/icons-material/Clear';
 import nani from '../pages/img/menheranani.webp'
 import MensajeAdvertencia from './horario/MensajeAdvertencia';
 import { BACK_IP } from '../publicConstants';
+import { getPageCommandsForm } from '../speechMethods/tarjetasMethods';
+import { useSpeechRecognition } from 'react-speech-recognition';
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -141,7 +143,12 @@ export default function Mazos(props) {
   sx={{fontWeight:'bold', color:'white', '&:hover': {backgroundColor: '#00b347'}}}
   mazo.Tarjetas.length
   ``  
+  
 */
+
+  const commands = getPageCommandsForm({setTitulo,setDescripcion,setPregunta,setOpcion1,setOpcion2,setOpcion3,setOpcion4,setRespuesta});
+  const {listening } = useSpeechRecognition({commands:commands})
+
   return (
 
     <React.Fragment>
@@ -242,27 +249,27 @@ export default function Mazos(props) {
                                                   <TextField onChange={(e=>{
                                                     setPregunta(e.target.value)
                                                     
-                                                  })} sx={{py:'2%'}} id="outlined-basic" label="Pregunta" defaultValue= {pregunta} variant="outlined" />
+                                                  })} sx={{py:'2%'}} id="outlined-basic" label="Pregunta" defaultValue= {pregunta} value = {pregunta} variant="outlined" />
                                                   <TextField onChange={(e=>{
                                                     setOpcion1(e.target.value)
                                                     
-                                                  })} sx={{py:'2%'}} id="outlined-basic" label="Opción 1" defaultValue= {opcion1} variant="outlined" />
+                                                  })} sx={{py:'2%'}} id="outlined-basic" label="Opción 1" defaultValue= {opcion1} value = {opcion1} variant="outlined" />
                                                   <TextField  onChange={(e=>{
                                                     setOpcion2(e.target.value)
                                                     
-                                                  })}sx={{py:'2%'}} id="outlined-basic" label="Opción 2" defaultValue= {opcion2} variant="outlined" />
+                                                  })}sx={{py:'2%'}} id="outlined-basic" label="Opción 2" defaultValue= {opcion2} value = {opcion2} variant="outlined" />
                                                   <TextField  onChange={(e=>{
                                                     setOpcion3(e.target.value)
                                                     
-                                                  })} sx={{py:'2%'}} id="outlined-basic" label="Opción 3" defaultValue= {opcion3} variant="outlined" />
+                                                  })} sx={{py:'2%'}} id="outlined-basic" label="Opción 3" defaultValue= {opcion3} value = {opcion3} variant="outlined" />
                                                   <TextField onChange={(e=>{
                                                     setOpcion4(e.target.value)
                                                     
-                                                  })} sx={{py:'2%'}} id="outlined-basic" label="Opción 4" defaultValue= {opcion4} variant="outlined" />
+                                                  })} sx={{py:'2%'}} id="outlined-basic" label="Opción 4" defaultValue= {opcion4} value = {opcion4} variant="outlined" />
                                                   <TextField onChange={(e=>{
                                                     setRespuesta(e.target.value)
                                                     
-                                                  })} sx={{py:'2%'}} id="outlined-basic" label="Respuesta (poner el número de la  rpta e.g : 1 o 2 o ..)" defaultValue= {respuesta} variant="outlined" />
+                                                  })} sx={{py:'2%'}} id="outlined-basic" label="Respuesta (poner el número de la  rpta e.g : 1 o 2 o ..)" defaultValue= {respuesta} value = {respuesta} variant="outlined" />
                                           </FormControl>
                                         </Box>
                                         <Box  className="edit-mazo-button"  justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>
@@ -437,27 +444,27 @@ export default function Mazos(props) {
                                           <TextField   onChange={(e=>{
                                               setPregunta(e.target.value)
                                               
-                                            })} sx={{py:'2%'}} id="outlined-basic" label="Pregunta" defaultValue= {pregunta} variant="outlined" />
+                                            })} sx={{py:'2%'}} id="outlined-basic" label="Pregunta" defaultValue= {pregunta} value = {pregunta} variant="outlined" />
                                             <TextField onChange={(e=>{
                                               setOpcion1(e.target.value)
                                               
-                                            })} sx={{py:'2%'}} id="outlined-basic" label="Opción 1" defaultValue= {opcion1} variant="outlined" />
+                                            })} sx={{py:'2%'}} id="outlined-basic" label="Opción 1" defaultValue= {opcion1} value = {opcion1} variant="outlined" />
                                             <TextField  onChange={(e=>{
                                               setOpcion2(e.target.value)
                                               
-                                            })}sx={{py:'2%'}} id="outlined-basic" label="Opción 2" defaultValue= {opcion2} variant="outlined" />
+                                            })}sx={{py:'2%'}} id="outlined-basic" label="Opción 2" defaultValue= {opcion2} value = {opcion2} variant="outlined" />
                                             <TextField  onChange={(e=>{
                                               setOpcion3(e.target.value)
                                               
-                                            })} sx={{py:'2%'}} id="outlined-basic" label="Opción 3" defaultValue= {opcion3} variant="outlined" />
+                                            })} sx={{py:'2%'}} id="outlined-basic" label="Opción 3" defaultValue= {opcion3} value = {opcion3} variant="outlined" />
                                             <TextField onChange={(e=>{
                                               setOpcion4(e.target.value)
                                               
-                                            })} sx={{py:'2%'}} id="outlined-basic" label="Opción 4" defaultValue= {opcion4} variant="outlined" />
+                                            })} sx={{py:'2%'}} id="outlined-basic" label="Opción 4" defaultValue= {opcion4} value = {opcion4} variant="outlined" />
                                             <TextField onChange={(e=>{
                                               setRespuesta(e.target.value)
                                               
-                                            })} sx={{py:'2%'}} id="outlined-basic" label="Respuesta (poner el número de la  rpta e.g : 1 o 2 o ..)" defaultValue= {respuesta} variant="outlined" />
+                                            })} sx={{py:'2%'}} id="outlined-basic" label="Respuesta (poner el número de la  rpta e.g : 1 o 2 o ..)" defaultValue= {respuesta} value = {respuesta} variant="outlined" />
                                     </FormControl>
                                   </Box>
                                         <Box  className="edit-mazo-button" justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>

@@ -1,4 +1,4 @@
-import { Card, Grid, Typography,Button,Box } from '@mui/material';
+import { Card, Grid, Typography,Button,Box, IconButton } from '@mui/material';
 import React,{useState,useEffect,useContext} from 'react';
 import { useHistory } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux';
 import { changePage } from '../stores/sliceAyuda';
 import MensajeAdvertencia from '../components/horario/MensajeAdvertencia';
 import { BACK_IP } from '../publicConstants';
-
+import DeleteIcon from '@mui/icons-material/Delete';
 export default function ActivityQueue(params) {
     const dispatch = useDispatch();
     const { sessionState,currentState } = useContext( AccountContext );   
@@ -67,14 +67,26 @@ export default function ActivityQueue(params) {
         if (sub){            
             axios.get(BACK_IP+'/api/colaActividades/'+sub)
             .then((data)=>{
-                //console.log(data.data);
-                setActivities(data.data);
+                if (data.data)
+                    setActivities(data.data);
+                else
+                    setActivities([])
             })
             .catch(err=>console.log(err));
         }else{
             setActivities([]);
         }
     }
+
+    const handleDelete = async (idAct) =>{
+        if(idAct){
+            axios.delete(BACK_IP+'/api/colaActividades/deleteActividad/'+idAct)
+                .then(data=>{
+                    getActs();
+                }).catch(err=>console.log(err))
+        }
+    }
+
 
     const initCrearActividad = ()=>{setShowForm(true)};
     const handleBack = ()=>{
@@ -143,20 +155,27 @@ export default function ActivityQueue(params) {
                         :
                         <Typography sx = {{width:'300px'}}>.</Typography>}
                         
+                        <Typography sx = {{bgcolor:'#1DDDBE',width:'70px',borderRadius:'30px',textAlign :'center',fontWeight:'bold',display:'inline',color:'black'}}> Peso {act.Peso} </Typography>
+
+
                         {act.ProyectoAsociado?
                             <Typography sx ={{bgcolor:'orange',width:'300px',borderRadius:'30px',textAlign :'center',fontWeight:'bold',display:'inline'}} variant = 'h6'>
                                 {act.ProyectoTitulo}
                             </Typography>
                         :
                             <Typography sx = {{width:'300px'}}>.</Typography>}
-                    </Grid>                                   
+                        
+                    </Grid>  
+                    <Button variant = 'contained' color = 'error' sx = {{height:'22px',cursor : 'pointer'}} onClick = {()=>handleDelete(act._id)}>
+                        <DeleteIcon/>
+                    </Button>                                
                 </Card>
             </Grid>
         ))}
         </Grid>
         
         {showForm?
-        <ActividadForm close = {()=>setShowForm(false)} activities = {activities} setActivities = {setActivities} proyectList = {proyectList} />
+        <ActividadForm close = {()=>setShowForm(false)} activities = {activities} setActivities = {setActivities} proyectList = {proyectList} refresh = {getActs} />
         :null}
 
         <Box sx = {{left:'50%',top:'50%',marginLeft:'-250px',marginTop:'-5%',position:'absolute'}}>

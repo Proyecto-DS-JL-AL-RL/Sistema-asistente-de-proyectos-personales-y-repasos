@@ -24,9 +24,9 @@ router.get('/colaActividades/actividad/:id', async function (req, res){
     res.send(resp)
 })
 
-router.delete('/colaActividades/deleteActividad/:userSub', async function(req,res){
-    //await datUser.deleteUser(req.params.id);
-    //res.send('usuario eliminado')
+router.delete('/colaActividades/deleteActividad/:id', async function(req,res){
+    const resp = await datActividades.deleteActivity(req.params.id);
+    res.send(resp)
 });
 
 
