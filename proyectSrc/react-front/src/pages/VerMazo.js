@@ -99,14 +99,15 @@ const mazos = [
         const [titulo, setTitulo] = useState('')
         const [descripcion, setDescripcion] = useState('')
         const {sessionState} = useContext(AccountContext);
-        const [existMazos, setExistMazos] = useState(true)
+        const [existMazos, setExistMazos] = useState(false)
         const [idUsersub, setidUsersub] = useState('')
         useEffect(()=>{
           const {sub} = sessionState;
           if (sub){
             setidUsersub(sub)
             axios.get(BACK_IP+'/api/mazos/'+sub).then(function(response){            
-              if (response.data.length === 0){
+              
+              if(typeof(response.data) === "undefined" || response.data === null || response.data.length === 0){
                 setExistMazos(false)
               }else{
                 setExistMazos(true)
@@ -209,35 +210,37 @@ const mazos = [
                                                   <Tooltip title="Guardar" placement="left">
                                                     <Button onClick={()=>{
                                                             props.showAdd.setShowAnadir({card:false, icon:true})
-                                                              axios.post(BACK_IP+'/api/mazos/', 
-                                                              {
-                                                                  "userSub":idUsersub,
-                                                                  "Titulo": titulo,
-                                                                  "Descripcion":descripcion,
-                                                                  "Tarjetas": [{"Pregunta":"",
-                                                                                "Opciones":[],
-                                                                                "Respuesta": 0,
-                                                                                "Puntos":0}],
-                                                                  "Puntos":0
-                                                              })
-                                                              setExistMazos(true)
-                                                              if (mazos.length===0){
-                                                                window.location.reload(false);
-                                                              }else{
-                                                                mazos.push({
-                                                                      "userSub":idUsersub,
-                                                                      "Titulo": titulo,
-                                                                      "Descripcion":descripcion,
-                                                                      "Tarjetas": [{"Pregunta":"",
-                                                                                    "Opciones":[],
-                                                                                    "Respuesta": 0,
-                                                                                    "Puntos":0}],
-                                                                      "Puntos":0
-                                                                  })
-                                                                setMazos(mazos)
-                                                                setTitulo("")
-                                                                setDescripcion("")
+                                                              if(mazos!== null){
+                                                                axios.post(BACK_IP+'/api/mazos/', 
+                                                                {
+                                                                    "userSub":idUsersub,
+                                                                    "Titulo": titulo,
+                                                                    "Descripcion":descripcion,
+                                                                    "Tarjetas": [{"Pregunta":"",
+                                                                                  "Opciones":[],
+                                                                                  "Respuesta": 0,
+                                                                                  "Puntos":0}],
+                                                                    "Puntos":0
+                                                                })
+                                                                setExistMazos(true)
+                                                                if (mazos.length===0){
+                                                                  window.location.reload(false);
+                                                                }else{
+                                                                  mazos.push({
+                                                                        "userSub":idUsersub,
+                                                                        "Titulo": titulo,
+                                                                        "Descripcion":descripcion,
+                                                                        "Tarjetas": [{"Pregunta":"",
+                                                                                      "Opciones":[],
+                                                                                      "Respuesta": 0,
+                                                                                      "Puntos":0}],
+                                                                        "Puntos":0
+                                                                    })
+                                                                  setMazos(mazos)
+                                                                  setTitulo("")
+                                                                  setDescripcion("")
                                                               }
+                                                            }
                                                             }} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
                                                       <SaveIcon sx={{p:1}}/>
                                                     </Button>

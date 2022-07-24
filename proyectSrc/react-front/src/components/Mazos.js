@@ -92,11 +92,11 @@ export default function Mazos(props) {
   const [mensajeAdvertenciaDisplay, setMensajeAdvertenciaDisplay] = useState(null)
 
 
-  const deletecard = (newMazo) =>{
+  const deletecard = (newMazo, tarjetaIndex) =>{
                       //console.log(mazo)
                       newMazo.Tarjetas.splice(tarjetaIndex, 1);
                       setMazo(newMazo.Tarjetas)
-                      axios.put(BACK_IP+'/api/mazos/'+mazo._id, {"Tarjetas":newMazo.Tarjetas})
+                      axios.put(BACK_IP+'/api/mazos/'+newMazo._id, {"Tarjetas":newMazo.Tarjetas})
   }
 
   const deleteMazo = (newMazos, mazo, idx) =>{
@@ -583,7 +583,6 @@ export default function Mazos(props) {
                               <IconButton onClick={()=>{
                                   setIndexMazo(idx)
                                   setMazo(mazo)
-                                  console.log(idx)
                                   return setMensajeAdvertenciaDisplay( <MensajeAdvertencia
                                     visible={setMensajeAdvertenciaDisplay}
                                     content={"¿Deseas borrar el mazo #"+(idx+1)+"?"}
@@ -638,14 +637,29 @@ export default function Mazos(props) {
                                               
                                               setTarjetaIndex(idx)
                                               setMazo(mazo)
-                                              return setMensajeAdvertenciaDisplay(AdvertenciaTarjeta)
+                                              return setMensajeAdvertenciaDisplay( <MensajeAdvertencia
+                                                visible={setMensajeAdvertenciaDisplay}
+                                                content={"¿Deseas borrar la tarjeta #"+(idx+1)+"?"}
+                                                imgContent={nani}
+                                                comentario={<>
+                                                  <div className='advertencia-buttons-container'>
+                                                              <button className='btn-advertencia-ok' onClick={()=>{
+                                                               deletecard(mazo,idx)
+                                                               setMensajeAdvertenciaDisplay(null)
+                                                              }}
+                                                              >Si</button>
+                                                              <button className='btn-advertencia-no' 
+                                                              onClick={()=>{setMensajeAdvertenciaDisplay(null)}}>No</button>
+                                                          </div>
+                                                </>}
+                                              />)
                                             }}  sx={{color:'white',  '&:hover': {backgroundColor: '#00b347', color:'black'}}} aria-label="comment">
                                                 <DeleteIcon />
                                             </IconButton>
                                       </React.Fragment>
                                     }
                                   >
-                                    <ListItemButton sx={{fontWeight:'bold', color:'white', '&:hover': {backgroundColor: '#00b347', color:'black'}}}>                                  
+                                    <ListItemButton disabled={true} sx={{fontWeight:'bold', color:'white'}}>                                  
                                         <ListItemText primary={`${(idx+1)+' '+value.Pregunta}`} />
                                     </ListItemButton>
                                   </ListItem>
