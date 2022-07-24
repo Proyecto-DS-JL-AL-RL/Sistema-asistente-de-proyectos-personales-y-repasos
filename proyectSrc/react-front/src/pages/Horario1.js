@@ -21,7 +21,7 @@ import  {getIniHorarioConfig}  from '../stores/sliceConfigHorario';
 
 import * as ReactDOMServer from 'react-dom/server';
 import { AccountContext } from '../AccountContext';
-
+import { BACK_IP } from '../publicConstants';
 import axios from 'axios';
 import AyudaInical from '../components/Ayuda/AyudaInical';
 
@@ -116,7 +116,7 @@ const actualizarHorarioConfigRequest = async(config,sub) =>{
         body: content,
         redirect: 'follow'
     }
-    const res = await fetch(`http://localhost:4000/api/horarioconfig/${sub}`,requestOptions);
+    const res = await fetch(`${BACK_IP}/api/horarioconfig/${sub}`,requestOptions);
     return res;
 
 }

@@ -88,19 +88,16 @@ export default function AppBarSearch(props) {
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
             {ayuda.title}
-            {sessionState.nickname}
+
           </Typography>
           <Search>
-            <Button onClick = {()=>{logout()}}>
-              logout
-            </Button>
 
 
             <IconButton
               color="inherit"
-              
+              onClick={handleAyuda}
             >
-              <QuestionMarkRoundedIcon onClick={handleAyuda}
+              <QuestionMarkRoundedIcon 
                  sx={{color:'white', 
                  background:'green',fontSize:'2em',
                   p:1,borderRadius:50}}/> 
@@ -109,26 +106,24 @@ export default function AppBarSearch(props) {
 
             <IconButton
               color="inherit"
-              
+              onClick={()=>{props.ClickButton.listen()}} 
             >        
               {listening?
                 <MicIcon sx={{p:1, borderRadius:50, background:'blue',
                 color:'white',fontSize:'2em' }}
-                onClick={()=>{props.ClickButton.listen()}} 
                 />
                 :
                 <MicIcon sx={{p:1, borderRadius:50, background:'red',
-                color:'white', fontSize:'2em' }}
-                onClick={()=>{props.ClickButton.listen()}} 
+                color:'white', fontSize:'2em' }}                
                 />
               }
             </IconButton>
             {props.stateButton.showAnadir.icon?<IconButton
               color="inherit"
-              
+              onClick={()=>{
+                props.ClickButton.setShowAnadir({card:true, icon:true})}}
             >        
-              <AddIcon mx={2} onClick={()=>{
-                props.ClickButton.setShowAnadir({card:true, icon:true})}} sx={{ fontSize:'1.5em' , background:'purple', color:'white', p:1, borderRadius:50, '&:hover': {backgroundColor: '#6f2da8'}}}/>
+              <AddIcon mx={2}  sx={{ fontSize:'2em' , background:'purple', color:'white', p:1, borderRadius:50, '&:hover': {backgroundColor: '#6f2da8'}}}/>
             </IconButton>:null}
           </Search>
         </Toolbar>

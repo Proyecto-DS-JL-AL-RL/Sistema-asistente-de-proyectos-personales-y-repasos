@@ -1,4 +1,4 @@
-import { Card, Grid, Typography,Button } from '@mui/material';
+import { Card, Grid, Typography,Button,Box } from '@mui/material';
 import React,{useState,useEffect,useContext} from 'react';
 import { useHistory } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
@@ -7,26 +7,54 @@ import { AccountContext } from '../AccountContext';
 import { useSpeechRecognition } from 'react-speech-recognition';
 import { getCommandsPage } from '../speechMethods/actividadesMethods';
 import axios from 'axios';
+import  ReactDOMServer from 'react-dom/server';
+import { useDispatch } from 'react-redux';
+import { changePage } from '../stores/sliceAyuda';
+import MensajeAdvertencia from '../components/horario/MensajeAdvertencia';
+import { BACK_IP } from '../publicConstants';
 
 export default function ActivityQueue(params) {
+    const dispatch = useDispatch();
     const { sessionState,currentState } = useContext( AccountContext );   
     const history = useHistory();
 
     const [activities,setActivities]     = useState([]);    
     const [showForm,setShowForm]         = useState(false);
     const [proyectList,setProyectList]   = useState([]);
+    const [mensajeAdvertenciaDisplay,setMensajeAdvertenciaDisplay] = useState(null);
+
+    const AdvertenciaNoInit = () =>{
+        return <MensajeAdvertencia 
+        visible={setMensajeAdvertenciaDisplay}
+        content={"Usuario no inicializado"}
+        comentario={<>
+                Parece que hubo un problema al momento de preparar la bienvenida a su usuario. Estamos trabajando en ello. Pruebe recargar la página. O vuelva en un rato.
+                <button className='btn-advertencia-ok' onClick={()=>{setMensajeAdvertenciaDisplay(null)}}>
+                    ok
+                </button>
+                </>}
+        />
+      }
 
     const getProyects = async()=>{
         const {sub} = sessionState;
         const {BaseProyect} = currentState;
         if (sub && BaseProyect){
-            axios.get('http://localhost:4000/api/Proyectos/Nombres/'+sub)
+            axios.get(BACK_IP+'/api/Proyectos/Nombres/'+sub)
                 .then(data=>{
                     if (data.data){
-                        const arr = data.data.filter((value,ind,arr) => (BaseProyect!=value._id));
-                        //console.log(data.data);
-                        //console.log(arr);
-                        setProyectList(arr);
+                        if (data.data.error){
+                            //console.log(data.data)
+                            if(data.data.error == 'no_init'){
+                                setMensajeAdvertenciaDisplay(AdvertenciaNoInit);
+                            }
+                            setProyectList([]);
+                        }else{
+                            const arr = data.data.filter((value,ind,arr) => (BaseProyect!=value._id));
+                            //console.log(data.data);
+                            //console.log(arr);
+                            setProyectList(arr);
+                        }
                     }
                 }).catch(err=>console.log(err));
         }
@@ -37,7 +65,7 @@ export default function ActivityQueue(params) {
         const {sub} = sessionState;
         //console.log(sub);
         if (sub){            
-            axios.get('http://localhost:4000/api/colaActividades/'+sub)
+            axios.get(BACK_IP+'/api/colaActividades/'+sub)
             .then((data)=>{
                 //console.log(data.data);
                 setActivities(data.data);
@@ -66,6 +94,26 @@ export default function ActivityQueue(params) {
         getProyects(); 
     },[sessionState,currentState]);
 
+    useEffect (()=>{                
+        const aa = <div className='sugerencia-contenido'>
+        <div className='sugenrencia-contenido-img'>
+        
+            <img  src='./Sugerencia.jpg'/>
+            <div>Cola de actividades</div>
+        </div>
+        <div className='sugerencia-contenido-descripcion'>
+            Estan son las actividades que puedes recibir por "Dame algo que hacer" 
+            <div className='sugerencia-descripcion'>
+                Puedes definir tus actividades con Pesos, lo cual indica que tan importante es. Sera asi más probable que te toque dicha actividad. 
+            </div>
+            <div className='sugerencia-descripcion'>
+                Puedes asociar una actividad a un proyecto, si no lo haces tus puntos iran a tu proyecto Base.  
+            </div>
+        </div>
+    </div>
+    const component=ReactDOMServer.renderToString(aa);
+        dispatch(changePage({content:component,title:"Cola de Actividades"}));
+    },[]);
     return(
     <React.Fragment>
         <Grid container direction = 'row' columnGap={2} alignItems='center'>
@@ -110,6 +158,11 @@ export default function ActivityQueue(params) {
         {showForm?
         <ActividadForm close = {()=>setShowForm(false)} activities = {activities} setActivities = {setActivities} proyectList = {proyectList} />
         :null}
+
+        <Box sx = {{left:'50%',top:'50%',marginLeft:'-250px',marginTop:'-5%',position:'absolute'}}>
+            {mensajeAdvertenciaDisplay}                 
+        </Box>
+
     </React.Fragment>
     );
 }

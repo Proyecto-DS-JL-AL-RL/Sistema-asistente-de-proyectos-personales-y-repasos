@@ -1,9 +1,9 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 import { temaChangeCSS } from "../components/horario/utilsHorario";
-
+import { BACK_IP } from "../publicConstants";
 
 export const getIniHorarioConfig = createAsyncThunk('configHorario/getIniHorario', async (sub)=>{
-    const response= await fetch(`http://localhost:4000/api/horarioInit/${sub}`);
+    const response= await fetch(`${BACK_IP}/api/horarioInit/${sub}`);
     const rpta = await response.json();
     const {intervalo,sobrescribir, intervaloDefault,tema}=rpta.config;
     temaChangeCSS(tema);

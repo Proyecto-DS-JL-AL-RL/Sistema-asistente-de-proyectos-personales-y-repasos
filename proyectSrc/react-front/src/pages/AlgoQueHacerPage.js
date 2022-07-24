@@ -7,18 +7,41 @@ import {parseUrlFromKey,uploadFile} from '../S3methods';
 import { useHistory } from 'react-router-dom';
 import { useSpeechRecognition } from 'react-speech-recognition';
 import {getCommandsPage} from '../speechMethods/algoQueHacerMethods'
+import MensajeAdvertencia from '../components/horario/MensajeAdvertencia'
+import { Box } from '@mui/material';
+import  ReactDOMServer from 'react-dom/server';
+import { useDispatch } from 'react-redux';
+import { changePage } from '../stores/sliceAyuda';
+import { BACK_IP } from '../publicConstants';
 
 export default function AlgoQueHacerPage(){
+    const dispatch = useDispatch();
     const history = useHistory();
+    const [mensajeAdvertenciaDisplay,setMensajeAdvertenciaDisplay] = useState(null);
     const {sessionState,currentState,setCurrentState} = useContext(AccountContext);
     const [doingSomething,setDoingSomething]    = useState(false);    
     const [currentActivity,setCurrentActivity]  = useState(null);
     const [started,setStarted]                  = useState(false);
     const [evidencia,setEvidencia]              = useState(null);
 
+
+    const AdvertenciaFinalizar = () =>{
+        return <MensajeAdvertencia 
+        visible={setMensajeAdvertenciaDisplay}
+        content={"Actividad completada"}
+        imgContent={"./bienImage.jpg"}
+        comentario={<>
+                Se te ha agregado {currentActivity?.Puntos} puntos a {currentActivity?.ProyectoTitulo||"Tu proyecto Personal"}
+                <button className='btn-advertencia-ok' onClick={()=>{setMensajeAdvertenciaDisplay(null)}}>
+                    ok
+                </button>
+                </>}
+        />
+    }
+
     const checkSession = async () => {
         if (currentState.ActividadActual){
-            axios.get('http://localhost:4000/api/colaActividades/actividad/'+currentState.ActividadActual)
+            axios.get(BACK_IP+'/api/colaActividades/actividad/'+currentState.ActividadActual)
                 .then(data=>{
                     const activity = data.data;
                     setStarted(true);
@@ -31,7 +54,7 @@ export default function AlgoQueHacerPage(){
         const {sub} = sessionState;
         if (currentActivity){
             const body = {userSub:sub,activity:currentActivity._id}
-            axios.post('http://localhost:4000/api/state/setActivity',body)
+            axios.post(BACK_IP+'/api/state/setActivity',body)
                 .then((data)=>{
                     console.log(data.data);
                     setCurrentState({...currentState,ActividadActual: currentActivity._id });
@@ -57,13 +80,17 @@ export default function AlgoQueHacerPage(){
                     RefTitle = "Dirección URL";
                 }
             }            
+                
             const evidenceBody = {tipo,UrlRef,RefTitle}
             const body = {activity: currentActivity, evidenceBody:evidenceBody };
-            axios.post('http://localhost:4000/api/state/endActivity',body)
+            axios.post(BACK_IP+'/api/state/endActivity',body)
                 .then((data)=>{
                     console.log(data.data);
-                    setCurrentState({...currentState,ActividadActual: null });             
+                    setCurrentState({...currentState,ActividadActual: null }); 
+                    setMensajeAdvertenciaDisplay(AdvertenciaFinalizar);            
                     setCurrentActivity(null);
+                    setStarted(false);
+                    setEvidencia(null);
                 }).catch(err=>console.log(err));
         }    
     }
@@ -72,7 +99,7 @@ export default function AlgoQueHacerPage(){
         if (currentActivity ||started)  return;
         const {sub} = sessionState;
         if (sub){
-            axios.get('http://localhost:4000/api/colaActividades/getActividad/'+sub)
+            axios.get(BACK_IP+'/api/colaActividades/getActividad/'+sub)
             .then((data)=>{
                 setCurrentActivity(data.data);
                 setStarted(false);
@@ -100,6 +127,23 @@ export default function AlgoQueHacerPage(){
     useEffect(()=>{setDoingSomething(!(currentActivity==null)); },[currentActivity]);
     useEffect(()=>{checkSession();},[currentState]);
 
+    useEffect (()=>{                
+        const aa = <div className='sugerencia-contenido'>
+        <div className='sugenrencia-contenido-img'>
+        
+            <img  src='./Sugerencia.jpg'/>
+            <div>Sugerencia</div>
+        </div>
+        <div className='sugerencia-contenido-descripcion'>
+            Aca podrás obtener una actividad aleatoria a realizar. 
+            <div className='sugerencia-descripcion'>
+                Si es tu primera vez aqui entre a cola de actividades para agregar actividades.
+            </div>
+        </div>
+    </div>
+    const component=ReactDOMServer.renderToString(aa);
+        dispatch(changePage({content:component,title:"Dame algo que hacer"}));
+    },[]);
 
     return (
         <React.Fragment>
@@ -116,6 +160,9 @@ export default function AlgoQueHacerPage(){
                 <AlgoQueHacer       giveAnActivity   = {giveAnActivity}    
                                     />
             }
+            <Box sx = {{left:'50%',top:'50%',marginLeft:'-250px',marginTop:'-5%',position:'absolute'}}>
+            {mensajeAdvertenciaDisplay}                 
+            </Box>
         </React.Fragment>
     );
 }

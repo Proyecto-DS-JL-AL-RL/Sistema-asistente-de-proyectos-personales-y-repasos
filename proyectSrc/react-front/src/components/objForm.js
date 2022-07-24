@@ -2,19 +2,35 @@ import React,{useEffect, useState,useContext} from 'react';
 import { AccountContext } from '../AccountContext';
 import {Button, Card, Grid, TextField, Typography,Box,Slider} from '@mui/material';
 import axios from 'axios';
-
+import MensajeAdvertencia from './horario/MensajeAdvertencia';
+import { getAgregarComands } from '../speechMethods/projectSpecific';
+import { useSpeechRecognition } from 'react-speech-recognition';
 
 export default function ObjetivoForm(props){
+    const [mensajeAdvertenciaDisplay,setMensajeAdvertenciaDisplay] = useState(null);
     const {sessionState} = useContext(AccountContext);
     const [titulo,setTitulo] = useState('');
     const [descripcion,setDescripcion] = useState('');
     const [peso,setPeso] = useState(4);
+    const [puntero,setPuntero] = useState(null);
 
+    const AdvertenciaT = () =>{
+        return <MensajeAdvertencia 
+        visible={setMensajeAdvertenciaDisplay}
+        content={"Parece que su Nuevo Pendiente no tiene un Titulo"}
+        comentario={<>
+                Debe ponerle un Titulo a su pendiente para poder identificarlo.
+                <button className='btn-advertencia-ok' onClick={()=>{setMensajeAdvertenciaDisplay(null)}}>
+                    ok
+                </button>
+                </>}
+        />
+    }
     const agregarActividad = async ()=>{
         const {sub} = sessionState;
         if (sub){
             if (titulo == ''){
-                alert('Ponga un titulo');
+                setMensajeAdvertenciaDisplay(AdvertenciaT);
                 return;
             }
     
@@ -37,11 +53,26 @@ export default function ObjetivoForm(props){
                 .catch(err=>console.log(err));           
         }
     }
+    const setPunteroPage     = (puntero)=>setPuntero(puntero);
+    const setPesosAudio      = (peso_)  =>setPeso(peso_);
 
+    const commands = getAgregarComands({setPunteroPage,setPesosAudio,agregarActividad});
+    const {listening,transcript,finalTranscript,resetTranscript} = useSpeechRecognition({commands:commands});
+
+    const setDictionary = {
+        "título":setTitulo,
+        "descripción":setDescripcion
+    }
+    useEffect(()=>{
+        if(puntero && listening){
+            resetTranscript();
+            setDictionary[puntero](finalTranscript);
+        }
+    },[finalTranscript]);
 
     return(
         <React.Fragment>
-            <Card sx = {{width:'40%',height:'60%', position:'absolute',top:'25%',left:'30%',border :'solid',borderColor:'black',padding:'20px'}}>
+            <Card sx = {{width:'40%',height:'60%', position:'absolute',top:'25%',left:'30%',border :'solid',borderColor:'black',padding:'20px',overflowY:'auto'}}>
                 <Button onClick = {props.close} variant = 'contained' sx = {{bgcolor :'red',left:'94%'}} >X</Button>
                 
                 <Typography variant = 'h4'>
@@ -49,6 +80,10 @@ export default function ObjetivoForm(props){
                 </Typography>
 
                 <Grid container direction = 'column' sx = {{width:'80%',marginLeft:'10%',marginTop:'70px'}} rowGap = {3} alignItems = 'center'>
+                    {puntero?
+                    <Typography variant = 'h6'>Escribiendo: {puntero}</Typography>
+                    :
+                    null}
                     <TextField label="Titulo" value = {titulo} sx = {{width : '100%'}} onChange = {(e)=>{setTitulo(e.target.value)}}>
                         asd
                     </TextField>
@@ -78,6 +113,9 @@ export default function ObjetivoForm(props){
                     </Button>
                 </Grid>
             </Card>
+            <Box sx = {{left:'50%',top:'50%',marginLeft:'-250px',marginTop:'-5%',position:'absolute'}}>
+            {mensajeAdvertenciaDisplay}                 
+            </Box>
         </React.Fragment>
     );
 }

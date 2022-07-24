@@ -9,7 +9,7 @@ var getUsers = async function (){
 }
 
 var getUsersID = async function (id){
-    var response = await User.findById(id).catch(err=> console.log(err));
+    var response = await User.findById(id).catch(err=> console.log(err));    
     return response;
 }
 

@@ -10,8 +10,8 @@ router.get('/horario', async (req,res)=>{
 })
 //Iniciar Horario
 router.get('/horarioInit/:id',async (req,res)=>{
-    const uss = await User.find({userSub:req.params.id}).catch(err =>console.log(err));
-    if(uss.length>0){
+    //const uss = await User.find({userSub:req.params.id}).catch(err =>console.log(err));
+    //if(uss.length>0){
         const response = await Horario.findOne({userSub:req.params.id}).populate("config").catch(err =>console.log(err));
         if(response){
             res.json(response);
@@ -22,10 +22,10 @@ router.get('/horarioInit/:id',async (req,res)=>{
             await newConfig.save();
             res.json(newHorario);
         }
-    }
-    else{
-        res.json({error:"No existe un usuario con dicho id"});
-    }
+    //}
+    //else{
+    //   res.json({error:"No existe un usuario con dicho id"});
+    //}
     
     //return;
     //const res = await Horario.find({"UserSub":req.params.id}).catch(err =>console.log(err));

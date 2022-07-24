@@ -33,9 +33,10 @@ function ItemButttonBar(props){
 }
 
 function LoggoutButttonBar(props){
+  const history = useHistory();
   const {logout} = useContext(AccountContext);;
   return (
-    <ListItemButton sx={{backgroundColor:'rgba(255,255,255,0.1)',mb:"3px"}} onClick={logout}>
+    <ListItemButton sx={{backgroundColor:'rgba(255,255,255,0.1)',mb:"3px"}} onClick={()=>{logout();history.push('/')}}>
       <ListItemIcon>
         <LogoutIcon sx={{color:'white', borderBottom:'solid 1px white'}}/>
       </ListItemIcon>

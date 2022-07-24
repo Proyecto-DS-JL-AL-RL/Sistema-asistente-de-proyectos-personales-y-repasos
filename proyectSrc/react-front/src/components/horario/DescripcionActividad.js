@@ -23,7 +23,7 @@ import MensajeAdvertencia from './MensajeAdvertencia';
 import { restoreValueConfig } from '../../stores/sliceConfigHorario';
 import SR,{ useSpeechRecognition } from 'react-speech-recognition';
 import { getDescCommands } from '../../speechMethods/horarioMethods';
-
+import { BACK_IP } from '../../publicConstants';
 
 
 
@@ -109,6 +109,7 @@ const actualizarHorarioRequest = async(newHorario,sub) =>{
         body: content,
         redirect: 'follow'
     }
+
 
     const res = await fetch(`${BACK_IP}/api/horario/${sub}`,requestOptions);
 
@@ -449,7 +450,7 @@ export default function DescripcionActividad(props) {
     useEffect(()=>{
         if (puntero in setDictionary)
             if(puntero && listening){
-                alert("|"+puntero+"|");
+                //alert("|"+puntero+"|");
                 resetTranscript();
                 setDictionary[puntero](finalTranscript);
             }
@@ -480,6 +481,13 @@ export default function DescripcionActividad(props) {
         autoComplete="off"
         >
         <div width={"100%"}>
+            {puntero?
+            <Typography variant = 'h6' sx = {{width:'100%',textAlign:'center'}}>
+                Escribiendo en : {puntero}
+            </Typography>
+            :
+            null}
+
             <TextField
             required
             className='text-entrain'

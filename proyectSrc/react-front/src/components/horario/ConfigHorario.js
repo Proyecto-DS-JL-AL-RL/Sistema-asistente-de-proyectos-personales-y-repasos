@@ -11,7 +11,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import ConstructionIcon from '@mui/icons-material/Construction';
 import MicIcon from '@mui/icons-material/Mic';
 import { setMensaje } from '../../stores/sliceMensajesCortos';
-
+import {BACK_IP}  from '../../publicConstants';
 //const stateButton2String =  (state) =>{
 //    const stringState = ['Editar','Crear','Guardar'];
 //    return stringState[state];
@@ -34,7 +34,7 @@ function valuetext(value) {
         body: content,
         redirect: 'follow'
     }
-    const res = await fetch(`http://localhost:4000/api/horarioconfig/${sub}`,requestOptions);
+    const res = await fetch(`${BACK_IP}/api/horarioconfig/${sub}`,requestOptions);
     return res;
 
 }

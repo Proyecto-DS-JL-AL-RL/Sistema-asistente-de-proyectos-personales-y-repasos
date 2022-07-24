@@ -28,7 +28,7 @@ export default function AddProyect(props) {
                 }} />
             </Box>
             <Typography sx={{fontSize:'1.5em'}}>
-            Mas Proyectos
+              Agregar Proyecto
             </Typography>
         
     </Box>

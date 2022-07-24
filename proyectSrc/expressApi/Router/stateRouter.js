@@ -4,8 +4,9 @@ const express = require("express")
 const router = express.Router();
 
 
-router.get('/state/:userSub', async function(req,res){
-    const resp = await datState.getState(req.params.userSub);
+router.get('/state/:userSub/:userNickname', async function(req,res){
+    console.log('BODY:',req.body);
+    const resp = await datState.getState(req.params.userSub,req.params.userNickname);
     res.json(resp);
 });
 
@@ -19,7 +20,9 @@ router.post('/state/endActivity',async function(req,res){
     res.json(resp);
 });
 
-
-
+router.post('/state/sumPuntos',async function(req,res){
+    let resp = await datState.agregarPuntos(req.body);
+    res.json(resp);
+});
 
 module.exports = router;

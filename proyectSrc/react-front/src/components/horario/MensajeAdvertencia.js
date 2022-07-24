@@ -14,7 +14,7 @@ export default function MensajeAdvertencia(props) {
             </div>
         </div>
         <div className='mensaje-advertencia-personaje'>
-            <img src={props.imgContent ||'./badImage.jpg'}/>
+            <img src={props.imgContent ||'./badimage.jpg'}/>
         </div>
         <div className='mensaje-advertencia-comentario'>
             {props.comentario || 

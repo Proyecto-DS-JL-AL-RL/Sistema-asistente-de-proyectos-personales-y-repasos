@@ -2,9 +2,9 @@ import { numerosDict,backExpresions,confirmExpresions } from "./constants";
 
 const getCommandsPage = (methods) =>{
     const comando = [{
-        command: ["Crear una actividad(.)","Agregar una actividad(.)","Agregar(.)"],
+        command: ["Crear una Pendiente(.)","Agregar una Pendiente(.)","Agregar(.)"],
         callback: (frase) =>{
-            methods.initCrearActividad();
+            methods.initCrearPendiente();
         },
         isFuzzyMatch: true,
         fuzzyMatchingThreshold: 0.85  
@@ -42,16 +42,7 @@ const getAgregarComands = (methods) =>{
         fuzzyMatchingThreshold: 0.8        
      },
      {
-        command: backExpresions,
-        callback: (frase)=>{
-            methods.handleBack();
-        },
-        isFuzzyMatch: true,
-        fuzzyMatchingThreshold: 0.8,
-        bestMatchOnly:true     
-     },
-     {
-        command: ["(El) Peso *(.)","(Los) Pesos *(.)"],
+        command: ["(El) Peso *(.)","(Los) Pesos *(.)","(La) Importancia *(.)","(Las) Importancias *(.)"],
         callback: (frase)=>{
             methods.setPunteroPage(null);
             let peso = 4;
@@ -70,32 +61,6 @@ const getAgregarComands = (methods) =>{
         }
      },
      {
-        command: ["Agregar Proyecto","Asociar Proyecto"],
-        callback: (frase)=>{
-            methods.setPunteroPage(null);
-            methods.setAgregarProyecto(true);
-        },
-        isFuzzyMatch: true,
-        fuzzyMatchingThreshold: 0.8,
-        bestMatchOnly:true
-     },
-     {
-        command: ["(El) Proyecto *(.)"],
-        callback: (frase)=>{
-            methods.setPunteroPage(null);
-            let idP = -1;
-            const numeroString = frase.toLowerCase();
-            if (isNaN(parseInt(numeroString))){
-                if(numeroString in numerosDict)
-                    idP = numerosDict[numeroString];
-            }else{
-                idP = parseInt(frase.toLowerCase());
-            }  
-            //lert(idP)
-            methods.setProyectoAsociado(idP);
-        },
-     },
-     {
         command: [...confirmExpresions,"Agregar(.)"],
         callback: (frase)=>{
             methods.setPunteroPage(null);
@@ -104,27 +69,7 @@ const getAgregarComands = (methods) =>{
         isFuzzyMatch: true,
         fuzzyMatchingThreshold: 0.85,
         bestMatchOnly:true
-     },
-     {
-        command: ["Evidencias Obligatorias(.)","Con evidencias(.)"],
-        callback: (frase)=>{
-            methods.setPunteroPage(null);
-            methods.setBlocked(true);
-        },
-        isFuzzyMatch: true,
-        fuzzyMatchingThreshold: 0.85,
-        bestMatchOnly:true
-     },
-     {
-        command: ["Sin Evidencias Obligatorias(.)","Sin evidencias(.)","Quitar evidencias(.)","Evidencia Opcional(.)"],
-        callback: (frase)=>{
-            methods.setPunteroPage(null);
-            methods.setBlocked(false);
-        },
-        isFuzzyMatch: true,
-        fuzzyMatchingThreshold: 0.85,
-        bestMatchOnly:true
-     },
+     }
     ]
     return comando;
 }

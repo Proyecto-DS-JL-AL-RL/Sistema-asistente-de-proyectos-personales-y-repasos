@@ -4,6 +4,10 @@ import { AccountContext } from '../AccountContext';
 import axios from 'axios';
 import { useSpeechRecognition } from 'react-speech-recognition';
 import { getAgregarComands } from '../speechMethods/actividadesMethods';
+import MensajeAdvertencia from './horario/MensajeAdvertencia';
+import { BACK_IP } from '../publicConstants';
+
+
 
 export default function ActividadForm(props){
     const [titulo,setTitulo] = useState('');
@@ -15,17 +19,32 @@ export default function ActividadForm(props){
     const [currProyect,setCurrProyect] = useState(null);
     const { sessionState } = useContext(AccountContext);
     const [puntero,setPuntero] = useState(null);
+    const [mensajeAdvertenciaDisplay,setMensajeAdvertenciaDisplay] = useState(null);
+    
+
+    const actividadSinNombrePaper = () =>{
+        return <MensajeAdvertencia 
+        visible={setMensajeAdvertenciaDisplay}
+        content={"Al parecer tu actividad no tiene un nombre."}
+        comentario={<>
+                Debes colocar un titulo a tu actividad, la descripción es opcional
+                <button className='btn-advertencia-ok' onClick={()=>{setMensajeAdvertenciaDisplay(null)}}>
+                    ok
+                </button>
+                </>}
+        />
+    }
 
     const agregarActividad = async ()=>{
         if (titulo == ''){
-            alert('Ponga un titulo');
-            return;
+                setMensajeAdvertenciaDisplay(actividadSinNombrePaper);
+                return;
         }
         
         const {sub} = sessionState;
         const p = currProyect||{titulo:null,id:null};
-        const tituloProyect = p.titulo;
-        const proyectId = p.id;
+        const tituloProyect = p.Titulo;
+        const proyectId = p._id;
 
         const Item = {
             "UserSub": sub,
@@ -37,18 +56,18 @@ export default function ActividadForm(props){
             "ProyectoTitulo":tituloProyect
           };
 
-        axios.post('http://localhost:4000/api/colaActividades/addActividad',Item)
+        axios.post(BACK_IP+'/api/colaActividades/addActividad',Item)
             .then(data=>{
-                console.log(data);
+                //console.log(data);
             })
             .catch(err=>console.log(err));  
 
-        console.log(Item);
+        //console.log('agregado',Item);
         props.setActivities([...props.activities,Item])
         props.close();
     }
     const establecerProyecto = (proyecto)=>{
-        //console.log(proyecto);
+        //console.log('proyproy',proyecto);
         setCurrProyect(proyecto);
         setSelectingProyect(false);
     }
@@ -60,7 +79,7 @@ export default function ActividadForm(props){
     const setProyectoAsociado= (idPro)  =>{
         if (selectingProyect) {
             //console.log(idPro);
-            if (idPro > 0 && idPro < proyectos.length){                
+            if (idPro >= 0 && idPro < proyectos.length){                
                 establecerProyecto(proyectos[idPro]);
             }            
         }
@@ -95,7 +114,7 @@ export default function ActividadForm(props){
 
     return(
         <React.Fragment>
-            <Card sx = {{width:'40%',height:'60%',maxHeight:'650px', position:'absolute',top:'25%',left:'30%',border :'solid',borderColor:'black',padding:'20px', overflowY:'auto'}}>
+            <Card sx = {{width:'40%',minHeight:'60%',maxHeight:'700px', position:'absolute',top:'25%',left:'30%',border :'solid',borderColor:'black',padding:'20px', overflowY:'auto'}}>
                 <Button onClick = {props.close} variant = 'contained' sx = {{bgcolor :'red',left:'88%'}} >X</Button>
                 
                 <Typography variant = 'h4'>
@@ -193,15 +212,15 @@ export default function ActividadForm(props){
                 :null}
 
                 {proyectos.map((p,idx)=>(
-                    <Grid container sx = {{width:'100%' , ":hover":{
+                    <Grid key = {idx} container sx = {{width:'100%' , ":hover":{
                         bgcolor:'#1DB5BE' ,cursor:'pointer'
                     }}} alignItems ='center' direction = 'row' 
                         onClick = {()=>{establecerProyecto(p)}}
                     >
-                        <Typography variant= 'h4' sx = {{width:'50px',bgcolor:'#D5FAFC',borderRadius:'30px',height:'50px',textAlign:'center',margin:'5px',paddingTop:'5px'}} alignContent = 'center'>
+                        <Typography variant= 'h4' sx = {{width:'50px',bgcolor:'#D5FAFC',borderRadius:'30px',minHeight:'50px',textAlign:'center',margin:'5px',paddingTop:'5px'}} alignContent = 'center'>
                             {idx} 
                         </Typography>
-                        <Typography variant= 'h4' sx = {{width:'70%',bgcolor:'#D5FAFC',borderRadius:'30px',height:'50px',padding:'10px',margin:'10px',paddingTop:'10px',textAlign:'center'}} alignContent = 'center'>
+                        <Typography variant= 'h4' sx = {{width:'70%',bgcolor:'#D5FAFC',borderRadius:'30px',minHeight:'50px',padding:'10px',margin:'10px',paddingTop:'10px',textAlign:'center'}} alignContent = 'center'>
                             {p.Titulo}
                         </Typography>
                     </Grid>
@@ -210,8 +229,10 @@ export default function ActividadForm(props){
             :
             null
             }
-            
-            
+        <Box sx = {{left:'50%',top:'50%',marginLeft:'-250px',marginTop:'-5%',position:'absolute'}}>
+            {mensajeAdvertenciaDisplay}                 
+        </Box>
+        
         </React.Fragment>
     );
 }
