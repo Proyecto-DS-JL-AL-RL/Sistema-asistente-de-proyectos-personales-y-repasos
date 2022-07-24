@@ -74,7 +74,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 export default function Mazos(props) {
   const [expanded, setExpanded] = useState('panel1');
   const [mazo, setMazo] = useState({})
-  const mazos = props.getmazo
+  const [mazos, setMazos] = useState(props.getmazo)
   const [mazoIndex, setIndexMazo] = useState(0)
   const [showEdit, setShowEdit] = useState(false)
   const [showEditCard, setShowEditCard] = useState(false)
@@ -202,9 +202,12 @@ export default function Mazos(props) {
                                         <Box className="edit-mazo-button" justifyContent="center" sx={{mt:'4%', display: 'flex', flexWrap: 'wrap' }}>
                                           <Tooltip title="Guardar" placement="left">
                                                 <Button className="edit-mazo-button" onClick={()=>{setShowEdit(false)
+                                                                      mazos[mazoIndex].Titulo = titulo
+                                                                      mazos[mazoIndex].Descripcion = descripcion
+                                                                      setMazos(mazos)
                                                                       axios.put(BACK_IP+'/api/mazos/'+mazo._id, { "Titulo":titulo,
                                                                       "Descripcion":descripcion})
-                                                                      window.location.reload(false);
+                                                                      //window.location.reload(false);
                                                 }} sx={{borderRadius: 3, color: 'white', fontWeight:'bold', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
                                                     <SaveIcon sx={{p:1}}/>
                                                     Guardar
@@ -289,7 +292,13 @@ export default function Mazos(props) {
                                                                                                 opcion4]
                                                                                             //const a['Tarjetas.${tarjetaIndex}.Pregunta']=1
                                                             setShowEditCard(false)
-                                                            
+                                                            mazo.Tarjetas[tarjetaIndex].Pregunta = pregunta
+                                                            mazo.Tarjetas[tarjetaIndex].Respuesta = respuesta
+                                                            mazo.Tarjetas[tarjetaIndex].Opciones = [opcion1, 
+                                                                                              opcion2, 
+                                                                                              opcion3, 
+                                                                                              opcion4]
+                                                            setMazo(mazo.Tarjetas[tarjetaIndex])
                                                             //`
                                                             //let update_tarjeta = {"$set":{update}}
                                                             //console.log(update_card)
@@ -301,7 +310,7 @@ export default function Mazos(props) {
                                                              setOpcion3("")
                                                              setOpcion4("")
                                                              setRespuesta("")
-                                                            window.location.reload(false);
+                                                            //window.location.reload(false);
                                                           }} sx={{borderRadius: 3, color: 'white', fontWeight:'bold', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
                                                               <SaveIcon sx={{p:1}}/>
                                                               Guardar
@@ -564,6 +573,7 @@ export default function Mazos(props) {
                                     <IconButton onClick={()=>{
                                       setShowEdit(true)
                                       setMazo(mazo)
+                                      setIndexMazo(idx)
                                       setTitulo(mazo.Titulo)
                                       setDescripcion(mazo.Descripcion)    
                                       }} sx={{color:'white',  '&:hover': {backgroundColor: '#00b347', color:'black'}}}>                             
