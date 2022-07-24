@@ -556,8 +556,12 @@ export default function Mazos(props) {
                           </Tooltip>
                           <Tooltip title="Iniciar repaso" placement="right">
                                 <IconButton onClick={()=>{
-                                      history.push('/Tarjetas/'+mazo._id)
-                                      }}
+                                      //setMazo(mazo)
+                                      if(mazo.Tarjetas.length!==0){
+                                        history.push('/Tarjetas/'+mazo._id)
+                                    }
+                                      }
+                                    }
                                       sx={{color:'white',  '&:hover': {backgroundColor: '#00b347', color:'black'}}}>   
                                                     
                                           <LaunchOutlinedIcon/>
