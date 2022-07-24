@@ -127,8 +127,21 @@ export default function AlgoQueHacerPage(){
     useEffect(()=>{setDoingSomething(!(currentActivity==null)); },[currentActivity]);
     useEffect(()=>{checkSession();},[currentState]);
 
-    useEffect (()=>{
-        const component = ReactDOMServer.renderToString(<div>Ayuda No disponible</div>);
+    useEffect (()=>{                
+        const aa = <div className='sugerencia-contenido'>
+        <div className='sugenrencia-contenido-img'>
+        
+            <img  src='./Sugerencia.jpg'/>
+            <div>Sugerencia</div>
+        </div>
+        <div className='sugerencia-contenido-descripcion'>
+            Aca podrás obtener una actividad aleatoria a realizar. 
+            <div className='sugerencia-descripcion'>
+                Si es tu primera vez aqui entre a cola de actividades para agregar actividades.
+            </div>
+        </div>
+    </div>
+    const component=ReactDOMServer.renderToString(aa);
         dispatch(changePage({content:component,title:"Dame algo que hacer"}));
     },[]);
 

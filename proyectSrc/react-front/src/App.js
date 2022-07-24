@@ -2,11 +2,11 @@ import './App.css';
 import React,{useContext,useEffect,useState} from 'react';
 import {Switch , Route, useLocation, useHistory} from 'react-router-dom';
 //import Page1 from './pages/Page1';
-
+import { Box, Grid } from '@mui/material';
 import Presentacion from './pages/Presentation';
 import AppBarSearch from './components/AppBarSearch';
 import DrawerComponent from './components/DrawerComponent';
-
+import CircularProgress from '@mui/material/CircularProgress';
 import Horario1 from './pages/Horario1';
 //import Proyectos from './pages/Proyectos';
 
@@ -44,7 +44,7 @@ function App() {
   const ayuda = useSelector((state)=>state.ayuda.value);
   const mensajesFantasma = useSelector((state)=>(state.mensajesCortos.value));
   const dispatch = useDispatch();
-
+  
   const { getSession, logout , sessionState , setSessionState,setCurrentState,currentState }= useContext(AccountContext);
   const location = useLocation();
   const history = useHistory();
@@ -52,7 +52,8 @@ function App() {
   const commands = getCommands(location,history,setAfterCommandFlag,lAfterComandFlag);
   const {listening,transcript} = useSpeechRecognition({commands:commands});
   const [mensajesCortos,setMensajesCortos] = useState(null);
-  
+  const [initFlag,setInitFlag] = useState(false);
+
   const beforeUnload = ()=>{
     if (listening){
       setAfterCommandFlag(false);
@@ -74,12 +75,15 @@ function App() {
   //const [showBars, setShowBars] = useState(true)
   
   useEffect(()=>{
+    setInitFlag(false)
     getSession()
     .then((session)=>{
         console.log('State:',session);
+        setInitFlag(true);
     })
     .catch((err)=>{
         console.log(err);
+        setInitFlag(true);
     });
   },[]);
 
@@ -101,8 +105,9 @@ function App() {
         axios.get(BACK_IP+'/api/state/'+sessionState.sub+'/'+sessionState.nickname)
         .then(data=>{
           setCurrentState(data.data);
+          setInitFlag(true)
         })
-        .catch(err=>console.log(err));
+        .catch(err=>{console.log(err);setInitFlag(true)});
     }else{
       setCurrentState({});
     }
@@ -121,79 +126,88 @@ function App() {
 
   return (
           <div className='container-main'>
-                  {sessionState?.nickname?
-                  <React.Fragment><DrawerComponent/> </React.Fragment>:
-                    null
-                  }
-                  
-
-                  
-                  <div className='other-container'>
-                    {sessionState?.nickname?
-                      <div className='head-container'>
-                      <AppBarSearch stateButton={{showFeedBack, showAnadir}} 
-                          ClickButton={{setShowFeedBack, setShowAnadir, listen}}
-                          name={nameBar} setName={setNameBar}/>
-                        </div>:null
+            {initFlag?
+            <React.Fragment>
+                            
+              {sessionState?.nickname?
+                    <React.Fragment><DrawerComponent/> </React.Fragment>:
+                      null
                     }
                     
-                    <div className='content-container'>
+
+                    
+                    <div className='other-container'>
                       {sessionState?.nickname?
-                      <Switch>
-                        <Route exact path = '/'>
-                          <MostrarFuncionalidades showAdd={{showAnadir, setShowAnadir}} showFuncionalidades={{showFeedBack, setShowFeedBack}}/>
-                        </Route>
-                
-                        <Route path = '/proyectos'>
-                          <Proyectos showAdd={{showAnadir, setShowAnadir}}/>
-                        </Route>
-                        <Route path = '/proyecto/:idProyecto'>
-                          <ProyectoView/>
-                        </Route>
-                        <Route path = '/algoQueHacer'>
-                          <AlgoQueHacerPage/>
-                        </Route>
-                        <Route path = '/activityQueue'>
-                          <ActivityQueue/>
-                        </Route>
-                        <Route path='/microAyuda'>
-                          <AyudaMicro/>
-                        </Route>
-                        <Route exact path = "/Tarjetas/:idSeccion" >
-                                <Tarjetas showFuncionalidades={{showFeedBack, setShowFeedBack}} showAdd={{showAnadir, setShowAnadir}} />
-                        </Route>
-                            <Route path = '/Mazos'>
-                                  <VerMazos showAdd={{showAnadir, setShowAnadir}} showFeed={{showFeedBack, setShowFeedBack}}/>
-                            </Route>
-                            <Route path = '/horario'>
-                              <Horario1/>
-                            </Route>
-                            <Route path = '/Presentacion'>
-                                  <Presentacion/>
-                            </Route>
-                        <Route>
-                          <NofoundPage/>
-                        </Route>
-                      </Switch>
-                      :
-                      <Switch>
-                  
-                        <Route exact path = '/registro'>
-                          <Register/>
-                        </Route>
-                        <Route default>
-                          <Inicio  logged={{logged,setLogged}}/>
-                        </Route>
-                        
-                      </Switch>
+                        <div className='head-container'>
+                        <AppBarSearch stateButton={{showFeedBack, showAnadir}} 
+                            ClickButton={{setShowFeedBack, setShowAnadir, listen}}
+                            name={nameBar} setName={setNameBar}/>
+                          </div>:null
                       }
-                    </div>
-                  </div>
-                  <Beforeunload onBeforeunload= {beforeUnload} />
+                      
+                      <div className='content-container'>
+                        {sessionState?.nickname?
+                        <Switch>
+                          <Route exact path = '/'>
+                            <MostrarFuncionalidades showAdd={{showAnadir, setShowAnadir}} showFuncionalidades={{showFeedBack, setShowFeedBack}}/>
+                          </Route>
                   
-                  {ayuda.display?<DisplayAyuda/>:null}
-                  {listening?<EscuchandoDisplay mensaje={transcript}/>:null}
-                {mensajesCortos}    
+                          <Route path = '/proyectos'>
+                            <Proyectos showAdd={{showAnadir, setShowAnadir}}/>
+                          </Route>
+                          <Route path = '/proyecto/:idProyecto'>
+                            <ProyectoView/>
+                          </Route>
+                          <Route path = '/algoQueHacer'>
+                            <AlgoQueHacerPage/>
+                          </Route>
+                          <Route path = '/activityQueue'>
+                            <ActivityQueue/>
+                          </Route>
+                          <Route path='/microAyuda'>
+                            <AyudaMicro/>
+                          </Route>
+                          <Route exact path = "/Tarjetas/:idSeccion" >
+                                  <Tarjetas showFuncionalidades={{showFeedBack, setShowFeedBack}} showAdd={{showAnadir, setShowAnadir}} />
+                          </Route>
+                              <Route path = '/Mazos'>
+                                    <VerMazos showAdd={{showAnadir, setShowAnadir}} showFeed={{showFeedBack, setShowFeedBack}}/>
+                              </Route>
+                              <Route path = '/horario'>
+                                <Horario1/>
+                              </Route>
+                              <Route path = '/Presentacion'>
+                                    <Presentacion/>
+                              </Route>
+                          <Route>
+                            <NofoundPage/>
+                          </Route>
+                        </Switch>
+                        :
+                        <Switch>
+                    
+                          <Route exact path = '/registro'>
+                            <Register/>
+                          </Route>
+                          <Route default>
+                            <Inicio  logged={{logged,setLogged}}/>
+                          </Route>
+                          
+                        </Switch>
+                        }
+                      </div>
+                    </div>
+                    <Beforeunload onBeforeunload= {beforeUnload} />
+                    
+                    {ayuda.display?<DisplayAyuda/>:null}
+                    {listening?<EscuchandoDisplay mensaje={transcript}/>:null}
+            </React.Fragment>
+            :
+            <Grid container  sx={{ display: 'flex', width:'100%',height:'100%'}} alignItems = 'center' justifyContent = 'center'>
+              <CircularProgress size={150}/>
+            </Grid>
+            }
+            {mensajesCortos}    
             </div>
   );
 }

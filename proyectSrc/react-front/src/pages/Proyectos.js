@@ -97,8 +97,21 @@ export default function Proyectos() {
   
   
 
-  useEffect(()=>{
-    const component = ReactDOMServer.renderToString(<div>Ayuda No disponible</div>);
+  useEffect(()=>{            
+    const aa = <div className='sugerencia-contenido'>
+        <div className='sugenrencia-contenido-img'>
+        
+            <img  src='./Sugerencia.jpg'/>
+            <div>Sugerencia</div>
+        </div>
+        <div className='sugerencia-contenido-descripcion'>
+            Aca veras Listados los proyectos que creas. 
+            <div className='sugerencia-descripcion'>
+              Tu proyecto base es el que tiene tu nombre usuario. 
+            </div>
+        </div>
+    </div>
+    const component=ReactDOMServer.renderToString(aa);
     dispatch(changePage({content:component,title:"Gestión de Proyectos"}));
     getProyects();
   },[sessionState]);
@@ -141,6 +154,8 @@ export default function Proyectos() {
     if(!showForm)
       setEscribiendo(false);
   },[showForm]);
+
+
 
   return (
     <React.Fragment>
