@@ -19,7 +19,7 @@ import Grow from '@mui/material/Grow';
 import Divider from '@mui/material/Divider';
 import Fade from '@mui/material/Fade';
 //import Paper from '@mui/material/Paper';
-import happy from './img/happy.png'//proyectSrc/react-front/public
+import happy from './img/gambare.webp'//proyectSrc/react-front/public
 import flashcard from './img/flashcard.png'
 import * as ReactDOMServer from 'react-dom/server'
 import { useDispatch} from 'react-redux';
@@ -129,16 +129,24 @@ const mazos = [
           props.showAdd.setShowAnadir({card:false, icon:true});
           
           const suggest = <Card  sx={{ mx:100, minWidth: 600, border: '0.5px solid black'  }}>
-                              <CardContent>
-                                    <Typography  sx={{fontWeight: 'bold'}} variant="h1">
-                                        Sugerencia
-                                    </Typography>
-                                    <Divider  variant="middle" />
-                                    <Typography variant="subtitle1" color="text.secondary" component="div">
-                                      Esta parte de la página esta enfocada en la funcionalidad de repasos. 🤓<br /> Aquí 
-                                      podra separar por temas las tarjetas 🎴 que vaya creando. 
-                                    </Typography>
-                                    <img style={{width:'40%', height:'40%'}} alt='emoji' src={happy}/>
+                              <CardContent  >
+                                <div className="split_suggerencia">
+                                      <div className="split_suggerencia left_text">
+                                          <img style={{height:'10vw'}} alt='emoji' src={happy}/>
+                                          <Typography  sx={{fontWeight: 'bold', color: 'gray'}} variant="h1">
+                                            Sugerencia
+                                        </Typography>
+                                      </div>
+                                      <div className="split_suggerencia  right_text">
+                                      
+                                        <Divider  variant="middle" />
+                                        <Typography variant="subtitle1" color="text.secondary" component="div">
+                                          Esta parte de la página esta enfocada en la funcionalidad de repasos. 🤓<br /> Aquí 
+                                          podra separar por temas las tarjetas 🎴 que vaya creando.<br/>
+                                          Recuerde la funcionalidad de repaso no se creará hasta que cree como minimo una tarjeta.
+                                        </Typography>
+                                      </div>
+                                    </div>
                                 </CardContent>
                           </Card>
           const component = ReactDOMServer.renderToString(suggest);

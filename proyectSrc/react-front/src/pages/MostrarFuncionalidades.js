@@ -100,7 +100,8 @@ export default function MostrarFuncionalidades(props) {
                                     <Divider  variant="middle" />
                                     <Typography variant="subtitle1" color="text.secondary" component="div">
                                         Bienvenido 🤗. Aquí podras ver las funcionalidades del software.<br /> 👀 Recuerde que tiene la opción
-                                        de navegar a travez de los botones<br/> de abajo o también por nuestra interfaz de voz 🎙. 
+                                        de navegar a travez de los botones de <br/> abajo  o también por nuestra interfaz de voz 🎙.  Para más 
+                                        información revisar <br/> el tutorial de la interfaz de voz en la barra de la izquierda.
                                     </Typography>
                                 </CardContent>
                             </Box>     
