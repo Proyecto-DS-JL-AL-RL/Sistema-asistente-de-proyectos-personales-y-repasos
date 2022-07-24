@@ -159,13 +159,13 @@ function App() {
                             <ProyectoView/>
                           </Route>
                           <Route path = '/algoQueHacer'>
-                            <AlgoQueHacerPage/>
+                            <AlgoQueHacerPage showAdd={{showAnadir, setShowAnadir}}/>
                           </Route>
                           <Route path = '/activityQueue'>
                             <ActivityQueue/>
                           </Route>
                           <Route path='/microAyuda'>
-                            <AyudaMicro/>
+                            <AyudaMicro showAdd={{showAnadir, setShowAnadir}}/>
                           </Route>
                           <Route exact path = "/Tarjetas/:idSeccion" >
                                   <Tarjetas showFuncionalidades={{showFeedBack, setShowFeedBack}} showAdd={{showAnadir, setShowAnadir}} />
@@ -174,7 +174,7 @@ function App() {
                                     <VerMazos showAdd={{showAnadir, setShowAnadir}} showFeed={{showFeedBack, setShowFeedBack}}/>
                               </Route>
                               <Route path = '/horario'>
-                                <Horario1/>
+                                <Horario1 showAdd={{showAnadir, setShowAnadir}}/>
                               </Route>
                               <Route path = '/Presentacion'>
                                     <Presentacion/>

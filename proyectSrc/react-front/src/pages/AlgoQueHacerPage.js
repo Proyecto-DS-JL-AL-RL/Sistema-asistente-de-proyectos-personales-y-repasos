@@ -14,7 +14,7 @@ import { useDispatch } from 'react-redux';
 import { changePage } from '../stores/sliceAyuda';
 import { BACK_IP } from '../publicConstants';
 
-export default function AlgoQueHacerPage(){
+export default function AlgoQueHacerPage(props){
     const dispatch = useDispatch();
     const history = useHistory();
     const [mensajeAdvertenciaDisplay,setMensajeAdvertenciaDisplay] = useState(null);
@@ -23,7 +23,9 @@ export default function AlgoQueHacerPage(){
     const [currentActivity,setCurrentActivity]  = useState(null);
     const [started,setStarted]                  = useState(false);
     const [evidencia,setEvidencia]              = useState(null);
-
+    useEffect(()=>{
+        props.showAdd.setShowAnadir({card:false, icon:false})
+    },[])
 
     const AdvertenciaFinalizar = () =>{
         return <MensajeAdvertencia 

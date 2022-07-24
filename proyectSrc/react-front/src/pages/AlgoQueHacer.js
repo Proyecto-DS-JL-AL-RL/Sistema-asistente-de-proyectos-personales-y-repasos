@@ -11,7 +11,7 @@ export default function AlgoQueHacer(props){
     const giveAnActivity = async () =>{
         props.giveAnActivity();
     }
-
+    
     return(
         <React.Fragment>
                 <Box sx = {{width:'100%'}}>

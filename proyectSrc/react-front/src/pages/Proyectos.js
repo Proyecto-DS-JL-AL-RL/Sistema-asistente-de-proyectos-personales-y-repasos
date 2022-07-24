@@ -17,7 +17,7 @@ import { useDispatch } from 'react-redux';
 import { changePage } from '../stores/sliceAyuda';
 import { BACK_IP } from '../publicConstants';
 
-export default function Proyectos() {
+export default function Proyectos(props) {
   const dispatch = useDispatch();
   const history = useHistory();
   const [proyects,setProyects] = useState([]);
@@ -97,7 +97,8 @@ export default function Proyectos() {
   
   
 
-  useEffect(()=>{            
+  useEffect(()=>{
+    props.showAdd.setShowAnadir({card:false, icon:false})            
     const aa = <div className='sugerencia-contenido'>
         <div className='sugenrencia-contenido-img'>
         

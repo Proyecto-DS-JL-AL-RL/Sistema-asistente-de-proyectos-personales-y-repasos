@@ -1,7 +1,10 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import './ayudaMicro.css';
 import MicIcon from '@mui/icons-material/Mic';
-export default function AyudaMicro() {
+export default function AyudaMicro(props) {
+    useEffect(()=>{
+        props.showAdd.setShowAnadir({card:false, icon:false})
+    },[])
   return (
     <div className='contendor-ayuda-micro'>
         <div className='content-ayuda-other'>

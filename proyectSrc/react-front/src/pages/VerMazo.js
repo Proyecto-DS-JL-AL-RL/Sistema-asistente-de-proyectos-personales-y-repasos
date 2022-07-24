@@ -16,7 +16,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SaveIcon from '@mui/icons-material/Save';
 import Grow from '@mui/material/Grow';
-import Divider from '@mui/material/Divider';
+//import Divider from '@mui/material/Divider';
 import Fade from '@mui/material/Fade';
 //import Paper from '@mui/material/Paper';
 import happy from './img/gambare.webp'//proyectSrc/react-front/public
@@ -127,28 +127,19 @@ const mazos = [
         /* eslint-disable */
         useEffect(() => {
           props.showAdd.setShowAnadir({card:false, icon:true});
+          const suggest = <div className='sugerencia-contenido'>
+            <div className='sugenrencia-contenido-img'>
+            
+                <img style={{height:"12vw"}} src={happy}/>
+                <div>Sugerencia</div>
+            </div>
+            <div className='sugerencia-contenido-descripcion'>
+            Esta parte de la página esta enfocada en la funcionalidad de repasos. 🤓 Aquí 
+            podra separar por temas las tarjetas 🎴 que vaya creando. Recuerde, la funcionalidad
+            de repaso  <LaunchOutlinedIcon/> no se activara hasta que cree como minimo una tarjeta. Dentro de un mazo.
+            </div>
+        </div>
           
-          const suggest = <Card  sx={{ mx:100, minWidth: 600, border: '0.5px solid black'  }}>
-                              <CardContent  >
-                                <div className="split_suggerencia">
-                                      <div className="split_suggerencia left_text">
-                                          <img style={{height:'10vw'}} alt='emoji' src={happy}/>
-                                          <Typography  sx={{fontWeight: 'bold', color: 'gray'}} variant="h1">
-                                            Sugerencia
-                                        </Typography>
-                                      </div>
-                                      <div className="split_suggerencia  right_text">
-                                      
-                                        <Divider  variant="middle" />
-                                        <Typography variant="subtitle1" color="text.secondary" component="div">
-                                          Esta parte de la página esta enfocada en la funcionalidad de repasos. 🤓<br /> Aquí 
-                                          podra separar por temas las tarjetas 🎴 que vaya creando.<br/>
-                                          Recuerde la funcionalidad de repaso no se creará hasta que cree como minimo una tarjeta.
-                                        </Typography>
-                                      </div>
-                                    </div>
-                                </CardContent>
-                          </Card>
           const component = ReactDOMServer.renderToString(suggest);
           dispatch(changeContent(component));
               return ()=>{
@@ -262,8 +253,10 @@ const mazos = [
                 </Box>
 
                   {existMazos?
-                      <Box className="container-mazo" >
-                          <Mazos className="mazo_hijo" getmazo={mazos} setMazo={setMazos} />
+                      <Box>
+                        <Box className="container-mazo" >
+                            <Mazos className="mazo_hijo" getmazo={mazos} setMazo={setMazos} />
+                        </Box>
                       </Box>:
                       <Box className="container_sinTarjeta">
                             <div className="row">
