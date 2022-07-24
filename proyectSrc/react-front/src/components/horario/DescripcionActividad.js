@@ -40,14 +40,14 @@ function valuetext(value) {
 const validarActividad = (actividades,newActividad) =>{
     let flag = true;
     actividades.forEach(element => {
-        console.log(element);
+        //console.log(element);
     });
     return flag;
 }
 const sobrescribir = (actividades)=>{
-    console.log("Entro");
+    //console.log("Entro");
     const actualSave = actividades.filter((e)=> {return e.estado==1})[0];
-    console.log("Oremos");
+    //console.log("Oremos");
     const witoutTemps = actividades.filter((e)=>{
         return (e.estado!=2)
     });
@@ -74,7 +74,7 @@ const sobrescribir = (actividades)=>{
         }
         return e;
     });
-    console.log("Actual save:",actualSave);
+    //console.log("Actual save:",actualSave);
     if(inter!=null){
         mapeado = [...mapeado,
             {...inter,inicio:inter.incio,fin:actualSave.inicio},
@@ -109,8 +109,10 @@ const actualizarHorarioRequest = async(newHorario,sub) =>{
         body: content,
         redirect: 'follow'
     }
+
+
     const res = await fetch(`${BACK_IP}/api/horario/${sub}`,requestOptions);
-    console.log(res);
+
     return res;
 
 }
@@ -191,9 +193,9 @@ export default function DescripcionActividad(props) {
         setActividad({...actividad,fin:i});
     }
     const acceptSobreescritura = ()=>{
-        console.log("Aceeept");
+        //console.log("Aceeept");
         const newHorario = sobrescribir(horario);
-        console.log(newHorario);
+        //console.log(newHorario);
         dispatch(sobrescribirTodo(newHorario)); 
         dispatch(setMensaje({content:"Se sobreescribieron actividad(es)"
         ,visible:true}))
@@ -244,7 +246,7 @@ export default function DescripcionActividad(props) {
         if(stateButton==0){
             setEditable(true);
             setStateButton(2);
-            console.log("Hola donde estoy",props.idAct);
+            //console.log("Hola donde estoy",props.idAct);
             dispatch(changeEditableActivity(props.idAct));
             return;
         }
@@ -258,7 +260,7 @@ export default function DescripcionActividad(props) {
                 inicio:duracion[0],fin:duracion[1],estado:1}
             const intervaloActTemp = actividad2intervalo(actTemp);
             const intervaloTemp = act2horario(horario,[0]);
-            console.log("Interval ? ",intervaloActTemp);
+            //console.log("Interval ? ",intervaloActTemp);
             let flag = false;
             intervaloActTemp.forEach((e)=>{
                 if(intervaloTemp.indexOf(e)!=-1) flag =true;
@@ -272,13 +274,13 @@ export default function DescripcionActividad(props) {
                 //mostrar advertencia
                 return;
             }
-            console.log("flas",flag);
+            //console.log("flas",flag);
             if(flag){
                 //Guardar sobreescribirendo
                 
                 //dispatch(saveWithSobrescritura());
                 const newHorario = sobrescribir(horario);
-                console.log(newHorario);
+                //console.log(newHorario);
                 dispatch(sobrescribirTodo(newHorario));
                 actualizarHorarioRequest(newHorario,props.sub);
                 setStateButton(0);
@@ -311,7 +313,7 @@ export default function DescripcionActividad(props) {
                 inicio:duracion[0],fin:duracion[1],estado:1}
             const intervaloActTemp = actividad2intervalo(actTemp);
             const intervaloTemp = act2horario(horario,[0]);
-            console.log("Interval ? ",intervaloActTemp);
+            //console.log("Interval ? ",intervaloActTemp);
             let flag = false;
             intervaloActTemp.forEach((e)=>{
                 if(intervaloTemp.indexOf(e)!=-1) flag =true;
@@ -325,13 +327,13 @@ export default function DescripcionActividad(props) {
                 //mostrar advertencia
                 return;
             }
-            console.log("flas",flag);
+            //console.log("flas",flag);
             if(flag){
                 //Guardar sobreescribirendo
                 
                 //dispatch(saveWithSobrescritura());
                 const newHorario = sobrescribir(horario);
-                console.log(newHorario);
+                //console.log(newHorario);
                 dispatch(sobrescribirTodo(newHorario));
                 actualizarHorarioRequest(newHorario,props.sub);
                 setStateButton(0);

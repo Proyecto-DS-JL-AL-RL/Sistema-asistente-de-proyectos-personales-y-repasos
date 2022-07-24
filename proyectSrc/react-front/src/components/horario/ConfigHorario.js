@@ -1,8 +1,6 @@
 import './estilosHorario.css';
 import React,{useEffect, useState} from 'react'
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import Badge  from '@mui/material/Badge';
 import { FormControl, FormControlLabel, FormGroup, FormHelperText, InputLabel, MenuItem, Select, Slider, Switch as Sw, Typography} from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -95,7 +93,7 @@ export default function ConfigHorario(props) {
         visible:true}))
     }
     const handleOnlyMinMax = (e) =>{
-        console.log(e.target.checked);
+        //console.log(e.target.checked);
         if(e.target.checked){
             dispatch(changeIntervaloDefault(e.target.checked));
             
