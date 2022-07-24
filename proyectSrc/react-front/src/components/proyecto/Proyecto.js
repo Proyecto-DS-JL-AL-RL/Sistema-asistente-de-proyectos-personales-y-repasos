@@ -15,10 +15,12 @@ export default function Proyecto(props) {
 
   useEffect(()=>{
     setProyect(props.proyect);
-    if (props.proyect.ActividadSemanal){
-      let sum = props.proyect.ActividadSemanal.reduce((a,b)=>a+b,0);
-      let avg = Math.round(100*(sum/7));
-      setAvance(avg);
+    if (props.proyect.UltimaActividad){
+      let o1 = new Date(props.proyect.UltimaActividad);
+      let o2 = new Date()
+      const o1Dias = Math.floor(o1.getTime()/(1000*60*6024));
+      const o2Dias = Math.floor(o2.getTime()/(1000*60*6024));
+      setAvance(o2Dias-o1Dias);
     }
   },[props.proyect]);
 
@@ -61,7 +63,7 @@ export default function Proyecto(props) {
             fontSize:'1.5em',
             color:'black'
           }}>
-            {avance+'%'}
+            {'Hace '+avance+' días'}
           </Typography>
         </Box>
     </Box>

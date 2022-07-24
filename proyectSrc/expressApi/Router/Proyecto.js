@@ -29,8 +29,12 @@ router.post('/Proyectos/addObjetivo', async function(req,res){
 });
 
 //Init
-router.post('/Proyectos/endObjetive', async function (req, res){
-    const resp = await datProyecto.completeObjetivo(req.body);
+router.delete('/Proyectos/endObjetive/:id', async function (req, res){
+    const resp = await datProyecto.completeObjetivo(req.params.id);
+    res.send(resp)
+})
+router.delete('/Proyectos/deleteProyecto/:id', async function (req, res){
+    const resp = await datProyecto.deleteProyecto(req.params.id);
     res.send(resp)
 })
 

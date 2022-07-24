@@ -58,13 +58,14 @@ export default function ActividadForm(props){
 
         axios.post(BACK_IP+'/api/colaActividades/addActividad',Item)
             .then(data=>{
-                //console.log(data);
+                props.refresh();
+                props.close();
             })
             .catch(err=>console.log(err));  
 
         //console.log('agregado',Item);
-        props.setActivities([...props.activities,Item])
-        props.close();
+        
+        
     }
     const establecerProyecto = (proyecto)=>{
         //console.log('proyproy',proyecto);
@@ -93,21 +94,21 @@ export default function ActividadForm(props){
         }
     }
 
-    const commands = getAgregarComands({setPunteroPage,setPesosAudio,setAgregarProyecto,handleBack,setProyectoAsociado,agregarActividad,setBlocked});
+    const commands = getAgregarComands({setPunteroPage,setPesosAudio,setAgregarProyecto,handleBack,setProyectoAsociado,agregarActividad,setBlocked,setTitulo,setDescripcion});
     const {listening,transcript,finalTranscript,resetTranscript} = useSpeechRecognition({commands:commands});
-
+    /*
     const setDictionary = {
         "título":setTitulo,
         "descripción":setDescripcion
     }
-
+    
     useEffect(()=>{
         if(puntero && listening){
             resetTranscript();
             setDictionary[puntero](finalTranscript);
         }
     },[finalTranscript]);
-
+    */
     useEffect(()=>{
         setProyectos(props.proyectList);
     },[props.proyectList]);

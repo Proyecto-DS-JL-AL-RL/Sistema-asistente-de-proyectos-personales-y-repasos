@@ -5,7 +5,7 @@ const router = express.Router();
 
 
 router.get('/state/:userSub/:userNickname', async function(req,res){
-    console.log('BODY:',req.body);
+    //console.log('BODY:',req.params.userNickname);
     const resp = await datState.getState(req.params.userSub,req.params.userNickname);
     res.json(resp);
 });

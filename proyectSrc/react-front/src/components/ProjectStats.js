@@ -11,9 +11,9 @@ export default function ProjectStats(props){
 
     useEffect(()=>{
         setStats(props.stats);
-        const constancia = Math.round(props.stats?.ConstanciaDiff * 100);
+        const constancia = Math.round(props.stats?.ConstanciaDiff);
         setStats([
-            {label:'Constancia Semanal',value: String(constancia)+ "%"},
+            {label:'Dias de inactividad: ',value: String(constancia)},
             {label:'Actividades Registradas',value:props.stats?.LogrosDiff},
             {label:'Puntos',value:props.stats?.Puntos}
         ]);

@@ -11,7 +11,7 @@ const numerosDict = {
 }
 
 const backExpresions = ["Volver(.)","Atrás(.)","Back(.)"];
-const continueExpresions  = ["Continuar(.)","Siguiente(.)","Next(.)","Continua","Confirmar","Aceptar"];
+const continueExpresions  = ["Continua(r)(.)","Siguiente(.)","Next(.)","Confirmar(.)","Aceptar(.)"];
 const confirmExpresions = ["Confirmar(.)","Aceptar(.)","Terminar(.)","Siguiente(.)"];
 
 export {numerosDict,backExpresions,continueExpresions,confirmExpresions };

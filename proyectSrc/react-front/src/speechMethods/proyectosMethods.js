@@ -4,7 +4,6 @@ const getCommandsPage = (methods) =>{
     const comando = [{
         command: ["Crear(.)","Agregar(.)","Crear Proyecto(.)","Nuevo Proyecto(.)","Agregar Proyecto(.)"],
         callback: (frase) =>{
-            methods.setEscribiendo(false);
             methods.addCreateProyect();
         },
         isFuzzyMatch: true,
@@ -14,7 +13,6 @@ const getCommandsPage = (methods) =>{
      {
         command: backExpresions,
         callback: (frase) =>{
-            methods.setEscribiendo(false);
             methods.handleBack();
         },
         isFuzzyMatch: true,
@@ -22,9 +20,8 @@ const getCommandsPage = (methods) =>{
         bestMatchOnly:true 
      },
      {
-        command: continueExpresions ,
+        command: [...continueExpresions,"Agregar(.)" ],
         callback: (frase) =>{
-            methods.setEscribiendo(false);
             methods.handleContinuar();
         },
         isFuzzyMatch: true,
@@ -32,24 +29,16 @@ const getCommandsPage = (methods) =>{
         bestMatchOnly:true 
      },
      {
-        command: ["Escribir (.)","Escribir Título(.)"] ,
-        callback: (frase) =>{
-            methods.setEscribir();
-        },
-        isFuzzyMatch: true,
-        fuzzyMatchingThreshold: 0.7  ,
-        bestMatchOnly:true 
-     },
-     {
-        command: ["Dejar de Escribir(.)"] ,
-        callback: (frase) =>{
-            methods.setEscribiendo(false);
-        },
-        isFuzzyMatch: true,
-        fuzzyMatchingThreshold: 0.7 ,
-        bestMatchOnly:true 
-     },
-
+        command: ["Escribir(,) *(.)","Escribir(,) (el )título(,) *(.)","(Me) Escribe(,) (el )título(,) *(.)","Título(,) *(.)"],
+        callback: (frase)=>{
+            let scriptT = ''
+            if (frase.length > 0)
+                scriptT += frase.charAt(0).toUpperCase();
+            if (frase.length > 1)
+                scriptT = scriptT  + frase.slice(1);
+            methods.setTituloInput(scriptT);
+        }
+     }
     ]
     return comando;
 }

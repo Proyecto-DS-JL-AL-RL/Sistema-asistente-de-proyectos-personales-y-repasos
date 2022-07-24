@@ -5,6 +5,7 @@ import axios from 'axios';
 import MensajeAdvertencia from './horario/MensajeAdvertencia';
 import { getAgregarComands } from '../speechMethods/projectSpecific';
 import { useSpeechRecognition } from 'react-speech-recognition';
+import { BACK_IP } from '../publicConstants';
 
 export default function ObjetivoForm(props){
     const [mensajeAdvertenciaDisplay,setMensajeAdvertenciaDisplay] = useState(null);
@@ -12,7 +13,7 @@ export default function ObjetivoForm(props){
     const [titulo,setTitulo] = useState('');
     const [descripcion,setDescripcion] = useState('');
     const [peso,setPeso] = useState(4);
-    const [puntero,setPuntero] = useState(null);
+    const [blocked,setBlocked] = useState(false);
 
     const AdvertenciaT = () =>{
         return <MensajeAdvertencia 
@@ -27,6 +28,10 @@ export default function ObjetivoForm(props){
         />
     }
     const agregarActividad = async ()=>{
+        if (blocked){
+            return;
+        }
+        setBlocked(true);
         const {sub} = sessionState;
         if (sub){
             if (titulo == ''){
@@ -44,31 +49,26 @@ export default function ObjetivoForm(props){
                 UserSub: sub
             }
             
-            axios.post('http://localhost:4000/api/Proyectos/addObjetivo',{objetivo: Item , proyectId: props.idProyecto })
+            axios.post(BACK_IP+'/api/Proyectos/addObjetivo',{objetivo: Item , proyectId: props.idProyecto })
                 .then(data=>{
-                    console.log(data);
-                    props.setActivities([...props.activities,Item])
+                    setBlocked(false);
+                    props.refresh();                    
                     props.close();
                 })
-                .catch(err=>console.log(err));           
+                .catch(err=>{console.log(err);setBlocked(false)});           
         }
     }
-    const setPunteroPage     = (puntero)=>setPuntero(puntero);
+
     const setPesosAudio      = (peso_)  =>setPeso(peso_);
 
-    const commands = getAgregarComands({setPunteroPage,setPesosAudio,agregarActividad});
+    const commands = getAgregarComands({setPesosAudio,agregarActividad,setTitulo,setDescripcion});
     const {listening,transcript,finalTranscript,resetTranscript} = useSpeechRecognition({commands:commands});
 
-    const setDictionary = {
-        "título":setTitulo,
-        "descripción":setDescripcion
-    }
+    
     useEffect(()=>{
-        if(puntero && listening){
-            resetTranscript();
-            setDictionary[puntero](finalTranscript);
-        }
-    },[finalTranscript]);
+        setBlocked(false);
+    },[]);
+
 
     return(
         <React.Fragment>
@@ -80,10 +80,6 @@ export default function ObjetivoForm(props){
                 </Typography>
 
                 <Grid container direction = 'column' sx = {{width:'80%',marginLeft:'10%',marginTop:'70px'}} rowGap = {3} alignItems = 'center'>
-                    {puntero?
-                    <Typography variant = 'h6'>Escribiendo: {puntero}</Typography>
-                    :
-                    null}
                     <TextField label="Titulo" value = {titulo} sx = {{width : '100%'}} onChange = {(e)=>{setTitulo(e.target.value)}}>
                         asd
                     </TextField>

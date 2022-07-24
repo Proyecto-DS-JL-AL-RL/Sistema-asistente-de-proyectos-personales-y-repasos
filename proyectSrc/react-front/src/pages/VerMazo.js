@@ -36,6 +36,8 @@ import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined';
 import {  AccountContext } from './../AccountContext';
 import { useContext } from "react";
 import { BACK_IP } from "../publicConstants";
+import { useSpeechRecognition } from "react-speech-recognition";
+import { getPageCommands } from "../speechMethods/tarjetasMethods";
 
 /*
 const mazos = [
@@ -101,6 +103,11 @@ const mazos = [
         const {sessionState} = useContext(AccountContext);
         const [existMazos, setExistMazos] = useState(false)
         const [idUsersub, setidUsersub] = useState('')
+
+
+        const commands = getPageCommands({setTitulo,setDescripcion});
+        const {listening} = useSpeechRecognition({commands:commands});
+
         useEffect(()=>{
           const {sub} = sessionState;
           if (sub){
@@ -139,6 +146,8 @@ const mazos = [
             de repaso  <LaunchOutlinedIcon/> no se activara hasta que cree como minimo una tarjeta. Dentro de un mazo.
             </div>
         </div>
+
+        
           
           const component = ReactDOMServer.renderToString(suggest);
           dispatch(changeContent(component));
@@ -193,7 +202,7 @@ const mazos = [
                                           </Typography>
                                           <Box  justifyContent="center" sx={{ display: 'flex', flexWrap: 'wrap' }}>
                                               <FormControl  sx={{width: '20vw' }} variant="outlined">
-                                                    <TextField  sx={{py:2}} id="outlined-basic" label="Titulo de la Sección" defaultValue = {titulo} onChange={(e=>{setTitulo(e.target.value)})} variant="outlined" />
+                                                    <TextField  sx={{py:2}} id="outlined-basic" label="Titulo de la Sección" defaultValue = {titulo} value = {titulo} onChange={(e=>{setTitulo(e.target.value)})} variant="outlined" />
                                                     <TextField
                                                         
                                                         id="outlined-multiline-static"
@@ -202,6 +211,7 @@ const mazos = [
                                                         rows={4}
                                                         onChange={(e=>{setDescripcion(e.target.value)})}
                                                         defaultValue={descripcion}
+                                                        value = {descripcion}
                                                       />
                                               </FormControl>
                                             </Box>

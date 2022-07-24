@@ -21,7 +21,7 @@ export default function Proyectos(props) {
   const dispatch = useDispatch();
   const history = useHistory();
   const [proyects,setProyects] = useState([]);
-  const [escribiendo,setEscribiendo] = useState(false);
+
   const {sessionState} = useContext(AccountContext);
   const [tituloInput,setTituloInput] = useState("");
   const [showForm,setShowForm] = useState(false);  
@@ -60,7 +60,6 @@ export default function Proyectos(props) {
       axios.get(BACK_IP+'/api/Proyectos/'+sub)
         .then(data=>{
           if(data.data.error){
-            console.log(data.data)
             setProyects([]);
             if(data.data.error == 'no_init'){
               setMensajeAdvertenciaDisplay(AdvertenciaNoInit);
@@ -87,7 +86,6 @@ export default function Proyectos(props) {
         }
         axios.post(BACK_IP+'/api/Proyectos/addProyect',proyect_)
           .then(data=>{
-            console.log('data:', data.data);
             setShowForm(false);
             getProyects();
             setTituloInput("");
@@ -132,29 +130,17 @@ export default function Proyectos(props) {
   }
 
   const addCreateProyect = ()=>{
-    setShowForm(true);
-  }
-
-  const setEscribir = ()=>{
-    if (showForm){
-      setEscribiendo(true);
+    if (!showForm){
+      setShowForm(true);
+      setTituloInput('')
     }
   }
 
-  const commands = getCommandsPage({handleBack , addCreateProyect ,handleContinuar,setEscribiendo,setEscribir});
+
+
+  const commands = getCommandsPage({handleBack , addCreateProyect ,handleContinuar,setTituloInput});
   const {listening,transcript,finalTranscript,resetTranscript} = useSpeechRecognition({commands:commands});
 
-  useEffect(()=>{
-    if(escribiendo && listening){
-        resetTranscript();
-        setTituloInput(finalTranscript);
-    }
-  },[finalTranscript]);
-
-  useEffect(()=>{
-    if(!showForm)
-      setEscribiendo(false);
-  },[showForm]);
 
 
 
