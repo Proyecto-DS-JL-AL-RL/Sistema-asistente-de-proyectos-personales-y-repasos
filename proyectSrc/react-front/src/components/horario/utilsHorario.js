@@ -34,6 +34,7 @@ export const act2horario = (actividades,estados = [0,1,2]) =>{
     return act.sort((a,b)=>{return a-b});
 }
 export const temaChangeCSS = (id) =>{
+    if(typeof(id)!=='number') return;
     const temas = [
         ['rgb(255, 205, 113)','rgb(90, 206, 241)','rgb(29, 241, 138)','rgb(228, 228, 32)','#a270f9','black'],
         ['rgb(0, 173, 247)','rgb(255, 240, 110)','rgb(136, 255, 251)','rgb(255, 71, 51)','#a270f9','black'],

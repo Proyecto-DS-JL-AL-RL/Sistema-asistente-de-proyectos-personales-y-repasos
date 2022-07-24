@@ -77,7 +77,7 @@ export const horarioSlice = createSlice({
     extraReducers:builder =>{
         builder
         .addCase(getIniHorario.fulfilled,(state,action)=>{
-            state.value = action.payload;
+            state.value = action.payload || [];
         })
     }
 })
