@@ -10,10 +10,10 @@ import { orange, red, blue, green } from '@mui/material/colors';
 import { useHistory } from "react-router-dom";
 //import QuestionMarkRoundedIcon from '@mui/icons-material/QuestionMarkRounded';
 //import Grow from '@mui/material/Grow';
-import Divider from '@mui/material/Divider';
+//import Divider from '@mui/material/Divider';
 //import Tooltip from '@mui/material/Tooltip';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
+//import Card from '@mui/material/Card';
+//import CardContent from '@mui/material/CardContent';
 //import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import Fade from '@mui/material/Fade';
@@ -91,22 +91,17 @@ export default function MostrarFuncionalidades(props) {
 
     useEffect(() => {
         props.showAdd.setShowAnadir({card:false, icon:false});
-        const suggest = <Card sx={{ display: 'flex' }}>
-                            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                                <CardContent  sx={{ flex: '1 0 auto' }}>  
-                                    <Typography  sx={{fontWeight: 'bold'}} variant="h1">
-                                        Sugerencia
-                                    </Typography>
-                                    <Divider  variant="middle" />
-                                    <Typography variant="subtitle1" color="text.secondary" component="div">
-                                        Bienvenido 🤗. Aquí podras ver las funcionalidades del software.<br /> 👀 Recuerde que tiene la opción
-                                        de navegar a travez de los botones de <br/> abajo  o también por nuestra interfaz de voz 🎙.  Para más 
-                                        información revisar <br/> el tutorial de la interfaz de voz en la barra de la izquierda.
-                                    </Typography>
-                                </CardContent>
-                            </Box>     
-                            <img style={{width:'50%', height:'50%'}} src={mehera} alt="mehera"/>
-                        </Card>
+        const suggest = <div className='sugerencia-contenido'>
+        <div className='sugenrencia-contenido-img'>
+                <img style={{height:"12vw"}} src={mehera}/>
+                <div>Sugerencia</div>
+            </div>
+            <div className='sugerencia-contenido-descripcion'>
+                Bienvenido 🤗. Aquí podras ver las funcionalidades del software. 👀 Recuerde que tiene la opción
+                de navegar a travez de los botones o también por nuestra interfaz de voz 🎙.  Para más 
+                información revisar  el tutorial de la interfaz de voz en la barra de la izquierda.
+           </div>
+        </div>
                         
         const component = ReactDOMServer.renderToString(suggest);
 

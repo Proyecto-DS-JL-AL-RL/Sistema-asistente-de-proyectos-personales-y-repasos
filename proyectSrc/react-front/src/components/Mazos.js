@@ -523,7 +523,7 @@ export default function Mazos(props) {
                 
                   <Accordion sx={{width:'130vh'}} expanded={expanded === `panel${idx}$`} onChange={handleChange(`panel${idx}$`)}>
                     <AccordionSummary aria-controls={`panel${idx}$d-content`} id={`panel${idx}$d-header`}>
-                        <Typography  variant="h5" sx={{ flexGrow: 1, color: 'white' }}>{(idx+1)+' '+mazo.Titulo}</Typography>
+                        <Typography  variant="h5" sx={{ flexGrow: 1, color: 'white' }}>{'Mazo #'+(idx+1)+' '+mazo.Titulo}</Typography>
                         <Grid item>
                         <Tooltip title="crear tarjeta" placement="right">
                                   <IconButton onClick={()=>{
@@ -645,7 +645,7 @@ export default function Mazos(props) {
                                     }
                                   >
                                     <ListItemButton disabled={true} sx={{fontWeight:'bold', color:'white'}}>                                  
-                                        <ListItemText primary={`${(idx+1)+' '+value.Pregunta}`} />
+                                        <ListItemText primary={'Tarjeta #'+`${(idx+1)+' '+value.Pregunta}`} />
                                     </ListItemButton>
                                   </ListItem>
                                   </React.Fragment>

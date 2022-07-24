@@ -362,23 +362,22 @@ export default function VerTarjeta(props) {
 
   useEffect(() => {
     props.showAdd.setShowAnadir({card:false, icon:false});
-    const suggest = <Card>
-                        <CardContent>   
-                            <Typography  sx={{fontWeight: 'bold'}} variant="h1">
-                                Sugerencia
-                            </Typography>
-                            <Divider  variant="middle" />
-                            <Typography variant="subtitle1" color="text.secondary" component="div">
-                                En esta sección podras realizar tus repasos  de los temas que desees aprender 🤓.<br/>
-                                Escoge alguna de las opciones o  usa Nuestra interfaz de voz 🎙 para seleccionar <br/>
-                                la respuesta (Solo debe decir la letra del botón para escoger dicha opción).
-                            </Typography>
-                          
-                        </CardContent>
-                        <Box  sx={{mt: '2%', mx:'23%', display:'flex'}}>
-                                <img style={{width:'30ch', height:'30ch'}} src={gambare} alt="mehera"/>
-                        </Box>
-                  </Card>
+    const suggest = <div className='sugerencia-contenido'>
+    <div className='sugenrencia-contenido-img'>
+            <img style={{width:'30ch', height:'30ch'}} src={gambare} alt="mehera"/>
+            <div>Sugerencia</div>
+    </div>
+           <div className='sugerencia-contenido-descripcion'>
+                En esta sección podras realizar tus repasos  de los temas que desees aprender 🤓.
+                Escoge alguna de las opciones o  usa Nuestra interfaz de voz 🎙 para seleccionar 
+                la respuesta. (Use el micrófono entre los botones).<br/>
+                Para indicar las opciones mediante la interfaz de voz : <b>"Opción:" + "la letra"
+                </b><br/>
+                <b>ejemplo "Opción b".</b><br/>
+                Tambien puedes Navegar entre las tarjetas diciendo <b>"siguiente"</b> o <b>"atras"</b>.
+            </div>
+    </div>
+          
     const component = ReactDOMServer.renderToString(suggest);
     dispatch(changeContent(component));
     return ()=>{
