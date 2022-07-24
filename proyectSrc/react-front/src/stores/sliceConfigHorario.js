@@ -9,17 +9,17 @@ export const getIniHorarioConfig = createAsyncThunk('configHorario/getIniHorario
     temaChangeCSS(tema);
     return {intervalo,sobrescribir:sobrescribir,intervaloDefault,tema};
 } )
-
+const valueIntialConfig = {
+    sobrescribir:true,
+    tema:0,
+    intervaloDefault:false,
+    //intervaloMaxMin:[6,18],
+    intervalo: [4,20]
+}
 export const configHorarioSlice = createSlice({
     name:'configHorario',
     initialState:{
-        value:{
-            sobrescribir:true,
-            tema:0,
-            intervaloDefault:false,
-            //intervaloMaxMin:[6,18],
-            intervalo: [4,20]
-        },
+        value:valueIntialConfig,
         base:null
     },
     reducers:{
@@ -51,7 +51,7 @@ export const configHorarioSlice = createSlice({
     extraReducers:builder =>{
         builder
         .addCase(getIniHorarioConfig.fulfilled, (state,action)=>{
-            state.value = action.payload;
+            state.value = action.payload || valueIntialConfig; 
         })
     }
 })

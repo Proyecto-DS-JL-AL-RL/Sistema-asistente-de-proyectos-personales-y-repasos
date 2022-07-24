@@ -23,6 +23,7 @@ import * as ReactDOMServer from 'react-dom/server';
 import { AccountContext } from '../AccountContext';
 import { BACK_IP } from '../publicConstants';
 import axios from 'axios';
+import AyudaInical from '../components/Ayuda/AyudaInical';
 
 
 
@@ -57,7 +58,7 @@ const id2ObtainAllActivities = (actividades,id) =>{
     const acts = []
     actividades.forEach((e)=>{
         if(e.intervalo.indexOf(id)!=-1){
-            console.log(e.estado);
+            //console.log(e.estado);
             acts.push(e);
         } 
     })
@@ -129,6 +130,7 @@ export default function Horario() {
     const dispatch = useDispatch();
     const {sessionState} = useContext(AccountContext);
 
+    const [ayudaVacio,setAyudaVacio] = useState(null);
     const [ocultarDescripcion, setOcultarDescripcion] = useState(true);
     const [visibleConfig,setVisibleConfig] = useState(true);
     const [intervaloHoras,setIntervaloHoras]=useState(false);
@@ -160,7 +162,7 @@ export default function Horario() {
     useEffect(()=>{
         if(!temporalActividad) return;
         dispatch(inciarHorario(temporalActividad.horario));
-        console.log(temporalActividad);
+        //console.log(temporalActividad);
     },[temporalActividad])
     useEffect(()=>{
         
@@ -293,6 +295,13 @@ export default function Horario() {
     useEffect(()=>{
         
         if(!horario) return;
+        if(horario.length<1){
+            setAyudaVacio(<AyudaInical 
+                closeAyuda={()=>{setAyudaVacio(null)}}
+                mostrarConfig={()=>{setVisibleConfig(!visibleConfig)}}/>);
+        }else{
+            setAyudaVacio(null);
+        }
         let flag_horario = true;
         horario.forEach((e)=>{
             if(e.dia<0) flag_horario=false;
@@ -323,7 +332,7 @@ export default function Horario() {
             return;
         }
         if(maxHora-minHora<minDistance){
-            console.log("Hola Min");
+            //console.log("Hola Min");
             const val = Math.floor((minDistance- (maxHora-minHora))/2)+1;
             dispatch(changeIntervalo([minHora-val,maxHora+val]))
             return;
@@ -343,12 +352,12 @@ export default function Horario() {
             if(!configHorario.intervaloDefault ){
 
             }
-            console.log("Comparando:",intervaloActual);
+            //console.log("Comparando:",intervaloActual);
             
             actualizarHorarioConfigRequest(configHorario,getSub());
 
-            console.log(configHorario)
-            console.log(configBase);
+            //console.log(configHorario)
+            //console.log(configBase);
         }
     },[ocultarDescripcion]);
   return (
@@ -406,7 +415,7 @@ export default function Horario() {
             </div>
             
         </div>
-        {ocultarDescripcion?null:descripcionRender}
+        {ocultarDescripcion?ayudaVacio:descripcionRender}
         {visibleConfig?null:<ConfigHorario 
         sub = {getSub()}
         minmaxIntervalo={

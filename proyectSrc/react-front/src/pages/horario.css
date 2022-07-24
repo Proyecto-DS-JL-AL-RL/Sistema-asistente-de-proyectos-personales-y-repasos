@@ -7,6 +7,7 @@
     --color-horario-6: white;
     --fondo-descripcion-horario: white;
     --color-text-tabla:black;
+    --transition-for-item: None;
 }
 #description-content-horario{
     color: var(--color-text-tabla);
@@ -58,6 +59,7 @@
     user-select: none;
     background-color: var(--color-horario-6);
     color:var(--color-text-tabla);
+    transition: var(--transition-for-item) ;
 }
 .unlock-item:hover{
     background-color: var(--color-horario-4);
