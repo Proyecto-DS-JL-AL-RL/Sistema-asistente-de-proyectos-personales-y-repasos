@@ -107,25 +107,7 @@ export default function Mazos(props) {
           window.location.reload(false);
         }
   }
-  const AdvertenciaTarjeta = ()=>{
 
-    return <MensajeAdvertencia
-      visible={setMensajeAdvertenciaDisplay}
-      content={"¿Deseas Borrar esta tarjeta #" + (tarjetaIndex+1)+"?"}
-      imgContent={nani}
-      comentario={<>
-        <div className='advertencia-buttons-container'>
-                    <button className='btn-advertencia-ok' onClick={()=>{
-                     deletecard(mazo)
-                     setMensajeAdvertenciaDisplay(null)
-                    }}
-                    >Si</button>
-                    <button className='btn-advertencia-no' 
-                    onClick={()=>{setMensajeAdvertenciaDisplay(null)}}>No</button>
-                </div>
-      </>}
-    />
-  }
 
 /*  const AdvertenciaMazo = ()=>{
 
@@ -216,8 +198,9 @@ export default function Mazos(props) {
                                                                       axios.put(BACK_IP+'/api/mazos/'+mazo._id, { "Titulo":titulo,
                                                                       "Descripcion":descripcion})
                                                                       window.location.reload(false);
-                                                }} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
+                                                }} sx={{borderRadius: 3, color: 'white', fontWeight:'bold', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
                                                     <SaveIcon sx={{p:1}}/>
+                                                    Guardar
                                                 </Button>
                                             </Tooltip>
                                             </Box>
@@ -312,8 +295,9 @@ export default function Mazos(props) {
                                                              setOpcion4("")
                                                              setRespuesta("")
                                                             window.location.reload(false);
-                                                          }} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
+                                                          }} sx={{borderRadius: 3, color: 'white', fontWeight:'bold', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
                                                               <SaveIcon sx={{p:1}}/>
+                                                              Guardar
                                                           </Button>
                                                       </Tooltip>
                                         </Box>
@@ -518,8 +502,9 @@ export default function Mazos(props) {
                                                             //console.log(mazos.Tarjetas[tarjetaIndex])
                                                             axios.put('/api/mazos/'+mazo._id, update_card)
                                                             window.location.reload(false);*/
-                                                          }} sx={{borderRadius: 3, color: 'black', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
+                                                          }} sx={{borderRadius: 3, color: 'white', fontWeight:'bold', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
                                                               <SaveIcon sx={{p:1}}/>
+                                                              Guardar
                                                           </Button>
                                                       </Tooltip>
                                         </Box>

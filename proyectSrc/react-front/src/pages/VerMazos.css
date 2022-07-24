@@ -1,4 +1,20 @@
+.split_suggerencia {
+    z-index: 1;
+    position: relative;
 
+  }
+  
+  .right_text {
+    right: 0;
+    background-color: whitesmoke;
+    width: 70%;
+  }
+
+  .left_text {
+    left: 0;
+    width: 30%;
+  }
+  
 .container_sinTarjeta{
     background-color: aqua;
     width: 80%;
