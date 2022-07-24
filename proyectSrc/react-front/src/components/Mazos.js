@@ -285,7 +285,13 @@ export default function Mazos(props) {
                                                                                                 opcion4]
                                                                                             //const a['Tarjetas.${tarjetaIndex}.Pregunta']=1
                                                             setShowEditCard(false)
-                                                            
+                                                            mazo.Tarjetas[tarjetaIndex].Pregunta = pregunta
+                                                            mazo.Tarjetas[tarjetaIndex].Respuesta = respuesta
+                                                            mazo.Tarjetas[tarjetaIndex].Opciones = [opcion1, 
+                                                                                              opcion2, 
+                                                                                              opcion3, 
+                                                                                              opcion4]
+                                                            setMazo(mazo.Tarjetas[tarjetaIndex])
                                                             //`
                                                             //let update_tarjeta = {"$set":{update}}
                                                             //console.log(update_card)
@@ -297,7 +303,7 @@ export default function Mazos(props) {
                                                              setOpcion3("")
                                                              setOpcion4("")
                                                              setRespuesta("")
-                                                            window.location.reload(false);
+                                                            //window.location.reload(false);
                                                           }} sx={{borderRadius: 3, color: 'white', fontWeight:'bold', background:'#00b347', '&:hover': {backgroundColor: '#cfe619'}}} variant="contained" size="small">
                                                               <SaveIcon sx={{p:1}}/>
                                                               Guardar
