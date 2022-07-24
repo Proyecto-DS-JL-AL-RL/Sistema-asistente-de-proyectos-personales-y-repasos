@@ -23,7 +23,7 @@ import MensajeAdvertencia from './MensajeAdvertencia';
 import { restoreValueConfig } from '../../stores/sliceConfigHorario';
 import SR,{ useSpeechRecognition } from 'react-speech-recognition';
 import { getDescCommands } from '../../speechMethods/horarioMethods';
-
+import { BACK_IP } from '../../publicConstants';
 
 
 
@@ -109,7 +109,8 @@ const actualizarHorarioRequest = async(newHorario,sub) =>{
         body: content,
         redirect: 'follow'
     }
-    const res = await fetch(`http://localhost:4000/api/horario/${sub}`,requestOptions);
+    const res = await fetch(`${BACK_IP}/api/horario/${sub}`,requestOptions);
+    console.log(res);
     return res;
 
 }

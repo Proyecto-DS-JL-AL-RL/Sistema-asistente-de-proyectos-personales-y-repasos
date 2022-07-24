@@ -11,7 +11,7 @@ import  ReactDOMServer from 'react-dom/server';
 import { useDispatch } from 'react-redux';
 import { changePage } from '../stores/sliceAyuda';
 import MensajeAdvertencia from '../components/horario/MensajeAdvertencia';
-
+import { BACK_IP } from '../publicConstants';
 
 export default function ActivityQueue(params) {
     const dispatch = useDispatch();
@@ -40,11 +40,11 @@ export default function ActivityQueue(params) {
         const {sub} = sessionState;
         const {BaseProyect} = currentState;
         if (sub && BaseProyect){
-            axios.get('http://localhost:4000/api/Proyectos/Nombres/'+sub)
+            axios.get(BACK_IP+'/api/Proyectos/Nombres/'+sub)
                 .then(data=>{
                     if (data.data){
                         if (data.data.error){
-                            console.log(data.data)
+                            //console.log(data.data)
                             if(data.data.error == 'no_init'){
                                 setMensajeAdvertenciaDisplay(AdvertenciaNoInit);
                             }
@@ -65,7 +65,7 @@ export default function ActivityQueue(params) {
         const {sub} = sessionState;
         //console.log(sub);
         if (sub){            
-            axios.get('http://localhost:4000/api/colaActividades/'+sub)
+            axios.get(BACK_IP+'/api/colaActividades/'+sub)
             .then((data)=>{
                 //console.log(data.data);
                 setActivities(data.data);
@@ -94,8 +94,24 @@ export default function ActivityQueue(params) {
         getProyects(); 
     },[sessionState,currentState]);
 
-    useEffect (()=>{
-        const component = ReactDOMServer.renderToString(<div>Ayuda No disponible</div>);
+    useEffect (()=>{                
+        const aa = <div className='sugerencia-contenido'>
+        <div className='sugenrencia-contenido-img'>
+        
+            <img  src='./Sugerencia.jpg'/>
+            <div>Cola de actividades</div>
+        </div>
+        <div className='sugerencia-contenido-descripcion'>
+            Estan son las actividades que puedes recibir por "Dame algo que hacer" 
+            <div className='sugerencia-descripcion'>
+                Puedes definir tus actividades con Pesos, lo cual indica que tan importante es. Sera asi más probable que te toque dicha actividad. 
+            </div>
+            <div className='sugerencia-descripcion'>
+                Puedes asociar una actividad a un proyecto, si no lo haces tus puntos iran a tu proyecto Base.  
+            </div>
+        </div>
+    </div>
+    const component=ReactDOMServer.renderToString(aa);
         dispatch(changePage({content:component,title:"Cola de Actividades"}));
     },[]);
     return(

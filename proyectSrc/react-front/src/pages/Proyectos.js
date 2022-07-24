@@ -15,6 +15,7 @@ import './proyectos.css'
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { changePage } from '../stores/sliceAyuda';
+import { BACK_IP } from '../publicConstants';
 
 export default function Proyectos() {
   const dispatch = useDispatch();
@@ -56,7 +57,7 @@ export default function Proyectos() {
     const {sub} = sessionState;
     if (sub){
       //console.log('subb:',sub);
-      axios.get('http://localhost:4000/api/Proyectos/'+sub)
+      axios.get(BACK_IP+'/api/Proyectos/'+sub)
         .then(data=>{
           if(data.data.error){
             console.log(data.data)
@@ -84,7 +85,7 @@ export default function Proyectos() {
           UserSub : sub,
           Titulo : tituloInput,
         }
-        axios.post('http://localhost:4000/api/Proyectos/addProyect',proyect_)
+        axios.post(BACK_IP+'/api/Proyectos/addProyect',proyect_)
           .then(data=>{
             console.log('data:', data.data);
             setShowForm(false);
@@ -96,8 +97,21 @@ export default function Proyectos() {
   
   
 
-  useEffect(()=>{
-    const component = ReactDOMServer.renderToString(<div>Ayuda No disponible</div>);
+  useEffect(()=>{            
+    const aa = <div className='sugerencia-contenido'>
+        <div className='sugenrencia-contenido-img'>
+        
+            <img  src='./Sugerencia.jpg'/>
+            <div>Sugerencia</div>
+        </div>
+        <div className='sugerencia-contenido-descripcion'>
+            Aca veras Listados los proyectos que creas. 
+            <div className='sugerencia-descripcion'>
+              Tu proyecto base es el que tiene tu nombre usuario. 
+            </div>
+        </div>
+    </div>
+    const component=ReactDOMServer.renderToString(aa);
     dispatch(changePage({content:component,title:"Gestión de Proyectos"}));
     getProyects();
   },[sessionState]);
@@ -140,6 +154,8 @@ export default function Proyectos() {
     if(!showForm)
       setEscribiendo(false);
   },[showForm]);
+
+
 
   return (
     <React.Fragment>

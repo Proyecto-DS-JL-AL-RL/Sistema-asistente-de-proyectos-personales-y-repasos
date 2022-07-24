@@ -12,6 +12,7 @@ import { Box } from '@mui/material';
 import  ReactDOMServer from 'react-dom/server';
 import { useDispatch } from 'react-redux';
 import { changePage } from '../stores/sliceAyuda';
+import { BACK_IP } from '../publicConstants';
 
 export default function AlgoQueHacerPage(){
     const dispatch = useDispatch();
@@ -40,7 +41,7 @@ export default function AlgoQueHacerPage(){
 
     const checkSession = async () => {
         if (currentState.ActividadActual){
-            axios.get('http://localhost:4000/api/colaActividades/actividad/'+currentState.ActividadActual)
+            axios.get(BACK_IP+'/api/colaActividades/actividad/'+currentState.ActividadActual)
                 .then(data=>{
                     const activity = data.data;
                     setStarted(true);
@@ -53,7 +54,7 @@ export default function AlgoQueHacerPage(){
         const {sub} = sessionState;
         if (currentActivity){
             const body = {userSub:sub,activity:currentActivity._id}
-            axios.post('http://localhost:4000/api/state/setActivity',body)
+            axios.post(BACK_IP+'/api/state/setActivity',body)
                 .then((data)=>{
                     console.log(data.data);
                     setCurrentState({...currentState,ActividadActual: currentActivity._id });
@@ -82,7 +83,7 @@ export default function AlgoQueHacerPage(){
                 
             const evidenceBody = {tipo,UrlRef,RefTitle}
             const body = {activity: currentActivity, evidenceBody:evidenceBody };
-            axios.post('http://localhost:4000/api/state/endActivity',body)
+            axios.post(BACK_IP+'/api/state/endActivity',body)
                 .then((data)=>{
                     console.log(data.data);
                     setCurrentState({...currentState,ActividadActual: null }); 
@@ -98,7 +99,7 @@ export default function AlgoQueHacerPage(){
         if (currentActivity ||started)  return;
         const {sub} = sessionState;
         if (sub){
-            axios.get('http://localhost:4000/api/colaActividades/getActividad/'+sub)
+            axios.get(BACK_IP+'/api/colaActividades/getActividad/'+sub)
             .then((data)=>{
                 setCurrentActivity(data.data);
                 setStarted(false);
@@ -126,8 +127,21 @@ export default function AlgoQueHacerPage(){
     useEffect(()=>{setDoingSomething(!(currentActivity==null)); },[currentActivity]);
     useEffect(()=>{checkSession();},[currentState]);
 
-    useEffect (()=>{
-        const component = ReactDOMServer.renderToString(<div>Ayuda No disponible</div>);
+    useEffect (()=>{                
+        const aa = <div className='sugerencia-contenido'>
+        <div className='sugenrencia-contenido-img'>
+        
+            <img  src='./Sugerencia.jpg'/>
+            <div>Sugerencia</div>
+        </div>
+        <div className='sugerencia-contenido-descripcion'>
+            Aca podrás obtener una actividad aleatoria a realizar. 
+            <div className='sugerencia-descripcion'>
+                Si es tu primera vez aqui entre a cola de actividades para agregar actividades.
+            </div>
+        </div>
+    </div>
+    const component=ReactDOMServer.renderToString(aa);
         dispatch(changePage({content:component,title:"Dame algo que hacer"}));
     },[]);
 

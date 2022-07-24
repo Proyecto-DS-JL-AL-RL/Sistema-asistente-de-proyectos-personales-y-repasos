@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useSpeechRecognition } from 'react-speech-recognition';
 import { getAgregarComands } from '../speechMethods/actividadesMethods';
 import MensajeAdvertencia from './horario/MensajeAdvertencia';
-
+import { BACK_IP } from '../publicConstants';
 
 
 
@@ -20,6 +20,7 @@ export default function ActividadForm(props){
     const { sessionState } = useContext(AccountContext);
     const [puntero,setPuntero] = useState(null);
     const [mensajeAdvertenciaDisplay,setMensajeAdvertenciaDisplay] = useState(null);
+    
 
     const actividadSinNombrePaper = () =>{
         return <MensajeAdvertencia 
@@ -55,18 +56,18 @@ export default function ActividadForm(props){
             "ProyectoTitulo":tituloProyect
           };
 
-        axios.post('http://localhost:4000/api/colaActividades/addActividad',Item)
+        axios.post(BACK_IP+'/api/colaActividades/addActividad',Item)
             .then(data=>{
-                console.log(data);
+                //console.log(data);
             })
             .catch(err=>console.log(err));  
 
-        console.log('agregado',Item);
+        //console.log('agregado',Item);
         props.setActivities([...props.activities,Item])
         props.close();
     }
     const establecerProyecto = (proyecto)=>{
-        console.log('proyproy',proyecto);
+        //console.log('proyproy',proyecto);
         setCurrProyect(proyecto);
         setSelectingProyect(false);
     }
@@ -211,7 +212,7 @@ export default function ActividadForm(props){
                 :null}
 
                 {proyectos.map((p,idx)=>(
-                    <Grid container sx = {{width:'100%' , ":hover":{
+                    <Grid key = {idx} container sx = {{width:'100%' , ":hover":{
                         bgcolor:'#1DB5BE' ,cursor:'pointer'
                     }}} alignItems ='center' direction = 'row' 
                         onClick = {()=>{establecerProyecto(p)}}

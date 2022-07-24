@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import { BACK_IP } from './publicConstants';
 const initUser  = async (userData)=>{
     const {sub,email,family_name,given_name,nickname} = userData;
     const data2 = {
@@ -9,7 +9,7 @@ const initUser  = async (userData)=>{
         Apellido: family_name,
         Correo: email,
     }
-    axios.post('http://localhost:4000/api/users',data2,{withCredentials: false})
+    axios.post(BACK_IP+'/api/users',data2,{withCredentials: false})
     .then((data)=>{
         console.log(data);
     })

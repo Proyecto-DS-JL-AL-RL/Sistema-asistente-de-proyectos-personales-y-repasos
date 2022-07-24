@@ -35,6 +35,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined';
 import {  AccountContext } from './../AccountContext';
 import { useContext } from "react";
+import { BACK_IP } from "../publicConstants";
 
 /*
 const mazos = [
@@ -104,7 +105,7 @@ const mazos = [
           const {sub} = sessionState;
           if (sub){
             setidUsersub(sub)
-            axios.get('/api/mazos/'+sub).then(function(response){            
+            axios.get(BACK_IP+'/api/mazos/'+sub).then(function(response){            
               if (response.data.length === 0){
                 setExistMazos(false)
               }else{
@@ -208,7 +209,7 @@ const mazos = [
                                                   <Tooltip title="Guardar" placement="left">
                                                     <Button onClick={()=>{
                                                             props.showAdd.setShowAnadir({card:false, icon:true})
-                                                              axios.post('/api/mazos/', 
+                                                              axios.post(BACK_IP+'/api/mazos/', 
                                                               {
                                                                   "userSub":idUsersub,
                                                                   "Titulo": titulo,
