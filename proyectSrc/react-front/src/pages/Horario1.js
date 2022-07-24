@@ -121,7 +121,7 @@ const actualizarHorarioConfigRequest = async(config,sub) =>{
 
 }
 
-export default function Horario() {
+export default function Horario(props) {
     const horario = useSelector((state)=>state.horario.value);
     const configHorario = useSelector((state) => state.configHorario.value);
     const configBase = useSelector((state)=>state.configHorario.base);
@@ -156,6 +156,7 @@ export default function Horario() {
     }
     
     useEffect(()=>{
+        props.showAdd.setShowAnadir({card:false, icon:false});
         iniHorario();
         //temaChangeCSS(2);
     },[sessionState])
