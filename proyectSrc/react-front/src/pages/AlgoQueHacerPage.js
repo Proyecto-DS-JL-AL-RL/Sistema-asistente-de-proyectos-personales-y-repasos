@@ -11,8 +11,9 @@ import MensajeAdvertencia from '../components/horario/MensajeAdvertencia'
 import { Box } from '@mui/material';
 import  ReactDOMServer from 'react-dom/server';
 import { useDispatch } from 'react-redux';
-import { changePage } from '../stores/sliceAyuda';
+import { changePage, restoreContent } from '../stores/sliceAyuda';
 import { BACK_IP } from '../publicConstants';
+import { changeTutorial, restoreContentTutorial } from '../stores/sliceTutorial';
 
 export default function AlgoQueHacerPage(props){
     const dispatch = useDispatch();
@@ -163,8 +164,51 @@ export default function AlgoQueHacerPage(props){
             </div>
         </div>
     </div>
+
+        const tuto = <div className='sugerencia-contenido'>
+            <div className='sugenrencia-contenido-img'>
+
+            <img  src='./microphonehelp.jpg'/>
+                <div>Tutorial Interfaz de Voz</div>
+            </div>
+            <div className='sugerencia-contenido-descripcion-600'>
+                <div className='sugerencia-descripcion-margin-subititle'>
+                    General
+                </div>
+                <div className='sugerencia-descripcion-margin'>
+                    "Dame una Actividad", "Dame Algo que hacer": Ejecuta la función de una actividad. 
+                </div>
+                <div className='sugerencia-descripcion-margin'>
+                    "Continuar" : Continua en el proceso de realizar una actividad, Aceptarla y terminarla.
+                </div>
+                <div className='sugerencia-descripcion-margin'>
+                    "Volver" : Si aun no se empezo la actividad dada, vuelve para poder tomar otra. Si fue aceptada vuelve a inicio.
+                </div>
+                
+                <div className='sugerencia-descripcion-margin-subititle'>
+                    En una actividad ya iniciada
+                </div>
+
+                <div className='sugerencia-descripcion-margin'>
+                    "Agregar evidencia": Abre el Formulario de evidencia
+                </div>
+                <div className='sugerencia-descripcion-margin'>
+                    "Terminar": Termina la actividad
+                </div>
+                <div className='sugerencia-descripcion-margin'>
+                    "Limpiar evidencia": Quita la evidencia subida.
+                </div>
+            </div>
+        </div>
+
+    const tutorial_ = ReactDOMServer.renderToString(tuto);
     const component=ReactDOMServer.renderToString(aa);
         dispatch(changePage({content:component,title:"Dame algo que hacer"}));
+        dispatch(changeTutorial(tutorial_));
+        return ()=>{
+            dispatch(restoreContent());
+            dispatch(restoreContentTutorial());
+        }
     },[]);
 
     return (

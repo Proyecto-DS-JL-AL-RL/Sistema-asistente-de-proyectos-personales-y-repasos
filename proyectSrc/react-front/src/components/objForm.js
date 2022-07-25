@@ -76,7 +76,7 @@ export default function ObjetivoForm(props){
                 <Button onClick = {props.close} variant = 'contained' sx = {{bgcolor :'red',left:'94%'}} >X</Button>
                 
                 <Typography variant = 'h4'>
-                    Agregando un Objetivo
+                    Agregando un Pendiente
                 </Typography>
 
                 <Grid container direction = 'column' sx = {{width:'80%',marginLeft:'10%',marginTop:'70px'}} rowGap = {3} alignItems = 'center'>

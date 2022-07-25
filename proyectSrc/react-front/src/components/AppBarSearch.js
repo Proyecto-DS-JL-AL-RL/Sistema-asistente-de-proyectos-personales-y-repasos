@@ -11,10 +11,11 @@ import MicIcon from '@mui/icons-material/Mic';
 import AddIcon from '@mui/icons-material/Add';
 import { useDispatch, useSelector } from 'react-redux';
 import { mostrarAyuda } from '../stores/sliceAyuda';
+import { mostrarTutorial } from '../stores/sliceTutorial';
 import SR,{useSpeechRecognition} from 'react-speech-recognition';
 import { AccountContext } from '../AccountContext';
 import { Button } from '@mui/material';
-
+import PermCameraMicIcon from '@mui/icons-material/PermCameraMic';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -64,8 +65,10 @@ export default function AppBarSearch(props) {
   const handleAyuda = () =>{
     dispatch(mostrarAyuda());
   }
+  const handleTutorial= () =>{
+    dispatch(mostrarTutorial());
+  }
   const {listening,transcript} = useSpeechRecognition();
-  const {sessionState,logout} = React.useContext(AccountContext);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -91,7 +94,15 @@ export default function AppBarSearch(props) {
 
           </Typography>
           <Search>
-
+            <IconButton
+              color="inherit"
+              onClick={handleTutorial}
+            >
+              <PermCameraMicIcon
+                 sx={{color:'white', 
+                 background:'orange',fontSize:'2em',
+                  p:1,borderRadius:50}}/> 
+            </IconButton>
 
             <IconButton
               color="inherit"

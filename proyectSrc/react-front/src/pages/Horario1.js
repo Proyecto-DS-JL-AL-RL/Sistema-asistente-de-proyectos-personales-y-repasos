@@ -14,6 +14,7 @@ import { useSelector,useDispatch} from 'react-redux';
 import {inciarHorario, restoreActivity } from '../stores/sliceHorario';
 import { actividad2intervalo, temaChangeCSS } from '../components/horario/utilsHorario';
 import { changePage,restoreContent } from '../stores/sliceAyuda';
+import { changeTutorial,restoreContentTutorial } from '../stores/sliceTutorial';
 import {changeIntervalo, intervaloOverFlow,changeBase} from '../stores/sliceConfigHorario';
 import { getIniHorario} from '../stores/sliceHorario';
 import  {getIniHorarioConfig}  from '../stores/sliceConfigHorario';
@@ -155,6 +156,8 @@ export default function Horario(props) {
         return sub;
     }
     
+    
+
     useEffect(()=>{
         props.showAdd.setShowAnadir({card:false, icon:false});
         iniHorario();
@@ -185,10 +188,52 @@ export default function Horario(props) {
                 </div>
             </div>
         </div>
+
+        const tuto = <div className='sugerencia-contenido'>
+        <div className='sugenrencia-contenido-img'>
+        
+        <img  src='./microphonehelp.jpg'/>
+            <div>Tutorial Interfaz de Voz</div>
+        </div>
+        <div className='sugerencia-contenido-descripcion-600'>
+            <div className='sugerencia-descripcion-margin-subititle'>
+               Mientras Crea/Modifica o ve la configuración de un actividad:
+            </div>
+            <div className='sugerencia-descripcion-margin'>
+                "Crear/Guardar"  : Termina de agregar o editar la actividad 
+            </div>
+            <div className='sugerencia-descripcion-margin'>
+                "Editar"  : Entra al modo edición al ver una actividad
+            </div>
+            <div className='sugerencia-descripcion-margin'>
+                "Eliminar"  : Elimina la actividad seleccionada
+            </div>
+            
+            <div className='sugerencia-descripcion-margin'>
+                "Nombre [Contenido]" : Llena el campo de nombre
+            </div>
+            <div className='sugerencia-descripcion-margin'>
+                "Descripción [Contenido]" : Llena el campo Descripción
+            </div>
+            <div className='sugerencia-descripcion-margin'>
+                "Acrónimo [Contenido]" : No mayor a 4 letras
+            </div>
+            <div className='sugerencia-descripcion-margin'>
+                "Desde la(s) [hora1] hasta la(s) [hora2]": Puede decirlos por separado (Formato 24 horas)
+            </div>
+            <div className='sugerencia-descripcion-margin'>
+                "[Lunes,Martes,Miercoles,Jueves,Viernes,Sabado,Domingo]": Día
+            </div>
+        </div>
+    </div>
+
+        const tutorial_ = ReactDOMServer.renderToString(tuto);
         const component=ReactDOMServer.renderToString(aa);
         dispatch(changePage({content:component,title:"Mi Horario"}));
+        dispatch(changeTutorial(tutorial_))
         return ()=>{
             dispatch(restoreContent());
+            dispatch(restoreContentTutorial());
         }
     },[])
     const id2actividadClick = (idSelect) =>{

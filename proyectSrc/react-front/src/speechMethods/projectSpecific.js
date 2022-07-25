@@ -2,7 +2,7 @@ import { numerosDict,backExpresions,confirmExpresions } from "./constants";
 
 const getCommandsPage = (methods) =>{
     const comando = [{
-        command: ["Crear una Pendiente(.)","Agregar una Pendiente(.)","Agregar(.)"],
+        command: ["Crear (un) Pendiente(.)","Agregar (un) Pendiente(.)","Agregar(.)"],
         callback: (frase) =>{
             methods.initCrearPendiente();
         },

@@ -26,7 +26,7 @@ import {useSelector,useDispatch} from 'react-redux';
 import Proyectos from './pages/Proyectos';
 import {  AccountContext } from './AccountContext';
 import DisplayAyuda from './components/Ayuda/DisplayAyuda';
-
+import DisplayTutorial from './components/Ayuda/tutorialDisplay';
 import MensajesCompletos from './components/horario/MensajesCompletos';
 import { setVisible as setVisibleMensajeCorto } from './stores/sliceMensajesCortos';
 import { BACK_IP } from './publicConstants';
@@ -42,6 +42,7 @@ function App() {
   const [nameBar,setNameBar] = useState("Inicio")
   const CONTINOUS_ = false;
   const ayuda = useSelector((state)=>state.ayuda.value);
+  const tutorial = useSelector(state=>state.tutoriales.value);
   const mensajesFantasma = useSelector((state)=>(state.mensajesCortos.value));
   const dispatch = useDispatch();
   
@@ -199,6 +200,7 @@ function App() {
                     <Beforeunload onBeforeunload= {beforeUnload} />
                     
                     {ayuda.display?<DisplayAyuda/>:null}
+                    {tutorial.display?<DisplayTutorial/>:null}
                     {listening?<EscuchandoDisplay mensaje={transcript}/>:null}
             </React.Fragment>
             :

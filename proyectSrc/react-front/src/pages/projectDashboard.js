@@ -12,8 +12,9 @@ import MensajeAdvertencia from '../components/horario/MensajeAdvertencia';
 import axios from 'axios';
 import  ReactDOMServer from 'react-dom/server';
 import { useDispatch } from 'react-redux';
-import { changePage } from '../stores/sliceAyuda';
+import { changePage, restoreContent } from '../stores/sliceAyuda';
 import { BACK_IP } from '../publicConstants';
+import { changeTutorial, restoreContentTutorial } from '../stores/sliceTutorial';
 export default function ProyectoView(){
     const { currentState } = useContext(AccountContext);
     const dispatch = useDispatch();
@@ -157,24 +158,66 @@ export default function ProyectoView(){
 
     useEffect (()=>{
             const aa = <div className='sugerencia-contenido'>
-            <div className='sugenrencia-contenido-img'>
-            
-                <img  src='./Sugerencia.jpg'/>
+            <div className='sugenrencia-contenido-img'>            
+                
                 <div>Vista de Proyecto</div>
             </div>
-            <div className='sugerencia-contenido-descripcion'>
+            <div className='sugerencia-contenido-descripcion-600'>
                 Esta es la vista de un proyecto
-                <div className='sugerencia-descripcion'>
+                <div className='sugerencia-descripcion-margin'>
                     Aca veras tu actividad, junto con los puntos que acumulaste 
                 </div>
-                <div className='sugerencia-descripcion'>
-                    Tus pendientes se ordenaran de acuerdo a su importancia y el tiempo que ha pasado desde que los pusiste  
+                <div className='sugerencia-descripcion-margin'>
+                    Los pendientes son anotaciones que se ordenaran de acuerdo a su importancia y el tiempo que ha pasado desde que los pusiste  
+                </div>
+                <div className='sugerencia-descripcion-margin'>
+                    Para agregar actividad reciente Debes completar actividades asociadas al proyecto en Dame Algo que hacer 
                 </div>
             </div>
         </div>
+
+        const tuto = <div className='sugerencia-contenido'>
+            <div className='sugenrencia-contenido-img'>
+                
+                    <div>Tutorial Interfaz de Voz</div>
+                </div>
+                <div className='sugerencia-contenido-descripcion-600'>
+
+                    <div className='sugerencia-descripcion-margin'>
+                        "Crear/Agregar Pendiente"  : Inicia crear un nuevo pendiente 
+                    </div>
+                    <div className='sugerencia-descripcion-margin-subititle'>
+                        Mientras esta agregando un pendiente:
+                    </div>
+                    <div className='sugerencia-descripcion-margin'>
+                        "Agregar"  : Termina de crear el nuevo Pendiente
+                    </div>
+                    <div className='sugerencia-descripcion-margin'>
+                        "Volver/Atrás"  : Cierra el formulario de crear Pendiente
+                    </div>        
+                    <div className='sugerencia-descripcion-margin'>
+                        "Título [Contenido]"
+                    </div>
+                    <div className='sugerencia-descripcion-margin'>
+                        "Descripción [Contenido]"
+                    </div>
+                    <div className='sugerencia-descripcion-margin'>
+                        "Peso [numero]" o "Importancia [numero]": Establece la Importancia
+                    </div>
+                    </div>
+        </div>
+
+
+        const tutorial_ = ReactDOMServer.renderToString(tuto);
         const component=ReactDOMServer.renderToString(aa);
         dispatch(changePage({content:component,title:"Gestión de Proyectos"}));
+        dispatch(changeTutorial(tutorial_));
         setBlockedDeleteP(false);
+
+        return ()=>{
+            dispatch(restoreContent());
+            dispatch(restoreContentTutorial());
+        }
     },[]);
 
     const commands = getCommandsPage({handleBack,initCrearPendiente});
@@ -207,7 +250,7 @@ export default function ProyectoView(){
 
                             <Button sx = {{width:'80%',bgcolor: '#C0DAE5', borderRadius:'20px',height:'15%', marginLeft: '10%'}} variant = 'contained' mb = {1} onClick = {initCrearPendiente}>
                                 <Typography color = 'black' sx = {{fontWeight : 'bold'}}>
-                                    Agregar
+                                    Agregar Pendiente
                                 </Typography>
                             </Button>
                             <Box sx = {{height:'80%',marginTop:'10px'}}>

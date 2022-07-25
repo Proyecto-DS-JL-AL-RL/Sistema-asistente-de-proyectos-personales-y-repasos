@@ -25,6 +25,7 @@ import mehera from './img/mehera.webp'
 
 import { useDispatch} from 'react-redux';
 import { restoreContent,changePage } from '../stores/sliceAyuda';
+import { changeTutorial, restoreContentTutorial } from "../stores/sliceTutorial";
 
 
     /*
@@ -102,16 +103,48 @@ export default function MostrarFuncionalidades(props) {
                 información revisar  el tutorial de la interfaz de voz en la barra de la izquierda.
            </div>
         </div>
-                        
+        const tuto = <div className='sugerencia-contenido'>
+        <div className='sugenrencia-contenido-img'>
+                <img  src='./microphonehelp.jpg'/>
+                <div>Tutorial Interfaz de Voz </div>
+            </div>
+            <div className='sugerencia-contenido-descripcion-600'>
+                
+                <div className='sugerencia-descripcion-margin-subititle'>
+                    Navegación:
+                </div>
+                <div className='sugerencia-descripcion-margin'>
+                    Pruebe decir el titulo de las funcionalidades mostrado en los recuadros para dirigirte a ellos
+                </div>
+                <div className='sugerencia-descripcion-margin'>
+                    Puedes volver aqui diciendo "Llevame a inicio"
+                </div>
+                <div className='sugerencia-descripcion-margin'>
+                    Existen otras frases para cada funcionalidad, además que no tienen que ser dichas de forma perfecta.
+                </div>        
+                <div className='sugerencia-descripcion-margin'>
+                    Podrá usar los comandos de navegación en cualquier momento y lugar de la aplicación
+                </div>
+                <div className='sugerencia-descripcion-margin'>
+                    El microfono se mantendrá escuchando mientras siga hablando. Si deja de hablar este se apagará automaticamente. 
+                </div>
+                <div className='sugerencia-descripcion-margin'>
+                    Debajo del microfono podra ver un texto que muestra las palabras que va diciendo.
+                </div>
+                </div>
+        </div>                        
+
+
         const component = ReactDOMServer.renderToString(suggest);
+        const tutorial_ = ReactDOMServer.renderToString(tuto);
 
         dispatch(changePage({content:component,title:"Funcionalidades" }));
-        
-
+        dispatch(changeTutorial(tutorial_));
 
         //dispatch(changeContent(component));
         return ()=>{
             dispatch(restoreContent());
+            dispatch(restoreContentTutorial());
         }
 
       },[]);

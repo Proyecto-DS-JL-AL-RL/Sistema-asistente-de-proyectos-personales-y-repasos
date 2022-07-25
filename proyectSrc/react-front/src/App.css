@@ -93,3 +93,27 @@
     --top-space:2px;
   }
 }
+
+.sugerencia-contenido-descripcion-600{
+  max-width: 600px;
+}
+
+.sugerencia-descripcion-margin{
+  padding-left: 20px;
+  font-weight: 500;
+  margin-top: 7px;
+  margin-bottom: 3px;
+}
+.sugerencia-descripcion-margin>*{
+  font-size: 10px;
+}
+
+.sugerencia-descripcion-margin-subititle{
+  font-weight: 700;
+  margin-top: 15px;
+  margin-bottom: 3px;
+}
+.sugerencia-descripcion-margin-subititle>*{
+  font-size: 12px;
+}
+

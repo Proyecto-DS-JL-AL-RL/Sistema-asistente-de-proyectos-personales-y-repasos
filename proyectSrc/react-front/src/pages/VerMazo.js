@@ -38,6 +38,7 @@ import { useContext } from "react";
 import { BACK_IP } from "../publicConstants";
 import { useSpeechRecognition } from "react-speech-recognition";
 import { getPageCommands } from "../speechMethods/tarjetasMethods";
+import { changeTutorial, restoreContentTutorial } from "../stores/sliceTutorial";
 
 /*
 const mazos = [
@@ -147,12 +148,44 @@ const mazos = [
             </div>
         </div>
 
+          const tuto = <div className='sugerencia-contenido'>
+          <div className='sugenrencia-contenido-img'>
+                  <img  src='./microphonehelp.jpg'/>
+                  <div>Tutorial Interfaz de Voz </div>
+              </div>
+              <div className='sugerencia-contenido-descripcion-600'>
+                  
+                  <div className='sugerencia-descripcion-margin-subititle'>
+                      Mientras agrega un mazo :
+                  </div>
+                  <div className='sugerencia-descripcion-margin'>
+                    "Título [Contenido]"
+                  </div>
+                  <div className='sugerencia-descripcion-margin'>
+                    "Descripción [Contenido]"
+                  </div>        
+                  <div className='sugerencia-descripcion-margin-subititle'>
+                      Mientras agrega una tarjeta a un Mazo:
+                  </div>
+                  <div className='sugerencia-descripcion-margin'>
+                    "Pregunta [Contenido]": Llena el campo de pregunta
+                  </div>
+                  <div className='sugerencia-descripcion-margin'>
+                    "Opción [Numero] [Contenido]": Llena el campo de Opción (1,2,3,4)
+                  </div>
+                  <div className='sugerencia-descripcion-margin'>
+                    "Respuesta [Numero]": Numero de la opción correcta
+                  </div>
+                  </div>
+          </div>           
         
-          
+          const tutorial_ = ReactDOMServer.renderToString(tuto);
           const component = ReactDOMServer.renderToString(suggest);
           dispatch(changeContent(component));
+          dispatch(changeTutorial(tutorial_));
               return ()=>{
                   dispatch(restoreContent());
+                  dispatch(restoreContentTutorial());
               }                           
         },[]);
 

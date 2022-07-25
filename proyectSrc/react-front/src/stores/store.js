@@ -3,7 +3,7 @@ import horarioReducer from './sliceHorario'
 import ayudaReducer from './sliceAyuda'
 import configHorarioRecucer from './sliceConfigHorario'
 import mensajesCortosReducer from './sliceMensajesCortos'
-
+import tutorialReducer from './sliceTutorial'
 
 const store = configureStore({
     reducer: {
@@ -11,6 +11,7 @@ const store = configureStore({
         ayuda:ayudaReducer,
         configHorario:configHorarioRecucer,
         mensajesCortos:mensajesCortosReducer,
+        tutoriales:tutorialReducer
     }
 
 })

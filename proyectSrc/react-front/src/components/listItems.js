@@ -75,10 +75,7 @@ export const secondaryListItems = (
     color:'white'}} inset>
       Accesos Rapidos
     </ListSubheader>
-    <ItemButttonBar 
-    icon = {<SettingsSuggestIcon sx={{color:'white',
-    borderBottom:'solid 1px white'}}/>} name={"Configuracion"}    
-    />
+
     <LoggoutButttonBar/>
     
     <ItemButttonBar page={"/"}
