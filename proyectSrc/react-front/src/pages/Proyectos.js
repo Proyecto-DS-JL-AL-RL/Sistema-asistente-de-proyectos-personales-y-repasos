@@ -14,8 +14,9 @@ import  ReactDOMServer from 'react-dom/server';
 import './proyectos.css'
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { changePage } from '../stores/sliceAyuda';
+import { changePage, restoreContent } from '../stores/sliceAyuda';
 import { BACK_IP } from '../publicConstants';
+import { changeTutorial, restoreContentTutorial } from '../stores/sliceTutorial';
 
 export default function Proyectos(props) {
   const dispatch = useDispatch();
@@ -104,15 +105,53 @@ export default function Proyectos(props) {
             <div>Sugerencia</div>
         </div>
         <div className='sugerencia-contenido-descripcion'>
-            Aca veras Listados los proyectos que creas. 
+            Aca veras Listados los proyectos que crees. 
             <div className='sugerencia-descripcion'>
               Tu proyecto base es el que tiene tu nombre usuario. 
             </div>
+            <div className='sugerencia-descripcion'>
+              La función de eliminar esta dentro del proyecto. Obviamente no podrás eliminar tu proyecto Base :) 
+            </div>
+            <div className='sugerencia-descripcion'>
+              Las barras rosas indican hace cuanto que no has sumado actividad 
+            </div>
         </div>
     </div>
+    const tuto = <div className='sugerencia-contenido'>
+    <div className='sugenrencia-contenido-img'>
+    
+    <img  src='./microphonehelp.jpg'/>
+        <div>Tutorial Interfaz de Voz</div>
+    </div>
+    <div className='sugerencia-contenido-descripcion-600'>
+
+        <div className='sugerencia-descripcion-margin'>
+            "Crear/Nuevo/Agregar Proyecto"  : Inicia crear un nuevo proyecto 
+        </div>
+        <div className='sugerencia-descripcion-margin-subititle'>
+           Mientras esta creando un nuevo proyecto:
+        </div>
+        <div className='sugerencia-descripcion-margin'>
+            "Agregar"  : Termina de crear el nuevo Proyecto
+        </div>
+        <div className='sugerencia-descripcion-margin'>
+            "Volver/Atrás"  : Cierra el formulario de crear Proyecto
+        </div>        
+        <div className='sugerencia-descripcion-margin'>
+            "Título [Contenido]" : Llena el campo de Titulo
+        </div>
+    </div>
+</div>
     const component=ReactDOMServer.renderToString(aa);
+    const tutorial_=ReactDOMServer.renderToString(tuto);
     dispatch(changePage({content:component,title:"Gestión de Proyectos"}));
+    dispatch(changeTutorial(tutorial_));
     getProyects();
+
+    return ()=>{
+      dispatch(restoreContent);
+      dispatch(restoreContentTutorial);
+    }
   },[sessionState]);
 
   const handleBack = ()=>{

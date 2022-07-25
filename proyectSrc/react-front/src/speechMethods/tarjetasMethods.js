@@ -1,7 +1,5 @@
 import { numerosDict,backExpresions,continueExpresions } from "./constants";
 
-const dictRef = {"la opción a":"a","la opción b":"b","la opción c":"c","la opción d":"d"}
-
 const getPageCommands = (methods) => {
     const comando = [
         {
@@ -89,7 +87,7 @@ const getPageCommandsForm = (methods) => {
          },
          ,
          {
-            command: ["(Me) Escribe(,) (la )Opción correcta(,) *(.)","Escribir(,) (la )Opción correcta (es) (la)(,) *(.)","(La) Opción correcta (es) (la) *(.)"],
+            command: ["(Me) Escribe(,) (la )Opción correcta(,) *(.)","Escribir(,) (la )Opción correcta (es) (la)(,) *(.)","(La) Opción correcta (es) (la) *(.)","(La) Respuesta (es) (la) *(.)"],
             callback: (frase)=>{
                 let peso = 1;
                 const numeroString = frase.toLowerCase();
@@ -111,17 +109,23 @@ const getPageCommandsForm = (methods) => {
 }
 
 
+const dictRef = {"la opción a":"a","la opción 1":"a","la opción uno":"a"
+                ,"la opción b":"b","la opción 2":"b","la opción dos":"b"
+                ,"la opción c":"c","la opción tres":"c","la opción 3":"c","la opción sé":"c"
+                ,"la opción d":"d","la opción cuatro":"d","la opción 4":"d"}
+
 const getInGameCommands = (methods) =>{
     const comando = [{
-        command: ["(La) Opción A(.)","(La) Opción B(.)","(La) Opción C(.)","(La) Opción D(.)"],
+        command: ["(La) Opción A(.)","(La) Opción B(.)","(La) Opción C(.)","(La) Opción Se(.)","(La) Opción Sé(.)","(La) Opción D(.)",
+                    "(La) Opción 1(.)","(La) Opción 2(.)","(La) Opción 3(.)","(La) Opción 4(.)",
+                    "(La) Opción uno(.)","(La) Opción dos(.)","(La) Opción tres(.)","(La) Opción cuatro(.)"],
         callback: (command,spoken,ratio) =>{
             const lett = command.toLowerCase();
-            console.log('Command-',lett)
             if (lett in dictRef)
                 methods.handleOption(dictRef[lett])
         },
         isFuzzyMatch: true,
-        fuzzyMatchingThreshold: 1,
+        fuzzyMatchingThreshold: 0.75,
         bestMatchOnly:true 
      },
      {

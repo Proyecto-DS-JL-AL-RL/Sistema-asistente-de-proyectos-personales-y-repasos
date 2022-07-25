@@ -14,7 +14,8 @@ import CardContent from '@mui/material/CardContent';
 import Divider from '@mui/material/Divider';
 //import Tooltip from '@mui/material/Tooltip';
 //import CloseIcon from '@mui/icons-material/Close';
-import gambare from './img/gambare.webp'
+import gambare from './img/gambare.webp';
+import micHelp from './img/microphonehelp.jpg'
 import * as ReactDOMServer from 'react-dom/server'
 import { useDispatch} from 'react-redux';
 import { changeContent,restoreContent } from '../stores/sliceAyuda';
@@ -30,6 +31,7 @@ import { getInGameCommands } from '../speechMethods/tarjetasMethods';
 import star from './img/star.png';
 import { AccountContext } from '../AccountContext';
 import { BACK_IP } from '../publicConstants';
+import { changeTutorial, restoreContentTutorial } from '../stores/sliceTutorial';
 
 //<MicIcon className='button-main' sx={{p:2, borderRadius:'50%', background:'red',
 //color:'white', width: '30%', height: '30%', '&:hover': {backgroundColor: '#FF6347'} }}/>
@@ -378,10 +380,36 @@ export default function VerTarjeta(props) {
             </div>
     </div>
           
+          const tuto = <div className='sugerencia-contenido'>
+          <div className='sugenrencia-contenido-img'>
+                  <img  src={micHelp}/>
+                  <div>Tutorial Interfaz de Voz </div>
+              </div>
+              <div className='sugerencia-contenido-descripcion-600'>
+                  
+                  <div className='sugerencia-descripcion-margin-subititle'>
+                      Ejecutando Repaso 
+                  </div>
+                  <div className='sugerencia-descripcion-margin'>
+                    "Siguiente" : Dirige a la Siguiente Tarjeta
+                  </div>
+                  <div className='sugerencia-descripcion-margin'>
+                    "Anterior" : Dirige a la Anterior Tarjeta
+                  </div>        
+                  <div className='sugerencia-descripcion-margin'>
+                      "Opción [1,2,3,4]": Marca la Opción 1,2,3,4 (A,B,C,D)
+                  </div>
+                  </div>
+          </div>           
+        
+    
+    const tutorial_ = ReactDOMServer.renderToString(tuto);
     const component = ReactDOMServer.renderToString(suggest);
     dispatch(changeContent(component));
+    dispatch(changeTutorial(tutorial_));
     return ()=>{
         dispatch(restoreContent());
+        dispatch(restoreContentTutorial());
     }                
   },[]);
 

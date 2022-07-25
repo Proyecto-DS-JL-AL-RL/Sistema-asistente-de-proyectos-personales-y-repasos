@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Tooltip, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import './proyect.css';
@@ -25,6 +25,7 @@ export default function Proyecto(props) {
   },[props.proyect]);
 
   return (
+
     <Box width={250} sx={{
       mx:2,
       boxShadow:6,
@@ -32,7 +33,8 @@ export default function Proyecto(props) {
       position:'relative',
       pb:'60px',
       minHeight:70,
-      borderRadius:1
+      borderRadius:1,
+      cursor:'pointer'
     }}
     onClick = {handleRedirect}
     >

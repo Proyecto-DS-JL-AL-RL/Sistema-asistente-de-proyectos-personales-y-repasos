@@ -9,10 +9,69 @@ import { getCommandsPage } from '../speechMethods/actividadesMethods';
 import axios from 'axios';
 import  ReactDOMServer from 'react-dom/server';
 import { useDispatch } from 'react-redux';
-import { changePage } from '../stores/sliceAyuda';
+import { changePage ,restoreContent} from '../stores/sliceAyuda';
 import MensajeAdvertencia from '../components/horario/MensajeAdvertencia';
 import { BACK_IP } from '../publicConstants';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { changeTutorial,restoreContentTutorial } from '../stores/sliceTutorial';
+const aa = <div className='sugerencia-contenido'>
+        <div className='sugenrencia-contenido-img'>
+        
+            <img  src='./Sugerencia.jpg'/>
+            <div>Cola de actividades</div>
+        </div>
+        <div className='sugerencia-contenido-descripcion'>
+            Estan son las actividades que puedes recibir por "Dame algo que hacer" 
+            <div className='sugerencia-descripcion'>
+                Puedes definir tus actividades con Pesos, lo cual indica que tan importante es. Sera asi más probable que te toque dicha actividad. 
+            </div>
+            <div className='sugerencia-descripcion'>
+                Puedes asociar una actividad a un proyecto, si no lo haces tus puntos iran a tu proyecto Base.  
+            </div>
+        </div>
+    </div>
+
+const Tutorialcomp = <div className='sugerencia-contenido'>
+        <div className='sugenrencia-contenido-img'>
+        
+        <img  src='./microphonehelp.jpg'/>
+            <div>Tutorial Interfaz de Voz</div>
+        </div>
+        <div className='sugerencia-contenido-descripcion-600'>
+            <div className='sugerencia-descripcion-margin-subititle'>
+              En la página base
+            </div>
+            <div className='sugerencia-descripcion-margin'>
+                "Agregar" " : Empieza a crear una actividad 
+            </div>
+
+            <div className='sugerencia-descripcion-margin-subititle'>
+              Mientras crea una Actividad:
+            </div>
+            <div className='sugerencia-descripcion-margin'>
+                "Agregar"  : Termina de agregar la actividad 
+            </div>
+            <div className='sugerencia-descripcion-margin'>
+                "Volver"  :  Cierra el formulario 
+            </div>
+            
+            <div className='sugerencia-descripcion-margin'>
+                 "Título [Contenido]"
+            </div>
+            <div className='sugerencia-descripcion-margin'>
+                "Descripción [Contenido]"
+            </div>
+            <div className='sugerencia-descripcion-margin'>
+                "Asociar Proyecto" &rarr; "Proyecto [numero]"
+            </div>
+            <div className='sugerencia-descripcion-margin'>
+                "Con evidencias" "Sin evidencias" : Evidencias obligatorias ?
+            </div>
+            <div className='sugerencia-descripcion-margin'>
+                "Peso [numero]": Establece el Peso/Importancia
+            </div>
+        </div>
+    </div>
 export default function ActivityQueue(params) {
     const dispatch = useDispatch();
     const { sessionState,currentState } = useContext( AccountContext );   
@@ -107,24 +166,15 @@ export default function ActivityQueue(params) {
     },[sessionState,currentState]);
 
     useEffect (()=>{                
-        const aa = <div className='sugerencia-contenido'>
-        <div className='sugenrencia-contenido-img'>
-        
-            <img  src='./Sugerencia.jpg'/>
-            <div>Cola de actividades</div>
-        </div>
-        <div className='sugerencia-contenido-descripcion'>
-            Estan son las actividades que puedes recibir por "Dame algo que hacer" 
-            <div className='sugerencia-descripcion'>
-                Puedes definir tus actividades con Pesos, lo cual indica que tan importante es. Sera asi más probable que te toque dicha actividad. 
-            </div>
-            <div className='sugerencia-descripcion'>
-                Puedes asociar una actividad a un proyecto, si no lo haces tus puntos iran a tu proyecto Base.  
-            </div>
-        </div>
-    </div>
-    const component=ReactDOMServer.renderToString(aa);
+        const tutorial_ =ReactDOMServer.renderToString(Tutorialcomp); 
+        const component =ReactDOMServer.renderToString(aa);
+
         dispatch(changePage({content:component,title:"Cola de Actividades"}));
+        dispatch(changeTutorial(tutorial_));
+        return ()=>{
+            dispatch(restoreContent());
+            dispatch(restoreContentTutorial());
+        }  
     },[]);
     return(
     <React.Fragment>
