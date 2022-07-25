@@ -528,9 +528,9 @@ export default function VerTarjeta(props) {
                                                                   <Grid item >
                                                                               <Stack spacing={'2%'}>
                                                                                   <Button className='button-main' onClick={handleClickA}  sx={{maxHeight:'20ch', height:'18ch', maxwidth:'70ch', width: '70ch', border: '5px solid black',color: 'black',background: colorA, '&:hover': {backgroundColor: '#0088b6'}}} disabled={disabledA}>
-                                                                                      <Typography sx={{fontWeight: 'bold'}} variant="h6" component="div"> a. {mazo.Tarjetas[page-1].Opciones[0]}</Typography></Button>
+                                                                                      <Typography sx={{fontWeight: 'bold'}} variant="h6" component="div"> Opción 1: {mazo.Tarjetas[page-1].Opciones[0]}</Typography></Button>
                                                                                   <Button onClick={handleClickB} className='button-main'  sx={{maxHeight:'20ch', height:'18ch', maxwidth:'70ch', width: '70ch', border: '5px solid black', color: 'black',background: colorB, '&:hover': {backgroundColor: '#0088b6'}}} disabled={disabledB}>
-                                                                                      <Typography sx={{fontWeight: 'bold'}}  variant="h6" component="div">b. {mazo.Tarjetas[page-1].Opciones[2]}</Typography></Button>
+                                                                                      <Typography sx={{fontWeight: 'bold'}}  variant="h6" component="div">Opción 2: {mazo.Tarjetas[page-1].Opciones[2]}</Typography></Button>
                                                                               </Stack>
                                                                   </Grid>
                                                                   <Grid mt={'10%'} item xs={'10%'}>
@@ -544,8 +544,8 @@ export default function VerTarjeta(props) {
                                                                   <Grid item >
                                                                           <Box sx={{ width: '100%' }}>
                                                                               <Stack spacing={'2%'}>
-                                                                                  <Button className='button-main' onClick={handleClickC} sx={{maxHeight:'20ch', height:'18ch', maxwidth:'70ch', width: '70ch',border: '5px solid black', color: 'black',background: colorC, '&:hover': {backgroundColor: '#0088b6'}}} disabled={disabledC}><Typography sx={{fontWeight: 'bold'}} variant="h6" component="div">c. {mazo.Tarjetas[page-1].Opciones[1]}</Typography></Button>
-                                                                                  <Button className='button-main' onClick={handleClickD} sx={{maxHeight:'20ch', height:'18ch', maxwidth:'70ch', width: '70ch', border: '5px solid black',  color: 'black',background: colorD, '&:hover': {backgroundColor: '#0088b6'}}} disabled={disabledD}><Typography sx={{fontWeight: 'bold'}} variant="h6" component="div">d. {mazo.Tarjetas[page-1].Opciones[3]}</Typography></Button>
+                                                                                  <Button className='button-main' onClick={handleClickC} sx={{maxHeight:'20ch', height:'18ch', maxwidth:'70ch', width: '70ch',border: '5px solid black', color: 'black',background: colorC, '&:hover': {backgroundColor: '#0088b6'}}} disabled={disabledC}><Typography sx={{fontWeight: 'bold'}} variant="h6" component="div">Opción 3: {mazo.Tarjetas[page-1].Opciones[1]}</Typography></Button>
+                                                                                  <Button className='button-main' onClick={handleClickD} sx={{maxHeight:'20ch', height:'18ch', maxwidth:'70ch', width: '70ch', border: '5px solid black',  color: 'black',background: colorD, '&:hover': {backgroundColor: '#0088b6'}}} disabled={disabledD}><Typography sx={{fontWeight: 'bold'}} variant="h6" component="div">Opción 4: {mazo.Tarjetas[page-1].Opciones[3]}</Typography></Button>
                                                                               </Stack>
                                                                           </Box>
                                                                   </Grid>
