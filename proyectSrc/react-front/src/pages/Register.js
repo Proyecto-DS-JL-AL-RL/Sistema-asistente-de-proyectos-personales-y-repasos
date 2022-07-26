@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import Box from '@mui/material/Box';
 //import Tooltip from '@mui/material/Tooltip';
 //import Card from '@mui/material/Card';
@@ -20,8 +20,70 @@ import Stack from '@mui/material/Stack';
 import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
 import UserPool from '../userPool';
 import { initUser } from "../userMethods";
+import MensajeAdvertencia from '../components/horario/MensajeAdvertencia';
 
 export default function Register(props){
+
+    const [mensajeAdvertenciaDisplay,setMensajeAdvertenciaDisplay] = useState(null);
+
+    const comeback = (boold)=>{
+      history.push('/');
+    }
+
+    const PasswordIncorrecto = () =>{
+      return <MensajeAdvertencia 
+      visible={setMensajeAdvertenciaDisplay}
+      content={"Contraseña no valida"}
+      comentario={<>
+              La contraseña debe tener almenos 8 caracteres y usar Números, Mayusculas y Minusculas.
+              </>}
+      />
+    }
+    const datosNoValidos = () =>{
+      return <MensajeAdvertencia 
+      visible={setMensajeAdvertenciaDisplay}
+      content={"Datos incorrectos"}
+      comentario={<>
+              Revise que haya llenado correctamente sus datos. Si lleno todos. Tal vez el correo no sea valido. O haya usado caracteres que no debia
+              </>}
+      />
+    }
+    const UsuarioYaExiste = () =>{
+      return <MensajeAdvertencia 
+      visible={setMensajeAdvertenciaDisplay}
+      content={"Nombre de usuario ya existente"}
+      comentario={<>
+              Parece que alguien más ya esta usando ese Nombre de Usuario, pruebe con otro
+              </>}
+      />
+    }
+
+    const UsuarioCreado = () =>{
+      return <MensajeAdvertencia 
+      visible={comeback}
+      content={"Usuario Creado con exito"}
+      comentario={<>
+              Revise su correo electrónico, Y verifique su cuenta con el Link de Amazon Web Services que le mandamos.
+              <button className='btn-advertencia-ok' onClick={comeback}>
+                    volver a inicio
+                </button>
+              </>}
+      />
+    }
+
+    const OtroError = (codeG) =>{
+      return ()=>{
+      return <MensajeAdvertencia 
+      visible={setMensajeAdvertenciaDisplay}
+      content={"Error desconocido"}
+      comentario={<>
+              {codeG}
+              </>}
+      />
+      }
+    }
+
+
     let history = useHistory()
     //const [showRegister, setShowRegister] = useState(false)
     const [values, setValues] = React.useState({
@@ -49,7 +111,7 @@ export default function Register(props){
     };
 
     const handleRegister = ()=>{
-      console.log(values);
+      //console.log(values);
       const password = values.password;
       const username = values.usuario;
       UserPool.signUp(username,password,[
@@ -59,8 +121,18 @@ export default function Register(props){
         new CognitoUserAttribute({Name:'nickname',Value: values.usuario}),
       ],null,(err,data) =>{
         if(err){
-        alert(err.message);
-        //console.log(err);
+        //alert(err.message);
+        console.log({asd:Object(err)});
+          if(err.code){
+            if(err.code == 'InvalidPasswordException')              
+              setMensajeAdvertenciaDisplay(PasswordIncorrecto);
+            else if(err.code == 'InvalidParameterException')
+              setMensajeAdvertenciaDisplay(datosNoValidos);
+            else if(err.code == 'UsernameExistsException')
+              setMensajeAdvertenciaDisplay(UsuarioYaExiste);
+            else 
+              setMensajeAdvertenciaDisplay(OtroError(err.code));
+          }
         }else{
         //console.log('Result:',data);
         const sub = data.userSub;
@@ -71,9 +143,8 @@ export default function Register(props){
             "given_name": values.nombre,
             "nickname": username,
         }
-        initUser(userData);
-        history.push('/');
-        alert('Usuario creado con exito');
+        initUser(userData);        
+        setMensajeAdvertenciaDisplay(UsuarioCreado);
         }
 
       });
@@ -139,6 +210,9 @@ export default function Register(props){
                                 </Stack>                
                             </Box>
                         </Grow>
+                        <Box sx = {{left:'50%',top:'50%',marginLeft:'-250px',marginTop:'-5%',position:'absolute'}}>
+                        {mensajeAdvertenciaDisplay}                 
+                        </Box>
                     </Box>
     )
 }

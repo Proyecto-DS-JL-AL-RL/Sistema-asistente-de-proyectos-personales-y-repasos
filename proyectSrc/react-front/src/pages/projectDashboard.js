@@ -15,6 +15,9 @@ import { useDispatch } from 'react-redux';
 import { changePage, restoreContent } from '../stores/sliceAyuda';
 import { BACK_IP } from '../publicConstants';
 import { changeTutorial, restoreContentTutorial } from '../stores/sliceTutorial';
+import mehera from './img/mehera.webp';
+import badMehera from './img/badimage.jpg'
+import micTuto from './img/microphonehelp.jpg';
 export default function ProyectoView(){
     const { currentState } = useContext(AccountContext);
     const dispatch = useDispatch();
@@ -34,6 +37,7 @@ export default function ProyectoView(){
         return <MensajeAdvertencia 
         visible={setMensajeAdvertenciaDisplay}
         content={"Proyecto No existe"}
+        imgContent = {badMehera}
         comentario={<>
                 Parece que este proyecto no existe en nuestra base de datos
                 <button className='btn-advertencia-ok' onClick={()=>{setMensajeAdvertenciaDisplay(null);history.push('/proyectos');}}>
@@ -45,8 +49,9 @@ export default function ProyectoView(){
 
       const AdvertenciaEliminado = () =>{
         return <MensajeAdvertencia 
-        visible={setMensajeAdvertenciaDisplay}
-        content={"Proyecto No existe"}
+        visible={setMensajeAdvertenciaDisplay}  
+        content={"Proyecto eliminado"}
+        imgContent = {mehera}
         comentario={<>
                 El proyecto fue eliminado con exito. Las actividades asociadas fueron desvinculadas
                 <button className='btn-advertencia-ok' onClick={()=>{setMensajeAdvertenciaDisplay(null);history.push('/proyectos');}}>
@@ -107,6 +112,7 @@ export default function ProyectoView(){
         return <MensajeAdvertencia 
         visible={setMensajeAdvertenciaDisplay}
         content={"Proyecto No existe"}
+        imgContent = {badMehera}
         comentario={<>
                 Esta seguro de eliminar el proyecto ?
                 <button className='btn-advertencia-ok' onClick={()=>{handleEliminarProyecto()}}>
@@ -178,7 +184,7 @@ export default function ProyectoView(){
 
         const tuto = <div className='sugerencia-contenido'>
             <div className='sugenrencia-contenido-img'>
-                
+                    <img src = {micTuto}/>
                     <div>Tutorial Interfaz de Voz</div>
                 </div>
                 <div className='sugerencia-contenido-descripcion-600'>

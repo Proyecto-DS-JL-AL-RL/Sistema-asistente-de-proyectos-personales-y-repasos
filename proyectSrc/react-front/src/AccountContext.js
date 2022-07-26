@@ -14,7 +14,7 @@ const AccountCon = function(props){
             const authDetail = new AuthenticationDetails({ Username: username, Password: password });
             user.authenticateUser(authDetail,{
                 onSuccess: (data)=>{
-                    console.log(data);
+                    //console.log(data);
                     user.getUserAttributes((err,atri)=>{
                         let atris = {};
                         atri.forEach((elem)=>{
@@ -27,11 +27,11 @@ const AccountCon = function(props){
                     resolve(data);
                 },
                 onFailure: (data)=>{
-                    console.error(data);
+                    //console.error(data);
                     reject(data);
                 },
                 newPasswordRequired: (data)=>{
-                    console.log(data);
+                    //console.log(data);
                     resolve(data);
                 }
             });

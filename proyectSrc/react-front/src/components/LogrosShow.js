@@ -5,6 +5,9 @@ import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 export default function LogrosShow (props){
     const [logros,setLogros]  = useState([]);
     const abrirUrl = url => {
+        if (!url.match(/^https?:\/\//i)) {
+            url = 'http://' + url;
+        }
         window.open(url, '_blank', 'noopener,noreferrer');
     };
 

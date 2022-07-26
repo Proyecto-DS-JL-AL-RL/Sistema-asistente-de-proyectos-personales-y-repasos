@@ -34,10 +34,10 @@ const Copyright = function Copyright(props) {
                             color="textSecondary"
                             align="center"
                           >
-                            {"Copyright © "}
+                            {""}
                             {new Date().getFullYear()}
-                            {" "}
-                            {"Página reservada por derechos de autor"}
+                            {" Creditos a los creadores "}
+                            {" de las imagenes usadas"}
                             {"."}
                           </Typography>
                     );

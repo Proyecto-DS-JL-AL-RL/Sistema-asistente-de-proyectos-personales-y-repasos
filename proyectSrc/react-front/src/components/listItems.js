@@ -81,10 +81,7 @@ export const secondaryListItems = (
     <ItemButttonBar page={"/"}
     icon={<HomeIcon sx={{color:'white',
     borderBottom:'solid 1px white'}}/>} name={"Home"}/>
-    <ItemButttonBar page={"/microAyuda"}
-    icon={<InfoIcon sx={{color:'white',
-    borderBottom:'solid 1px white'}}/>} name={"Info Voz"}
-    />
+
   </React.Fragment>
     
 );

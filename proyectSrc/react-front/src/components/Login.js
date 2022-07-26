@@ -1,4 +1,4 @@
-import  React,{useContext,useEffect} from 'react';
+import  React,{useContext,useEffect,useState} from 'react';
 import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
@@ -12,6 +12,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
 import { useHistory } from "react-router-dom";
 import {  AccountContext } from '../AccountContext';
+import MensajeAdvertencia from './horario/MensajeAdvertencia';
 import './login.css'
 /*
     login simple:
@@ -24,7 +25,51 @@ import './login.css'
 
 export default function Login(props) {
   const { authenticate } = useContext(AccountContext);
+  const [mensajeAdvertenciaDisplay,setMensajeAdvertenciaDisplay] = useState(null);
   let history = useHistory()
+
+  const lleneDatos = () =>{
+    return <MensajeAdvertencia 
+    visible={setMensajeAdvertenciaDisplay}
+    content={"Llene los campos de Usuario y contraseña"}
+    comentario={<>
+            Llene los campos de Usuario y contraseña
+            </>}
+    />
+  }
+
+  const usuarioNoConfirmado = () =>{
+    return <MensajeAdvertencia 
+    visible={setMensajeAdvertenciaDisplay}
+    content={"Usuario no verificado"}
+    comentario={<>
+            Vea el link AWS que le enviamos a su correo. O pidale a un admin que lo confirme manualmente
+            </>}
+    />
+  }
+
+  const noAutorizado = ()=>{
+    return <MensajeAdvertencia 
+    visible={setMensajeAdvertenciaDisplay}
+    content={"Usuario-Contraseña incorrectos"}
+    comentario={<>
+            Combinación usuario contraseña incorrecta
+            </>}
+    />
+  }
+
+  const OtroError = (codeG) =>{
+    return ()=>{
+    return <MensajeAdvertencia 
+    visible={setMensajeAdvertenciaDisplay}
+    content={"Error desconocido"}
+    comentario={<>
+            {codeG}
+            </>}
+    />
+    }
+  }
+
   const [values, setValues] = React.useState({
     usuario: '',
     password: '',
@@ -51,8 +96,18 @@ export default function Login(props) {
       //console.log("app:",data);
       history.push('/');
   }).catch((err)=>{
-      alert(err.message);
-      //console.error("app",err);sx={{width:'5vw', height:'5vw'}}
+      if (err.code){
+        if (err.code == 'InvalidParameterException')
+          setMensajeAdvertenciaDisplay(lleneDatos);
+        else if(err.code == 'UserNotConfirmedException')
+          setMensajeAdvertenciaDisplay(usuarioNoConfirmado);
+        else if (err.code == 'NotAuthorizedException')
+          setMensajeAdvertenciaDisplay(noAutorizado)
+        else 
+          setMensajeAdvertenciaDisplay(OtroError(err.code));
+      }else{
+        setMensajeAdvertenciaDisplay(OtroError('Algo paso'));
+      }
   });
   };
 
@@ -91,12 +146,15 @@ export default function Login(props) {
                                 <Button onClick={handleLogin} sx={{p:2,  borderRadius: 5, py: 2, color: 'white' ,background:'#0000cc'}} variant="contained" size="large">
                                       <Typography sx= {{fontWeight: 'bold'}} variant = 'h5'>Iniciar Sesión</Typography>
                                         </Button>                            
-                                                <Typography sx={{py:2}} variant = 'h8'>¿Olvidaste tu contraseña?</Typography>
-                                        <Button onClick={()=>{history.push('./Registro')}} sx={{py:2, borderRadius: 5, color: 'white', background:'#00b347'}} variant="contained" size="large">
+                                                
+                                        <Button onClick={()=>{history.push('./Registro')}} sx={{marginTop:'10px',py:2, borderRadius: 5, color: 'white', background:'#00b347'}} variant="contained" size="large">
                                       <Typography sx= {{fontWeight: 'bold'}} variant = 'h5'>Registrate</Typography>
                                   </Button>
               </FormControl>
           </FormControl>
+          </Box>
+          <Box sx = {{left:'50%',top:'50%',marginLeft:'-250px',marginTop:'-5%',position:'fixed'}}>
+                        {mensajeAdvertenciaDisplay}                 
           </Box>
     </React.Fragment>
   );
